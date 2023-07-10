@@ -14,8 +14,8 @@ In order to keep track of the nodes that are not in the tree yet and the weights
 
 Using a binary min-heap, the running time of this algorithm is $O(E \log V)$, since we need to perform $|E|$ operations on a binary min-heap, each of which takes $O(\log V)$ time, which in the case of dense graphs dominates the number of extract-min operations, which take $O(V \log V)$ time in total.
 
-Implementation: [MST - binary Prim](https://github.com/pl3onasm/AADS/blob/main/algorithms/graphs/mst/prim-1.c)
+Implementation: [MST - binary Prim](https://github.com/pl3onasm/AADS/blob/main/algorithms/graphs/MST-prim/prim-1.c)
 
 We can also use a Fibonacci heap to implement Prim's algorithm. This will result in a faster running time, since the Fibonacci heap has a better amortized running time than the binary min-heap. For more information on Fibonacci heaps, see CLRS³, chapter 19. Unfortunately, they were omitted from CLRS⁴. The running time of this version of the algorithm is $O(E + V \log V)$, which is a significant improvement over the $O(E \log V)$ running time of the binary heap version in the case of dense graphs.
 
-Implementation: [MST - Fibonacci Prim](https://github.com/pl3onasm/AADS/blob/main/algorithms/graphs/mst/prim-2.c)
+Implementation: [MST - Fibonacci Prim](https://github.com/pl3onasm/AADS/blob/main/algorithms/graphs/MST-prim/prim-2.c)

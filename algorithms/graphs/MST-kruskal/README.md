@@ -23,4 +23,4 @@ Implementing the disjoint-set data structure this way results in a better runnin
 
 For a detailed explanation of the union-find data structure and the heuristics, see CLRS³ 21.3, or CLRS⁴ 19.3.
 
-Implementation: [MST - Kruskal](https://github.com/pl3onasm/AADS/blob/main/algorithms/graphs/mst/kruskal.c)
+Implementation: [MST - Kruskal](https://github.com/pl3onasm/AADS/blob/main/algorithms/graphs/MST-kruskal/kruskal.c)

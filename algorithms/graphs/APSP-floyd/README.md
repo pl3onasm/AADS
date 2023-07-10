@@ -22,7 +22,7 @@ $$
 
 After $n$ iterations, we have $d_{ij}^n = \delta_{ij}$, which is the weight of the shortest path between any two vertices $i$ and $j$ in the given graph.
 
-Implementation: [APSP - Floyd-Warshall](https://github.com/pl3onasm/AADS/blob/main/algorithms/graphs/APSP-floyd/apsp-3.c)
+Implementation: [APSP - Floyd-Warshall](https://github.com/pl3onasm/AADS/blob/main/algorithms/graphs/APSP-floyd/floyd.c)
 
 Notice that the code is very similar to the [solutions drawing upon the matrix multiplication algorithm](https://github.com/pl3onasm/AADS/tree/main/algorithms/graphs/APSP-matrixmp), except that here we iterate over the intermediate vertices $k$ first, and then over the pairs of vertices $i$ and $j$. We also omit the outermost loop of $n-1$ or $\lceil \log_2 (n-1) \rceil$ iterations. Thus, the time complexity of the Floyd-Warshall algorithm is able to drop to $\Theta(n^3)$.
 
