@@ -7,7 +7,7 @@ Like dynamic programming, greedy algorithms are best suited to optimization prob
 There are two key properties of a problem that suggest the use of a greedy algorithm:
 
 1. **Greedy choice property**  
-   The property holds if it is possible to reach a global optimum by making the greedy choice at each step. That is, at each step, we make the choice that looks best at that moment, without looking ahead to see whether it is the best choice or without depending on solutions to subproblems (this is the key difference with dynamic programming). In other words, each choice is made locally, without considering the global effect of that choice.
+   The property holds if it is possible to reach a global optimum by making the greedy choice at each step. That is, at each step, we make the choice that looks best at that moment, without looking ahead to see whether it is the best choice or without depending on solutions to subproblems (this is the key difference with dynamic programming). In other words, each choice is made locally, without considering the global effect of that choice, and the property holds if that choice is safe to make at each step.
 
 2. **Optimal substructure**  
    A problem has optimal substructure if an optimal solution can be constructed from optimal solutions to its subproblems. This is a key ingredient for both dynamic programming and greedy algorithms. In the case of greedy algorithms, each greedy choice leads to a smaller subproblem, and we need to show that an optimal solution to the subproblem, combined with the greedy choice that led to the subproblem, yields an optimal solution to the original problem.  
