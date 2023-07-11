@@ -29,7 +29,7 @@ Note that this is a work in progress. Some explanations and summaries are still 
 
 ## References
 
-CLRS³: Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. (2009). Introduction to algorithms. MIT press.  
-CLRS⁴: Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. (2022). Introduction to algorithms. MIT press.  
-CP: Halim, S., Halim, F., & Effendy, S. (2022) Competitive programming 4. Lulu Publishing.  
+CLRS³: Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. (2009). [Introduction to algorithms](https://mitpress.mit.edu/9780262533058/introduction-to-algorithms/). MIT press.  
+CLRS⁴: Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. (2022). [Introduction to algorithms](http://mitpress.mit.edu/9780262046305/introduction-to-algorithms/). MIT press.  
+CP: Halim, S., Halim, F., & Effendy, S. (2022) [Competitive programming 4](https://cpbook.net/details?cp=4). Lulu Publishing.  
 JE: Erickson, J. (2019). [Algorithms](https://github.com/jeffgerickson/algorithms/blob/master/Algorithms-JeffE.pdf). Independent Publisher.  
