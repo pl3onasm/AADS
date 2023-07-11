@@ -70,11 +70,11 @@ void *safeCalloc (int n, int size) {
     return ptr;
 }
 
-void **newMatrix (int n, int m, size_t eSize) {
-  /* allocates a n x m matrix and checks whether the allocation was successful */
-  void **M = (void**) safeCalloc(n, sizeof(void *));
-  for (int i = 0; i < n; i++) 
-    M[i] = safeCalloc(m, eSize);
+void **newMatrix (int m, int n, size_t eSize) {
+  /* allocates a m x n matrix */
+  void **M = (void**) safeCalloc(m, sizeof(void *));
+  for (int i = 0; i < m; i++) 
+    M[i] = safeCalloc(n, eSize);
   return M;
 }
 
@@ -196,7 +196,7 @@ void swap (heap *H, int i, int j) {
 
 heap *newHeap(graph *G, int s) {
   /* creates a heap with n nodes */
-  int n = G->nNodes;
+  int n = G->nNodes-1;  // exclude the source node of G'
   heap *H = safeCalloc(1, sizeof(heap));
   H->nNodes = n;
   H->nodes = safeCalloc(n, sizeof(node*));

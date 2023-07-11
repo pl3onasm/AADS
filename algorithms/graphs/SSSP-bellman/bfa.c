@@ -14,15 +14,15 @@
 
 //:::::::::::::::::::::::: data structures ::::::::::::::::::::::::://
 
-typedef struct edge {
-  int u, v;              // edge endpoints
-  double w;              // edge weight
-} edge;
-
 typedef struct node {
   int id, parent;        // node id and predecessor
   double dist;           // distance to the source 
 } node;
+
+typedef struct edge {
+  node *to, *from;       // edge endpoints
+  double w;              // edge weight
+} edge;
 
 typedef enum {
   false = 0,
@@ -70,11 +70,11 @@ void checkEdgeCap(graph *G) {
   }
 }
 
-edge *newEdge(int u, int v, double w) {
+edge *newEdge(graph *G, int u, int v, double w) {
   /* creates a new edge */
   edge *e = safeCalloc(1, sizeof(edge));
-  e->u = u;
-  e->v = v;
+  e->from = G->nodes[u];
+  e->to = G->nodes[v];
   e->w = w;
   return e;
 }
@@ -104,8 +104,8 @@ void buildGraph (graph *G){
   /* adds an edge to the graph */
   int u, v; double w;
   while (scanf("%d %d %lf", &u, &v, &w) == 3) {
-  checkEdgeCap(G);
-  G->edges[G->nEdges++] = newEdge(u, v, w);
+    checkEdgeCap(G);
+    G->edges[G->nEdges++] = newEdge(G, u, v, w);
   }
 }
 
@@ -142,12 +142,12 @@ void print (graph *G, int s) {
 
 bool relax(graph *G, edge *e) {
   /* relaxes the edge e */
-  node *u = G->nodes[e->u];
-  node *v = G->nodes[e->v];
-  if (v->dist > u->dist + e->w) {   // found a shorter path
-    v->dist = u->dist + e->w;       // update estimate
-    v->parent = u->id;
+  if (e->to->dist > e->from->dist + e->w) {   // found a shorter path
+    e->to->dist = e->from->dist + e->w;       // update estimate
+    e->to->parent = e->from->id;
+    return true;
   }
+  return false;
 }
 
 void bFord(graph *G, int s) {
@@ -161,7 +161,7 @@ void bFord(graph *G, int s) {
   for (int i = 0; i < G->nEdges; i++)       // check for negative cycles
     if (relax(G, G->edges[i])) {
       printf("Negative-weight cycle found.\n");
-        exit(EXIT_FAILURE);
+      exit(EXIT_FAILURE);
     } 
 }
 
