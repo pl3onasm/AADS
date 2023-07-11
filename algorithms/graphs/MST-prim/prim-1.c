@@ -1,4 +1,4 @@
-/* file: mst-2.c
+/* file: prim-1.c
    author: David De Potter
    email: pl3onasm@gmail.com
    license: MIT, see LICENSE file in repository root folder
