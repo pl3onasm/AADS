@@ -85,9 +85,9 @@ Next, we compute the following 7 products of matrices of size $n/2 \times n/2$:
 
 $$
 \begin{align*}
-  P_1 &= A_{11} \cdot S_1\quad& P_2 &= S_2 \cdot B_{22} \\
-  P_3 &= S_3 \cdot B_{11}\quad& P_4 &= A_{22}\cdot S_4 \\
-  P_5 &= S_5 \cdot S_6\quad& P_6 &= S_7 \cdot S_8 \\
+  P_1 &= A_{11} \cdot S_1\quad& P_2 &= S_2 \cdot B_{22}\\
+  P_3 &= S_3 \cdot B_{11}\quad& P_4 &= A_{22}\cdot S_4\\
+  P_5 &= S_5 \cdot S_6\quad& P_6 &= S_7 \cdot S_8\\
   P_7 &= S_9 \cdot S_{10}\quad& &
 \end{align*}
 $$
@@ -96,10 +96,10 @@ Finally, we update the following 4 submatrices of the final matrix $C$:
 
 $$
 \begin{align*}
-  C_{11} &= P_5 + P_4 - P_2 + P_6\quad&
-  C_{12} &= P_1 + P_2 \\
-  C_{21} &= P_3 + P_4\quad&
-  C_{22} &= P_5 + P_1 - P_3 - P_7
+  C_{11} &= P_5 + P_4 - P_2 + P_6\\
+  C_{12} &= P_1 + P_2\\
+  C_{21} &= P_3 + P_4\\
+  C_{22} &= P_5 + P_1 - P_3 - P_7\\
 \end{align*}
 $$
 
