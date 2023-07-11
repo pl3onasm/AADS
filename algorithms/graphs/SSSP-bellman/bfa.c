@@ -34,7 +34,6 @@ typedef struct graph {
   edge **edges;          // array of pointers to edges
   node **nodes;          // array of pointers to nodes
   int edgeCap;           // capacity of the edges array
-  bool cycle;            // true if there is a negative-weight cycle
 } graph;
 
 //::::::::::::::::::::::: memory management :::::::::::::::::::::::://
@@ -95,7 +94,6 @@ graph *newGraph(int n) {
   /* creates a graph with n vertices */
   graph *G = safeCalloc(1, sizeof(graph));
   G->nNodes = n;
-  G->cycle = false;
   G->nodes = safeCalloc(n, sizeof(node*));
   for (int i = 0; i < n; i++)
     G->nodes[i] = newNode(i);
@@ -126,10 +124,6 @@ void freeGraph(graph *G) {
 
 void print (graph *G, int s) {
   /* prints the distances and parents of the nodes */
-  if (G->cycle) {
-    printf("Negative-weight cycle found.\n");
-    return;
-  }
   printf("Node   Distance   Parent\n"); 
   for (int i = 0; i < G->nNodes; i++) {
     node *n = G->nodes[i];
@@ -146,23 +140,14 @@ void print (graph *G, int s) {
   }
 }
 
-void relax(graph *G, edge *e) {
+bool relax(graph *G, edge *e) {
   /* relaxes the edge e */
   node *u = G->nodes[e->u];
   node *v = G->nodes[e->v];
-  if (u->dist == INF) return;       // u is unreachable
   if (v->dist > u->dist + e->w) {   // found a shorter path
     v->dist = u->dist + e->w;       // update estimate
     v->parent = u->id;
   }
-}
-
-bool containsCycle(graph *G, edge *e) {
-  /* checks whether the edge e belongs to a negative cycle */
-  node *u = G->nodes[e->u];
-  node *v = G->nodes[e->v];
-  G->cycle = v->dist > u->dist + e->w;
-  return G->cycle;
 }
 
 void bFord(graph *G, int s) {
@@ -174,8 +159,10 @@ void bFord(graph *G, int s) {
       relax(G, G->edges[j]);
 
   for (int i = 0; i < G->nEdges; i++)       // check for negative cycles
-    if (containsCycle(G, G->edges[i]))
-      return;
+    if (relax(G, G->edges[i])) {
+      printf("Negative-weight cycle found.\n");
+        exit(EXIT_FAILURE);
+    } 
 }
 
 //::::::::::::::::::::::::::::: main ::::::::::::::::::::::::::::::://
