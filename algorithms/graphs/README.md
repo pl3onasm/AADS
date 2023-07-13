@@ -17,5 +17,7 @@
 | Chap 25.3 | Chap 23.3 | [APSP - Johnson](https://github.com/pl3onasm/AADS/tree/main/algorithms/graphs/APSP-johnson)
 | Chap 26 | Chap 24 | [Maximum flow - Ford-Fulkerson](https://github.com/pl3onasm/AADS/tree/main/algorithms/graphs/MF-ford-fulkerson)
 | Chap 26.4-5 | n/a | [Maximum flow - Push-relabel](https://github.com/pl3onasm/AADS/tree/main/algorithms/graphs/MF-push-relabel)
-| n/a | Chap 25 | [Bipartite graph matchings](https://github.com/pl3onasm/AADS/tree/main/algorithms/graphs/mcbm)
+| n/a | Chap 25.1 | [MCBM - unweighted](https://github.com/pl3onasm/AADS/tree/main/algorithms/graphs/MCBM-unweighted)
+| n/a | Chap 25.2 | [MCBM - Gale-Shapley](https://github.com/pl3onasm/AADS/tree/main/algorithms/graphs/MCBM-gale-shapley)
+| n/a | Chap 25.3 | [MCBM - weighted](https://github.com/pl3onasm/AADS/tree/main/algorithms/graphs/MCBM-weighted)
 | n/a | n/a | [Flood fill](https://github.com/pl3onasm/AADS/tree/main/algorithms/graphs/floodfill)
