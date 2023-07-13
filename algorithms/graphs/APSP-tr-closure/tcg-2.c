@@ -9,7 +9,7 @@
       (i.e. the transitive closure of a graph is a binary
       matrix in which the entry (i, j) is 1 if there is a
       path from node i to node j, and 0 otherwise)
-   complexity: O(n^3) where n is the number of nodes
+   complexity: O(V³)
 */
 
 #include <stdio.h>
@@ -38,8 +38,8 @@ void freeM (int **M, int n) {
 //:::::::::::::::::::::::: matrix functions :::::::::::::::::::::::://
 
 int **initT (int n) {
-  /* initializes a int matrix with 0's on the diagonal 
-     and inf elsewhere */
+  /* initializes a int matrix with 1's on the diagonal 
+     and 0 elsewhere */
   int **T = safeCalloc(n, sizeof(int*));
   for (int i = 0; i < n; i++){
     T[i] = safeCalloc(n, sizeof(int)); 

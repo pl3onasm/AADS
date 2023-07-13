@@ -1,18 +1,19 @@
-/* file: maxflow-5.c  
+/* file: ffm-3.c  
    author: David De Potter
    email: pl3onasm@gmail.com
    license: MIT, see LICENSE file in repository root folder
-   description: implements the relabel-to-front
-                maximum flow algorithm
-   time complexity: O(V³)
+   description: implements the Dinitz version of the 
+     max-flow algorithm. This is Ford-Fulkerson with 
+     level graphs and DFS.
+   time complexity: O(V²E)
 */
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <limits.h>
+#include <float.h>
 
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
-#define INF INT_MAX
+#define INF DBL_MAX
 
 //:::::::::::::::::::::::: data structures ::::::::::::::::::::::::://
 
@@ -24,23 +25,20 @@ typedef enum {            // definition for boolean type
 } bool;
 
 typedef struct edge {
-  node *from, *to;        // pointers to the endpoints of the edge (u->v)
+  node *from, *to;        // pointers to the endnodes of the edge (u->v)
   double cap;             // capacity of the edge
   double flow;            // flow on the edge
-  bool reverse;           // to separate Gf from G
+  bool reverse;           // to separate G from Gf, the residual graph
   struct edge *rev;       // pointer to edge in the reverse direction
 } edge;
 
 struct node {
   int id;                 // id of the node
-  edge **adj;             // adjacency list: array of pointers to edges
+  edge **adj;             // adj list is an array of pointers to edges
   int adjCap;             // capacity of the adjacency list
   int nAdj;               // number of adjacent nodes
-  int height;             // height of the node in the residual graph
-  int current;            // current adjacency list index 
-  double excess;          // excess flow at the node
-  struct node *next;      // pointer to the next node in the worklist
-  struct node *prev;      // pointer to the previous node in the worklist
+  int level;              // level of the node in the level graph
+  int adjIdx;             // current adj list index in the DFS traversals
 };
 
 typedef struct graph {
@@ -50,6 +48,11 @@ typedef struct graph {
   int edgeCap;            // capacity of the edge array
   double maxFlow;         // maximum flow in the graph
 } graph;
+
+typedef struct queue {
+  int front, back, size;   // front and back of the queue, and its size
+  int *array;              // array of elements in the queue
+} queue;
 
 //::::::::::::::::::::::: memory management :::::::::::::::::::::::://
 
@@ -80,6 +83,7 @@ node *newNode(int id) {
   /* creates a node with given id */
   node *n = safeCalloc(1, sizeof(node));
   n->id = id;
+  n->level = -1;
   return n;
 }
 
@@ -91,6 +95,14 @@ graph *newGraph(int n) {
   for (int i = 0; i < n; i++)
     G->nodes[i] = newNode(i);
   return G;
+}
+
+void loopReset(graph *G) {
+  /* resets all level fields and current adjacency list indices */
+  for (int i = 0; i < G->nNodes; i++){
+    G->nodes[i]->level = -1;
+    G->nodes[i]->adjIdx = 0;
+  }
 }
 
 void freeGraph(graph *G) {
@@ -140,98 +152,107 @@ void buildGraph(graph *G) {
   }
 }
 
-//::::::::::::::::::::::: push and relabel ::::::::::::::::::::::::://
+//:::::::::::::::::::::::: queue functions ::::::::::::::::::::::::://
 
-node *newList(graph *G, int s, int t) {
-  /* makes a doubly linked worklist of all nodes in G except for  
-     s and t, by setting the next and prev pointers of each node */
-  node *L = NULL;
-  for (int i = G->nNodes-1; i >= 0; i--) 
-    if (i != s && i != t) {
-      G->nodes[i]->next = L;
-      L = G->nodes[i];
-      if (L->next != NULL)
-        L->next->prev = L;
+bool isEmpty(queue *Q) {
+  /* is true if the queue is empty */
+  return Q->front == Q->back;
+}
+
+queue *newQueue(int n) {
+  /* creates a queue with n elements */
+  queue *Q = safeCalloc(1, sizeof(queue));
+  Q->array = safeCalloc(n, sizeof(int));
+  Q->size = n;
+  return Q;
+}
+
+void freeQueue(queue *Q) {
+  /* frees all memory allocated for the queue */
+  free(Q->array);
+  free(Q);
+}
+
+void doubleQueueSize(queue *Q) {
+  /* doubles the size of the queue */
+  Q->array = safeRealloc(Q->array, 2 * Q->size * sizeof(int));
+  for (int i = 0; i < Q->back; ++i)
+    Q->array[i + Q->size] = Q->array[i];
+  Q->back += Q->size;
+  Q->size *= 2;
+}
+
+void enqueue (queue *Q, int n) {
+  /* adds n to the back of the queue */
+  Q->array[Q->back] = n; 
+  Q->back = (Q->back + 1) % Q->size;
+  if (Q->back == Q->front) doubleQueueSize(Q);
+}
+
+int dequeue (queue *Q) {
+  /* removes and returns the first element of the queue */
+  if (isEmpty(Q)) {
+    printf("Error: dequeue() called on empty queue.\n");
+    exit(EXIT_FAILURE);
+  }
+  int n = Q->array[Q->front];
+  Q->front = (Q->front + 1) % Q->size;
+  return n;
+}
+
+//::::::::::::::::::::::::::::: Dinic :::::::::::::::::::::::::::::://
+
+bool bfs(graph *G, int s, int t) {
+  /* builds a BFS tree from s to t and returns if there is a path */
+  queue *q = newQueue(G->nNodes); 
+  enqueue(q, s);                           // enqueue source node
+  G->nodes[s]->level = 0;                  // set source level to 0
+  while (!isEmpty(q)) {
+    node *n = G->nodes[dequeue(q)];
+   
+    // check each edge from n
+    for (int i = 0; i < n->nAdj; i++) {
+      edge *e = n->adj[i];
+      if (e->cap - e->flow > 0 && e->to->level == -1) {
+        e->to->level = n->level + 1;       // set level of child node
+        enqueue(q, e->to->id);                
+      }
     }
-  return L;
+  }
+  freeQueue(q);
+  return G->nodes[t]->level != -1;         // return if t is reachable
 }
 
-void initPreflow(graph *G, int s) {
-  /* initializes the preflow at the source s */
-  node *u = G->nodes[s];
-  u->height = G->nNodes;      // set height of source to n
-  for (int i = 0; i < u->nAdj; i++) {
-    // set full flow on all edges from s
-    edge *e = u->adj[i];
-    e->flow = e->cap;         // set flow on edges
-    e->rev->flow = -e->cap;   
-    e->to->excess += e->cap;  // update excess at v
+double dfs(graph *G, int s, int t, double flow) {
+  /* finds the blocking flow from s to t */
+  if (s == t) return flow;                 // reached sink
+  node *n = G->nodes[s];
+  // check each edge from n and prune those that don't lead to t
+  // so that we don't have to check them again in the next DFS call
+  for (int i = n->adjIdx; i < n->nAdj; i++) {
+    n->adjIdx = i;                         // update current adj list index
+    edge *e = n->adj[i];
+    if (e->cap - e->flow > 0 && e->to->level == n->level + 1) {
+      double bneck = dfs(G, e->to->id, t, MIN(flow, e->cap - e->flow));
+      if (bneck > 0) {
+        e->flow += bneck;                  // adjust flow on edges
+        e->rev->flow -= bneck;             
+        return bneck;
+      } 
+    } 
+  }
+  return 0;
+}
+
+void dinic(graph *G, int s, int t) {
+  /* finds the maximum flow from s to t using Dinic's algorithm */
+  double f;
+  while (bfs(G, s, t)) {
+    while (f = dfs(G, s, t, INF))  // while there is a blocking flow
+      G->maxFlow += f;
+    loopReset(G);  // reset all levels and current adjList indices
   }
 }
-
-void push(graph *G, node *u, node *v, edge *e) {
-  /* pushes flow from u to v along edge e */
-  double delta = MIN(u->excess, e->cap - e->flow);
-  e->flow += delta;           // update flow on edges
-  e->rev->flow -= delta;      
-  u->excess -= delta;         // update excess at u
-  v->excess += delta;         // update excess at v
-}
-
-void relabel(graph *G, node *u) {
-  /* relabels u to the minimum height of its 
-     neighbors in Gf plus one */
-  int min = INF;
-  for (int i = 0; i < u->nAdj; i++) {
-    edge *e = u->adj[i];
-    if (e->cap - e->flow > 0) 
-      min = MIN(min, e->to->height);
-  }
-  u->height = min + 1;
-}
-
-void discharge(graph *G, node *u) {
-  /* discharges the excess at u, i.e. pushes all excess flow 
-     from u to its neighbors in Gf, relabeling u if needed */
-  while (u->excess > 0) {
-    if (u->current < u->nAdj){ // if there are still neighbors to push to
-      edge *e = u->adj[u->current];
-      if (e->cap - e->flow > 0 && u->height == e->to->height + 1) 
-        push(G, u, e->to, e);
-      else u->current++;       // move to next neighbor
-    } else {                   // if no neighbors can be pushed to
-      relabel(G, u);           // relabel u
-      u->current = 0;          // reset current adj list index 
-    }
-  }
-}
-
-node *moveToFront(node *L, node *u) {
-  /* moves node u to the front of worklist L */
-  if (u->next) u->next->prev = u->prev;
-  if (u->prev) u->prev->next = u->next;
-  else L = u->next;            // if u is the head of the worklist
-  u->prev = NULL;
-  u->next = L;
-  L->prev = u;
-  return u;
-}
-
-void maxFlow (graph *G, int s, int t) {
-  /* computes the maximum flow from s to t */
-  initPreflow(G, s);                  // initialize the preflow
-  node *listHead = newList(G, s, t);  // make a worklist  
-  node *u = listHead;
-
-  while (u) {
-    int oldHeight = u->height;
-    discharge(G, u);                  // discharge the excess at u
-    if (u->height > oldHeight)        // if u was relabeled while discharging
-      listHead = moveToFront(listHead, u);  
-    u = u->next;
-  }
-  G->maxFlow = G->nodes[t]->excess;   // max flow is excess at t
-} 
 
 void printFlow(graph *G, int s, int t) {
   /* prints the flow on each edge of the graph G */
@@ -240,7 +261,7 @@ void printFlow(graph *G, int s, int t) {
           s, t, G->maxFlow, "flow");
   for (int i = 0; i < G->nEdges; ++i) {
     edge *e = G->edges[i];
-    if (!e->reverse){                // print original edges only
+    if (!e->reverse){  // only edges in G, not in Gf
       printf("%6d %6d", e->from->id, e->to->id);
       if (e->flow > 0) printf("%13.2lf\n", e->flow);
       else printf("%13c\n", '-');
@@ -251,15 +272,15 @@ void printFlow(graph *G, int s, int t) {
 //::::::::::::::::::::::::: main function :::::::::::::::::::::::::://
 
 int main (int argc, char *argv[]) {
-  int n, s, t;                       // number of nodes, source, sink
+  int n, s, t;                    // number of nodes, source, sink
   scanf("%d %d %d", &n, &s, &t);
 
   graph *G = newGraph(n); 
-  buildGraph(G);                     // read edges from stdin
+  buildGraph(G);                  // read edges from stdin
 
-  maxFlow(G, s, t);                  // compute max flow
-  printFlow(G, s, t);                // print flow values
+  dinic(G, s, t);                 // find the maximum flow
+  printFlow(G, s, t);             // print flow values
 
-  freeGraph(G);                      // free memory
+  freeGraph(G);                   // free memory
   return 0;
 }

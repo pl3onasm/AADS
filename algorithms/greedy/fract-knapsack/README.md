@@ -28,6 +28,6 @@ After the partitioning process is complete, we know for sure that the items to t
 
 If we use the [median of medians algorithm](https://github.com/pl3onasm/CLRS-in-C/blob/main/algorithms/divide-and-conquer/quickselect/qselect-2.c) to find an ideal pivot such that the partitioning is always optimally balanced, the time complexity becomes linear in the worst case. Thus, the total time complexity of the algorithm is in $O(n)$.
 
-For simplicity, we use the randomized quickselect algorithm in the implementation. This runs in expected linear time.
+For simplicity, we use the [randomized quickselect algorithm](https://github.com/pl3onasm/CLRS-in-C/blob/main/algorithms/divide-and-conquer/quickselect/qselect-1.c) in the implementation. This runs in expected linear time.
 
 Implementation: [FKP - Linear Greedy](https://github.com/pl3onasm/AADS/tree/main/algorithms/greedy/fract-knapsack/fkp-2.c)  

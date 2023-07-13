@@ -1,16 +1,16 @@
-/* file: maxflow-3.c  
+/* file: ffm-1.c  
    author: David De Potter
    email: pl3onasm@gmail.com
    license: MIT, see LICENSE file in repository root folder
-   description: implements the Dinitz version of the 
-     max-flow algorithm. This is Ford-Fulkerson with 
-     level graphs and DFS.
-   time complexity: O(V²E)
+   description: implements the Edmonds-Karp version of the 
+     max-flow algorithm. This is Ford-Fulkerson with BFS.
+   time complexity: O(VE²) 
 */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <float.h>
+#include <string.h>
 
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 #define INF DBL_MAX
@@ -25,7 +25,7 @@ typedef enum {            // definition for boolean type
 } bool;
 
 typedef struct edge {
-  node *from, *to;        // pointers to the endnodes of the edge (u->v)
+  int from, to;           // ids of the endpoints of the edge (u->v)
   double cap;             // capacity of the edge
   double flow;            // flow on the edge
   bool reverse;           // to separate G from Gf, the residual graph
@@ -37,8 +37,6 @@ struct node {
   edge **adj;             // adj list is an array of pointers to edges
   int adjCap;             // capacity of the adjacency list
   int nAdj;               // number of adjacent nodes
-  int level;              // level of the node in the level graph
-  int adjIdx;             // current adj list index in the DFS traversals
 };
 
 typedef struct graph {
@@ -83,7 +81,6 @@ node *newNode(int id) {
   /* creates a node with given id */
   node *n = safeCalloc(1, sizeof(node));
   n->id = id;
-  n->level = -1;
   return n;
 }
 
@@ -95,14 +92,6 @@ graph *newGraph(int n) {
   for (int i = 0; i < n; i++)
     G->nodes[i] = newNode(i);
   return G;
-}
-
-void loopReset(graph *G) {
-  /* resets all level fields and current adjacency list indices */
-  for (int i = 0; i < G->nNodes; i++){
-    G->nodes[i]->level = -1;
-    G->nodes[i]->adjIdx = 0;
-  }
 }
 
 void freeGraph(graph *G) {
@@ -121,23 +110,23 @@ void freeGraph(graph *G) {
 edge *addEdge(graph *G, int uId, int vId, double cap, bool reverse) {
   /* adds an edge from u to v with capacity cap */
   edge *e = safeCalloc(1, sizeof(edge));
-  node *u = G->nodes[uId];
-  e->to = G->nodes[vId];
-  e->from = u;
+  e->from = uId;
+  e->to = vId;
   e->cap = cap;
-  e->reverse = reverse;        // true if the edge is exclusive to Gf
+  e->reverse = reverse;     // is true if the edge is exlusive to Gf
   // check if we need to resize the edge array
   if (G->edgeCap == G->nEdges) {
     G->edgeCap += 10;
     G->edges = safeRealloc(G->edges, G->edgeCap * sizeof(edge*));
   }
   // check if we need to resize the adjacency list
+  node *u = G->nodes[uId];
   if (u->adjCap == u->nAdj) {
     u->adjCap += 10;
     u->adj = safeRealloc(u->adj, u->adjCap * sizeof(int));
   }
-  u->adj[u->nAdj++] = e;       // add the edge to the adj list
-  G->edges[G->nEdges++] = e;   // add the original edge to G
+  u->adj[u->nAdj++] = e;         // add the edge to the adj list
+  G->edges[G->nEdges++] = e;     // add the original edge to G
   return e;
 }
 
@@ -184,7 +173,7 @@ void doubleQueueSize(queue *Q) {
 
 void enqueue (queue *Q, int n) {
   /* adds n to the back of the queue */
-  Q->array[Q->back] = n; 
+  Q->array[Q->back] = n;
   Q->back = (Q->back + 1) % Q->size;
   if (Q->back == Q->front) doubleQueueSize(Q);
 }
@@ -200,58 +189,49 @@ int dequeue (queue *Q) {
   return n;
 }
 
-//::::::::::::::::::::::::::::: Dinic :::::::::::::::::::::::::::::://
+//::::::::::::::::::::::::: Edmonds-Karp ::::::::::::::::::::::::::://
 
-bool bfs(graph *G, int s, int t) {
-  /* builds a BFS tree from s to t and returns if there is a path */
+double bfs(graph *G, int s, int t, edge **path) {
+  /* tries to find an augmenting path from s to t using BFS */
+  memset(path, 0, G->nNodes * sizeof(edge*)); // all edges unexplored
+  double flow = INF;
   queue *q = newQueue(G->nNodes); 
-  enqueue(q, s);                           // enqueue source node
-  G->nodes[s]->level = 0;                  // set source level to 0
+  enqueue(q, s);    // enqueue source node
   while (!isEmpty(q)) {
-    node *n = G->nodes[dequeue(q)];
+    node *n = G->nodes[dequeue(q)]; 
    
-    // check each edge from n
-    for (int i = 0; i < n->nAdj; i++) {
+    // visit all outgoing edges from n
+    for (int i = 0; i < n->nAdj; i++) {  
       edge *e = n->adj[i];
-      if (e->cap - e->flow > 0 && e->to->level == -1) {
-        e->to->level = n->level + 1;       // set level of child node
-        enqueue(q, e->to->id);                
+      if (!path[e->to] && e->cap - e->flow > 0) {
+        flow = MIN(flow, e->cap - e->flow);
+        path[e->to] = e;
+        if (e->to == t) {
+          freeQueue(q);
+          return flow;
+        }
+        enqueue(q, e->to);
       }
     }
   }
   freeQueue(q);
-  return G->nodes[t]->level != -1;         // return if t is reachable
-}
-
-double dfs(graph *G, int s, int t, double flow) {
-  /* finds the blocking flow from s to t */
-  if (s == t) return flow;                 // reached sink
-  node *n = G->nodes[s];
-  // check each edge from n and prune those that don't lead to t
-  // so that we don't have to check them again in the next DFS call
-  for (int i = n->adjIdx; i < n->nAdj; i++) {
-    n->adjIdx = i;                         // update current adj list index
-    edge *e = n->adj[i];
-    if (e->cap - e->flow > 0 && e->to->level == n->level + 1) {
-      double bneck = dfs(G, e->to->id, t, MIN(flow, e->cap - e->flow));
-      if (bneck > 0) {
-        e->flow += bneck;                  // adjust flow on edges
-        e->rev->flow -= bneck;             
-        return bneck;
-      } 
-    } 
-  }
   return 0;
 }
 
-void dinic(graph *G, int s, int t) {
-  /* finds the maximum flow from s to t using Dinic's algorithm */
-  double f;
-  while (bfs(G, s, t)) {
-    while (f = dfs(G, s, t, INF))  // while there is a blocking flow
-      G->maxFlow += f;
-    loopReset(G);  // reset all levels and current adjList indices
+void edmondsKarp(graph *G, int s, int t) {
+  /* finds the maximum flow from s to t using Edmonds-Karp */
+  edge **path = safeCalloc(G->nNodes, sizeof(edge*));  // simple path from s to t
+  double flow;              // flow on the path                              
+  while ((flow = bfs(G, s, t, path))) {
+    G->maxFlow += flow;     // augment the flow in G by path flow
+    // update flow on each edge in the path
+    for (int i = t; i != s; i = path[i]->from){
+      edge *e = path[i];
+      e->flow += flow;      // update flow on both edges
+      e->rev->flow -= flow; 
+    }
   }
+  free(path);
 }
 
 void printFlow(graph *G, int s, int t) {
@@ -261,8 +241,8 @@ void printFlow(graph *G, int s, int t) {
           s, t, G->maxFlow, "flow");
   for (int i = 0; i < G->nEdges; ++i) {
     edge *e = G->edges[i];
-    if (!e->reverse){  // only edges in G, not in Gf
-      printf("%6d %6d", e->from->id, e->to->id);
+    if (!e->reverse){  // only egdes in G, not in Gf
+      printf("%6d %6d", e->from, e->to);
       if (e->flow > 0) printf("%13.2lf\n", e->flow);
       else printf("%13c\n", '-');
     }
@@ -278,7 +258,7 @@ int main (int argc, char *argv[]) {
   graph *G = newGraph(n); 
   buildGraph(G);                  // read edges from stdin
 
-  dinic(G, s, t);                 // find the maximum flow
+  edmondsKarp(G, s, t);           // find the maximum flow
   printFlow(G, s, t);             // print flow values
 
   freeGraph(G);                   // free memory
