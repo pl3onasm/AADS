@@ -59,6 +59,8 @@ double distance(point p1, point p2) {
 }
 
 pair findClosestPairInStrip (point *points, int n, double min) {
+  /* find closest pair in the strip between the two halves
+     of the points array */
   point *strip = safeMalloc (n * sizeof(point));
   int len = 0; pair p = {DBL_MAX, {0,0}, {0,0}}; 
   
@@ -113,16 +115,18 @@ pair findClosestPair(point *points, int n) {
     return pair1;
   }
 
-  // divide
+  // divide in two halves
   int mid = n / 2;
-  pair1 = findClosestPair(points, mid);           // left half
-  pair2 = findClosestPair(points + mid, n - mid); // right half
+  // find closest pair in left and right half recursively
+  pair1 = findClosestPair(points, mid);           
+  pair2 = findClosestPair(points + mid, n - mid);
   
-  // conquer
-  double min = MIN(pair1.dist, pair2.dist); 
+  // get minimum distance of the two halves
+  double min = MIN(pair1.dist, pair2.dist);
+  // find closest pair in the strip between the two halves 
   pair pair3 = findClosestPairInStrip(points, n, min);
 
-  // return the closest pair
+  // combine to get the closest pair
   d1 = pair1.dist; d2 = pair2.dist; d3 = pair3.dist; 
   if (d1 <= d2 && d1 <= d3) return pair1;
   if (d2 <= d1 && d2 <= d3) return pair2;
@@ -137,6 +141,7 @@ int main(int argc, char *argv[]) {
   for (int i = 0; i < n; i++) 
     scanf("(%lf,%lf),", &points[i].x, &points[i].y);
 
+  // sort points on x-coordinate
   qsort(points, n, sizeof(point), xcompare);
 
   pair pair = findClosestPair(points, n);
