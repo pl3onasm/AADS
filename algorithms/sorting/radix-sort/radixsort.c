@@ -34,9 +34,10 @@ void countingSort(int size, char *arr[], int d) {
 
 void radixSort (char *dates[], int size) {
   /* sorts the dates in ascending order */
-  int digits[8] = {9,8,6,5,3,2,1,0};
-  for (int i = 0; i < 8; i++) 
-    countingSort(size, dates, digits[i]);
+  for (int i = 9; i >= 0; i--){
+    if (i == 4 || i == 7) continue;   // skip the dashes
+    countingSort(size, dates, i);
+  }
 }
 
 int main (int argc, char *argv[]){

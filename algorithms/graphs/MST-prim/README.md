@@ -12,7 +12,7 @@ In [Kruskal's algorithm](https://github.com/pl3onasm/AADS/tree/main/algorithms/g
 
 In order to keep track of the nodes that are not in the tree yet and the weights of the edges connecting them to the tree, we use a *min-priority queue*. The key of each vertex in this queue is the weight of the lightest edge connecting it to a vertex in the tree. At each step, we extract the vertex with the smallest key from the priority queue, add it to the MST, and update the keys of its non-tree neighbors. If the key of a neighbor is greater than the weight of the edge connecting it to the vertex we just added to the tree, we update the key of the neighbor to the weight of the edge. We also keep track of the parent of each vertex, so that we can reconstruct the minimum spanning tree after we have found it.
 
-Using a binary min-heap, the running time of this algorithm is $O(E \log V)$, since we need to perform $|E|$ operations on a binary min-heap, each of which takes $O(\log V)$ time, which in the case of dense graphs dominates the number of extract-min operations, which take $O(V \log V)$ time in total.
+Using a binary min-heap, the running time of this algorithm is $O(E \log V)$, since we need to perform $|E|$ operations on a binary min-heap, each of which takes $O(\log V)$ time.
 
 Implementation: [MST - binary Prim](https://github.com/pl3onasm/AADS/blob/main/algorithms/graphs/MST-prim/prim-1.c)
 

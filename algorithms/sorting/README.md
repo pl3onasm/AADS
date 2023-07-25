@@ -16,7 +16,7 @@ This is illustrated in the below decision tree. Each internal node (in blue) is 
 
 The number of comparisons performed by a comparison sort algorithm for a given input corresponds to the path length from the root to the leaf in the decision tree. Thus, the longest path from the root to a leaf corresponds to the worst-case number of comparisons for a given input of size $n$. In other words, the height of the decision tree represents the worst-case running time of a comparison sort algorithm.
 
-Let $l$ be the number of leaves in the decision tree. Since a decision tree is a full binary tree (each decision node has exactly two children), it has at most $2^h$ leaves, where $h$ is the height of the tree, so that $l \leq 2^h$. Each permutation of the input elements appears as a label on one or more leaves of the decision tree, so that $l \geq n!$. Thus, $n! \leq l \leq 2^h$, which implies $h \geq log(n!)$. Rewriting the latter term as a sum, we get:
+Let $l$ be the number of leaves in the decision tree. Since a decision tree is a full binary tree (each decision node has exactly two children), it has at most $2^h$ leaves, where $h$ is the height of the tree, so that $l \leq 2^h$. Each permutation of the input elements appears as a label on one or more leaves of the decision tree, so that $l \geq n!$. Thus, $n! \leq l \leq 2^h$, which implies $h \geq log(n!)$. Rewriting the latter term as a sum, we get (/ is integer division):
 
 $$
 \begin{align*}
