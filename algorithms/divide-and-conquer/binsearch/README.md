@@ -26,7 +26,7 @@ In the following problem, we want to find the upper bound on the solution space,
 
 The problem involves $k$ aggressive cows and $n$ stalls. Each stall can hold at most one cow, and each cow must be put into a stall. The stalls are located on a straight line at positions $x_1, x_2, \dots, x_n$, and the goal is to assign the cows to the stalls such that the minimum distance between any two of them is as large as possible and the cows cannot attack each other.
 
-The solution space consists of the increasing sequence of distances $d_i$ between the stalls. The lower bound is 0, and the upper bound is the distance between the first and last stall. Using a binary search, we can then find the largest distance $d$ such that each cow can be assigned to a stall and that the distance between any two of them is *at least* $d$.
+The solution space consists of the increasing sequence of minimum distances $d_i$ between the stalls. The lower bound is 0, and the upper bound is the distance between the first and last stall. Using a binary search, we can then find the largest distance $d$ such that each cow can be assigned to a stall and that the distance between any two of them is *at least* $d$.
 
 Implementation: [Agressive cows](https://github.com/pl3onasm/AADS/blob/main/algorithms/divide-and-conquer/binsearch/cows.c)
 
