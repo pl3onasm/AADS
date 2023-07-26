@@ -15,48 +15,63 @@ typedef struct {
   int low, high, sum;
 } Sub;
 
-void printResult (int arr[], Sub max) {
+void *safeMalloc (int n) {
+  void *ptr = malloc(n);
+  if (ptr == NULL) {
+    printf("Error: malloc(%d) failed. Out of memory?\n", n);
+    exit(EXIT_FAILURE);
+  }
+  return ptr;
+}
+
+int *readInts (int size) {
+  int *arr = safeMalloc(size * sizeof(int));
+  for (int i = 0; i < size; i++)
+    scanf("%d", arr + i);
+  return arr;
+}
+
+void printResult (int *arr, Sub max) {
   /* prints the result */
+  printf("Maximum sum: %d\n", max.sum);
   printf("Maximum subarray: \n["); 
   for (int i = max.low; i <= max.high; ++i) {
     printf("%d", arr[i]);
     if (i < max.high) printf(", ");
   }
   printf("]\n");
-  printf("Maximum sum: %d\n", max.sum);
 }
 
-void getMaxCrossSub (int arr[], int mid, Sub *max) {
+void getMaxCrossSub (int *arr, int mid, Sub *max) {
   /* determines the maximum subarray crossing the midpoint */
-  int sum = 0;
-  int leftSum = INT_MIN, rightSum = INT_MIN;
-  int maxLeft = 0, maxRight = 0;
-  for (int i = mid; i >= max->low; --i) {
+  int sum = 0, leftSum = INT_MIN, rightSum = INT_MIN;
+  int left = max->low, right = max->high;
+  // get maximum subarray on the left side of the midpoint
+  for (int i = mid; i >= left; --i) {
     sum += arr[i];
     if (sum > leftSum) {
       leftSum = sum;
-      maxLeft = i;
+      max->low = i;
     }
   }
+  // get maximum subarray on the right side of the midpoint
   sum = 0;
-  for (int j = mid + 1; j <= max->high; ++j) {
+  for (int j = mid + 1; j <= right; ++j) {
     sum += arr[j];
     if (sum > rightSum) {
       rightSum = sum;
-      maxRight = j;
+      max->high = j;
     }
   }
-  max->low = maxLeft;
-  max->high = maxRight;
-  max->sum = leftSum + rightSum;
+  max->sum = leftSum + rightSum; 
 }
 
-void getMaxSub (int arr[], Sub *max) {
+void getMaxSub (int *arr, Sub *max) {
   /* computes the maximum subarray */
   int low = max->low, high = max->high;
   if (low == high) max->sum = arr[low];
   else {
-    int mid = (low + high) / 2;
+    int mid = low + (high - low) / 2;
     Sub left = {low, mid, 0};
     getMaxSub(arr, &left);
     Sub right = {mid + 1, high, 0};
@@ -71,15 +86,14 @@ void getMaxSub (int arr[], Sub *max) {
 }
 
 int main(int argc, char *argv[]) {
-  int example[] = {1, -3, 2, 14, -9, 16, 7, -20, 3, -14, 5, 
-                  -1, 3, -5, -4, 17, -8, 9, -10, 11, -12, 13,
-                  -14, 15, -20, 17, -18, 19, -20, 16, -2, 14};
-
-  int n = sizeof(example) / sizeof(int);
+  int n;
+  scanf("%d", &n);
+  int *arr = readInts(n);
   Sub max = {0, n-1, 0};
   
-  getMaxSub(example, &max);
-  printResult(example, max);
-
+  getMaxSub(arr, &max);
+  printResult(arr, max);
+  
+  free(arr);
   return 0;
 }

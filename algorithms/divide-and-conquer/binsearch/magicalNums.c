@@ -6,7 +6,7 @@
      this an example of binary search, where we are looking for 
      the n-th magical number. A magical number is a number that
      is divisible by either a or b, where a and b are two given
-     co-prime integers.
+     positive integers.
    time complexity: 
      O(log(n * min(a, b)))
 */

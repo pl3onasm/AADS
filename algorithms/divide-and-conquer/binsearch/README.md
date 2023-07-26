@@ -10,7 +10,7 @@ The fact that the array is sorted is crucial to designing an algorithm in which 
 
 Since the array is halved at each step and comparing takes constant time, the recurrence for the running time is $T(n) = T(n/2) + \Theta(1)$. According to the master theorem, case 2, the solution is then $T(n) = \Theta(\log n)$.
 
-## Example 1
+## Example 1: n-th magical number
 
 Binary search can also be used to search a solution space. For example, consider the problem of finding the $n$-th magical number, given two positive integers $a$ and $b$. A magical number is a number that is divisible by either $a$ or $b$. We can use a binary search in this case because the set of magical numbers is monotonically increasing (forming a virtual sorted array we can search through), and we are able to set upper and lower bounds on the solution space.  
 
@@ -20,7 +20,7 @@ If the number of magical numbers is less than $n$, we know that the $n$-th magic
 
 Implementation: [Magical numbers](https://github.com/pl3onasm/AADS/blob/main/algorithms/divide-and-conquer/binsearch/magicalNums.c)
 
-## Example 2
+## Example 2: aggressive cows
 
 In the following problem, we want to find the upper bound on the solution space, i.e. the pivot point above which there are no solutions anymore. For this, we use a function that specifically checks whether the new mid point still yields a solution and refine the upper bound accordingly.
 
@@ -30,6 +30,6 @@ The solution space consists of the increasing sequence of minimum distances $d_i
 
 Implementation: [Agressive cows](https://github.com/pl3onasm/AADS/blob/main/algorithms/divide-and-conquer/binsearch/cows.c)
 
-## Example 3
+## Example 3: minimum maximum sum
 
 An example in which we want to find the lower bound of the solution space is the problem of splitting an array into $k$ subarrays such that the maximum sum of the elements in each subarray is minimized. An implementation for $k = 3$ can be found here: [3-split](https://github.com/pl3onasm/Imperative-programming/blob/main/Finals/2018/problem4/prob4-2.c).

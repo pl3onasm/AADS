@@ -70,6 +70,7 @@ void printSolution (int * stalls, int n, int c, int minDist) {
       printf("%d ", stalls[i]);
       prev = stalls[i];
       count++;
+      if (count == c) break;
     }
   }
   printf("\n");
