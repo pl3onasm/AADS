@@ -2,7 +2,7 @@
 
 ## Problem
 
-Given an array of numbers, find the contiguous subarray with the largest sum.
+Given an array of numbers, find a contiguous subarray with the largest sum. For example, given the array $[-2, 1, -3, 4, -1, 2, 1, -5, 4]$, the contiguous subarray with the largest sum is $[4, -1, 2, 1]$, with sum 6. Note that there may be multiple subarrays with the same maximum sum; in this case, we only return one of them.
 
 ## Quadratic Solution
 

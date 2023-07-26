@@ -18,7 +18,7 @@ Each operation has a given cost associated with it. We want to find the minimum 
 ## DP - Bottom-up
 
 The problem can be solved using dynamic programming. The idea is to build a table where each cell $T[i,j]$ contains the minimum cost of transforming the source string $s[1..i]$ to the target string $t[1..j]$. The table is filled in a bottom-up fashion, starting with the base cases $T[i,0]$ and $T[0,j]$, which are the costs of transforming the empty string to the source and target strings, respectively. The general case is filled by considering the cost of each operation and choosing the one that minimizes the total cost.  
-The input consists of the source string $S$ and the target string $T$, and the cost of each operation. The output is the minimum cost $T[m,n]$ and an optimal operation sequence. The time complexity is $O(mn)$, where $m$ and $n$ are the lengths of the source and target strings, respectively.
+The input consists of the source string $s$ and the target string $t$, and the cost of each operation. The output is the minimum cost $T[m,n]$ and an optimal operation sequence. The time complexity is $O(mn)$, where $m$ and $n$ are the lengths of the source and target strings, respectively.
 
 Implementation: [MED - DP Bottom-up](https://github.com/pl3onasm/AADS/blob/main/algorithms/dynamic-programming/min-edit-dist/med-1.c)
 
