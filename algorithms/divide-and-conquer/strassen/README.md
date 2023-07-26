@@ -8,7 +8,7 @@ Strassen's matrix multiplication is a divide and conquer algorithm for multiplyi
 
 If we want to multiply two $n \times n$ matrices $A$ and $B$, we can do so by taking the dot product of each row of $A$ with each column of $B$. This is the naive approach, which is shown in the following pseudocode:
 
-```
+```text
   MatrixMultiply(A, B, C, n)
     for i = 1 to n
         for j = 1 to n
@@ -48,7 +48,7 @@ $$ \begin{align*}
   \end{align*}
 $$
 
-Repeatedly dividing the matrices in submatrices of size $n/2 \times n/2$ in order to apply a divide and conquer algorithm presumes that $n$ is a power of two. This way, it's possible to keep halving the dimensions until we reach the base case, where we have matrices of size $1 \times 1$, which is just scalar multiplication. If $n$ is not a power of two, we can simply pad the original matrices with zeros until we get a matrix of size $2^k \times 2^k$, where $k$ is the smallest integer such that $2^k \geq n$. Padding makes it even possible to generalize the algorithm to input matrices of arbitrary dimensions, while the core algorithm works for matrices of size $2^k \times 2^k$. And it won't affect the time complexity either, since the padding only adds a constant number of operations to the first recursive step of the algorithm.
+Repeatedly dividing the matrices in submatrices of size $n/2 \times n/2$ in order to apply a divide and conquer algorithm presumes that $n$ is a power of two. Only this way can we keep halving the dimensions until we reach the base case, where we have matrices of size $1 \times 1$, which is just scalar multiplication. If $n$ is not a power of two, we can simply pad the original matrices with zeros until we get a matrix of size $2^k \times 2^k$, where $k$ is the smallest integer such that $2^k \geq n$. Padding makes it even possible to generalize the algorithm to input matrices of arbitrary dimensions, while the core algorithm works for matrices of size $2^k \times 2^k$. And it won't affect the time complexity either, since the padding only adds a constant number of operations to the first recursive step of the algorithm.
 
 Looking at the above formula, we can see that we need to compute 8 products of matrices of size $n/2 \times n/2$ at each dividing step. If we use index calculations to partition the matrices at each step, the partitioning itself only takes $\Theta(1)$ time. All this leads to the following recurrence relation:
 
