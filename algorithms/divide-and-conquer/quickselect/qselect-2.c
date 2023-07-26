@@ -4,7 +4,7 @@
    license: MIT, see LICENSE file in repository root folder
    description: 
      implementation of quickselect, using a specific pivot to
-     partition the array while searching for the ith smallest
+     partition the array while searching for the k-th smallest
      element in the array. The pivot is chosen as the median
      of the medians of groups of 5 elements.
    time complexity: O(n)
@@ -41,9 +41,9 @@ int partition(int *arr, int left, int right, int pivot) {
   /* partitions arr[left..right] around a given pivot value */
   int idx = left, pivotIdx = 0; 
   for (int i = left; i <= right; i++) {
+    // move all elements <= pivot to the low end
     if (arr[i] <= pivot){
-      // move all elements <= pivot to the low end
-      if (arr[i] == pivot) pivotIdx = idx;
+      if (arr[i] == pivot) pivotIdx = idx; // save pivot's index
       swap(i, idx++, arr);
     }
   }
@@ -51,19 +51,19 @@ int partition(int *arr, int left, int right, int pivot) {
   return idx-1;
 }
 
-int select (int *arr, int left, int right, int i) {
-  /* returns the ith smallest element in arr[left..right] */
+int select (int *arr, int left, int right, int k) {
+  /* returns the k-th smallest element in arr[left..right] */
 
   // makes sure that arr's length is divisible by 5
   while ((right - left + 1) % 5) {
     for (int j = left + 1; j <= right; j++) 
       // get the minimum at arr[left]
       if (arr[left] > arr[j]) swap(left, j, arr);
-    if (i == 1) 
+    if (k == 1) 
       return arr[left];
     left++;   // move the left boundary by 1 to the right
-    i--;      // update i to reflect the new position 
-              // of the ith smallest element
+    k--;      // update k to reflect the new position 
+              // of the k-th smallest element
   }
 
   // g = total number of 5-element groups
@@ -88,17 +88,17 @@ int select (int *arr, int left, int right, int i) {
   // partition around the median
   int q = partition(arr, left, right, pivot);
 
-  int k = q - left + 1;   // number of elements ≤ median
+  int i = q - left + 1;   // number of elements ≤ median
   if (i == k) return arr[q];
-  else if (i < k) return select(arr, left, q - 1, i);
-  else return select(arr, q + 1, right, i - k);
+  else if (k < i) return select(arr, left, q - 1, k);
+  else return select(arr, q + 1, right, k - i);
 }
 
 int main () {
-  int n, i;   // n = number of elements, i = ith order statistic
-  scanf("%d %d", &n, &i);
+  int n, k;   // n = number of elements, k = k-th order statistic
+  scanf("%d %d", &n, &k);
   int *arr = readArray(n);
-  printf("%d\n", select(arr, 0, n-1, i));
+  printf("%d\n", select(arr, 0, n-1, k));
   free(arr);
   return 0;
 }
