@@ -9,13 +9,13 @@
 
 # Data structures in C
 
-* [Stacks and queues]()
-* [Lists]()
+* Stacks and queues
+* Lists
 * [Trees](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/datastructures/trees)
-* [Hash tables]()
-* [Heaps]()
-* [Sets]()
-* [Augmented data structures]()
+* Hash tables
+* Heaps
+* Sets
+* Augmented data structures
 
 ## Notes
 

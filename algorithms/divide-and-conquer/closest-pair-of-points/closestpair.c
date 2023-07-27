@@ -13,8 +13,9 @@
 #include <stdlib.h>
 #include <math.h>
 #include <float.h>
-
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
+
+//:::::::::::::::::::::::: data structures ::::::::::::::::::::::::://
 
 typedef struct point {
   double x;
@@ -27,6 +28,8 @@ typedef struct pair {
   point p2;
 } pair;
 
+//::::::::::::::::::::::: memory management :::::::::::::::::::::::://
+
 void *safeCalloc (int n, int size) {
   /* allocates n elements of size size, initializing them to 0, and
      checks whether the allocation was successful */
@@ -38,85 +41,83 @@ void *safeCalloc (int n, int size) {
   return ptr;
 }
 
-// compares two points by x-coordinate
+//:::::::::::::::::::::::: helper functions :::::::::::::::::::::::://
+
 int xcompare(const void *a, const void *b) {
-    point *p1 = (point*) a;
-    point *p2 = (point*) b;
-    return p1->x - p2->x;
+  /* compares two points by x-coordinate */
+  point *p1 = (point*) a;
+  point *p2 = (point*) b;
+  return p1->x - p2->x;
 }
 
-// compares two points by y-coordinate
 int ycompare(const void *a, const void *b) {
-    point *p1 = (point*) a;
-    point *p2 = (point*) b;
-    return p1->y - p2->y;
+  /* compares two points by y-coordinate */
+  point *p1 = (point*) a;
+  point *p2 = (point*) b;
+  return p1->y - p2->y;
 }
 
-// returns euclidean distance between two points
 double distance(point p1, point p2) {
-    return sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2));
+  /* returns euclidean distance between two points */
+  return sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2));
 }
 
-pair findClosestPairInStrip (point *ypoints, int ysize, double median, double min) {
+void setPair (pair *p, point p1, point p2, double dist) {
+  /* sets pair p to points p1 and p2 with distance dist */
+  p->p1 = p1;
+  p->p2 = p2;
+  p->dist = dist;
+}
+
+//::::::::::::::::::::: closest pair algorithm ::::::::::::::::::::://
+
+pair findClosestPairInStrip (point *ypoints, int ysize, 
+  double median, double delta) {
+  /* finds closest pair in strip of width 2*delta around median */
   point *strip = safeCalloc (ysize, sizeof(point));
   int len = 0; pair p = {DBL_MAX, {0,0}, {0,0}};
 
-  for (int i = 0; i < ysize; ++i) {
-    if (abs(ypoints[i].x - median) < min) 
+  // make strip of points within 2*delta of median
+  for (int i = 0; i < ysize; ++i) 
+    if (abs(ypoints[i].x - median) < delta) 
       strip[len++] = ypoints[i];
-  }
   
-  for (int i = 0; i < len; ++i) {
+  // pass through strip in groups of 7 points at a time
+  // and keep track of new closest pair (if any)
+  for (int i = 0; i < len; ++i) 
     for (int j = 1; j < 8 && i + j < len; ++j) {
       double d = distance (strip[i], strip[i+j]);
-      if (d < min) {
-        min = d;
-        p.p1 = strip[i];
-        p.p2 = strip[i+j];
-        p.dist = d;
+      if (d < delta) {
+        delta = d;
+        setPair (&p, strip[i], strip[i+j], d);
       }
     }
-  }
+
   free (strip);
   return p;
 }
 
 pair findClosestPair(point *xpoints, point *ypoints, int ysize, int n) {
-  pair pair1, pair2; double d1, d2, d3; 
+  pair minpair, pair1, pair2, pair3; double d1, d2, d3; 
 
-  // base cases: 2 or 3 points
-  if (n == 2) {
-    pair1.p1 = xpoints[0];
-    pair1.p2 = xpoints[1];
-    pair1.dist = distance(xpoints[0], xpoints[1]);
-    return pair1;
-  }
-  if (n == 3) {
+  // BASE CASES: brute force for n <= 3
+  if (n <= 3) {
     d1 = distance(xpoints[0], xpoints[1]);
+    setPair (&minpair, xpoints[0], xpoints[1], d1);
+    if (n == 2) return minpair;   
     d2 = distance(xpoints[0], xpoints[2]);
     d3 = distance(xpoints[1], xpoints[2]);
-    pair1.p1 = xpoints[0];
-    pair1.p2 = xpoints[1];
-    pair1.dist = d1;
-    if (d2 < d1 && d2 < d3) {
-      pair1.p1 = xpoints[0];
-      pair1.p2 = xpoints[2];
-      pair1.dist = d2;
-    }
-    if (d3 < d1 && d3 < d2) {
-      pair1.p1 = xpoints[1];
-      pair1.p2 = xpoints[2];
-      pair1.dist = d3;
-    }
-    return pair1;
+    if (d2 < d1 && d2 < d3) 
+      setPair (&minpair, xpoints[0], xpoints[2], d2);
+    if (d3 < d1 && d3 < d2) 
+      setPair (&minpair, xpoints[1], xpoints[2], d3);
+    return minpair;
   }
 
-  // divide
+  // DIVIDE: split ypoints into left and right half based on
+  //         whether they are left or right of the median
   point *yrpoints = safeCalloc(ysize, sizeof(point));
   point *ylpoints = safeCalloc(ysize, sizeof(point));
-  
-  // make y-sorted subarrays based on which side of 
-  // the median the points are on
   int yl = 0, yr = 0, mid = n / 2;
   int median = xpoints[mid].x;
   for (int i = 0; i < ysize; ++i) {
@@ -125,22 +126,24 @@ pair findClosestPair(point *xpoints, point *ypoints, int ysize, int n) {
     else 
       yrpoints[yr++] = ypoints[i];
   }
-  // left half
-  pair1 = findClosestPair(xpoints, ylpoints, yl, mid);   
-  // right half       
+
+  // CONQUER: find closest pair in each half
+  pair1 = findClosestPair(xpoints, ylpoints, yl, mid);         
   pair2 = findClosestPair(xpoints + mid, yrpoints, yr, n - mid); 
   free (yrpoints); free (ylpoints);
   
-  // conquer
-  double min = MIN(pair1.dist, pair2.dist); 
-  pair pair3 = findClosestPairInStrip(ypoints, ysize, median, min);
+  // COMBINE: find closest pair in strip of width 2*delta around median
+  //          and return the closest of the three pairs
+  double delta = MIN(pair1.dist, pair2.dist); 
+  pair3 = findClosestPairInStrip(ypoints, ysize, median, delta);
 
-  // return the closest pair
   d1 = pair1.dist; d2 = pair2.dist; d3 = pair3.dist; 
   if (d1 <= d2 && d1 <= d3) return pair1;
   if (d2 <= d1 && d2 <= d3) return pair2;
   return pair3;
 }
+
+//::::::::::::::::::::::::: main function :::::::::::::::::::::::::://
 
 int main(int argc, char *argv[]) {
   int n; 
@@ -148,22 +151,25 @@ int main(int argc, char *argv[]) {
   point *xpoints = safeCalloc(n, sizeof(point));
   point *ypoints = safeCalloc(n, sizeof(point));
 
+  // read points from stdin
   for (int i = 0; i < n; i++) {
     scanf("(%lf,%lf),", &xpoints[i].x, &xpoints[i].y);
     ypoints[i] = xpoints[i];
   } 
   
+  // presort points once by x and once by y coordinates
   qsort(xpoints, n, sizeof(point), xcompare);
   qsort(ypoints, n, sizeof(point), ycompare);
 
+  // find closest pair of points
   pair pair = findClosestPair(xpoints, ypoints, n, n);
 
+  // print result
   printf("The closest distance is %lf between (%lf,%lf)" 
          " and (%lf,%lf).\n", pair.dist, pair.p1.x, 
           pair.p1.y, pair.p2.x, pair.p2.y);
 
   free(xpoints); 
   free(ypoints);
-
   return 0;
 }
