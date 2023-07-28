@@ -21,12 +21,12 @@ Let $l$ be the number of leaves in the decision tree. Since a decision tree is a
 $$
 \begin{align*}
 \log(n!) &=  \sum_{i=1}^n \log(i)\\
-&= \sum_{i=1}^{\lfloor n/2 \rfloor} \log(i) + \sum_{i= \lceil n/2 \rceil}^n \log(i)\\
-& \geq \sum_{i=1}^{\lfloor n/2 \rfloor} 1 + \sum_{i=\lceil n/2 \rceil}^n \log(n/2)\\
-&= \lfloor n/2 \rfloor + \lceil n/2 \rceil \log(n/2)\\
-&= \lfloor n/2 \rfloor + \lceil n/2 \rceil \log(n) - \lceil n/2 \rceil \log(2)\\
-&= \lceil n/2 \rceil \log(n) + \lfloor n/2 \rfloor - \lceil n/2 \rceil\\
-& \geq \lceil n/2 \rceil \log(n) - 1\\
+&= \sum_{i=1}^{\lfloor n/2 \rfloor} \log(i) + \sum_{i= \lfloor n/2 \rfloor +1}^n \log(i)\\
+& \geq \sum_{i=1}^{\lfloor n/2 \rfloor} 1 + \sum_{i=\lfloor n/2 \rfloor +1}^n \log(n/2)\\
+& \geq \lfloor n/2 \rfloor + \lfloor n/2 \rfloor \log(n/2)\\
+&= \lfloor n/2 \rfloor + \lfloor n/2 \rfloor \log(n) - \lfloor n/2 \rfloor \log(2)\\
+&= \lfloor n/2 \rfloor \log(n) + \lfloor n/2 \rfloor - \lfloor n/2 \rfloor\\
+&= \lfloor n/2 \rfloor \log(n)\\
 &= \Theta(n\log n)
 \end{align*}
 $$
