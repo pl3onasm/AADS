@@ -16,16 +16,17 @@ This is illustrated in the below decision tree. Each internal node (in blue) is 
 
 The number of comparisons performed by a comparison sort algorithm for a given input corresponds to the path length from the root to the leaf in the decision tree. Thus, the longest path from the root to a leaf corresponds to the worst-case number of comparisons for a given input of size $n$. In other words, the height of the decision tree represents the worst-case running time of a comparison sort algorithm.
 
-Let $l$ be the number of leaves in the decision tree. Since a decision tree is a full binary tree (each decision node has exactly two children), it has at most $2^h$ leaves, where $h$ is the height of the tree, so that $l \leq 2^h$. Each permutation of the input elements appears as a label on one or more leaves of the decision tree, so that $l \geq n!$. Thus, $n! \leq l \leq 2^h$, which implies $h \geq log(n!)$. Rewriting the latter term as a sum, we get (/ is integer division):
+Let $l$ be the number of leaves in the decision tree. Since a decision tree is a full binary tree (each decision node has exactly two children), it has at most $2^h$ leaves, where $h$ is the height of the tree, so that $l \leq 2^h$. Each permutation of the input elements appears as a label on one or more leaves of the decision tree, so that $l \geq n!$. Thus, $n! \leq l \leq 2^h$, which implies $h \geq log(n!)$. Rewriting the latter term as a sum, we get:
 
 $$
 \begin{align*}
 log(n!) &=  \sum_{i=1}^n log(i)\\
-&= \sum_{i=1}^{n/2-1} log(i) + \sum_{i=n/2}^n log(i)\\
-& \geq \sum_{i=1}^{n/2-1} 1 + \sum_{i=n/2}^n log(n/2)\\
-&= (n/2 - 1) + (n/2)log(n/2)\\
-&= (n/2 - 1) + (n/2)log(n) - (n/2)log(2)\\
-&= (n/2)log(n) - 1\\
+&= \sum_{i=1}^{\lfloor n/2 \rfloor} log(i) + \sum_{i= \lceil n/2 \rceil}^n log(i)\\
+& \geq \sum_{i=1}^{\lfloor n/2 \rfloor} 1 + \sum_{i=\lceil n/2 \rceil}^n log(n/2)\\
+&= \lfloor n/2 \rfloor + (\lceil n/2 \rceil)log(n/2)\\
+&= \lfloor n/2 \rfloor + (\lceil n/2 \rceil)log(n) - (\lceil n/2 \rceil)log(2)\\
+&= (\lceil n/2 \rceil)log(n) + \lfloor n/2 \rfloor - \lceil n/2 \rceil\\
+& \geq (\lceil n/2 \rceil)log(n) - 1\\
 &= \Theta(nlogn)
 \end{align*}
 $$

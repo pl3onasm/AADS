@@ -13,6 +13,7 @@
 #include <stdlib.h>
 
 void *safeMalloc (int n) {
+  /* malloc that checks if the allocation was succesful */
   void *ptr = malloc(n);
   if (ptr == NULL) {
     printf("Error: malloc(%d) failed. Out of memory?\n", n);
@@ -22,6 +23,7 @@ void *safeMalloc (int n) {
 }
 
 int merge(int *arr, int left, int mid, int right) {
+  /* merges two sorted arrays, and counts the number of inversions */
   int *temp = safeMalloc((right - left + 1)*sizeof(int));
   int l = left, r = mid + 1, t = 0, count = 0;   
   while (l <= mid && r <= right) {
@@ -35,7 +37,7 @@ int merge(int *arr, int left, int mid, int right) {
       count += mid - l + 1;
     }
   }
-  while (l <= mid) temp[t++] = arr[l++];
+  while (l <= mid) temp[t++] = arr[l++]; 
   while (r <= right) temp[t++] = arr[r++];
   for (int i = left; i <= right; i++) arr[i] = temp[i - left];
   free(temp);
@@ -56,6 +58,7 @@ int inversionCount(int *arr, int left, int right) {
 }
 
 int *readIntVector (int size) {
+  /* reads a vector of integers from stdin */
   int *vect = safeMalloc(size * sizeof(int));
   for (int i = 0; i < size; i++)
     scanf("%d", vect + i);

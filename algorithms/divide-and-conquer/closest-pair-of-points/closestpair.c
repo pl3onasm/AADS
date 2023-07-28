@@ -1,4 +1,4 @@
-/* file: closestpair-2.c
+/* file: closestpair.c
    author: David De Potter
    email: pl3onasm@gmail.com
    license: MIT, see LICENSE file in repository root folder
@@ -18,14 +18,14 @@
 //:::::::::::::::::::::::: data structures ::::::::::::::::::::::::://
 
 typedef struct point {
-  double x;
-  double y;
+  double x;             // x-coordinate of point
+  double y;             // y-coordinate of point
 } point;
 
 typedef struct pair {
-  double dist;
-  point p1;
-  point p2;
+  point p1;             // first point of the pair
+  point p2;             // second point of the pair
+  double dist;          // distance between the two points
 } pair;
 
 //::::::::::::::::::::::: memory management :::::::::::::::::::::::://
@@ -75,7 +75,7 @@ pair findClosestPairInStrip (point *ypoints, int ysize,
   double median, double delta) {
   /* finds closest pair in strip of width 2*delta around median */
   point *strip = safeCalloc (ysize, sizeof(point));
-  int len = 0; pair p = {DBL_MAX, {0,0}, {0,0}};
+  int len = 0; pair p = {{0,0}, {0,0}, DBL_MAX};
 
   // make strip of points within 2*delta of median
   for (int i = 0; i < ysize; ++i) 
@@ -83,9 +83,9 @@ pair findClosestPairInStrip (point *ypoints, int ysize,
       strip[len++] = ypoints[i];
   
   // pass through strip in groups of 7 points at a time
-  // and keep track of new closest pair (if any)
+  // and keep track of new the closest pair (if any)
   for (int i = 0; i < len; ++i) 
-    for (int j = 1; j < 8 && i + j < len; ++j) {
+    for (int j = 1; j < 7 && i + j < len; ++j) {
       double d = distance (strip[i], strip[i+j]);
       if (d < delta) {
         delta = d;
