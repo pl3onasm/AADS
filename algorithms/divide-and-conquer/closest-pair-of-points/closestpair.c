@@ -83,11 +83,12 @@ pair findClosestPairInStrip (point *ypoints, int ysize,
       strip[len++] = ypoints[i];
   
   // pass through strip in groups of 7 points at a time
-  // and keep track of new the closest pair (if any)
-  for (int i = 0; i < len; ++i) 
-    for (int j = 1; j < 7 && i + j < len; ++j) {
+  // and keep track of the new closest pair (if any)
+  for (int i = 0; i < len; ++i)
+    // check next 7 points
+    for (int j = 1; j < 8 && i + j < len; ++j) {  
       double d = distance (strip[i], strip[i+j]);
-      if (d < delta) {
+      if (d < delta) {  // new closest pair found?
         delta = d;
         setPair (&p, strip[i], strip[i+j], d);
       }
