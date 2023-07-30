@@ -35,7 +35,7 @@ As a result, $h = \Omega(\log(n!)) = \Omega(n\log n)$. Since the height of the d
 
 ## Linear-time sorts
 
-The only way to escape the $\Omega(nlogn)$ lower bound for comparison sorts is to exploit special properties of the input elements, such as the range of possible values. This is exactly what linear-time sorts do. The most well-known non-comparison sorts are counting sort, radix sort and bucket sort. For example, counting sort assumes that the input elements are integers in the range $0$ to $k$, for some integer $k = O(n)$. Radix sort assumes that the input elements are integers represented in a fixed number of digits in some base $b$. And bucket sort assumes that the input elements are uniformly distributed in the interval $[0, 1)$.
+The only way to escape the $\Omega(n\log n)$ lower bound for comparison sorts is to exploit special properties of the input elements, such as the range of possible values. This is exactly what linear-time sorts do. The most well-known non-comparison sorts are counting sort, radix sort and bucket sort. For example, counting sort assumes that the input elements are integers in the range $0$ to $k$, for some integer $k = O(n)$. Radix sort assumes that the input elements are integers represented in a fixed number of digits in some base $b$. And bucket sort assumes that the input elements are uniformly distributed in the interval $[0, 1)$.
 
 ## Sorting algorithms
 
@@ -44,10 +44,10 @@ The only way to escape the $\Omega(nlogn)$ lower bound for comparison sorts is t
 | $\Theta(n + k)$ | Chap 8.2 | Chap 8.2 | [Counting sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/counting-sort)
 | $\Theta(d(n + k))$ | Chap 8.3 | Chap 8.3 | [Radix sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/radix-sort)
 | ~ $\Theta(n)$ [^1] | Chap 8.4 | Chap 8.4 | [Bucket sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/bucket-sort)
-| $\Theta(nlogn)$ | Chap 2.3 | Chap 2.3 |  [Merge sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/merge-sort)
-| $\Theta(nlogn)$ | n/a | n/a  | [WHAM sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/wham-sort)
-| $O(nlogn)$ | Chap 6.4 | Chap 6.4 |  [Heap sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/heap-sort)
-| ~ $O(nlogn)$ | Chap 7.1-3 | Chap 7.1-3 | [Quick sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/quick-sort)
+| $\Theta(n\log n)$ | Chap 2.3 | Chap 2.3 |  [Merge sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/merge-sort)
+| $\Theta(n\log n)$ | n/a | n/a  | [WHAM sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/wham-sort)
+| $O(n\log n)$ | Chap 6.4 | Chap 6.4 |  [Heap sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/heap-sort)
+| ~ $O(n\log n)$ | Chap 7.1-3 | Chap 7.1-3 | [Quick sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/quick-sort)
 | $O(n^2)$ | Chap 2.1-2 | Chap 2.1-2 | [Insertion sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/insertion-sort)
 | $O(n^2)$ | Ex 2.2-2 | Ex 2.2-2 | [Selection sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/selection-sort)
 | $O(n^2)$ | Prob 2-2 | Prob 2-2 | [Bubble sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/bubble-sort)
