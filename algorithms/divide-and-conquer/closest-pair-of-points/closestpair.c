@@ -77,12 +77,12 @@ pair findClosestPairInStrip (point *ypoints, int ysize,
   point *strip = safeCalloc (ysize, sizeof(point));
   int len = 0; pair p = {{0,0}, {0,0}, DBL_MAX};
 
-  // make strip of points within 2*delta of median
+  // make strip of points within 2*delta around median
   for (int i = 0; i < ysize; ++i) 
     if (abs(ypoints[i].x - median) < delta) 
       strip[len++] = ypoints[i];
   
-  // pass through strip in groups of 7 points at a time
+  // pass through strip in groups of 8 points at a time
   // and keep track of the new closest pair (if any)
   for (int i = 0; i < len; ++i)
     // check next 7 points

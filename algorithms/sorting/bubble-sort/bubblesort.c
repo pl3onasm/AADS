@@ -6,6 +6,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+typedef enum {               
+  false = 0,
+  true = 1
+} bool;
+
 void printArray (int *arr, int n) {
   // prints an array of size n
   printf("[");
@@ -24,10 +29,15 @@ void swap(int *arr, int i, int j) {
 }
 
 void bubbleSort(int *arr, int n) {
+  // sorts array arr of size n using bubble sort
+  bool swapped = true;
   for (int i = 0; i < n; i++) {
+    if (!swapped) break;
+    swapped = false;
     for (int j = n - 1; j > i; j--) {
       if (arr[j] < arr[j - 1]) {
         swap(arr, j, j - 1);
+        swapped = true;
       }
     }
   }
