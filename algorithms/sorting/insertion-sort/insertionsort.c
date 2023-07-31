@@ -10,7 +10,7 @@
 #include <stdio.h>
 
 void printArray (int *arr, int n) {
-  // prints an array of size n
+  /* prints an array of size n */
   printf("[");
   for (int i = 0; i < n; i++) {
     printf("%d", (arr)[i]);
@@ -20,13 +20,17 @@ void printArray (int *arr, int n) {
 }
 
 void insertionSort(int *arr, int n) {
+  /* sorts an array of size n using insertion sort */
   for (int i = 1; i < n; i++) {
     int key = arr[i];
     int j = i - 1;
+    // shift elements of arr[0..i-1] to the right until
+    // the correct position for key is found
     while (j >= 0 && arr[j] > key) {
       arr[j + 1] = arr[j];
       j--;
     }
+    // insert key into the correct position
     arr[j + 1] = key;
   }
 }

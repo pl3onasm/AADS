@@ -1,13 +1,16 @@
 /* file: selectionsort.c
-* author: David De Potter
-* description: selection sort
+   author: David De Potter
+   email: pl3onasm@gmail.com
+   license: MIT, see LICENSE file in repository root folder
+   description: selection sort
+   time complexity: O(n^2)
 */
 
 #include <stdlib.h>
 #include <stdio.h>
 
 void printArray (int *arr, int n) {
-  // prints an array of size n
+  /* prints an array of size n */
   printf("[");
   for (int i = 0; i < n; i++) {
     printf("%d", (arr)[i]);
@@ -17,19 +20,21 @@ void printArray (int *arr, int n) {
 }
 
 void swap(int *arr, int i, int j) {
-  // swaps elements at indices i and j in array arr
+  /* swaps elements at indices i and j in arr */
   int temp = arr[i];
   arr[i] = arr[j];
   arr[j] = temp;
 }
 
 void selectionSort(int *arr, int n) {
-  // sorts an array of size n using selection sort
+  /* sorts an array of size n using selection sort */
   for (int i = 0; i < n-1; i++) {
     int min = i;
-    for (int j = i+1; j < n; j++) {
-      if (arr[j] < arr[min]) min = j;
-    }
+    // find the minimum element in the unsorted subarray
+    for (int j = i+1; j < n; j++) 
+      if (arr[j] < arr[min]) 
+        min = j;
+    // swap minimum with 1st element of unsorted subarray
     swap(arr, i, min);
   }
 }
