@@ -15,7 +15,7 @@ typedef enum {
 } bool;
 
 void printArray (int *arr, int n) {
-  // prints an array of size n
+  /* prints an array of size n */
   printf("[");
   for (int i = 0; i < n; i++) {
     printf("%d", (arr)[i]);
@@ -25,18 +25,21 @@ void printArray (int *arr, int n) {
 }
 
 void swap(int *arr, int i, int j) {
-  // swaps elements at indices i and j in array arr
+  /* swaps elements at indices i and j in arr */
   int temp = arr[i];
   arr[i] = arr[j];
   arr[j] = temp;
 }
 
 void bubbleSort(int *arr, int n) {
-  // sorts array arr of size n using bubble sort
+  /* sorts an array of size n using bubble sort */
   bool swapped = true;
   for (int i = 0; i < n; i++) {
+    // if no swaps were made in the previous iteration, 
+    // the array is sorted
     if (!swapped) break;
     swapped = false;
+    // bubble up smaller elements to the front of the array
     for (int j = n - 1; j > i; j--) {
       if (arr[j] < arr[j - 1]) {
         swap(arr, j, j - 1);

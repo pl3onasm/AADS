@@ -1,6 +1,9 @@
 /* file: mergesort.c
-* author: David De Potter
-* description: merge sort, using a temporary array
+   author: David De Potter
+   email: pl3onasm@gmail.com
+   license: MIT, see LICENSE file in repository root folder
+   description: merge sort, using a temporary array to merge
+   time complexity: O(nlogn) 
 */
 
 #include <stdlib.h>
@@ -18,7 +21,7 @@ void *safeMalloc (int n) {
 }
 
 void printArray (int *arr, int n) {
-  // prints an array of size n
+  /* prints an array of size n */ 
   printf("[");
   for (int i = 0; i < n; i++) {
     printf("%d", arr[i]);
@@ -28,24 +31,31 @@ void printArray (int *arr, int n) {
 }
 
 void merge(int *arr, int left, int mid, int right) {
-  int *temp = safeMalloc((right - left + 1)*sizeof(int));
-  int l = left, r = mid + 1, t = 0;   
+  /* merges two sorted subarrays into one sorted array */
+  int *sorted = safeMalloc((right - left + 1)*sizeof(int));
+  int l = left, r = mid + 1, s = 0; 
+  // merge while both subarrays are not empty  
   while (l <= mid && r <= right) {
-    if (arr[l] < arr[r]) temp[t++] = arr[l++];
-    else temp[t++] = arr[r++];
+    if (arr[l] < arr[r]) sorted[s++] = arr[l++];
+    else sorted[s++] = arr[r++];
   }
-  while (l <= mid) temp[t++] = arr[l++];
-  while (r <= right) temp[t++] = arr[r++];
-  for (int i = left; i <= right; i++) arr[i] = temp[i - left];
-  free(temp);
+  // copy the remaining elements
+  while (l <= mid) sorted[s++] = arr[l++];
+  while (r <= right) sorted[s++] = arr[r++];
+  // copy the sorted array back to the original array
+  for (int i = left; i <= right; i++) arr[i] = sorted[i - left];
+  free(sorted);
 }
 
 void mergeSort(int *arr, int left, int right) { 
   /* sorts the int array in ascending order */
   if (left < right) {
+    // divide the array in two subarrays
     int mid = left + (right - left)/2;
+    // conquer the subarrays
     mergeSort(arr, left, mid);
     mergeSort(arr, mid + 1, right);
+    // combine the sorted halves
     merge(arr, left, mid, right);
   }
 }

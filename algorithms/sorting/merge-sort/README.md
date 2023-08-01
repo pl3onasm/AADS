@@ -1,0 +1,9 @@
+# Merge Sort
+
+Merge sort is a comparison sort based on the divide and conquer paradigm. It starts out by computing the middle index, and dividing the input array into two subarrays, one containing the elements from the start of the input array up to the middle index, and the other containing the elements from the middle index up to the end of the input array. This is done recursively until the subarrays contain only one element, at which point they are trivially sorted. At this point, recursion starts to unwind, and the merge procedure is called, which merges the two sorted subarrays into a single sorted array. The merging is done by maintaining two pointers, one for each subarray, and comparing the elements at the pointers. The smaller element is copied into the sorted output array, and the pointer is incremented. This process is repeated until one of the subarrays is exhausted, at which point the remaining elements of the other subarray are copied into the output array. The merge procedure is repeated recursively until the entire input array is sorted.
+
+The recurrence for the running time of merge sort is $T(n) = 2T(n/2) + \Theta(n)$, which has the solution $T(n) = \Theta(n \log n)$. This is also the best case running time, since the algorithm always divides the input array into two subarrays, regardless of the input. Merge sort is a stable sort, meaning that the relative order of equal elements is preserved. It is also an out-of-place sort, since it requires additional memory to store the sorted output array. The space complexity is $\Theta(n)$.
+
+Implementation: [Merge Sort](https://github.com/pl3onasm/CLRS/tree/main/algorithms/sorting/merge-sort/mergesort.c)
+
+Another implementation that can take any kind of data type as input, and sort it as long as a comparison function is provided: [Generic Merge Sort](https://github.com/pl3onasm/CLRS/tree/main/algorithms/sorting/merge-sort)
