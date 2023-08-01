@@ -1,8 +1,8 @@
-/* file: genquicksort.c
+/* file: genqsort.c
    author: David De Potter
    email: pl3onasm@gmail.com
    license: MIT, see LICENSE file in repository root folder
-   description: generic quick sort, can be used to sort any
+   description: generic quicksort, can be used to sort any
      type of data, including structs, as long as a comparison
      function is provided
    time complexity: worst case O(n^2), average case O(nlogn)

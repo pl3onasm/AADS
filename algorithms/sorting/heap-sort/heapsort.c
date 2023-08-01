@@ -1,6 +1,9 @@
 /* file: heapsort.c
-* author: David De Potter
-* description: heap sort
+   author: David De Potter
+   email: pl3onasm@gmail.com
+   license: MIT, see LICENSE file in repository root folder
+   description: heapsort
+   time complexity: O(nlogn)
 */
 
 #include <stdlib.h>
@@ -26,7 +29,7 @@ void *safeMalloc (int n) {
 }
 
 Heap *newHeap(int size) {
-  /* creates a new heap of size size */
+  /* creates a new heap of given size */
   Heap *hp = safeMalloc(sizeof(Heap)); 
   hp->size = size;
   hp->array = safeMalloc(size*sizeof(int));
@@ -34,7 +37,7 @@ Heap *newHeap(int size) {
 }
 
 void freeHeap(Heap *H) {
-  /* frees the heap hp */
+  /* frees the heap */
   free(H->array);
   free(H);
 }
@@ -57,13 +60,14 @@ void swap (Heap *H, int a, int b) {
 }
 
 void maxHeapify(Heap *H, int i){
-  /* restores the max heap property for the heap */
+  /* restores the max heap property */
   int max = i, l = LEFT(i), r = RIGHT(i);
   if (l < H->size && H->array[l] > H->array[max])
     max = l;
   if (r < H->size && H->array[r] > H->array[max])
     max = r;
-  if (max != i) {
+  if (max != i) { // is the max heap property violated?
+    // move the violating element down the heap
     swap(H, i, max); 
     maxHeapify(H, max);
   }
@@ -80,10 +84,15 @@ void heapsort(Heap *H){
   int size = H->size;
   initMaxHeap(H);
   for (int i = H->size - 1; i > 0; --i) {
+    // swap the root with the last element of the heap
     swap(H, 0, i);
+    // remove the last element from the heap 
+    // by decreasing its size
     H->size--;
+    // restore the max heap property
     maxHeapify(H, 0);
   }
+  // restore the original size of the heap
   H->size = size;
 }
 
