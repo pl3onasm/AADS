@@ -1,7 +1,11 @@
-/* file: polyquicksort.c
-* author: David De Potter
-* description: generic quick sort, can be used to sort any
-* type of data, including structs
+/* file: genquicksort.c
+   author: David De Potter
+   email: pl3onasm@gmail.com
+   license: MIT, see LICENSE file in repository root folder
+   description: generic quick sort, can be used to sort any
+     type of data, including structs, as long as a comparison
+     function is provided
+   time complexity: worst case O(n^2), average case O(nlogn)
 */
 
 #include <stdlib.h>
@@ -21,7 +25,7 @@ void *safeMalloc (int n) {
 }
 
 void printArray (void *arr, int n, char type) {
-  // prints an array of size n
+  /* prints an array of size n */
   printf("[");
   for (int i = 0; i < n; i++) {
     if (type == 'i') printf("%d", ((int *)arr)[i]);
@@ -52,6 +56,7 @@ int compStr (const void *a, const void *b) {
 }
 
 void swap(void *arr, int i, int j, int width) {
+  /* swaps two elements with indices i and j in arr */
   void *temp = safeMalloc(width);
   memcpy(temp, (char*)arr + i*width, width);
   memcpy((char*)arr + i*width, (char*)arr + j*width, width);
@@ -60,7 +65,10 @@ void swap(void *arr, int i, int j, int width) {
 }
 
 int partition(void *arr, int left, int right, int width, 
-int (*comp)(const void*, const void*)) {
+  int (*comp)(const void*, const void*)) {
+  /* partitions the array into two parts, one with elements
+     smaller than the pivot, one with elements larger than
+     the pivot */
   int pivot = right;
   int i = left;
   for (int j = left; j < right; j++) {
@@ -74,9 +82,12 @@ int (*comp)(const void*, const void*)) {
 }
 
 void quickSort(void *arr, int left, int right, int width,
-int (*compare)(const void *, const void *)){
+  int (*compare)(const void *, const void *)){
+  /* sorts the array using quick sort */
   if (left < right) {
+    // partition the array into two parts
     int q = partition(arr, left, right, width, compare);
+    // recursively sort the two parts
     quickSort(arr, left, q-1, width, compare);
     quickSort(arr, q+1, right, width, compare);
   }

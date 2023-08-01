@@ -1,14 +1,16 @@
-/* file: quicksort.c
+/* file: randomqsort.c
    author: David De Potter
    email: pl3onasm@gmail.com
    license: MIT, see LICENSE file in repository root folder
-   description: quicksort, using last element as pivot
-   time complexity: worst case O(n^2), average case O(nlogn)
+   description: quicksort, using a random element as pivot
+   time complexity: expected O(nlogn)
 */
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
+#include <ctype.h>
 
 void *safeMalloc (int n) {
   /* allocates n bytes of memory and checks whether the allocation
@@ -39,8 +41,12 @@ void swap(int *arr, int i, int j) {
 }
 
 int partition(int *arr, int left, int right) {
-  /* partitions arr[left:right] around a pivot element */
-  int pivot = right, i = left;
+  /* partitions arr[left:right] around a random pivot */
+  srand(time(0));
+  int random = left + rand() % (right - left);
+  swap(arr, random, right);
+  int pivot = right;
+  int i = left;
   // loop invariant: arr[left:i] < arr[pivot]
   for (int j = left; j < right; j++) {
     if (arr[j] < arr[pivot]) {
@@ -48,7 +54,7 @@ int partition(int *arr, int left, int right) {
       i++;
     }
   }
-  swap(arr, i, pivot); // put pivot back in place
+  swap(arr, i, pivot); // put pivot in its rightful place
   return i;
 }
 

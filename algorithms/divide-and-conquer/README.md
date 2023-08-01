@@ -23,5 +23,4 @@ Note that if the subproblems are not independent (i.e. the solution to one subpr
 | Chap 9.2-3 | Chap 9.2-3 | [Quickselect](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/divide-and-conquer/quickselect)
 | Chap 33.4 | n/a | [Closest Pair of Points](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/divide-and-conquer/closest-pair-of-points)
 | Chap 2.3 | Chap 2.3 | [Merge Sort](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/sorting/merge-sort)
-| Chap 7.1-3 | Chap 7.1-3 | [Quick Sort](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/sorting/quick-sort)
-| n/a | n/a | [WHAM Sort](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/sorting/wham-sort)
+| Chap 7.1-3 | Chap 7.1-3 | [Quicksort](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/sorting/quick-sort)

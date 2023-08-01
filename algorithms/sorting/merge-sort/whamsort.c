@@ -2,7 +2,7 @@
    author: David De Potter
    email: pl3onasm@gmail.com
    license: MIT, see LICENSE file in repository root folder
-   description: WHAM sort
+   description: WHAM sort, an optimized version of merge sort
    time complexity: O(nlogn) 
 */
 
