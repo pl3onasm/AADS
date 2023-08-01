@@ -1,6 +1,6 @@
 /* file: polyquicksort.c
 * author: David De Potter
-* description: polymorphic quick sort, can be used to sort any
+* description: generic quick sort, can be used to sort any
 * type of data, including structs
 */
 

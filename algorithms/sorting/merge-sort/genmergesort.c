@@ -2,7 +2,7 @@
    author: David De Potter
    email: pl3onasm@gmail.com
    license: MIT, see LICENSE file in repository root folder
-   description: merge sort, generic merge sort,  
+   description: generic merge sort,  
      can be used to sort any type of data, including structs,
      as long as a comparison function is provided
    time complexity: O(nlogn) 

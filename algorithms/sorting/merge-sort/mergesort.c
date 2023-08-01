@@ -2,7 +2,7 @@
    author: David De Potter
    email: pl3onasm@gmail.com
    license: MIT, see LICENSE file in repository root folder
-   description: merge sort, using a temporary array to merge
+   description: merge sort
    time complexity: O(nlogn) 
 */
 
