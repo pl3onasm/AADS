@@ -6,4 +6,4 @@ At each iteration, the left subarray is sorted and we insert the next element fr
 
 Like bubble sort, insertion sort is a stable sort, since it inserts elements that are equal to each other in the same order as they appear in the input array. Note that this is true because we use the strict greater-than operator in the inner loop. If we had used the greater-than-or-equal-to operator, insertion sort would have been unstable.
 
-Implementation: [Insertion sort](https://github.com/pl3onasm/CLRS/tree/main/algorithms/sorting/insertion-sort)
+Implementation: [Insertion sort](https://github.com/pl3onasm/CLRS/tree/main/algorithms/sorting/insertion-sort/insertionsort.c)

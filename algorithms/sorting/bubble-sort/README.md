@@ -6,4 +6,4 @@ Bubble sort is an in-place sort, meaning that it does not require any additional
 
 Note the difference with [selection sort](https://github.com/pl3onasm/CLRS/tree/main/algorithms/sorting/selection-sort), which also finds the minimum element at each index, but does so by performing a linear search for the minimum through the current subarray $A[i:n-1]$ and only swapping the found minimum with $A[i]$ at the very end of each pass without any intermediate swaps, thus making it an unstable sort.
 
-Implementation: [Bubble sort](https://github.com/pl3onasm/CLRS/tree/main/algorithms/sorting/bubble-sort)
+Implementation: [Bubble sort](https://github.com/pl3onasm/CLRS/tree/main/algorithms/sorting/bubble-sort/bubblesort.c)

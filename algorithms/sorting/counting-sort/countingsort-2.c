@@ -4,7 +4,8 @@
    license: MIT, see LICENSE file in repository root folder
    description: counting sort
      This is an adaptation so that it also works in cases where
-     the array contains negative integers or has a minimum value > 0.
+     the array contains negative integers or is more efficient
+     if the minimum value is much larger than 0.
    time complexity: O(n) provided that k = O(n)
 */
 
