@@ -7,3 +7,5 @@ After swapping the last element of the heap into the root, the heap property may
 Since the heapify procedure takes $O(\log n)$ time and is called $n-1$ times, the overall time complexity of this algorithm is $O(n \log n)$.
 
 The algorithm is very similar to [selection sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/selection-sort), as selection sort could also be implemented by finding the maximum element at each iteration and then swapping it with the last element, thus shrinking the unsorted region by 1, and repeating this process until the unsorted region is empty. The difference is that heapsort uses a heap data structure rather than a linear-time search to find the maximum. This makes heapsort much faster than selection sort.
+
+Implementation: [Heapsort](https://github.com/pl3onasm/CLRS/tree/main/algorithms/sorting/heap-sort/heapsort.c)

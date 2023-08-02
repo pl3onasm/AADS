@@ -1,39 +1,60 @@
 /* file: radixsort.c
    author: David De Potter
+   email: pl3onasm@gmail.com
+   license: MIT, see LICENSE file in repository root folder
    description: radix sort, using counting sort as a subroutine
+   time complexity: O(d(n+k)) where d is the number of digits in the
+     largest number, n is the number of elements in the array and k 
+     is the number of possible values for a digit (10 in this case)
 */
 
 #include <stdlib.h>
 #include <stdio.h>
 
-void printDates (char *dates[], int n) {
-  /* prints the sorted dates in the format YYYY-MM-DD */
+void *safeCalloc (int n, int size) {
+  /* allocates n elements of size size, initializing them to 0, and
+     checks whether the allocation was successful */
+  void *ptr = calloc(n, size);
+  if (ptr == NULL) {
+    printf("Error: calloc(%d, %d) failed. Out of memory?\n", n, size);
+    exit(EXIT_FAILURE);
+  }
+  return ptr;
+}
+
+void printDates (char *strings[], int n) {
+  /* prints an array of strings */
   for (int i = 0; i<n; i++) 
-    printf("%s\n", dates[i]);
+    printf("%s\n", strings[i]);
 }
 
 void countingSort(int size, char *arr[], int d) {
   /* sorts the dates on the digit with index d */
   int count[10] = {0};
-  char *sorted[25];
+  char **sorted = safeCalloc(size, sizeof(char*));
+  // count the number of occurrences of each digit
   for (int i = 0; i < size; i++) 
     count[(arr[i][d] - '0')]++;
-  
+  // compute the cumulative sums of the counts
   for (int i = 1; i < 10; i++) 
     count[i] += count[i - 1];
-  
+  // place the elements in their correct positions
   for (int i = size - 1; i >= 0; i--) {
     int digit = arr[i][d] - '0';
     sorted[count[digit] - 1] = arr[i];
     count[digit]--;
   }
-
+  // copy the sorted array back to the original array
   for (int i = 0; i < size; i++) 
     arr[i] = sorted[i];
+  free(sorted);
 }
 
 void radixSort (char *dates[], int size) {
   /* sorts the dates in ascending order */
+
+  // go through the digits from least  
+  // significant to most significant
   for (int i = 9; i >= 0; i--){
     if (i == 4 || i == 7) continue;   // skip the dashes
     countingSort(size, dates, i);
@@ -41,12 +62,13 @@ void radixSort (char *dates[], int size) {
 }
 
 int main (int argc, char *argv[]){
-  char *dates [25] = {"2020-03-10", "2023-01-02", "2015-10-03", 
-  "2019-01-28", "2019-01-05", "2019-04-06", "2021-08-07", "2019-01-08", 
-  "2019-08-10", "2019-11-11", "2019-01-12", "2019-02-13", "2020-01-14", 
-  "2021-01-19", "2019-01-16", "2021-11-17", "2019-02-18", "2020-12-19", 
-  "2018-07-20", "2010-02-09", "2013-04-06", "2018-06-20", "2019-02-08",
-  "2020-10-25", "2019-07-20"};
+  char *dates [25] = {"2020-03-10", "2023-01-02", 
+  "2019-01-28", "2019-01-05", "2019-04-06", "2021-08-07", 
+  "2019-01-08", "2019-08-10", "2019-11-11", "2019-01-12", 
+  "2019-02-13", "2020-01-14", "2021-01-19", "2019-01-16", 
+  "2021-11-17", "2019-02-18", "2020-12-19", "2018-07-20", 
+  "2010-02-09", "2013-04-06", "2018-06-20", "2019-02-08",
+  "2020-10-25", "2019-07-20", "2015-10-03"};
   radixSort(dates, 25);
   printDates(dates, 25);
   return 0;

@@ -1,8 +1,12 @@
 /* file: bucketsort.c
-* author: David De Potter
-* description: bucket sort, using a singly linked list
-* to store the elements in each bucket, and insertion sort
-* to sort the elements within each bucket
+   author: David De Potter
+   email: pl3onasm@gmail.com
+   license: MIT, see LICENSE file in repository root folder
+   description: bucket sort, using a singly linked list
+     to store the elements in each bucket, and insertion 
+     sort to sort the elements within each bucket
+   time complexity: O(n) provided that the elements are 
+     uniformly distributed over the interval [0, 1)
 */
 
 #include <stdlib.h>

@@ -45,7 +45,7 @@ The only way to escape the $\Omega(n\log n)$ lower bound for comparison sorts is
 | $\Theta(d(n + k))$ | Chap 8.3 | Chap 8.3 | [Radix sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/radix-sort)
 | ~ $\Theta(n)$ [^1] | Chap 8.4 | Chap 8.4 | [Bucket sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/bucket-sort)
 | $\Theta(n\log n)$ | Chap 2.3 | Chap 2.3 |  [Merge sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/merge-sort)
-| $\Theta(n\log n)$ | n/a | n/a  | [WHAM sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/merge-sort)
+| $\Theta(n\log n)$ | n/a | n/a  | [WHAM sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/merge-sort#wham-sort)
 | $O(n\log n)$ | Chap 6.4 | Chap 6.4 |  [Heapsort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/heap-sort)
 | ~ $O(n\log n)$ | Chap 7.1-3 | Chap 7.1-3 | [Quicksort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/quick-sort)
 | $O(n^2)$ | Chap 2.1-2 | Chap 2.1-2 | [Insertion sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/insertion-sort)

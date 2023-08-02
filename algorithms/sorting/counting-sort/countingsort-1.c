@@ -1,8 +1,11 @@
-/* file: countingsort.c
-* author: David De Potter
-* description: counting sort
-* This version can only be used to sort arrays 
-* containing non-negative integers.
+/* file: countingsort-1.c
+   author: David De Potter
+   email: pl3onasm@gmail.com
+   license: MIT, see LICENSE file in repository root folder
+   description: counting sort
+     This version can only be used to sort arrays
+     containing non-negative integers.
+   time complexity: O(n) provided that k = O(n)
 */
 
 #include <stdlib.h>
@@ -20,7 +23,7 @@ void *safeCalloc (int n, int size) {
 }
 
 void printArray (int arr[], int n) {
-  // prints an array of size n
+  /* prints an array of size n */
   printf("[");
   for (int i = 0; i < n; i++) {
     printf("%d", (arr)[i]);
@@ -29,37 +32,35 @@ void printArray (int arr[], int n) {
   printf("]\n");
 }
 
-int *createIntArray (int size) {
-  // creates an array of size size
-  int *arr = safeCalloc(size, sizeof(int));
-  return arr;
-}
-
-void countingSort(int arr[], int n) {
-  int max = arr[0], *count, *sorted;
-  for (int i = 1; i < n; i++) {
+int *countingSort(int arr[], int n) {
+  /* sorts an array of non-negative integers */
+  int max = arr[0];
+  // find maximum value k
+  for (int i = 1; i < n; i++) 
     if (arr[i] > max) max = arr[i];
-  }
-  count = createIntArray(max+1);
+  // count the number of occurences of each value
+  int *count = safeCalloc(max+1, sizeof(int));
   for (int i = 0; i < n; i++) count[arr[i]]++;
+  // compute the cumulative sums of the counts
   for (int i = 1; i <= max; i++) count[i] += count[i-1];
-  sorted = createIntArray(n);
+  // place the elements in their correct positions
+  int *sorted = safeCalloc(n, sizeof(int));
   for (int i = n-1; i >= 0; i--) {
     sorted[count[arr[i]]-1] = arr[i];
     count[arr[i]]--;
   }
-  for (int i = 0; i < n; i++) arr[i] = sorted[i];
   free(count);
-  free(sorted);
+  return sorted;
 }
 
 int main (int argc, char *argv[]){
   int example[] = {10, 8, 9, 6, 7, 5, 2, 3, 4, 1, 2,
-                   13, 7, 11, 20, 1, 15, 7, 16, 18};
+                   13, 7, 11, 20, 0, 15, 7, 16, 18};
   printf("Unsorted:\n");
   printArray(example, 20);
-  countingSort(example, 20);
+  int *sorted = countingSort(example, 20);
   printf("Sorted:\n");
-  printArray(example, 20);
+  printArray(sorted, 20);
+  free(sorted);
   return 0;
 }
