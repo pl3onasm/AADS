@@ -6,6 +6,6 @@ It is particularly useful when the input is uniformly distributed over a range l
 
 The first implementation of bucket sort in this repository is based on the pseudocode in CLRS, and sorts an array of floating-point numbers in the range $[0,1)$.
 
-Implementation: [Bucket Sort 1](https://github.com/pl3onasm/CLRS/blob/main/algorithms/sorting/bucket-sort/bucketsort.c)
+Implementation: [Bucket Sort](https://github.com/pl3onasm/CLRS/blob/main/algorithms/sorting/bucket-sort/bucketsort.c)
 
 [^1]: Insertion sort is used because it is efficient on small lists, and the lists are expected to be small since the input is assumed to be uniformly distributed.
