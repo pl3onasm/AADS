@@ -6,11 +6,11 @@ A divide-and-conquer algorithm consists of three steps at each level of the recu
 
 1. **Divide** the problem into a number of subproblems that are smaller instances of the same problem.
 2. **Conquer** the subproblems by solving them recursively.
-3. **Combine** the solutions to the subproblems into the solution for the original problem.
+3. **Combine** the solutions to the subproblems into a solution for the original problem.
 
-After sufficiently many levels of recursion, the recursion bottoms out and the subproblems become so small that they can be solved directly. The solutions to the subproblems are then combined to give a solution to the original problem.
+After sufficiently many levels of recursion, the recursion bottoms out and the subproblems become so small that they can be solved directly. As recursion unwinds, the solutions to the subproblems are then combined to give a solution to the original problem.
 
-Note that if the subproblems are not independent (i.e. the solution to one subproblem depends on the solution to another subproblem), the divide-and-conquer approach is not suitable, since the same subproblem would be solved multiple times. In such cases, a [dynamic programming](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/dynamic-programming) approach is more appropriate.
+Note that if the subproblems are not independent (i.e. solutions to subproblems depend on solutions to other subproblems), the divide-and-conquer approach is not suitable, since the same subproblem would be solved multiple times. In such cases, a [dynamic programming](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/dynamic-programming) approach is more appropriate.
 
 ## Problems
 

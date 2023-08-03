@@ -1,4 +1,4 @@
-/* file: kmp-2.c
+/* file: fsm-2.c
    author: David De Potter
    email: pl3onasm@gmail.com
    license: MIT, see LICENSE file in repository root folder

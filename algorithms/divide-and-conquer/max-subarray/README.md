@@ -20,7 +20,7 @@ Implementation: [Linearithmic MSP](https://github.com/pl3onasm/AADS/blob/main/al
 
 ## Linear Solution
 
-A linear solution can be obtained by using the following observation: if adding a number to the running sum of a subarray causes the sum to turn negative, then the subarray should be reset to an empty array and the running sum should be reset to zero. The maximum can still be updated in this case, if the running sum is greater than the current (negative) maximum, but the subarray itself should be reset because:
+A linear solution can be obtained by making the following observation: if adding a number to the running sum of a subarray causes the sum to turn negative, then the subarray should be reset to an empty array and the running sum should be reset to zero. The maximum can still be updated in this case, if the running sum is greater than the current (negative) maximum, but the subarray itself should be reset because:
 
 - if the next number is negative, the overall result will only decrease
 - if the next number is positive, we should start a new subarray from that number, without the negative running sum so far, in order to get the larger sum

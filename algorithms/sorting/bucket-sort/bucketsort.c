@@ -41,7 +41,7 @@ void insertionSort(int i, node **arr) {
   /* insertion sort for a node list stored in arr[i] */
   node* sorted = NULL;      // head of the sorted list
   node* current = arr[i];   // head of the unsorted list
-  while (current != NULL) {
+  while (current) {
     node* next = current->next;
     // if sorted is empty or value of current is smaller
     if (sorted == NULL || current->value < sorted->value) {
@@ -50,7 +50,7 @@ void insertionSort(int i, node **arr) {
       sorted = current;
     } else { // else search for correct position to insert current
       node *s = sorted;
-      while (s->next != NULL && current->value >= s->next->value)
+      while (s->next && current->value >= s->next->value)
         s = s->next;
       // insert current between s and s->next
       current->next = s->next;
@@ -66,7 +66,7 @@ void concatenate (node **buckets, double *arr, int n) {
   int k = 0;
   for (int i = 0; i < n; i++) {
     node *b = buckets[i];
-    while (b != NULL) {
+    while (b) {
       arr[k++] = b->value;
       node *temp = b;
       b = b->next;
@@ -80,10 +80,10 @@ void insert (node **buckets, int bucketNo, double value) {
   /* inserts given value in the node list at buckets[bucketNo] */
   node *new = safeCalloc(1, sizeof(node));
   new->value = value;
-  if (buckets[bucketNo] == NULL) 
-    new->next = NULL;
-  else
+  if (buckets[bucketNo]) 
     new->next = buckets[bucketNo];
+  else
+    new->next = NULL;
   buckets[bucketNo] = new;
 }
 

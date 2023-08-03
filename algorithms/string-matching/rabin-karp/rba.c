@@ -1,14 +1,18 @@
-/* file: rba-1.c
+/* file: rba.c
    author: David De Potter
    email: pl3onasm@gmail.com
    license: MIT, see LICENSE file in repository root folder
-   description: string matching, brute force
+   description: string matching using the Rabin-Karp algorithm
+   assumption: length of the alphabet is 256 (ASCII)
 */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 
 typedef unsigned int uint;
+typedef unsigned long ul;
+#define d 256  // number of characters in the alphabet
 
 void *safeMalloc (int n) {
   /* allocates n bytes of memory and checks whether the allocation
@@ -46,22 +50,38 @@ char *readString(uint *size, short type) {
 }
 
 void computeShifts (char *text, uint tLen, char *pattern, uint pLen) {
-  /* determines the valid pattern shifts using brute force */
+  /* determines the valid pattern shifts using the Rabin-Karp algorithm */
   if (pLen > tLen) {
     printf("Pattern is longer than text. No shifts found.\n"); 
     return;
   }
+  ul q = ULONG_MAX, pHash = 0, tHash = 0, h = 1; 
   short r = 0; 
   uint i, j, n = tLen - pLen;
+  
+  for (i = 0; i < pLen-1; i++) h = (h * d) % q;
+
+  // compute hash values for pattern and text[0..pLen-1]
+  for (i = 0; i < pLen; i++) {
+    pHash = (pHash * d + pattern[i]) % q;
+    tHash = (tHash * d + text[i]) % q;
+  }
+  
+  // check for valid shifts
   for (i = 0; i <= n; i++) {
-    for (j = 0; j < pLen; j++) {
-      if (text[i+j] != pattern[j]) break;
+    if (pHash == tHash) {  
+      for (j = 0; j < pLen; j++)    // spurious hit ?
+        if (text[i+j] != pattern[j]) break;
+      if (j == pLen) {  // valid shift
+        if (!r) {
+          r = 1;
+          printf("Shifts: %d", i);
+        } else printf(", %d", i);
+      }
     }
-    if (j == pLen) {  // valid shift
-      if (!r) {
-        r = 1;
-        printf("Shifts: %d", i);
-      } else printf(", %d", i);
+    if (i < n) {  // compute hash value for next shift
+      tHash = ((tHash - text[i] * h) * d + text[i+pLen]) % q;
+      if (tHash < 0) tHash += q;  
     }
   }
   if (r) printf("\n"); 

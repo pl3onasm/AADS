@@ -1,11 +1,10 @@
-/* file: kmp-1.c
+/* file: kmp.c
    author: David De Potter
    email: pl3onasm@gmail.com
    license: MIT, see LICENSE file in repository root folder
-   description: string matching using an automaton,
-     i.e. a FSM with a transition function
-   time complexity: automaton construction is in O(m³d) 
-     and matching time is in O(n) time
+   description: string matching using the Knuth-Morris-Pratt algorithm
+   time complexity: O(m + n) since the prefix function is computed in O(m) time
+     and the matching is done in O(n) time
    assumption: length of the alphabet is 256 (ASCII)
 */
 
@@ -14,7 +13,6 @@
 
 typedef unsigned int uint;
 #define d 256  // number of characters in the alphabet
-#define MIN(a, b) ((a) < (b) ? (a) : (b))
 
 void *safeCalloc (int n, int size) {
   /* allocates n elements of size size, initializing them to 0, and
@@ -58,52 +56,35 @@ char *readString(uint *size, short type) {
   return str;
 }
 
-void freeDelta (uint **delta, uint pLen) {
-  /* frees the memory allocated for the transition function */
-  uint i;
-  for (i = 0; i <= pLen; i++) free(delta[i]);
-  free(delta);
+uint *computePrefixFunction (char *pattern, uint pLen) {
+  /* computes the prefix function of pattern */
+  uint *pi = safeCalloc(pLen, sizeof(uint));
+  for (uint q = 1, k = 0; q < pLen; q++) {
+    while (k > 0 && pattern[k] != pattern[q]) k = pi[k-1];
+    if (pattern[k] == pattern[q]) k++;
+    pi[q] = k;
+  }
+  return pi;
 }
 
-short isSuffix (char *pattern, uint q, short a, uint k) {
-  /* checks whether pattern[:k] is a suffix of pattern[:q] U {a} */
-  if (pattern[k-1] != a) return 0;
-  for (uint i = 0; i < k-1; i++) 
-    if (pattern[i] != pattern[q-(k-1)+i]) return 0;
-  return 1;
-  
-}
-
-uint **computeDelta (char *pattern, uint pLen) {
-  /* computes the transition function of the automaton */
-  uint **delta = newM(pLen+1, d);  
-
-  for (uint q = 0; q <= pLen; q++) {
-    for (short a = 0; a < d; a++) {
-      uint k = MIN(q+1, pLen);
-      // find the longest prefix of pattern[:k] that is 
-      // also a suffix of pattern[:q] U {a}
-      while (k > 0 && !isSuffix(pattern, q, a, k)) k--;
-      delta[q][a] = k;    // new state
-    }
-  }  
-  return delta;
-}
-
-void matcher(char *text, uint tLen, uint** delta, uint pLen) {
-  /* matches the pattern against the text */
+void matcher (char *pattern, uint pLen, char *text, uint tLen) {
+  /* matches pattern in text using the Knuth-Morris-Pratt algorithm */
+  uint *pi = computePrefixFunction(pattern, pLen);
   short found = 0;
   for (uint i = 0, q = 0; i < tLen; i++) {
-    q = delta[q][(short)text[i]];  // q is the state of the automaton
-    if (q == pLen) {               // a match is found
+    while (q > 0 && pattern[q] != text[i]) q = pi[q-1];   // get longest prefix
+    if (pattern[q] == text[i]) q++;
+    if (q == pLen) {
       if (!found) {
         found = 1;
-        printf("Shifts: %d", i-pLen+1);
-      } else printf(", %d", i-pLen+1);
+        printf("Shifts: %d", i-q+1);
+      } else printf(", %d", i-q+1);
+      q = pi[q-1];
     }
   }
-  if (found) printf("\n"); 
+  if (found) printf("\n");
   else printf("No matches found.\n");
+  free(pi);
 }
 
 int main (int argc, char *argv[]) {
@@ -112,10 +93,8 @@ int main (int argc, char *argv[]) {
   char *pattern = readString(&pLen, 1);
   char *text = readString(&tLen, 0);
 
-  uint **delta = computeDelta(pattern, pLen);
-  matcher(text, tLen, delta, pLen);
+  matcher(pattern, pLen, text, tLen);
 
-  freeDelta(delta, pLen);
   free(text);
   free(pattern);
   return 0;

@@ -28,7 +28,7 @@ Thus, given a chain of matrices $A_1 \dots A_n$, the cost of parenthesizing it o
 $$
 m[i,j] = \begin{cases}
 0 & \text{if } i = j \\
-\min_{i \leq k < j} \lbrace m[i,k] + m[k+1,j] + p_{i-1} \cdot p_k \cdot p_j \rbrace & \text{if } i < j
+\min \lbrace m[i,k] + m[k+1,j] + p_{i-1} \cdot p_k \cdot p_j : i \leq k < j\rbrace & \text{if } i < j
 \end{cases}
 $$
 

@@ -29,7 +29,7 @@ It should be an easy exercise to implement a top-down approach with memoization.
 $$
 C[A] = \begin{cases}
 0 & \text{if } A = 0 \\
-1 + \min_{1 \leq i \leq n}  \lbrace C[A - d_i] \rbrace & \text{if } A > 0
+1 + \min \lbrace C[A - d_i] : 1 \leq i \leq n \rbrace & \text{if } A > 0
 \end{cases}
 $$
 
