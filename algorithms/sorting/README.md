@@ -55,5 +55,5 @@ The only way to escape the $\Omega(n\log n)$ lower bound for comparison sorts is
 [^1]: The tilde (~) means that this is the expected complexity: the complexity is not guaranteed,  
 but it is the average case complexity. The worst case complexity is higher.
 
-[^2]: If all elements are distinct, each permutation appears on exactly one leaf: $l = n!$.
-If some elements are equal, some permutations appear on more than one leaf: $l > n!$.
+[^2]: If all elements are distinct, each permutation appears on exactly one leaf: l = n!.
+If some elements are equal, some permutations appear on more than one leaf: l > n!.
