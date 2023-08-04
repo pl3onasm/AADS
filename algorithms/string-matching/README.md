@@ -2,7 +2,7 @@
 
 String matching is the problem of finding all occurrences of a string pattern $P$ of length $m$ in a text $T$ of lenght $n$, where $m \leq n$. The characters in the pattern and the text come from a finite set $\Sigma$ called the *alphabet*.
 
-Pattern $P$ occurs with shift $s$ in text $T$ if $0 \leq s \leq n - m$ and $T[s + 1..s + m] = P[1..m]$. The shift $s$ is also called the starting position of the occurrence. If $P$ occurs with shift $s$ in $T$, then $s$ is called a *valid shift* for $P$ in $T$.
+We say that pattern $P$ occurs with shift $s$ in text $T$ if $0 \leq s \leq n - m$ and $T[s + 1..s + m] = P[1..m]$. If $P$ occurs with shift $s$ in $T$, then $s$ is called a *valid shift* for $P$ in $T$, otherwise $s$ is called an *invalid shift* for $P$ in $T$.
 
 In other words, the string-matching problem is to find all valid shifts for $P$ in $T$, i.e. the shift set of $P$ in $T$. Using the terminology below, the string-matching problem is to find all shifts $s$ such that $P \sqsupset T[:s + m]$, where $0 \leq s \leq n - m$ and $T[:s + m]$ is the prefix of $T$ of length $s + m$.
 
@@ -26,10 +26,10 @@ In other words, the string-matching problem is to find all valid shifts for $P$ 
 
 ## Overlapping-suffix lemma
 
-Let $x$, $y$ and $z$ be strings such that $x \sqsupset y$ and $y \sqsupset z$.
-If $|x| \leq |y|$, then $x \sqsupset y$
-If $|x| \geq |y|$, then $y \sqsupset x$
-If $|x| = |y|$, then $x = y$
+Let $x$, $y$ and $z$ be strings such that $x \sqsupset y$ and $y \sqsupset z$.  
+If $|x| \leq |y|$, then $x \sqsupset y$  
+If $|x| \geq |y|$, then $y \sqsupset x$  
+If $|x| = |y|$, then $x = y$  
 
 &nbsp;
 
