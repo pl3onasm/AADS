@@ -19,7 +19,7 @@ q + 1 & \text{if } q < m \text{ and } a = P[q + 1] \\
 \end{cases}
 $$
 
-where $\sigma : \Sigma^*\rightarrow \{0, 1, ..., m\}$ is an auxiliary function, called the suffix function, which maps a string $x \in \Sigma^*$ to the length of the longest prefix of $P$ that is also a suffix of $x$:
+where $\sigma : \Sigma^* \rightarrow \{0, 1, ..., m\}$ is an auxiliary function, called the suffix function, which maps a string $x \in \Sigma^*$ to the length of the longest prefix of $P$ that is also a suffix of $x$:
 
 $$
 \sigma(x) = \max \lbrace k : P_k \sqsupset x \rbrace
