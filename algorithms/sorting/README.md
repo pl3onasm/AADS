@@ -1,4 +1,4 @@
-## Sorting algorithms
+# Sorting algorithms
 
 | **Complexity** | **CLRS³** |  **CLRS⁴** | **Link** |
 |:---|:---:|:---:|:---|
@@ -12,6 +12,9 @@
 | $O(n^2)$ | Chap 2.1-2 | Chap 2.1-2 | [Insertion sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/insertion-sort)
 | $O(n^2)$ | Ex 2.2-2 | Ex 2.2-2 | [Selection sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/selection-sort)
 | $O(n^2)$ | Prob 2-2 | Prob 2-2 | [Bubble sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/bubble-sort)
+
+[^1]: The tilde (~) means that this is the expected complexity: the complexity is not guaranteed,  
+but it is the average case complexity. The worst case complexity is higher.
 
 # Sorting
 
@@ -51,9 +54,6 @@ As a result, $h = \Omega(\log(n!)) = \Omega(n\log n)$. Since the height of the d
 ## Linear-time sorts
 
 The only way to escape the $\Omega(n\log n)$ lower bound for comparison sorts is to exploit special properties of the input elements, such as the range of possible values. This is exactly what linear-time sorts do. The most well-known non-comparison sorts are counting sort, radix sort and bucket sort. For example, counting sort assumes that the input elements are integers in the range $0$ to $k$, for some integer $k = O(n)$. Radix sort assumes that the input elements are integers represented in a fixed number of digits in some base $b$. And bucket sort assumes that the input elements are uniformly distributed in the interval $[0, 1)$.
-
-[^1]: The tilde (~) means that this is the expected complexity: the complexity is not guaranteed,  
-but it is the average case complexity. The worst case complexity is higher.
 
 [^2]: If all elements are distinct, each permutation appears on exactly one leaf: l = n!.
 If some elements are equal, some permutations appear on more than one leaf: l > n!.

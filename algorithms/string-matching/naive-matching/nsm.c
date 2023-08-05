@@ -10,9 +10,13 @@
 
 typedef unsigned int uint;
 
+typedef enum {               
+  false = 0,
+  true = 1
+} bool;
+
 void *safeMalloc (int n) {
-  /* allocates n bytes of memory and checks whether the allocation
-     was successful */
+  /* allocates memory and checks whether the allocation was successful */
   void *ptr = malloc(n);
   if (ptr == NULL) {
     printf("Error: malloc(%d) failed. Out of memory?\n", n);
@@ -22,7 +26,7 @@ void *safeMalloc (int n) {
 }
 
 void *safeRealloc (void *ptr, int newSize) {
-  // reallocates memory and checks whether the allocation was successful
+  /* reallocates memory and checks whether the allocation was successful */
   ptr = realloc(ptr, newSize);
   if (ptr == NULL) {
     printf("Error: realloc(%d) failed. Out of memory?\n", newSize);
@@ -46,20 +50,22 @@ char *readString(uint *size, short type) {
 }
 
 void computeShifts (char *text, uint tLen, char *pattern, uint pLen) {
-  /* determines the valid pattern shifts using brute force */
+  /* determines all valid shifts of pattern in text and prints them */
   if (pLen > tLen) {
     printf("Pattern is longer than text. No shifts found.\n"); 
     return;
   }
-  short r = 0; 
+  bool r = false; // result found?
   uint i, j, n = tLen - pLen;
+
+  // loop over all possible shifts
   for (i = 0; i <= n; i++) {
     for (j = 0; j < pLen; j++) {
       if (text[i+j] != pattern[j]) break;
     }
     if (j == pLen) {  // valid shift
       if (!r) {
-        r = 1;
+        r = true;
         printf("Shifts: %d", i);
       } else printf(", %d", i);
     }

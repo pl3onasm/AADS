@@ -2,10 +2,11 @@
 
 ## Problem
 
-Given a pattern $P$ and a text $T$, find all occurrences of $P$ in $T$. The result should consist of the indices indicating where each occurrence of $P$ in $T$ starts (so-called *shifts*). The pattern $P$ and the text $T$ are both strings of length $m$ and $n$, respectively.
+Given a pattern $P[0..m-1]$ and a text $T[0..n-1]$, find all occurrences of $P$ in $T$. It is assumed that $n \geq m$. The result should consist of the indices indicating where each occurrence of $P$ in $T$ starts, i.e. the valid shifts for $P$ in $T$.
 
 ## Brute-force solution
 
-The brute-force algorithm for string matching simply checks all possible shifts of $P$ in $T$ and compares all the characters in the substrings of $T$ with $P$ at each and every shift. The complexity of this algorithm is thus $O((n-m+1)m)$, where $n$ is the length of $T$ and $m$ is the length of $P$.
+The naive string-matching algorithm slides the pattern $P$ one position at a time along the text $T$, at each position comparing the characters in $P$ and $T$ until either $P$ mismatches $T$ or $P$ matches $T$ completely.
+Since there are $n-m+1$ valid shifts for $P$ in $T$, and each shift requires $O(m)$ time to compare the characters, the algorithm runs in $O((n-m+1)m)$ time.
 
 Implementation: [Naive String Matching](https://github.com/pl3onasm/AADS/blob/main/algorithms/string-matching/naive-matching/nsm.c)

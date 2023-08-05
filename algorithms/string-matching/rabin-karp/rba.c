@@ -14,9 +14,13 @@ typedef unsigned int uint;
 typedef unsigned long ul;
 #define d 256  // number of characters in the alphabet
 
+typedef enum {               
+  false = 0,
+  true = 1
+} bool;
+
 void *safeMalloc (int n) {
-  /* allocates n bytes of memory and checks whether the allocation
-     was successful */
+  /* allocates memory and checks whether it was successful */
   void *ptr = malloc(n);
   if (ptr == NULL) {
     printf("Error: malloc(%d) failed. Out of memory?\n", n);
@@ -26,7 +30,7 @@ void *safeMalloc (int n) {
 }
 
 void *safeRealloc (void *ptr, int newSize) {
-  // reallocates memory and checks whether the allocation was successful
+  /* reallocates memory and checks whether the allocation was successful */
   ptr = realloc(ptr, newSize);
   if (ptr == NULL) {
     printf("Error: realloc(%d) failed. Out of memory?\n", newSize);
@@ -50,31 +54,31 @@ char *readString(uint *size, short type) {
 }
 
 void computeShifts (char *text, uint tLen, char *pattern, uint pLen) {
-  /* determines the valid pattern shifts using the Rabin-Karp algorithm */
+  /* determines all valid shifts of pattern in text and prints them */
   if (pLen > tLen) {
     printf("Pattern is longer than text. No shifts found.\n"); 
     return;
   }
   ul q = ULONG_MAX, pHash = 0, tHash = 0, h = 1; 
-  short r = 0; 
+  bool r = false;   // result found? 
   uint i, j, n = tLen - pLen;
   
   for (i = 0; i < pLen-1; i++) h = (h * d) % q;
 
-  // compute hash values for pattern and text[0..pLen-1]
+  // precompute hash values for pattern and text[0..pLen-1]
   for (i = 0; i < pLen; i++) {
     pHash = (pHash * d + pattern[i]) % q;
     tHash = (tHash * d + text[i]) % q;
   }
   
-  // check for valid shifts
+  // check for valid shifts by comparing hash values
   for (i = 0; i <= n; i++) {
-    if (pHash == tHash) {  
-      for (j = 0; j < pLen; j++)    // spurious hit ?
-        if (text[i+j] != pattern[j]) break;
+    if (pHash == tHash) {   // hash values match
+      for (j = 0; j < pLen; j++)    
+        if (text[i+j] != pattern[j]) break; // spurious hit
       if (j == pLen) {  // valid shift
         if (!r) {
-          r = 1;
+          r = true;
           printf("Shifts: %d", i);
         } else printf(", %d", i);
       }
