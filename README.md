@@ -25,7 +25,7 @@ In addition, you will also find a few other algorithms and data structures that 
 
 Please refer to the license if you wish to use any of the code in this repository. If a link does not work, this is probably because the code is not yet available. Any images were created using Photoshop. If you find any errors or have any suggestions, please let me know. Please make sure that line endings are set to LF, not CRLF, as this may cause problems with the code. Some of the solutions to the textbook's exercises can be found on [this site](https://walkccc.me/CLRS/), although these are not always optimal or even correct.
 
-Note that this is a work in progress. Some explanations and summaries are still incomplete or missing and some code is not yet available. Updates will be made regularly. If you appreciate this repository and find it useful, please consider giving it a star, as this will help others find it as well. Thank you!
+Note that this is a work in progress. Some explanations and summaries are still incomplete or missing and some code is not yet available. Updates will be made regularly. If you appreciate this repository, or would like to see more work like this in the future, please consider giving it a star. Thank you!
 
 ## References
 

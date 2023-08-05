@@ -9,7 +9,7 @@
 | n/a | n/a | Boyer-Moore Algorithm
 | n/a | Chap 32.5 | Suffix arrays
 
-# String Matching
+# String-matching Problem
 
 String matching is the problem of finding all occurrences of a string pattern $P$ of length $m$ in a text $T$ of lenght $n$, where $m \leq n$. The characters in the pattern and the text come from a finite set $\Sigma$ called the *alphabet*.
 
@@ -34,4 +34,3 @@ In other words, the string-matching problem is to find all valid shifts for $P$ 
 - $\forall a \in \Sigma: x \sqsupset y \Leftrightarrow xa \sqsupset ya$
 - $\forall z \in \Sigma^*: x \sqsupset y \land y \sqsupset z \Rightarrow x \sqsupset z$
 - $\forall z \in \Sigma^*: x \sqsubset y \land y \sqsubset z \Rightarrow x \sqsubset z$
-
