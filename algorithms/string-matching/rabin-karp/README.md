@@ -20,12 +20,12 @@ The precomputation of the hash values of $P$ and $T_m$ can be done in $O(m)$ tim
 
 $$h(s) = (((s[0] \cdot d + s[1]) \cdot d + s[2]) \cdot d + \dots + s[m-1]) \mod p$$
 
-After that, the hash value at each new shift $s+1$ can be recomputed in constant time using the following formula:
+After that, the hash value at each new shift $s+1$ can be recomputed in constant time as follows:
 
 $$h(T[s+1..s + m]) = (d \cdot (h(T[s..s + m -1]) - T[s] \cdot q) + T[s + m]) \mod p$$
 
-where $q$ is precomputed as $q = d^{m-1} \mod p$. The subtraction of $T[s] \cdot q$ is necessary to remove the contribution of the character that just left the window, and the addition of $T[s + m]$ is necessary to add the contribution of the new character in the window. The hash values are computed modulo $p$ at each step to avoid overflow. The probability of a hash collision is then reduced to $1/p$.
+where $q$ is precomputed as $q = d^{m-1} \mod p$. The subtraction of $T[s] \cdot q$ is necessary to remove the contribution of the character that just left the window, and the addition of $T[s + m]$ is necessary to add the contribution of the new character in the window. Note that the hash values are computed modulo $p$ at each step to avoid overflow. The probability of a hash collision is thus reduced to $1/p$.
 
 Implementation: [Rabin-Karp](https://github.com/pl3onasm/AADS/blob/main/algorithms/string-matching/rabin-karp/rba.c)
 
-[^1]: A hash function $h$ maps a string $s$ to an integer $h(s)$. A rolling hash function is one which can be recomputed in constant time as the string is being read and we slide the window over it.
+[^1]: A hash function h maps a string s to an integer h(s). A rolling hash function is one whose value can be recomputed in constant time as the string is shifted by one position.
