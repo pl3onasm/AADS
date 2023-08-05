@@ -1,11 +1,11 @@
-/* file: fsm-1.c
+/* file: sma-3.c
    author: David De Potter
    email: pl3onasm@gmail.com
    license: MIT, see LICENSE file in repository root folder
    description: string matching using an automaton,
      i.e. a FSM with a transition function
-   time complexity: automaton construction is in O(m³d) 
-     and matching time is in O(n) time
+   time complexity: the automaton is built in O(md) time
+     and the matching is done in O(n) time
    assumption: length of the alphabet is 256 (ASCII)
 */
 
@@ -14,11 +14,14 @@
 
 typedef unsigned int uint;
 #define d 256  // number of characters in the alphabet
-#define MIN(a, b) ((a) < (b) ? (a) : (b))
+
+typedef enum {               
+  false = 0,
+  true = 1
+} bool;
 
 void *safeCalloc (int n, int size) {
-  /* allocates n elements of size size, initializing them to 0, and
-     checks whether the allocation was successful */
+  /* allocates memory, and checks whether this was successful */
   void *ptr = calloc(n, size);
   if (ptr == NULL) {
     printf("Error: calloc(%d, %d) failed. Out of memory?\n", n, size);
@@ -28,7 +31,7 @@ void *safeCalloc (int n, int size) {
 }
 
 void *safeRealloc (void *ptr, int newSize) {
-  // reallocates memory and checks whether the allocation was successful
+  /* reallocates memory and checks whether it was successful */
   ptr = realloc(ptr, newSize);
   if (ptr == NULL) {
     printf("Error: realloc(%d) failed. Out of memory?\n", newSize);
@@ -65,26 +68,19 @@ void freeDelta (uint **delta, uint pLen) {
   free(delta);
 }
 
-short isSuffix (char *pattern, uint q, short a, uint k) {
-  /* checks whether pattern[:k] is a suffix of pattern[:q] U {a} */
-  if (pattern[k-1] != a) return 0;
-  for (uint i = 0; i < k-1; i++) 
-    if (pattern[i] != pattern[q-(k-1)+i]) return 0;
-  return 1;
-  
-}
-
 uint **computeDelta (char *pattern, uint pLen) {
   /* computes the transition function of the automaton */
-  uint **delta = newM(pLen+1, d);  
+  uint **delta = newM(pLen+1, d); 
+  short a; 
 
   for (uint q = 0; q <= pLen; q++) {
-    for (short a = 0; a < d; a++) {
-      uint k = MIN(q+1, pLen);
-      // find the longest prefix of pattern[:k] that is 
-      // also a suffix of pattern[:q] U {a}
-      while (k > 0 && !isSuffix(pattern, q, a, k)) k--;
-      delta[q][a] = k;    // new state
+    for (a = 0; a < d; a++) {
+      // if match, go to next state
+      if (q < pLen && pattern[q] == a) delta[q][a] = q+1;  
+      // if empty string, stay in state 0
+      else if (q == 0) delta[q][a] = 0;      
+      // else transition to the previous state for the same character           
+      else delta[q][a] = delta[delta[q-1][a]][a];  
     }
   }  
   return delta;
@@ -92,12 +88,12 @@ uint **computeDelta (char *pattern, uint pLen) {
 
 void matcher(char *text, uint tLen, uint** delta, uint pLen) {
   /* matches the pattern against the text */
-  short found = 0;
+  bool found = false;   // match found?
   for (uint i = 0, q = 0; i < tLen; i++) {
     q = delta[q][(short)text[i]];  // q is the state of the automaton
     if (q == pLen) {               // a match is found
       if (!found) {
-        found = 1;
+        found = true; 
         printf("Shifts: %d", i-pLen+1);
       } else printf(", %d", i-pLen+1);
     }

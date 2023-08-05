@@ -1,4 +1,4 @@
-/* file: fsm-2.c
+/* file: sma-2.c
    author: David De Potter
    email: pl3onasm@gmail.com
    license: MIT, see LICENSE file in repository root folder
@@ -16,9 +16,13 @@ typedef unsigned int uint;
 #define d 256  // number of characters in the alphabet
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 
+typedef enum {               
+  false = 0,
+  true = 1
+} bool;
+
 void *safeCalloc (int n, int size) {
-  /* allocates n elements of size size, initializing them to 0, and
-     checks whether the allocation was successful */
+  /* allocates memory, and checks whether this was successful */
   void *ptr = calloc(n, size);
   if (ptr == NULL) {
     printf("Error: calloc(%d, %d) failed. Out of memory?\n", n, size);
@@ -28,7 +32,7 @@ void *safeCalloc (int n, int size) {
 }
 
 void *safeRealloc (void *ptr, int newSize) {
-  // reallocates memory and checks whether the allocation was successful
+  /* reallocates memory and checks whether it was successful */
   ptr = realloc(ptr, newSize);
   if (ptr == NULL) {
     printf("Error: realloc(%d) failed. Out of memory?\n", newSize);
@@ -72,8 +76,8 @@ uint **computeDelta (char *pattern, uint pLen) {
   for (uint q = 0; q <= pLen; q++) {
     for (short a = 0; a < d; a++) {
       uint k = MIN(q+1, pLen);
-      // find the longest prefix of pattern[:k] that  
-      // is also a suffix of pattern[:q] U {a}
+      // k is the length of the longest prefix of 
+      // Pq that is a suffix of Pq + a
       while (k > 0 && pattern[k-1] != a) k--;
       delta[q][a] = k;
     }
@@ -83,12 +87,12 @@ uint **computeDelta (char *pattern, uint pLen) {
 
 void matcher(char *text, uint tLen, uint** delta, uint pLen) {
   /* matches the pattern against the text */
-  short found = 0;
+  bool found = false;   // match found?
   for (uint i = 0, q = 0; i < tLen; i++) {
     q = delta[q][(short)text[i]];  // q is the state of the automaton
     if (q == pLen) {               // a match is found
       if (!found) {
-        found = 1;
+        found = true;
         printf("Shifts: %d", i-pLen+1);
       } else printf(", %d", i-pLen+1);
     }

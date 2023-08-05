@@ -35,9 +35,3 @@ In other words, the string-matching problem is to find all valid shifts for $P$ 
 - $\forall z \in \Sigma^*: x \sqsupset y \land y \sqsupset z \Rightarrow x \sqsupset z$
 - $\forall z \in \Sigma^*: x \sqsubset y \land y \sqsubset z \Rightarrow x \sqsubset z$
 
-## Overlapping-suffix lemma
-
-Let $x$, $y$ and $z$ be strings such that $x \sqsupset y$ and $y \sqsupset z$.  
-If $|x| \leq |y|$, then $x \sqsupset y$  
-If $|x| \geq |y|$, then $y \sqsupset x$  
-If $|x| = |y|$, then $x = y$  
