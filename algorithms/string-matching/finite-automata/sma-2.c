@@ -4,7 +4,7 @@
    license: MIT, see LICENSE file in repository root folder
    description: string matching using an automaton,
      i.e. a FSM with a transition function
-   time complexity: the automaton is built in O(m²d) time
+   time complexity: the automaton is built in O(m²|Σ|) time
      and the matching is done in O(n) time
    assumption: length of the alphabet is 256 (ASCII)
 */
@@ -13,7 +13,7 @@
 #include <stdlib.h>
 
 typedef unsigned int uint;
-#define d 256  // number of characters in the alphabet
+#define d 256  // number of characters in the alphabet, d = |Σ|
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 
 typedef enum {               

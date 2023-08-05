@@ -10,15 +10,15 @@ The Rabin-Karp algorithm avoids having to compare all the characters of $T[s..s 
 
 The precomputation of the hash values of $P$ and $T_m$ can be done in $O(m)$ time. The expected time complexity of the algorithm is then $O(n+m)$, since the hash values of the substrings of $T$ are recomputed in constant time. The worst-case time complexity occurs when all the substrings of $T$ have the same hash value as $P$, in which case the complexity of the algorithm degenerates to $O((n-m+1)m)$, the same as that of the naive algorithm. This happens when the text $T$ consists of $n$ copies of the pattern $P$ or when the hash function is a poor one and produces too many collisions.
 
-Luckily, we can greatly reduce the probability of hash collisions by using a good hash function. For example, a merely additive rolling hash function is definitely not good enough. Such a hash function represents a string as the sum of the values of its characters and recomputes the hash value by adding the value of the new character in the window and subtracting the value of the character that just left the window. This is a poor hash function because it is easy to find two strings that have the same hash value. A much better hash function is the polynomial rolling hash function, which the Rabin-Karp algorithm uses. The hash value of a string $s$ is then computed as follows:
+Luckily, we can greatly reduce the probability of hash collisions by using a good hash function. For example, a merely additive rolling hash function is definitely not good enough. Such a hash function represents a string as the sum of the values of its characters and recomputes the hash value by adding the value of the new character in the window and subtracting the value of the character that just left the window. This is a poor hash function because it is easy to find two strings that have the same hash value. A much better hash function is the polynomial rolling hash function, which the Rabin-Karp algorithm uses. The hash value of a string $S$ is then computed as follows:
 
-$$h(s) = \sum_{i=0}^{m-1} (s[i] \cdot d^i) \mod p$$
+$$h(S) = \sum_{i=0}^{m-1} (S[i] \cdot d^i) \mod p$$
 
-where $d = |\Sigma|$ is the size of the alphabet, $p$ is a large prime number (so that the hash values are uniformly distributed) and $s[i]$ is the value of the $i$-th character of the string $s$ in the alphabet $\Sigma$.
+where $d = |\Sigma|$ is the size of the alphabet, $p$ is a large prime number (so that the hash values are uniformly distributed) and $S[i]$ is the value of the $i$-th character of the string $S$ taken from the alphabet $\Sigma$.
 
 The precomputation of the hash values of $P$ and $T_m$ can be done in $O(m)$ time by applying Horner's rule to the above formula:
 
-$$h(s) = (((s[0] \cdot d + s[1]) \cdot d + s[2]) \cdot d + \dots + s[m-1]) \mod p$$
+$$h(S) = (((S[0] \cdot d + S[1]) \cdot d + S[2]) \cdot d + \dots + S[m-1]) \mod p$$
 
 After that, the hash value at each new shift $s+1$ can be recomputed in constant time as follows:
 
