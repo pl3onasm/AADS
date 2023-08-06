@@ -76,7 +76,6 @@ bool isSuffix (char *pattern, uint q, short a, uint k) {
   for (uint i = 0; i < k-1; i++) 
     if (pattern[i] != pattern[q-(k-1)+i]) return false;
   return true;
-  
 }
 
 uint **computeDelta (char *pattern, uint pLen) {
@@ -89,7 +88,7 @@ uint **computeDelta (char *pattern, uint pLen) {
       // k is the length of the longest prefix of Pq 
       // that is also a suffix of Pq + a
       while (k > 0 && !isSuffix(pattern, q, a, k)) k--;
-      delta[q][a] = k;    // new state
+      delta[q][a] = k;   // transition from state q on input a
     }
   }  
   return delta;

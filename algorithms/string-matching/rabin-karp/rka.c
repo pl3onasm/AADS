@@ -12,7 +12,7 @@
 
 typedef unsigned int uint;
 typedef unsigned long ul;
-#define d 256  // number of characters in the alphabet
+#define d 256  // number of characters in the alphabet, d = |Σ|
 
 typedef enum {               
   false = 0,

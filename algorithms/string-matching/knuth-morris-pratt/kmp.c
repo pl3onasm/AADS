@@ -14,9 +14,13 @@
 typedef unsigned int uint;
 #define d 256  // number of characters in the alphabet
 
+typedef enum {               
+  false = 0,
+  true = 1
+} bool;
+
 void *safeCalloc (int n, int size) {
-  /* allocates n elements of size size, initializing them to 0, and
-     checks whether the allocation was successful */
+  /* allocates memory, and checks whether this was successful */
   void *ptr = calloc(n, size);
   if (ptr == NULL) {
     printf("Error: calloc(%d, %d) failed. Out of memory?\n", n, size);
@@ -26,7 +30,7 @@ void *safeCalloc (int n, int size) {
 }
 
 void *safeRealloc (void *ptr, int newSize) {
-  // reallocates memory and checks whether the allocation was successful
+  /* reallocates memory and checks whether it was successful */
   ptr = realloc(ptr, newSize);
   if (ptr == NULL) {
     printf("Error: realloc(%d) failed. Out of memory?\n", newSize);
@@ -70,13 +74,14 @@ uint *computePrefixFunction (char *pattern, uint pLen) {
 void matcher (char *pattern, uint pLen, char *text, uint tLen) {
   /* matches pattern in text using the Knuth-Morris-Pratt algorithm */
   uint *pi = computePrefixFunction(pattern, pLen);
-  short found = 0;
+  bool found = false;  // match found?
   for (uint i = 0, q = 0; i < tLen; i++) {
-    while (q > 0 && pattern[q] != text[i]) q = pi[q-1];   // get longest prefix
+    // get longest prefix of pattern that matches a suffix of text[0..i]
+    while (q > 0 && pattern[q] != text[i]) q = pi[q-1];   
     if (pattern[q] == text[i]) q++;
     if (q == pLen) {
       if (!found) {
-        found = 1;
+        found = true;
         printf("Shifts: %d", i-q+1);
       } else printf(", %d", i-q+1);
       q = pi[q-1];
