@@ -1,4 +1,4 @@
-/* file: sma-1.c
+/* file: sma.c
    author: David De Potter
    email: pl3onasm@gmail.com
    license: MIT, see LICENSE file in repository root folder
@@ -70,7 +70,7 @@ void freeDelta (uint **delta, uint pLen) {
 }
 
 bool isSuffix (char *pattern, uint q, short a, uint k) {
-  /* checks whether the prefix of length k of Pq 
+  /* checks whether the prefix of length k of P 
      is a suffix of Pq + a */
   if (pattern[k-1] != a) return false;
   for (uint i = 0; i < k-1; i++) 
@@ -85,7 +85,7 @@ uint **computeDelta (char *pattern, uint pLen) {
   for (uint q = 0; q <= pLen; q++) {
     for (short a = 0; a < d; a++) {
       uint k = MIN(q+1, pLen);
-      // k is the length of the longest prefix of Pq 
+      // determine k as the length of the longest prefix of P 
       // that is also a suffix of Pq + a
       while (k > 0 && !isSuffix(pattern, q, a, k)) k--;
       delta[q][a] = k;   // transition from state q on input a

@@ -13,7 +13,7 @@
 | Chap 24.3 | Chap 22.3 | [SSSP - Dijkstra](https://github.com/pl3onasm/AADS/tree/main/algorithms/graphs/SSSP-dijkstra)
 | Chap 25.1 | Chap 23.1 | [APSP - Matrix multiplication](https://github.com/pl3onasm/AADS/tree/main/algorithms/graphs/APSP-matrixmp)
 | Chap 25.2 | Chap 23.2 | [APSP - Floyd-Warshall](https://github.com/pl3onasm/AADS/tree/main/algorithms/graphs/APSP-floyd)
-| Chap 25.2 | Chap 23.2 | [APSP - Transitive closure](https://github.com/pl3onasm/AADS/tree/main/algorithms/graphs/tr-closure)
+| Chap 25.2 | Chap 23.2 | [APSP - Transitive closure](https://github.com/pl3onasm/AADS/tree/main/algorithms/graphs/APSP-tr-closure)
 | Chap 25.3 | Chap 23.3 | [APSP - Johnson](https://github.com/pl3onasm/AADS/tree/main/algorithms/graphs/APSP-johnson)
 | Chap 26 | Chap 24 | [Maximum flow - Ford-Fulkerson](https://github.com/pl3onasm/AADS/tree/main/algorithms/graphs/MF-ford-fulkerson)
 | Chap 26.4-5 | n/a | [Maximum flow - Push-relabel](https://github.com/pl3onasm/AADS/tree/main/algorithms/graphs/MF-push-relabel)
