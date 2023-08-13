@@ -1,7 +1,7 @@
 # Sorting algorithms
 
 | **Complexity** | **CLRS³⁺⁴** | **Link** |
-|:---|:---:|:---:|:---|
+|:---|:---:|:---|
 | $\Theta(n + k)$ | Chap 8.2 | [Counting sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/counting-sort)
 | $\Theta(d(n + k))$ | Chap 8.3 | [Radix sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/radix-sort)
 | ~ $\Theta(n)$ [^1] | Chap 8.4 |  [Bucket sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/bucket-sort)
