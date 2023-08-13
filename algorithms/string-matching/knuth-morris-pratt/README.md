@@ -6,13 +6,13 @@ Given a pattern $P[0..m-1]$ and a text $T[0..n-1]$, find all occurrences of $P$ 
 
 ## Knuth Morris Pratt Algorithm
 
-The algorithm works by precomputing a prefix function $\pi$ for the pattern $P$, which is defined as follows:
+The algorithm works by precomputing a prefix function $\pi : \lbrace 0, 1, \dots, m \rbrace \rightarrow \lbrace 0, 1, \dots, m \rbrace$ for the pattern $P$, which is defined as follows:
 
 $$
 \pi(q) = \max \lbrace k : k < q \land P_k \sqsupset P_q \rbrace
 $$
 
-This prefix function $\pi$ can be computed in $O(m)$ time. The matching process then works in the same way as a [string-matching automaton](https://github.com/pl3onasm/CLRS/tree/main/algorithms/string-matching/finite-automata) with $m$ states, where the transition function is computed on the fly and is redefined to be:
+The matching process then works in the same way as a [string-matching automaton](https://github.com/pl3onasm/CLRS/tree/main/algorithms/string-matching/finite-automata) with $m$ states, where the transition function is computed on the fly and is redefined to be:
 
 $$
 \delta(q, a) = \begin{cases}
@@ -23,7 +23,7 @@ q' + 1 & \text{if } \exists q' \in \pi^\ast(q): q' > 0 \land a = P[q' + 1] \\
 \end{cases}
 $$
 
-The iterated prefix function $\pi^\ast$, also known as the failure function, is defined as follows:
+The iterated prefix function $\pi^\ast$ is defined as follows:
 
 $$
 \pi^\ast(q) = \begin{cases}
@@ -31,5 +31,7 @@ $$
 \pi^\ast(\pi(q)) \cup \lbrace \pi(q) \rbrace & \text{otherwise}
 \end{cases}
 $$
+
+The running time of the algorithm is $\Theta(n)$, since the prefix function can be computed in $\Theta(m)$ time and the matching process takes $\Theta(n)$ time.
 
 Implementation: [KMP Algorithm](https://github.com/pl3onasm/AADS/blob/main/algorithms/string-matching/knuth-morris-pratt/kmp.c)
