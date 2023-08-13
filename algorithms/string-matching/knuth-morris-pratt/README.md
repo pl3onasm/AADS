@@ -18,7 +18,7 @@ $$
 \delta(q, a) = \begin{cases}
 q + 1 & \text{if } q < m \land a = P[q + 1] \\
 \pi(q) & \text{if } q = m \\
-q' + 1 & \text{if } \exists \: q' \in \pi^\ast(q): q' > 0 \land a = P[q' + 1] \\
+q' + 1 & \text{if } \exists q' \in \pi^\ast(q): q' > 0 \land a = P[q' + 1] \\
 0 & \text{otherwise}
 \end{cases}
 $$
