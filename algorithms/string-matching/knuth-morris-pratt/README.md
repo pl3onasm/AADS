@@ -18,17 +18,19 @@ $$
 \delta(q, a) = \begin{cases}
 q + 1 & \text{if } q < m \land a = P[q + 1] \\
 \pi(q) & \text{if } q = m \\
-q' + 1 & \text{if } \exists q' \in \pi^\ast(q): q' > 0 \land a = P[q' + 1] \\
+q' + 1 & \text{if } q' > 0 \\
 0 & \text{otherwise}
 \end{cases}
 $$
 
-The iterated prefix function $\pi^\ast$ is defined as follows:
+where $q' = \max \lbrace k: k \in \pi^\ast(q) \land a = P[k + 1] \rbrace$.
+
+The iterated prefix function $\pi^\ast$ can be recursively defined as:
 
 $$
 \pi^\ast(q) = \begin{cases}
 \lbrace 0 \rbrace & \text{if } \pi(q) = 0 \\
-\pi^\ast(\pi(q)) \cup \lbrace \pi(q) \rbrace & \text{otherwise}
+\lbrace \pi(q) \rbrace \cup  \pi^\ast(\pi(q)) & \text{otherwise}
 \end{cases}
 $$
 

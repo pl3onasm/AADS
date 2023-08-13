@@ -28,4 +28,4 @@ where $q$ is precomputed as $q = d^{m-1} \mod p$. The subtraction of $T[s] \cdot
 
 Implementation: [Rabin-Karp](https://github.com/pl3onasm/AADS/blob/main/algorithms/string-matching/rabin-karp/rka.c)
 
-[^1]: A hash function h : Σ*→ℤ, maps a string s to an integer h(s). A rolling hash function is one whose value can be recomputed in constant time as the text window slides to the right by one character.
+[^1]: A hash function h : Σ*→ℤ, maps a string s to an integer h(s). A rolling hash function is one whose value can be recomputed in constant time as the text window of length m slides to the right by one character.
