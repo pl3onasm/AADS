@@ -28,7 +28,7 @@ The iterated prefix function $\pi^\ast$ is defined as follows:
 
 $$
 \pi^\ast(q) = \begin{cases}
-\{q\} & \text{if } q = 0 \\
+\lbrace q \rbrace & \text{if } q = 0 \\
 \pi^\ast(\pi(q)) \cup \pi(q) & \text{otherwise}
 \end{cases}
 $$
