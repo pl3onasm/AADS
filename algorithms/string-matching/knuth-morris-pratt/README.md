@@ -27,9 +27,9 @@ where $q' < q < m$ and $q' \in \pi^*(q)$.
 The iterated prefix function $\pi^*$ is defined as follows:
 
 $$
-\pi^*(q) = \begin{cases}
+\pi^\ast(q) = \begin{cases}
 \{q\} & \text{if } q = 0 \\
-\pi^*(\pi(q)) \cup \pi(q) & \text{otherwise}
+\pi^\ast(\pi(q)) \cup \pi(q) & \text{otherwise}
 \end{cases}
 $$
 
