@@ -9,7 +9,7 @@ Given a pattern $P[0..m-1]$ and a text $T[0..n-1]$, find all occurrences of $P$ 
 The algorithm works by precomputing a prefix function $\pi$ for the pattern $P$, which is defined as follows:
 
 $$
-\pi(q) = \max\{k : k < q \text{ and } P_k \sqsupset P_q\}
+\pi(q) = \max \lbrace k : k < q \text{ and } P_k \sqsupset P_q \rbrace
 $$
 
 This prefix function $\pi$ can be computed in $O(m)$ time. The matching process then works in the same way as a [string-matching automaton](https://github.com/pl3onasm/CLRS/tree/main/algorithms/string-matching/finite-automata) with $m$ states, where the transition function is redefined to be:
