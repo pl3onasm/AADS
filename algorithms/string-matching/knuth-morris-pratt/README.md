@@ -16,9 +16,9 @@ This prefix function $\pi$ can be computed in $O(m)$ time. The matching process 
 
 $$
 \delta(q, a) = \begin{cases}
-q + 1 & \text{if } q < m \text{ and } a = P[q + 1] \\
-q' + 1 & \text{if } q' > 0 \text{ and } a = P[q' + 1] \\
-q' & \text{if } q' = 0 \\
+q + 1 & \text{if } q < m \land a = P[q + 1] \\
+q' + 1 & \text{if } q' > 0 \land a = P[q' + 1] \\
+q' & \text{if } q' = 0 \lor q = m \\
 \end{cases}
 $$
 
@@ -29,7 +29,7 @@ The iterated prefix function $\pi^\ast$ is defined as follows:
 $$
 \pi^\ast(q) = \begin{cases}
 \lbrace 0 \rbrace & \text{if } \pi(q) = 0 \\
-\pi^\ast(\pi(q)) \cup \pi(q) & \text{otherwise}
+\pi^\ast(\pi(q)) \cup \lbrace \pi(q) \rbrace & \text{otherwise}
 \end{cases}
 $$
 
