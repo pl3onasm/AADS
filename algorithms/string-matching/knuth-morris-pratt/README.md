@@ -6,25 +6,25 @@ Given a pattern $P[0..m-1]$ and a text $T[0..n-1]$, find all occurrences of $P$ 
 
 ## Knuth Morris Pratt Algorithm
 
-The algorithm works by precomputing a prefix function $\pi$ for the pattern $P$. The prefix function $\pi$ is defined as follows:
+The algorithm works by precomputing a prefix function $\pi$ for the pattern $P$, which is defined as follows:
 
 $$
 \pi(q) = \max\{k : k < q \text{ and } P_k \sqsupset P_q\}
 $$
 
-This prefix function $\pi$ can be computed in $O(m)$ time. The algorithm then proceeds in the same way as a [string-matching automaton](https://github.com/pl3onasm/CLRS/tree/main/algorithms/string-matching/finite-automata) with $m$ states, but uses the following transition function $\delta'$ instead:
+This prefix function $\pi$ can be computed in $O(m)$ time. The matching process then works in the same way as a [string-matching automaton](https://github.com/pl3onasm/CLRS/tree/main/algorithms/string-matching/finite-automata) with $m$ states, where the transition function is redefined to be:
 
 $$
-\delta'(q, a) = \begin{cases}
+\delta(q, a) = \begin{cases}
 q + 1 & \text{if } q < m \text{ and } a = P[q + 1] \\
 q' + 1 & \text{if } q' > 0 \text{ and } a = P[q' + 1] \\
 0 & \text{otherwise}
 \end{cases}
 $$
 
-where $q' < q < m$ and $q' \in \pi^*(q)$.
+where $q' < q < m$ and $q' \in \pi^\ast(q)$.
 
-The iterated prefix function $\pi^*$ is defined as follows:
+The iterated prefix function $\pi^\ast$ is defined as follows:
 
 $$
 \pi^\ast(q) = \begin{cases}
