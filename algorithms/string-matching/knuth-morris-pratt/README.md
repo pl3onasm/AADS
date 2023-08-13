@@ -17,7 +17,6 @@ The matching process then works in the same way as a [string-matching automaton]
 $$
 \delta(q, a) = \begin{cases}
 q + 1 & \text{if } q < m \land a = P[q + 1] \\
-\pi(q) & \text{if } q = m \\
 q' + 1 & \text{if } q' > 0 \\
 0 & \text{otherwise}
 \end{cases}
