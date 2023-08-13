@@ -18,7 +18,7 @@ $$
 \delta(q, a) = \begin{cases}
 q + 1 & \text{if } q < m \text{ and } a = P[q + 1] \\
 q' + 1 & \text{if } q' > 0 \text{ and } a = P[q' + 1] \\
-0 & \text{otherwise}
+q' & \text{if } q' = 0 \\
 \end{cases}
 $$
 
@@ -28,7 +28,7 @@ The iterated prefix function $\pi^\ast$ is defined as follows:
 
 $$
 \pi^\ast(q) = \begin{cases}
-\lbrace q \rbrace & \text{if } q = 0 \\
+\lbrace 0 \rbrace & \text{if } \pi(q) = 0 \\
 \pi^\ast(\pi(q)) \cup \pi(q) & \text{otherwise}
 \end{cases}
 $$
