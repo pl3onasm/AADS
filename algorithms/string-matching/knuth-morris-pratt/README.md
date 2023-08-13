@@ -11,7 +11,7 @@ The algorithm simulates the operation of a string-matching automaton with $m$ st
 $$
 \delta(q, a) = \begin{cases}
 q + 1 & \text{if } q < m \text{ and } a = P[q + 1] \\
-q' + 1 & \text{if } a = P[q' + 1] \\
+q' + 1 & \text{if } q' > 0 \text{ and } a = P[q' + 1] \\
 0 & \text{otherwise}
 \end{cases}
 $$
