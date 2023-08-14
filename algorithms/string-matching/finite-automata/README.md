@@ -26,6 +26,6 @@ Implementation: [SMA](https://github.com/pl3onasm/AADS/blob/main/algorithms/stri
 
 [^1]: We use the notation P<sub>q</sub>a to denote the string P[0..q-1]a, i.e. the q-character prefix of P followed by the character a.
 
-[^2]: Since we are working with 0-based indices (contrary to the book), P[q] is in fact the (q+1)-th character of P. The suffix function stores lengths, which is why there is always a difference of 1 when translating suffix function values to string indices.
+[^2]: Since we are working with 0-based indices (contrary to the book), P[q] is in fact the (q+1)-th character of P. Suffix function values, just like state values, pertain to string lengths, not indices. Thus, there is always a difference of 1 when switching between state or suffix function values and indices.
 
 [^3]: T<sub>i</sub> denotes the string T[0..i-1]. The shift is computed by subtracting the last index of the pattern from the index of the last character of the text that was read, i.e. i - 1 - (m - 1) = i - m.

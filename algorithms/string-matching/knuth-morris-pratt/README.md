@@ -26,7 +26,7 @@ $$
 
 where $q' = \max \lbrace k: k \in \pi^\ast(q) \land a = P[k] \rbrace$.[^1]
 
-[^1]: Since we are working with 0-based indices (contrary to the book), P[q] is in fact the (q+1)-th character of P. The prefix function stores lengths, which is why there is always a difference of 1 when translating prefix function values to string indices.
+[^1]: Since we are working with 0-based indices (contrary to the book), P[q] is in fact the (q+1)-th character of P. Prefix function values, just like state values, pertain to string lengths, not indices. Thus, there is always a difference of 1 when switching between state or prefix function values and indices.
 
 The iterated prefix function $\pi^\ast$ can be recursively defined as:
 
