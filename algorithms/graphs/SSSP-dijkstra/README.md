@@ -4,7 +4,7 @@ _____________________________________
 
 ## Problem
 
-Given a weighted, directed graph $G = (V, E)$, with non-negative weight function $w : E \to \mathbb{R}$, and a source vertex $s \in V$, find shortest paths from this source to all the other $|V| - 1$ vertices in the graph. A *shortest path* is a path from the source to a given vertex with the smallest total weight, which in itself is defined as the sum of the weights of its constituent edges.
+Given a weighted, directed graph $G = (V, E)$, with non-negative weight function $w : E \to \mathbb{R}$, and a source vertex $s \in V$, find shortest paths from this source to all the other $|V| - 1$ vertices in the graph. A *shortest path* is a path from the source to a given vertex with the smallest total weight, which in itself is defined as the sum of the weights of its constituent edges : $w(p) = \sum_{e \in p} w(e)$.
 
 ## Dijkstra's solution
 
