@@ -16,6 +16,8 @@
 [^1]: The tilde (~) means that this is the expected complexity: the complexity is not guaranteed,  
 but it is the average case complexity. The worst case complexity is higher.
 
+&nbsp;
+
 # Sorting Problem
 
 The task of sorting is to rearrange a given sequence of elements into a particular order given by a comparison function, denoted by $\leq$, which is defined on the elements of the sequence and is assumed to be total, antisymmetric and transitive. In other words, given a sequence $A = \langle a_1, a_2, \dots, a_n \rangle$, the sorted output should be the permutation $A' = \langle a'_1, a'_2, \dots, a'_n \rangle$ satisfying the condition $a'_1 \leq a'_2 \leq \dots \leq a'_n$.

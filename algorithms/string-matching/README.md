@@ -8,6 +8,8 @@
 | Chap 32.4 | Chap 32.4 | [Knuth-Morris-Pratt Algorithm](https://github.com/pl3onasm/AADS/tree/main/algorithms/string-matching/knuth-morris-pratt)
 | n/a | Chap 32.5 | Suffix arrays
 
+&nbsp;
+
 # String-matching Problem
 
 String matching is the problem of finding all occurrences of a string pattern $P$ of length $m$ in a text $T$ of lenght $n$, where $m \leq n$. The characters in the pattern and the text come from a finite set $\Sigma$ called the *alphabet*.

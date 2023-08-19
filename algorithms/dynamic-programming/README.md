@@ -12,6 +12,8 @@
 | Prob 15-5| Prob 14-5 | [Minimum Edit Distance](https://github.com/pl3onasm/AADS/tree/main/algorithms/dynamic-programming/min-edit-dist)
 | Chap 25.2 | Chap 23.2 | [Floyd-Warshall](https://github.com/pl3onasm/CLRS-in-C/tree/main/algorithms/graphs/APSP-floyd)
 
+&nbsp;
+
 # Dynamic Programming Approach
 
 Dynamic programming is most suited for optimization problems. Such problems should have two main properties in order to apply dynamic programming:
