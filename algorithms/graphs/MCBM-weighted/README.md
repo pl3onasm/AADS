@@ -1,4 +1,6 @@
-# Maximum Cardinality Bipartite Matching (MCBM)
+_______________________________________________
+*Maximum cardinality bipartite matching (MCBM)*
+_______________________________________________
 
 (Under construction)
 
