@@ -30,7 +30,7 @@ void printDates (char *strings[], int n) {
 
 void countingSort(int size, char *arr[], int d) {
   /* sorts the dates on the digit with index d */
-  int count[10] = {0};
+  int count[10] = {0};  // k = 10, since there are 10 digits
   char **sorted = safeCalloc(size, sizeof(char*));
   // count the number of occurrences of each digit
   for (int i = 0; i < size; i++) 
