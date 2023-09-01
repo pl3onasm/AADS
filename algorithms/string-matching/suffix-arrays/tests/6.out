@@ -1,0 +1,11 @@
+Pattern: a
+Shifts: 10, 26, 50, 15, 31, 21
+Longest repeated substrings:
+2 times:  i
+2 times:  o
+2 times: al
+2 times: is
+2 times: r
+2 times: st
+Number of non-duplicate substrings: 1782
+Longest palindromic substring: aibohphobia

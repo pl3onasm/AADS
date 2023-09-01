@@ -1,3 +1,6 @@
-Pattern shifts: 1540, 1570
+Pattern: m
+Shifts: 4, 0
 Longest repeated substrings:
-2 times: proof of Fermat's Last Theorem.
+2 times: a
+Number of non-duplicate substrings: 13
+Longest palindromic substring: madam

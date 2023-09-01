@@ -3,16 +3,14 @@
    email: pl3onasm@gmail.com
    license: MIT, see LICENSE file in repository root folder
    description: suffix arrays
-   assumption: Σ is the extended ASCII alphabet (256 ucharacters)
+   assumption: Σ is the extended ASCII alphabet (256 characters)
 */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 
 typedef unsigned int uint;
-typedef unsigned char uchar;
 
 typedef enum {               
   false = 0,
@@ -45,15 +43,14 @@ void *safeRealloc (void *ptr, int newSize) {
   return ptr;
 }
 
-uchar *readString(uint *size, short type) {
+char *readString(uint *size, short type) {
   /* reads a string from stdin and stores its length in size */
-  uchar c; uint len = 0; 
-  uchar tok = type ? '\n' : EOF;   // type = 1: read until newline
-  uchar *str = safeCalloc(100, sizeof(uchar));
+  char c; uint len = 0; 
+  char tok = type ? '\n' : EOF;   // type = 1: read until newline
+  char *str = safeCalloc(100, sizeof(char));
   while (scanf("%c", &c) == 1 && c != tok) {
-    if (c == '\n') c = ' '; // replace newline with space
     str[len++] = c; 
-    if (len % 100 == 0) str = safeRealloc(str, (len+100) * sizeof(uchar));
+    if (len % 100 == 0) str = safeRealloc(str, (len+100) * sizeof(char));
   }
   str[len] = '\0';
   *size = len;
@@ -67,9 +64,7 @@ void radixSort(suffix *suffixes, uint n, uint k) {
   suffix *output = safeCalloc(n, sizeof(suffix));
   /* sort by right ranks */
   // count occurences of each rank
-  for (uint i = 0; i < n; ++i) {
-    count[suffixes[i].rightRank]++;
-  }
+  for (uint i = 0; i < n; ++i) count[suffixes[i].rightRank]++;
   // compute cumulative counts
   for (uint i = 1; i < k; ++i) count[i] += count[i-1];
   // sort suffixes
@@ -77,7 +72,6 @@ void radixSort(suffix *suffixes, uint n, uint k) {
     output[count[suffixes[i].rightRank]-1] = suffixes[i];
     count[suffixes[i].rightRank]--;
   }
-  
   /* sort by left ranks */
   // reset count
   memset(count, 0, k * sizeof(uint));
@@ -106,7 +100,7 @@ uint makeRanks (suffix *suffixes, uint *rank, uint n) {
   return r;
 }
 
-uint *buildSuffixArray(uchar *text, uint n) {
+uint *buildSuffixArray(char *text, uint n) {
   /* builds a suffix array for text of length n */
 
   // allocate memory for suffix array and suffixes
@@ -117,13 +111,12 @@ uint *buildSuffixArray(uchar *text, uint n) {
   // initialize suffixes
   for (uint i = 0; i < n; i++) {
     suffixes[i].index = i;
-    suffixes[i].leftRank = text[i];
-    suffixes[i].rightRank = (i+1 < n) ? text[i+1] : 0;
+    suffixes[i].leftRank = (uint)text[i];
+    suffixes[i].rightRank = (i+1 < n) ? (uint)text[i+1] : 0;
   }
   // sort suffixes according to their left and right ranks
   radixSort(suffixes, n, 256);
-  // length of sorted suffixes
-  uint l = 2; 
+  uint l = 2; // length of sorted suffixes
 
   // repeat until all suffixes are sorted
   while (l < n) {
@@ -148,7 +141,7 @@ uint *buildSuffixArray(uchar *text, uint n) {
   return sa;
 }
 
-uint *buildLCPArray(uchar *text, uint *sa, uint n) {
+uint *buildLCPArray(char *text, uint *sa, uint n) {
   /* builds a longest common prefix array for text of length n
      and suffix array sa */
   uint *lcp = safeCalloc(n, sizeof(uint));
@@ -169,7 +162,7 @@ uint *buildLCPArray(uchar *text, uint *sa, uint n) {
   return lcp;
 }
 
-void matcher(uchar *pattern, uchar *text, uint *sa, uint *lcp, uint n, uint m) {
+void matcher(char *pattern, char *text, uint *sa, uint *lcp, uint n, uint m) {
   /* finds all occurences of pattern in text in O(mlogn) time, using binary search */
   uint l = 0, r = n-1, i, j, mid; 
   bool found = false;
@@ -201,8 +194,7 @@ void matcher(uchar *pattern, uchar *text, uint *sa, uint *lcp, uint n, uint m) {
   // find end of occurences
   while (end < n-1 && lcp[end+1] >= m) end++;
   // print valid shifts
-  printf("Pattern: %s\n", pattern);
-  printf("Shifts: ");
+  printf("Pattern shifts: ");
   for (uint i = start; i <= end; i++) {
     printf("%d", sa[i]);
     if (i < end) printf(", ");
@@ -210,7 +202,7 @@ void matcher(uchar *pattern, uchar *text, uint *sa, uint *lcp, uint n, uint m) {
   printf("\n");
 }
 
-void getLrs(uchar *text, uint *sa, uint *lcp, uint n) {
+void getLrs(char *text, uint *sa, uint *lcp, uint n) {
   /* finds all longest repeated substrings in text in O(n) time */
 
   // find length of longest repeated substring
@@ -238,30 +230,29 @@ void getLrs(uchar *text, uint *sa, uint *lcp, uint n) {
   }
 }
 
-void getNoSubs(uchar *text, uint *sa, uint *lcp, uint n) {
-  /* computes the total number of substrings in text 
-     without counting duplicates in O(n) time */
+void getUniqueSubs(char *text, uint *sa, uint *lcp, uint n) {
+  /* computes the number of unique substrings in text in O(n) time */
   uint lcpSum = 0;
   for (uint i = 1; i < n; ++i)
     lcpSum += lcp[i];
-  printf("Number of non-duplicate substrings: %d\n", n*(n+1)/2 - lcpSum);
+  printf("Number of unique substrings: %d\n", n*(n+1)/2 - lcpSum);
 }
 
-void getLps(uchar *text, uint n) {
-  /* computes the longest palindromic substring in text in O(nlogn) time */
+void getLps(char *text, uint n) {
+  /* computes the longest palindromic substring in text in O(n) time */
   uint *lps = safeCalloc(n, sizeof(uint));
   // concatenate text and its reverse
-  uchar *str = safeCalloc(2*n, sizeof(uchar));
-  for (uint i = 0; i < n; ++i) str[i] = tolower(text[i]);
-  for (uint i = 0; i < n; ++i) str[n+i] = tolower(text[n-i-1]);
+  char *str = safeCalloc(2*n+1, sizeof(char));
+  for (uint i = 0; i < n; ++i) str[i] = text[i];
+  for (uint i = 0; i < n; ++i) str[n+i] = text[n-i-1];
+  str[2*n] = '\0';
   // build suffix array and LCP array
   uint *sa = buildSuffixArray(str, 2*n);
   uint *lcp = buildLCPArray(str, sa, 2*n);
-
   // find longest palindromic substring
   uint max = 0, k = 0;
   for (uint i = 1; i < 2*n; ++i) {
-    if ((sa[i] < n && sa[i-1] >= n) || (sa[i] >= n && sa[i-1] < n)) {
+    if ((sa[i] < n && sa[i-1] > n) || (sa[i] > n && sa[i-1] < n)) {
       if (lcp[i] > max) {
         max = lcp[i];
         k = sa[i];
@@ -277,8 +268,8 @@ void getLps(uchar *text, uint n) {
 
 int main() {
   uint n, m; // lengths of text and pattern
-  uchar *pattern = readString(&m, 1); 
-  uchar *text = readString(&n, 0); 
+  char *pattern = readString(&m, 1); 
+  char *text = readString(&n, 0); 
 
   // build suffix array and LCP array
   uint *sa = buildSuffixArray(text, n); 
@@ -290,8 +281,8 @@ int main() {
   // find longest repeated substring
   getLrs(text, sa, lcp, n);
 
-  // compute number of substrings in text
-  getNoSubs(text, sa, lcp, n);
+  // compute number of unique substrings
+  getUniqueSubs(text, sa, lcp, n);
 
   // compute longest palindromic substring
   getLps(text, n);

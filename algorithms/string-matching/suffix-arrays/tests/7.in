@@ -1,0 +1,34 @@
+quaternion
+On October 16, 1843, Sir William Rowan Hamilton was crossing the Royal Canal, Dublin,
+with his wife, on his way to presiding over a meeting of the Royal Irish Academy.
+While crossing Brougham Bridge, he had a moment of inspiration, and discovered the
+quaternions, in the process carving their fundamental equation i2 = j2 = k2 = ijk = -1
+into the stone of this bridge. Since 1989, an annual ‘pilgrimage’ called the Hamilton
+Walk is held from Dunsink Observatory to this Royal Canal bridge, in which scientists
+and mathematicians remember this inspirational moment.
+The year 1843 was around the time that mathematicians were attempting to put the
+concept of complex numbers, a 2-dimensional system based on the equation i2 = -1,
+on a more solid, mathematical footing. Hamilton was trying, unsuccessfully, to obtain
+a 3-dimensional system of numbers akin to the 2-dimensional complex numbers.
+For some reason, his focus must have shifted momentarily to a 4-dimensional system,
+perhaps due to the futility of his 3-dimensional endeavours. While crossing this
+bridge, this idea of a system of numbers based on the four numbers 1, i, j and k that
+satisfy the above equations came to him, and the rest is history.
+Hamilton was so proud of his quaternions that he demanded that they are to be studied
+in school. Soon, they became a compulsory examination topic in Dublin. He also founded
+a ‘school of quaternionists’ to continue to popularise the subject. One reason why
+Hamilton was so obsessed with quaternions was the discovery that they can describe what
+we nowadays call vectors – a word coined by Hamilton himself – and the operations which
+are referred to as the scalar and vector products.
+Unfortunately, in the 1880s, today’s vector techniques, spearheaded by Gibbs and
+Heaviside, began taking over, partly because the way Hamilton described quaternions
+in his posthumous book Elements of Quaternions, containing no fewer than 762 pages,
+was difficult to read. Physicists started to favour Gibbs’ and Heaviside’s approach
+to vectors, which was seen to be simpler.
+The story, however, does have a happy ending. At around the start of this century,
+quaternions were brought back to life, finding applications in computer vision, quantum
+physics, robotics and in the fast implementation of 3-dimensional computer graphics.
+This is because quaternions can describe spatial rotations in a more compact way than
+using other methods such as matrices, allowing such rotations to be implemented in a
+more efficient manner. Thus, almost 200 years later, Hamilton can finally have a
+contented sigh in his grave.

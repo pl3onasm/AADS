@@ -52,6 +52,7 @@ char *readString(uint *size, short type) {
   char tok = type ? '\n' : EOF;   // type = 1: read until newline
   char *str = safeCalloc(100, sizeof(char));
   while (scanf("%c", &c) == 1 && c != tok) {
+    if (c == '\n') c = ' '; // replace newline with space
     str[len++] = c; 
     if (len % 100 == 0) str = safeRealloc(str, (len+100) * sizeof(char));
   }

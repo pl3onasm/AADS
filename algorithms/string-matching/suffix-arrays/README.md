@@ -15,7 +15,7 @@ Given the suffix array, we can find all occurrences of a pattern $P[0:m-1]$ in a
 
 We can also find the longest repeated substring(s) in a text by finding the maximum value in the LCP array and then going through the LCP array again and finding all the indices where the LCP array has this maximum value. If this maximum value appears at index $i$, then the longest repeated substring is the substring starting at index $SA[i]$ with length $LCP[i]$. In the example above, we find the maximum value in the LCP array to be 3. Thus, the longest repeated substring starts at $SA[2] = 1$ and has length $LCP[2] = 3$, and is `ana`.
 
-Another thing we can easily compute is the cardinality of the set containing all substrings of the text, i.e. the number of all substrings without counting any duplicates. We can do this by taking the sum of the lengths of the suffixes (which represents the total number of substrings) and then subtracting the sum of the values in the LCP array (which represents the number of duplicate substrings). Thus, the number of unique substrings is:
+Another thing we can easily compute is the cardinality of the set containing all substrings of the text, i.e. the number of all substrings without counting any duplicates. We can do this by taking the sum of the lengths of the suffixes (which represents the total number of substrings) and then subtracting the sum of the values in the LCP array (which represents the number of duplicate substrings). Thus, the number of non-duplicate substrings is:
 
 $$\frac{n (n + 1)}{2}  - \sum_{i=0}^{n-1} LCP[i]$$
 
