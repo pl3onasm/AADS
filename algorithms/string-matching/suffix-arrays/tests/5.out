@@ -1,6 +1,6 @@
 Pattern: is
-Shifts: 78, 138, 35, 85
+Shifts (4): 78, 138, 35, 85
 Longest repeated substrings:
-2 times:  word or phrase
+  2 times:  word or phrase
 Number of non-duplicate substrings: 37639
-Longest palindromic substring:  saippuakivikauppias
+Longest palindromic substring:  saippuakivikauppias 

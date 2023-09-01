@@ -7,11 +7,11 @@ into the stone of this bridge. Since 1989, an annual ‘pilgrimage’ called the
 Walk is held from Dunsink Observatory to this Royal Canal bridge, in which scientists
 and mathematicians remember this inspirational moment.
 The year 1843 was around the time that mathematicians were attempting to put the
-concept of complex numbers, a 2-dimensional system based on the equation i2 = -1,
+concept of complex numbers, a two-dimensional system based on the equation i2 = -1,
 on a more solid, mathematical footing. Hamilton was trying, unsuccessfully, to obtain
-a 3-dimensional system of numbers akin to the 2-dimensional complex numbers.
-For some reason, his focus must have shifted momentarily to a 4-dimensional system,
-perhaps due to the futility of his 3-dimensional endeavours. While crossing this
+a three-dimensional system of numbers akin to the two-dimensional complex numbers.
+For some reason, his focus must have shifted momentarily to a four-dimensional system,
+perhaps due to the futility of his three-dimensional endeavours. While crossing this
 bridge, this idea of a system of numbers based on the four numbers 1, i, j and k that
 satisfy the above equations came to him, and the rest is history.
 Hamilton was so proud of his quaternions that he demanded that they are to be studied
@@ -27,7 +27,7 @@ was difficult to read. Physicists started to favour Gibbs’ and Heaviside’s a
 to vectors, which was seen to be simpler.
 The story, however, does have a happy ending. At around the start of this century,
 quaternions were brought back to life, finding applications in computer vision, quantum
-physics, robotics and in the fast implementation of 3-dimensional computer graphics.
+physics, robotics and in the fast implementation of three-dimensional computer graphics.
 This is because quaternions can describe spatial rotations in a more compact way than
 using other methods such as matrices, allowing such rotations to be implemented in a
 more efficient manner. Thus, almost 200 years later, Hamilton can finally have a

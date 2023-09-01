@@ -1,6 +1,6 @@
 Pattern: ta
-Shifts: 4, 2
+Shifts (2): 4, 2
 Longest repeated substrings:
-2 times: atat
+  2 times: atat
 Number of non-duplicate substrings: 18
 Longest palindromic substring: atata

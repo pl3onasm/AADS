@@ -13,6 +13,7 @@
 #include <stdlib.h>
 
 typedef unsigned int uint;
+typedef unsigned char uchar;
 #define d 256  // number of characters in the alphabet, d = |Σ|
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 
@@ -48,15 +49,15 @@ uint **newM (uint m, uint n) {
   return M;
 }
 
-char *readString(uint *size, short type) {
+uchar *readString(uint *size, short type) {
   /* reads a string from stdin and stores its length in size */
-  char c; uint len = 0; 
-  char tok = type ? '\n' : EOF;   // type = 1: read until newline
-  char *str = safeCalloc(100, sizeof(char));
+  uchar c; uint len = 0; 
+  uchar tok = type ? '\n' : EOF;   // type = 1: read until newline
+  uchar *str = safeCalloc(100, sizeof(uchar));
   while (scanf("%c", &c) == 1 && c != tok) {
     if (c == '\n') c = ' '; // replace newline with space
     str[len++] = c; 
-    if (len % 100 == 0) str = safeRealloc(str, (len+100) * sizeof(char));
+    if (len % 100 == 0) str = safeRealloc(str, (len+100) * sizeof(uchar));
   }
   str[len] = '\0';
   *size = len;
@@ -70,7 +71,7 @@ void freeDelta (uint **delta, uint pLen) {
   free(delta);
 }
 
-bool isSuffix (char *pattern, uint q, short a, uint k) {
+bool isSuffix (uchar *pattern, uint q, short a, uint k) {
   /* checks whether the prefix of length k of P 
      is a suffix of Pq + a */
   if (pattern[k-1] != a) return false;
@@ -79,7 +80,7 @@ bool isSuffix (char *pattern, uint q, short a, uint k) {
   return true;
 }
 
-uint **computeDelta (char *pattern, uint pLen) {
+uint **computeDelta (uchar *pattern, uint pLen) {
   /* computes the transition function of the automaton */
   uint **delta = newM(pLen+1, d);  
 
@@ -95,7 +96,7 @@ uint **computeDelta (char *pattern, uint pLen) {
   return delta;
 }
 
-void matcher(char *text, uint tLen, uint** delta, uint pLen) {
+void matcher(uchar *text, uint tLen, uint** delta, uint pLen) {
   /* matches the pattern against the text */
   bool found = false;   // match found?
   for (uint i = 0, q = 0; i < tLen; i++) {
@@ -111,11 +112,11 @@ void matcher(char *text, uint tLen, uint** delta, uint pLen) {
   else printf("No matches found.\n");
 }
 
-int main (int argc, char *argv[]) {
+int main () {
   uint tLen, pLen;
 
-  char *pattern = readString(&pLen, 1);
-  char *text = readString(&tLen, 0);
+  uchar *pattern = readString(&pLen, 1);
+  uchar *text = readString(&tLen, 0);
 
   uint **delta = computeDelta(pattern, pLen);
   matcher(text, tLen, delta, pLen);

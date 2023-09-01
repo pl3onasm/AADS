@@ -1,6 +1,6 @@
 Pattern: catcat
-Shifts: 525
+Shifts (1): 525
 Longest repeated substrings:
-2 times: gccgaaaaatgatacgctct
+  2 times: gccgaaaaatgatacgctct
 Number of non-duplicate substrings: 13206164
 Longest palindromic substring: tttacgtgcattt

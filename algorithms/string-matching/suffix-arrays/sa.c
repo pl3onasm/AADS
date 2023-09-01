@@ -3,13 +3,13 @@
    email: pl3onasm@gmail.com
    license: MIT, see LICENSE file in repository root folder
    description: suffix arrays
-   assumption: Σ is the extended ASCII alphabet (256 ucharacters)
+   assumption: Σ is the extended ASCII alphabet (256 characters)
 */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
+#include <ctype.h>
 
 typedef unsigned int uint;
 typedef unsigned char uchar;
@@ -61,10 +61,11 @@ uchar *readString(uint *size, short type) {
 }
 
 void radixSort(suffix *suffixes, uint n, uint k) {
-  /* sorts suffixes according to their left and right ranks by first
-     using counting sort on the right ranks and then on the left ranks */
+  /* sorts suffixes by first using counting sort on the 
+     right ranks and then on the left ranks */
   uint *count = safeCalloc(k, sizeof(uint));
   suffix *output = safeCalloc(n, sizeof(suffix));
+  
   /* sort by right ranks */
   // count occurences of each rank
   for (uint i = 0; i < n; ++i) {
@@ -156,14 +157,14 @@ uint *buildLCPArray(uchar *text, uint *sa, uint n) {
 
   // compute rank of each suffix
   for (uint i = 0; i < n; i++) rank[sa[i]] = i;
-  lcp[0] = 0; // lcp of first suffix is 0 (no preceding suffix)
-  uint l = 0; // length of longest common prefix
+  lcp[0] = 0;  // lcp of first suffix is 0 (no preceding suffix)
+  uint l = 0;  // length of longest common prefix
   for (uint i = 0; i < n; i++) {
     if (rank[i] == 0) continue; // first suffix has no preceding suffix
-    uint j = sa[rank[i]-1]; // preceding suffix
-    while (i+l < n && j+l < n && text[i+l] == text[j+l]) l++; // compute lcp
-    lcp[rank[i]] = l; // store lcp
-    if (l > 0) l--; // lcp of next suffix is at least one shorter
+    uint j = sa[rank[i]-1];     // preceding suffix
+    while (i+l < n && j+l < n && text[i+l] == text[j+l]) l++; 
+    lcp[rank[i]] = l; 
+    if (l > 0) l--;   // lcp of next suffix is at least one shorter
   }
   free(rank);
   return lcp;
@@ -185,7 +186,7 @@ void matcher(uchar *pattern, uchar *text, uint *sa, uint *lcp, uint n, uint m) {
       found = true;
       break;
     }
-    // pattern is lexicographically larger ?
+    // pattern lexicographically larger ?
     if (j < m && text[i+j] < pattern[j]) l = mid+1; 
     // pattern is lexicographically smaller
     else r = mid-1; 
@@ -202,7 +203,7 @@ void matcher(uchar *pattern, uchar *text, uint *sa, uint *lcp, uint n, uint m) {
   while (end < n-1 && lcp[end+1] >= m) end++;
   // print valid shifts
   printf("Pattern: %s\n", pattern);
-  printf("Shifts: ");
+  printf("Shifts (%d): ", end-start+1);
   for (uint i = start; i <= end; i++) {
     printf("%d", sa[i]);
     if (i < end) printf(", ");
@@ -228,8 +229,8 @@ void getLrs(uchar *text, uint *sa, uint *lcp, uint n) {
     if (lcp[k] == max) {
       r = 0;
       while (k+r < n-1 && lcp[k+r] == max) r++;
-      if (r) printf("%d times: ", r+1);
-      else printf("1 time: ");
+      if (r) printf("  %d times: ", r+1);
+      else printf("  1 time: ");
       for (uint i = 0; i < max; i++) printf("%c", text[sa[k]+i]);
       printf("\n");
       k += r;
@@ -261,7 +262,7 @@ void getLps(uchar *text, uint n) {
   // find longest palindromic substring
   uint max = 0, k = 0;
   for (uint i = 1; i < 2*n; ++i) {
-    if ((sa[i] < n && sa[i-1] >= n) || (sa[i] >= n && sa[i-1] < n)) {
+    if (sa[i] == 2*n - sa[i-1] - lcp[i]) {
       if (lcp[i] > max) {
         max = lcp[i];
         k = sa[i];

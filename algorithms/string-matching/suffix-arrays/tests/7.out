@@ -1,6 +1,6 @@
 Pattern: quaternion
-Shifts: 1400, 2356, 1858, 1241, 1502, 2167, 251
+Shifts (7): 1415, 2375, 1873, 1256, 1517, 2182, 251
 Longest repeated substrings:
-2 times: -dimensional system
-Number of non-duplicate substrings: 3423510
+  2 times: -dimensional system
+Number of non-duplicate substrings: 3473268
 Longest palindromic substring: refer

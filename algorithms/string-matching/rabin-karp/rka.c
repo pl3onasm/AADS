@@ -12,6 +12,7 @@
 
 typedef unsigned int uint;
 typedef unsigned long ul;
+typedef unsigned char uchar;
 #define d 256  // number of characters in the alphabet, d = |Σ|
 
 typedef enum {               
@@ -39,22 +40,22 @@ void *safeRealloc (void *ptr, int newSize) {
   return ptr;
 }
 
-char *readString(uint *size, short type) {
+uchar *readString(uint *size, short type) {
   /* reads a string from stdin and stores its length in size */
-  char c; uint len = 0; 
-  char tok = type ? '\n' : EOF;   // type = 1: read until newline
-  char *str = safeMalloc(100*sizeof(char));
+  uchar c; uint len = 0; 
+  uchar tok = type ? '\n' : EOF;   // type = 1: read until newline
+  uchar *str = safeMalloc(100*sizeof(uchar));
   while (scanf("%c", &c) == 1 && c != tok) {
     if (c == '\n') c = ' '; // replace newline with space
     str[len++] = c; 
-    if (len % 100 == 0) str = safeRealloc(str, (len+100) * sizeof(char));
+    if (len % 100 == 0) str = safeRealloc(str, (len+100) * sizeof(uchar));
   }
   str[len] = '\0';
   *size = len;
   return str;
 }
 
-void computeShifts (char *text, uint tLen, char *pattern, uint pLen) {
+void computeShifts (uchar *text, uint tLen, uchar *pattern, uint pLen) {
   /* determines all valid shifts of pattern in text and prints them */
   if (pLen > tLen) {
     printf("Pattern is longer than text. No shifts found.\n"); 
@@ -93,11 +94,11 @@ void computeShifts (char *text, uint tLen, char *pattern, uint pLen) {
   else printf("No matches found.\n");
 }
 
-int main (int argc, char *argv[]) {
+int main () {
   uint tLen, pLen;
 
-  char *pattern = readString(&pLen, 1);
-  char *text = readString(&tLen, 0);
+  uchar *pattern = readString(&pLen, 1);
+  uchar *text = readString(&tLen, 0);
 
   computeShifts(text, tLen, pattern, pLen);
 
