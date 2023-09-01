@@ -6,7 +6,7 @@
 | Chap 32.2 | Chap 32.2 | [Rabin-Karp Algorithm](https://github.com/pl3onasm/AADS/tree/main/algorithms/string-matching/rabin-karp)
 | Chap 32.3 | Chap 32.3 | [String-matching Automata](https://github.com/pl3onasm/AADS/tree/main/algorithms/string-matching/finite-automata)
 | Chap 32.4 | Chap 32.4 | [Knuth-Morris-Pratt Algorithm](https://github.com/pl3onasm/AADS/tree/main/algorithms/string-matching/knuth-morris-pratt)
-| n/a | Chap 32.5 | Suffix arrays
+| n/a | Chap 32.5 | [Suffix Arrays](https://github.com/pl3onasm/CLRS/tree/main/algorithms/string-matching/suffix-arrays)
 
 &nbsp;
 
