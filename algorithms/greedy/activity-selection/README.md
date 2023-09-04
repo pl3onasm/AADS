@@ -26,6 +26,8 @@ where $k$ is the index of the activity that we choose to include in the solution
 
 In order to simplify the implementation, we need to add two sentinel activities, one with start time $0$ and finish time $0$, and another one with start time $\infty$ and finish time $\infty$. We use the example from section 15.1 of the textbook to illustrate the implementation. It contains the following set of activities:
 
+<div align="center">
+
 | Activity | Start time | Finish time |
 | :--- | :--- | :--- |
 | $a_1$ | 1 | 4 |
@@ -40,7 +42,9 @@ In order to simplify the implementation, we need to add two sentinel activities,
 | $a_{10}$ | 2 | 14 |
 | $a_{11}$ | 12 | 16 |
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+</div>
+&nbsp;  
+
 Implementation using bottom-up DP: [ASP - Bottom-up DP](https://github.com/pl3onasm/AADS/blob/main/algorithms/greedy/activity-selection/asp-1.c)
 
 Note the similarity with the [bottom-up DP implementation for the matrix-chain multiplication problem](https://github.com/pl3onasm/AADS/blob/main/algorithms/dynamic-programming/matrix-chain-mult/mcm-3.c).  
