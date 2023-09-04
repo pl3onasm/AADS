@@ -137,16 +137,9 @@ uint *buildSuffixArray(uchar *text, uint n) {
       suffixes[i].rightRank = (i + l < n) ? rank[i+l] : 0;	
       suffixes[i].index = i;
     }
-    // print suffixes
-    printf("Suffixes (l = %d): ", l);
-    for (uint i = 0; i < n; i++) printf("%d ", suffixes[i].index);
-    printf("\n");
     // sort suffixes according to new ranks
     radixSort(suffixes, n, r+1);
     // double length of sorted suffixes
-    printf("Suffixes (after sorting): ");
-    for (uint i = 0; i < n; i++) printf("%d ", suffixes[i].index);
-    printf("\n");
     l *= 2; 
   }
   // store suffix array
