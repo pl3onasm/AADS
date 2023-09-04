@@ -137,9 +137,16 @@ uint *buildSuffixArray(uchar *text, uint n) {
       suffixes[i].rightRank = (i + l < n) ? rank[i+l] : 0;	
       suffixes[i].index = i;
     }
+    // print suffixes
+    printf("Suffixes (l = %d): ", l);
+    for (uint i = 0; i < n; i++) printf("%d ", suffixes[i].index);
+    printf("\n");
     // sort suffixes according to new ranks
     radixSort(suffixes, n, r+1);
     // double length of sorted suffixes
+    printf("Suffixes (after sorting): ");
+    for (uint i = 0; i < n; i++) printf("%d ", suffixes[i].index);
+    printf("\n");
     l *= 2; 
   }
   // store suffix array
@@ -155,16 +162,19 @@ uint *buildLCPArray(uchar *text, uint *sa, uint n) {
   uint *lcp = safeCalloc(n, sizeof(uint));
   uint *rank = safeCalloc(n, sizeof(uint));
 
-  // compute rank of each suffix
-  for (uint i = 0; i < n; i++) rank[sa[i]] = i;
+  // compute rank of each suffix; this is the inverse of sa
+  // rank[i] = sorted index of suffix i, i.e. position of suffix i in sa
+  for (uint i = 0; i < n; i++) rank[sa[i]] = i; 
+
+  // compute lcp of each suffix
   lcp[0] = 0;  // lcp of first suffix is 0 (no preceding suffix)
   uint l = 0;  // length of longest common prefix
-  for (uint i = 0; i < n; i++) {
-    if (rank[i] == 0) continue; // first suffix has no preceding suffix
-    uint j = sa[rank[i]-1];     // preceding suffix
-    while (i+l < n && j+l < n && text[i+l] == text[j+l]) l++; 
+  for (uint i = 0; i < n; i++) { // goes over suffixes in text order
+    if (rank[i] == 0) continue;  // first suffix has no preceding suffix
+    uint j = sa[rank[i]-1];      // text index of the lexicographically preceding suffix
+    while (i+l < n && j+l < n && text[i+l] == text[j+l]) l++;  
     lcp[rank[i]] = l; 
-    if (l > 0) l--;   // lcp of next suffix is at least one shorter
+    if (l > 0) l--;   // lcp of next suffix is at most one shorter than current lcp
   }
   free(rank);
   return lcp;
@@ -262,11 +272,9 @@ void getLps(uchar *text, uint n) {
   // find longest palindromic substring
   uint max = 0, k = 0;
   for (uint i = 1; i < 2*n; ++i) {
-    if (sa[i] == 2*n - sa[i-1] - lcp[i]) {
-      if (lcp[i] > max) {
-        max = lcp[i];
-        k = sa[i];
-      }
+    if (lcp[i] > max && sa[i] == 2*n - sa[i-1] - lcp[i]) {
+      max = lcp[i];
+      k = sa[i];
     }
   }
   printf("Longest palindromic substring: ");
