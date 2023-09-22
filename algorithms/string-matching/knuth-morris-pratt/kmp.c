@@ -40,13 +40,6 @@ void *safeRealloc (void *ptr, int newSize) {
   return ptr;
 }
 
-uint **newM (uint m, uint n) {
-  /* allocates memory for a m x n matrix */
-  uint i, **M = safeCalloc(m, sizeof(uint*));
-  for (i = 0; i < m; i++) M[i] = safeCalloc(n, sizeof(uint));
-  return M;
-}
-
 uchar *readString(uint *size, short type) {
   /* reads a string from stdin and stores its length in size */
   uchar c; uint len = 0; 

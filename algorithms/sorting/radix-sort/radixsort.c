@@ -55,7 +55,7 @@ void radixSort (char *dates[], int size) {
 
   // go through the digits from least  
   // significant to most significant
-  for (int i = 9; i >= 0; i--){
+  for (int i = 9; i--;){
     if (i == 4 || i == 7) continue;   // skip the dashes
     countingSort(size, dates, i);
   }
