@@ -22,7 +22,7 @@ During the matching phase, the automaton takes characters from $T$ one at a time
 
 The values of the transition function $\delta$ can be retrieved in constant time during the matching phase by building a transition table of size $m \times |\Sigma|$ in the preprocessing phase. This table is populated by considering all possible values of $q$ and $a$ and computing $\delta(q, a)$ for each combination of $q$ and $a$. The running time of the preprocessing phase is $O(m^3|\Sigma|)$, since there are $m$ possible values of $q$, $d = |\Sigma|$ possible values of $a$, and for each combination we need to determine the maximum length $k$ such that $P_k \sqsupset P_qa$. This last step takes $O(m^2)$ time, since we need to try each possible value of $k$ by decrementing $k$ at most $m$ times and at each of these steps we have to check whether $P_k \sqsupset P_qa$ by comparing at most $m$ characters. The running time of the matching phase is $O(n)$, since each character of $T$ is read once and each transition can be performed in constant time using the transition table.
 
-Implementation: [SMA](https://github.com/pl3onasm/AADS/blob/main/algorithms/string-matching/finite-automata/sma-1.c)
+Implementation: [SMA](https://github.com/pl3onasm/AADS/blob/main/algorithms/string-matching/finite-automata/sma.c)
 
 [^1]: We use the notation P<sub>q</sub>a to denote the string P[0:q-1]a, i.e. the q-character prefix of P followed by the character a.
 
