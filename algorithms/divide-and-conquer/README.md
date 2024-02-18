@@ -11,8 +11,8 @@
 | Prob 2-4 | Prob 2-4 | [Inversion Count](inversion-count)|
 | Chap 9.2-3 | Chap 9.2-3 | [Quickselect](quickselect)|
 | Chap 33.4 | n/a | [Closest Pair of Points](closest-pair-of-points)|
-| Chap 2.3 | Chap 2.3 | [Merge Sort](merge-sort)|
-| Chap 7.1-3 | Chap 7.1-3 | [Quicksort](quick-sort)|
+| Chap 2.3 | Chap 2.3 | [Merge Sort](https://github.com/pl3onasm/CLRS/tree/main/algorithms/sorting/merge-sort)|
+| Chap 7.1-3 | Chap 7.1-3 | [Quicksort](https://github.com/pl3onasm/CLRS/tree/main/algorithms/sorting/quick-sort)|
 
 &nbsp;
 
