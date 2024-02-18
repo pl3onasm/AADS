@@ -4,13 +4,13 @@
 
 | ${\color{peru}\text{CLRS}^3}$ | ${\color{peru}\text{CLRS}^4}$ | ${\color{peru}\text{Link}}$ |
 |:---:|:---:|:---|
-| Chap 4.1 | n/a | [Maximum Subarray](max-subarray) |
-| Chap 4.2 | Chap 4.1-2 | [Strassen's Matrix Multiplication](strassen)|
-| n/a | n/a | [Karatsuba Multiplication](karatsuba)|
-| Ex 2.3-5 | Ex 2.3-6 | [Binary Search](binsearch)|
-| Prob 2-4 | Prob 2-4 | [Inversion Count](inversion-count)|
-| Chap 9.2-3 | Chap 9.2-3 | [Quickselect](quickselect)|
-| Chap 33.4 | n/a | [Closest Pair of Points](closest-pair-of-points)|
+| Chap 4.1 | n/a | [Maximum Subarray](https://github.com/pl3onasm/CLRS/tree/main/algorithms/divide-and-conquer/max-subarray) |
+| Chap 4.2 | Chap 4.1-2 | [Strassen's Matrix Multiplication](https://github.com/pl3onasm/CLRS/tree/main/algorithms/divide-and-conquer/strassen)|
+| n/a | n/a | [Karatsuba Multiplication](https://github.com/pl3onasm/CLRS/tree/main/algorithms/divide-and-conquer/karatsuba)|
+| Ex 2.3-5 | Ex 2.3-6 | [Binary Search](https://github.com/pl3onasm/CLRS/tree/main/algorithms/divide-and-conquer/binsearch)|
+| Prob 2-4 | Prob 2-4 | [Inversion Count](https://github.com/pl3onasm/CLRS/tree/main/algorithms/divide-and-conquer/inversion-count)|
+| Chap 9.2-3 | Chap 9.2-3 | [Quickselect](https://github.com/pl3onasm/CLRS/tree/main/algorithms/divide-and-conquer/quickselect)|
+| Chap 33.4 | n/a | [Closest Pair of Points](https://github.com/pl3onasm/CLRS/tree/main/algorithms/divide-and-conquer/closest-pair-of-points)|
 | Chap 2.3 | Chap 2.3 | [Merge Sort](https://github.com/pl3onasm/CLRS/tree/main/algorithms/sorting/merge-sort)|
 | Chap 7.1-3 | Chap 7.1-3 | [Quicksort](https://github.com/pl3onasm/CLRS/tree/main/algorithms/sorting/quick-sort)|
 
