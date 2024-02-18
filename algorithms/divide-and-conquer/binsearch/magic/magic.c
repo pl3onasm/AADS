@@ -1,4 +1,4 @@
-/* file: magicalNums.c
+/* file: magic.c
    author: David De Potter
    email: pl3onasm@gmail.com
    license: MIT, see LICENSE file in repository root folder
@@ -11,11 +11,7 @@
      O(log(n * min(a, b)))
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>
-
-typedef unsigned long long ull;
+#include "../../../../lib/clib/clib.h"
 
 int gcd (int a, int b) {
   /* returns the greatest common divisor of a and b */
@@ -30,20 +26,23 @@ int lcm (int a, int b) {
 
 ull nthMagicalNumber (int n, int a, int b) {
   /* returns the n-th magical number */
-  if (a > b) return nthMagicalNumber(n, b, a); // make sure a <= b
-  ull l = 0, r = n * a, m;
+  if (a > b) 
+    return nthMagicalNumber(n, b, a); // make sure a <= b
+  
+  ull left = 0, right = n * a, mid;
   int lcmab = lcm(a, b);
-  while (l < r) {
-    m = l + (r - l) / 2;
-    if (m/a + m/b - m/lcmab < n) l = m + 1;
-    else r = m;
+
+  while (left < right) {
+    mid = left + (right - left) / 2;
+    if (mid/a + mid/b - mid/lcmab < n) left = mid + 1;
+    else right = mid;
   }
-  return l;
+  return left;
 }
 
 int main () {
   int n, a, b;
-  scanf("%d %d %d", &n, &a, &b);
+  (void)! scanf("%d %d %d", &n, &a, &b);
   printf("%llu\n", nthMagicalNumber(n, a, b));
   return 0;
 }

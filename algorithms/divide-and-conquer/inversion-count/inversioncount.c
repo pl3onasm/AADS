@@ -9,18 +9,7 @@
      solution in O(nlogn), since it's just mergesort with a counter.
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-
-void *safeMalloc (int n) {
-  /* malloc that checks if the allocation was succesful */
-  void *ptr = malloc(n);
-  if (ptr == NULL) {
-    printf("Error: malloc(%d) failed. Out of memory?\n", n);
-    exit(EXIT_FAILURE);
-  }
-  return ptr;
-}
+#include "../../../lib/clib/clib.h"
 
 int merge(int *arr, int left, int mid, int right) {
   /* merges two sorted arrays, and counts the number of inversions */
@@ -55,14 +44,6 @@ int inversionCount(int *arr, int left, int right) {
     count += merge(arr, left, mid, right);
   }
   return count;
-}
-
-int *readIntVector (int size) {
-  /* reads a vector of integers from stdin */
-  int *vect = safeMalloc(size * sizeof(int));
-  for (int i = 0; i < size; i++)
-    scanf("%d", vect + i);
-  return vect;
 }
 
 int main(int argc, char **argv){

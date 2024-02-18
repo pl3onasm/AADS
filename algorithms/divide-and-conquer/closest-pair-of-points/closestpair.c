@@ -9,11 +9,9 @@
      the master theorem.
 */ 
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <math.h>
 #include <float.h>
-#define MIN(a, b) ((a) < (b) ? (a) : (b))
+#include "../../../lib/clib/clib.h"
 
 //:::::::::::::::::::::::: data structures ::::::::::::::::::::::::://
 
@@ -28,29 +26,17 @@ typedef struct pair {
   double dist;          // distance between the two points
 } pair;
 
-//::::::::::::::::::::::: memory management :::::::::::::::::::::::://
-
-void *safeCalloc (int n, int size) {
-  /* allocates n elements of size size, initializing them to 0, and
-     checks whether the allocation was successful */
-  void *ptr = calloc(n, size);
-  if (ptr == NULL) {
-    printf("Error: calloc(%d, %d) failed. Out of memory?\n", n, size);
-    exit(EXIT_FAILURE);
-  }
-  return ptr;
-}
 
 //:::::::::::::::::::::::: helper functions :::::::::::::::::::::::://
 
-int xcompare(const void *a, const void *b) {
+int compareXs(const void *a, const void *b) {
   /* compares two points by x-coordinate */
   point *p1 = (point*) a;
   point *p2 = (point*) b;
   return p1->x - p2->x;
 }
 
-int ycompare(const void *a, const void *b) {
+int compareYs(const void *a, const void *b) {
   /* compares two points by y-coordinate */
   point *p1 = (point*) a;
   point *p2 = (point*) b;
@@ -74,7 +60,7 @@ void setPair (pair *p, point p1, point p2, double dist) {
 pair findClosestPairInStrip (point *ypoints, int ysize, 
   double median, double delta) {
   /* finds closest pair in strip of width 2*delta around median */
-  point *strip = safeCalloc (ysize, sizeof(point));
+  CREATE_ARRAY(point, strip, ysize);
   int len = 0; pair p = {{0,0}, {0,0}, DBL_MAX};
 
   // make strip of points within 2*delta around median
@@ -117,8 +103,8 @@ pair findClosestPair(point *xpoints, point *ypoints, int ysize, int n) {
 
   // DIVIDE: split ypoints into left and right half based on
   //         whether they are left or right of the median
-  point *yrpoints = safeCalloc(ysize, sizeof(point));
-  point *ylpoints = safeCalloc(ysize, sizeof(point));
+  CREATE_ARRAY(point, yrpoints, ysize);
+  CREATE_ARRAY(point, ylpoints, ysize);
   int yl = 0, yr = 0, mid = n / 2;
   int median = xpoints[mid].x;
   for (int i = 0; i < ysize; ++i) {
@@ -148,19 +134,19 @@ pair findClosestPair(point *xpoints, point *ypoints, int ysize, int n) {
 
 int main(int argc, char *argv[]) {
   int n; 
-  scanf("%d\n", &n);
-  point *xpoints = safeCalloc(n, sizeof(point));
-  point *ypoints = safeCalloc(n, sizeof(point));
+  (void)! scanf("%d\n", &n);
+  CREATE_ARRAY(point, xpoints, n);
+  CREATE_ARRAY(point, ypoints, n);
 
   // read points from stdin
   for (int i = 0; i < n; i++) {
-    scanf("(%lf,%lf),", &xpoints[i].x, &xpoints[i].y);
+    (void)! scanf("(%lf,%lf),", &xpoints[i].x, &xpoints[i].y);
     ypoints[i] = xpoints[i];
   } 
   
   // presort points once by x and once by y coordinates
-  qsort(xpoints, n, sizeof(point), xcompare);
-  qsort(ypoints, n, sizeof(point), ycompare);
+  qsort(xpoints, n, sizeof(point), compareXs);
+  qsort(ypoints, n, sizeof(point), compareYs);
 
   // find closest pair of points
   pair pair = findClosestPair(xpoints, ypoints, n, n);

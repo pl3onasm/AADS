@@ -18,7 +18,7 @@ Since a magical number divides either $a$ or $b$, the sharpest upper bound can b
 
 If the number of magical numbers is less than $n$, we know that the $n$-th magical number is greater than the middle number, and we set the lower bound to the middle number plus 1 and search the right half of the solution space. If the number of magical numbers is greater than or equal to $n$, we set the upper bound to the middle number and search the left half of the solution space. This process is repeated until we find the number of magical numbers to be exactly $n$.
 
-Implementation: [Magical numbers](https://github.com/pl3onasm/AADS/blob/main/algorithms/divide-and-conquer/binsearch/magicalNums.c)
+Implementation: [Magical numbers](magic/magic.c)
 
 ## Example 2: aggressive cows
 
@@ -28,7 +28,7 @@ The problem involves $k$ aggressive cows and $n$ stalls. Each stall can hold at 
 
 The solution space consists of the increasing sequence of minimum distances $d_i$ between the stalls. The lower bound is 0, and the upper bound is the distance between the first and last stall. Using a binary search, we can then find the largest distance $d$ such that each cow can be assigned to a stall and that the distance between any two of them is *at least* $d$.
 
-Implementation: [Agressive cows](https://github.com/pl3onasm/AADS/blob/main/algorithms/divide-and-conquer/binsearch/cows.c)
+Implementation: [Agressive cows](cows/cows.c)
 
 ## Example 3: minimum maximum sum
 

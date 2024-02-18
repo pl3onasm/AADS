@@ -7,29 +7,11 @@
    time complexity: O(nlogn)
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>
+#include "../../../lib/clib/clib.h"
 
 typedef struct {
   int low, high, sum;
 } Sub;
-
-void *safeMalloc (int n) {
-  void *ptr = malloc(n);
-  if (ptr == NULL) {
-    printf("Error: malloc(%d) failed. Out of memory?\n", n);
-    exit(EXIT_FAILURE);
-  }
-  return ptr;
-}
-
-int *readInts (int size) {
-  int *arr = safeMalloc(size * sizeof(int));
-  for (int i = 0; i < size; i++)
-    scanf("%d", arr + i);
-  return arr;
-}
 
 void printResult (int *arr, Sub max) {
   /* prints the result */
@@ -87,8 +69,11 @@ void getMaxSub (int *arr, Sub *max) {
 
 int main(int argc, char *argv[]) {
   int n;
-  scanf("%d", &n);
-  int *arr = readInts(n);
+  (void)! scanf("%d", &n);
+
+  CREATE_ARRAY(int, arr, n);
+  READ_ARRAY(arr, "%d", n);
+
   Sub max = {0, n-1, 0};
   
   getMaxSub(arr, &max);

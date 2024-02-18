@@ -7,53 +7,10 @@
    time complexity: O(n³), where n is the padding size
 */
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "../../../lib/clib/clib.h"
 
-void *safeCalloc (int n, int size) {
-  /* allocates n elements of size size, initializing them to 0, and
-     checks whether the allocation was successful */
-  void *ptr = calloc(n, size);
-  if (ptr == NULL) {
-    printf("Error: calloc(%d, %d) failed. Out of memory?\n", n, size);
-    exit(EXIT_FAILURE);
-  }
-  return ptr;
-}
-
-int **newM(int n) {
-  /* allocates a n x n matrix */
-  int **m = safeCalloc(n, sizeof(int *));
-  for (int i = 0; i < n; ++i)
-    m[i] = safeCalloc(n, sizeof(int));
-  return m;
-}
-
-void freeM(int **m, int n) {
-  /* frees a n x n matrix */
-  for (int i = 0; i < n; ++i) free(m[i]);
-  free(m);
-}
-
-void printM(int **arr, int m, int n) {
-  /* prints a m x n matrix */
-  for (int i = 0; i < m; ++i) {
-    for (int j = 0; j < n; ++j){
-      printf("%d", arr[i][j]);
-      if (j < n - 1) printf(" ");
-    }
-    printf("\n");
-  }
-}
-
-void readM(int **arr, int m, int n) {
-  /* reads a m x n matrix */
-  for (int i = 0; i < m; ++i)
-    for (int j = 0; j < n; ++j)
-      scanf("%d", &arr[i][j]);
-}
-
-void multiplyM(int **A, int **B, int **C, int n, int i, int k, int j) {
+void mul(int **A, int **B, int **C, size_t n, 
+          size_t i, size_t k, size_t j) {
   /* recursively computes the product of n x n matrices A and B
      and stores the result in n x n matrix C */
 
@@ -64,61 +21,63 @@ void multiplyM(int **A, int **B, int **C, int n, int i, int k, int j) {
   }
   // partition A, B and C into 4 submatrices using indices
   // and recursively multiply the submatrices
-  int n2 = n / 2;
-  int i2 = i + n2;
-  int j2 = j + n2;
-  int k2 = k + n2;
+  size_t n2 = n / 2;
+  size_t i2 = i + n2;
+  size_t j2 = j + n2;
+  size_t k2 = k + n2;
 
   // C₁₁ = A₁₁ * B₁₁ + A₁₂ * B₂₁
-  multiplyM(A, B, C, n2, i, k, j);
-  multiplyM(A, B, C, n2, i, k2, j);
+  mul(A, B, C, n2, i, k, j);
+  mul(A, B, C, n2, i, k2, j);
   // C₁₂ = A₁₁ * B₁₂ + A₁₂ * B₂₂
-  multiplyM(A, B, C, n2, i, k, j2);
-  multiplyM(A, B, C, n2, i, k2, j2);
+  mul(A, B, C, n2, i, k, j2);
+  mul(A, B, C, n2, i, k2, j2);
   // C₂₁ = A₂₁ * B₁₁ + A₂₂ * B₂₁
-  multiplyM(A, B, C, n2, i2, k, j);
-  multiplyM(A, B, C, n2, i2, k2, j);
+  mul(A, B, C, n2, i2, k, j);
+  mul(A, B, C, n2, i2, k2, j);
   // C₂₂ = A₂₁ * B₁₂ + A₂₂ * B₂₂
-  multiplyM(A, B, C, n2, i2, k, j2);
-  multiplyM(A, B, C, n2, i2, k2, j2);
+  mul(A, B, C, n2, i2, k, j2);
+  mul(A, B, C, n2, i2, k2, j2);
 }
 
-int pow2(int m, int l) {
-  /* computes the next power of 2 ≥ m and l */
-  if (m < l) m = l;
-  int p = 1;
+size_t padSize(size_t m, size_t l) {
+  /* computes p = 2^k, where p is the smallest power of 2
+     greater than or equal to max(m, l) */
+  m = MAX(m, l);
+  size_t p = 1;
   while (p < m) p <<= 1;
   return p;
 }
 
 int main(int argc, char *argv[]) {
-  int m, n, k, l;   // matrix dimensions
+  size_t m, n, k, l;   // matrix dimensions
 
-  scanf("%d %d", &m, &n);
-  scanf("%d %d", &k, &l);
+  (void)! scanf("%lu %lu", &m, &n);
+  (void)! scanf("%lu %lu", &k, &l);
 
   if (n != k) { 
     printf("Incompatible matrices.\n");
-    return 1;
+    return 0;
   }
 
-  int p = pow2(m, l); // padding size
+  size_t p = padSize(m, l);
 
   // allocate pxp matrices
-  int **A = newM(p);
-  int **B = newM(p);
-  int **C = newM(p);
+  CREATE_MATRIX(int, A, p, p);
+  CREATE_MATRIX(int, B, p, p);
+  CREATE_MATRIX(int, C, p, p);
 
   // read matrices
-  readM(A, m, n);
-  readM(B, k, l);
+  READ_MATRIX(A, "%d", m, n);
+  READ_MATRIX(B, "%d", k, l);
 
-  multiplyM(A, B, C, p, 0, 0, 0);
-  printM(C, m, l);
+  mul(A, B, C, p, 0, 0, 0);
+  PRINT_MATRIX(C, "%d", m, l);
 
-  freeM(A, p);
-  freeM(B, p);
-  freeM(C, p);
+  FREE_MATRIX(A, p);
+  FREE_MATRIX(B, p);
+  FREE_MATRIX(C, p);
+
   return 0; 
 }
   

@@ -10,32 +10,7 @@
    time complexity: O(n)
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-
-void *safeCalloc (int n) {
-  /* checks if memory allocation was successful */
-  void *p = calloc(n, sizeof(int));
-  if (p == NULL) {
-    printf("Error: malloc(%d) failed. Out of memory?\n", n);
-    exit(EXIT_FAILURE);}
-  return p;
-}
-
-int *readArray (int n) {
-  /* reads input and stores it in an array */
-  int *arr;
-  arr = safeCalloc(n);
-  for (int i = 0; i < n; ++i) scanf("%d", &arr[i]);
-  return arr;
-}
-
-void swap (int i, int j, int *arr) {
-  /* swaps arr[i] and arr[j] */
-  int tmp = arr[i];
-  arr[i] = arr[j];
-  arr[j] = tmp;
-}
+#include "../../../lib/clib/clib.h"
 
 int partition(int *arr, int left, int right, int pivot) {
   /* partitions arr[left..right] around a given pivot value */
@@ -44,25 +19,25 @@ int partition(int *arr, int left, int right, int pivot) {
     // move all elements <= pivot to the low end
     if (arr[i] <= pivot){
       if (arr[i] == pivot) pivotIdx = idx; // save pivot's index
-      swap(i, idx++, arr);
+      SWAP(arr[i], arr[idx++]);
     }
   }
-  swap(pivotIdx, idx-1, arr); // move pivot to its final place
+  SWAP(arr[pivotIdx], arr[idx-1]);  // move pivot to its final place
   return idx-1;
 }
 
-int select (int *arr, int left, int right, int k) {
+int select (int *arr, int left, int right, int kth) {
   /* returns the k-th smallest element in arr[left..right] */
 
   // makes sure that arr's length is divisible by 5
   while ((right - left + 1) % 5) {
     for (int j = left + 1; j <= right; j++) 
       // get the minimum at arr[left]
-      if (arr[left] > arr[j]) swap(left, j, arr);
-    if (k == 1) 
+      if (arr[left] > arr[j]) SWAP(arr[left], arr[j]);
+    if (kth == 1) 
       return arr[left];
     left++;   // move the left boundary by 1 to the right
-    k--;      // update k to reflect the new position 
+    kth--;      // update k to reflect the new position 
               // of the k-th smallest element
   }
 
@@ -89,15 +64,18 @@ int select (int *arr, int left, int right, int k) {
   int q = partition(arr, left, right, pivot);
 
   int i = q - left + 1;   // number of elements ≤ median
-  if (i == k) return arr[q];
-  else if (k < i) return select(arr, left, q - 1, k);
-  else return select(arr, q + 1, right, k - i);
+  if (i == kth) return arr[q];
+  else if (kth < i) return select(arr, left, q - 1, kth);
+  else return select(arr, q + 1, right, kth - i);
 }
 
 int main () {
   int n, k;   // n = number of elements, k = k-th order statistic
-  scanf("%d %d", &n, &k);
-  int *arr = readArray(n);
+  (void)! scanf("%d %d", &n, &k);
+  
+  CREATE_ARRAY(int, arr, n);
+  READ_ARRAY(arr, "%d", n);
+
   printf("%d\n", select(arr, 0, n-1, k));
   free(arr);
   return 0;

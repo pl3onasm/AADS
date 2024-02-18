@@ -1,4 +1,4 @@
-/* file: functions.h
+/* file: clib.h
    author: David De Potter
    description: library containing some useful functions
 */
@@ -10,7 +10,8 @@
 #include <stdlib.h>   // for malloc, calloc, realloc, free
 #include <stddef.h>   // for size_t
 #include <stdbool.h>  // for bool
-#include <string.h>   // for memcpy
+#include <string.h>   // for memcpy, strlen, etc.
+#include <limits.h>   // for INT_MAX, INT_MIN, etc.
 
 //::::::::::::::::::::::::::: TYPEDEFS ::::::::::::::::::::::::::://
 
@@ -28,7 +29,7 @@ typedef unsigned char uc;
 
 #define SIGN(a) ((a) > 0 ? 1 : ((a) < 0 ? -1 : 0))
 
-//::::::::::::::::::::::::::::: IO.C ::::::::::::::::::::::::::::://
+//::::::::::::::::::::::::::: PRINTING ::::::::::::::::::::::::::://
 
   // macro for printing an array of a given type and length
   // Examples:  PRINT_ARRAY(myInts, "%d", 10);
@@ -39,7 +40,8 @@ typedef unsigned char uc;
     printf(arr##i == len-1 ? "\n" : ", "); \
   }
 
-  // macro for printing a matrix of a given type and dimensions
+  // macro for printing a 2D matrix of a given type and dimensions
+  // A 2D matrix is a stack of 1D arrays
   // Examples:  PRINT_MATRIX(myInts, "%d", rows, cols);
   //            PRINT_MATRIX(myDbls, "%.2lf", rows, cols);
   //            PRINT_MATRIX(myChrs, "%c", rows, cols);
@@ -51,29 +53,9 @@ typedef unsigned char uc;
     } \
   }
 
-  // macro for creating an array of a given type and length
-  // Examples:  CREATE_ARRAY(myInts, int, 10);
-  //            CREATE_ARRAY(myDbls, double, 20);
-  //            CREATE_ARRAY(myString, 15);
-#define CREATE_ARRAY(type, arr, len) \
-  type *arr = safeCalloc(len, sizeof(type))
+//::::::::::::::::::::::::: READING INPUT :::::::::::::::::::::::://
 
-  // macro for creating a matrix of given type and dimensions
-  // Examples:  CREATE_MATRIX(myInts, int, 10, 10);
-  //            CREATE_MATRIX(myDbls, double, 10, 15);
-  //            CREATE_MATRIX(myChrs, char, 15, 10);
-#define CREATE_MATRIX(type, matrix, rows, cols) \
-  type **matrix = safeCalloc(rows, sizeof(type *)); \
-  for (size_t matrix##i = 0; matrix##i < rows; ++matrix##i) \
-    matrix[matrix##i] = safeCalloc(cols, sizeof(type));
-
-  // macro for freeing the memory of a matrix 
-#define FREE_MATRIX(matrix, rows) \
-  for (size_t matrix##i = 0; matrix##i < rows; ++matrix##i) \
-    free(matrix[matrix##i]); \
-  free(matrix);
-
-  // macro for reading input into an array of known length
+  // macro for reading input into a 1D array of known length
   // Examples:  READ_ARRAY(myInts, "%d", 20);
   //            READ_ARRAY(myDbls, "%lf", 15);
   //            READ_ARRAY(myString, "%c", 10);
@@ -81,7 +63,7 @@ typedef unsigned char uc;
   for (size_t arr##i = 0; arr##i < len; ++arr##i) \
     (void)! scanf(format, &arr[arr##i]);
 
-  // macro for reading input into a matrix of given dimensions
+  // macro for reading input into a 2D matrix of given dimensions
   // Examples:  READ_MATRIX(myInts, "%d", 10, 5);
   //            READ_MATRIX(myDbls, "%lf", 8, 8);
   //            READ_MATRIX(myChrs, "%c", 5, 10);
@@ -125,7 +107,52 @@ typedef unsigned char uc;
   size = arr##Len;\
   arr[arr##Len] = '\0';
     
-//:::::::::::::::::::::::::::: MEMORY :::::::::::::::::::::::::::://
+//::::::::::::::::::::::: MEMORY MANAGEMENT::::::::::::::::::::::://
+
+  // macro for creating a 1D array of a given type and length
+  // Examples:  CREATE_ARRAY(myInts, int, 10);
+  //            CREATE_ARRAY(myDbls, double, 20);
+  //            CREATE_ARRAY(myString, 15);
+#define CREATE_ARRAY(type, arr, len) \
+  type *arr = safeCalloc(len, sizeof(type))
+
+  // macro for creating a 2D matrix of given type and dimensions
+  // Examples:  CREATE_MATRIX(myInts, int, 10, 10);
+  //            CREATE_MATRIX(myDbls, double, 10, 15);
+  //            CREATE_MATRIX(myChrs, char, 15, 10);
+#define CREATE_MATRIX(type, matrix, rows, cols) \
+  type **matrix = safeCalloc(rows, sizeof(type *)); \
+  for (size_t matrix##i = 0; matrix##i < rows; ++matrix##i) \
+    matrix[matrix##i] = safeCalloc(cols, sizeof(type)); \
+
+  // macro for creating a 3D matrix of given type and dimensions
+  // A 3D matrix is a stack of 2D matrices, just like a 2D matrix
+  // is a stack of 1D arrays.
+  // Examples:  CREATE_3DMATRIX(myInts, int, 10, 10, 10);
+  //            CREATE_3DMATRIX(myDbls, double, 10, 15, 20);
+  //            CREATE_3DMATRIX(myChrs, char, 15, 10, 5);
+#define CREATE_3DMATRIX(type, matrix, rows, cols, depth) \
+  type ***matrix = safeCalloc(rows, sizeof(type **)); \
+  for (size_t matrix##i = 0; matrix##i < rows; ++matrix##i) { \
+    matrix[matrix##i] = safeCalloc(cols, sizeof(type *)); \
+    for (size_t matrix##j = 0; matrix##j < cols; ++matrix##j) \
+      matrix[matrix##i][matrix##j] = safeCalloc(depth, sizeof(type)); \
+  }
+
+  // macro for freeing the memory of a 2D matrix 
+#define FREE_MATRIX(matrix, rows) \
+  for (size_t matrix##i = 0; matrix##i < rows; ++matrix##i) \
+    free(matrix[matrix##i]); \
+  free(matrix);
+
+    // macro for freeing the memory of a 3D matrix
+#define FREE_3DMATRIX(matrix, rows, cols) \
+  for (size_t matrix##i = 0; matrix##i < rows; ++matrix##i) { \
+    for (size_t matrix##j = 0; matrix##j < cols; ++matrix##j) \
+      free(matrix[matrix##i][matrix##j]); \
+    free(matrix[matrix##i]); \
+  } \
+  free(matrix);
 
   // macro definition for swapping two variables
 #define SWAP(a, b) swap(&a, &b, sizeof(a))

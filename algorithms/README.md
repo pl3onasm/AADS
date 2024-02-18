@@ -1,4 +1,4 @@
-# Algorithms
+# ${\color{Cadetblue}\text{Algorithms}}$
 
 An algorithm is a well-defined computational procedure that takes some value, or set of values, as *input* and produces some value, or set of values, as *output* in a finite number of steps. An algorithm is thus a sequence of computational steps that transform the input into the output.
 
