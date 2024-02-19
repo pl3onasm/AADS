@@ -9,18 +9,17 @@
 
 #include "../../../lib/clib/clib.h"
 
-void strassen(int **A, int **B, int **C, size_t sz){
+void strassen(int **A, int **B, int **C, size_t size){
   /* computes C = A x B using Strassen's algorithm */
 
   // base case
-  if (sz == 1) {
+  if (size == 1) {
     C[0][0] = A[0][0] * B[0][0];
     return;
   }  
  
-  size_t n = sz/2; 
-
-  // allocate submatrices
+  // allocate submatrices and auxiliary matrices
+  size_t n = size/2;  
   CREATE_3DMATRIX(int, Sub, 4, n, n);
   CREATE_3DMATRIX(int, S, 10, n, n);
   CREATE_3DMATRIX(int, P, 7, n, n);

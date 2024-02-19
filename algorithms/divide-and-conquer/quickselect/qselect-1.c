@@ -36,12 +36,12 @@ int quickSelect(int *arr, int left, int right, int k) {
   if (left >= right) 
     return arr[left];
   int q = partition(arr, left, right);
-  int i = q - left + 1;  // i = number of elements ≤ pivot
+  int i = q - left + 1;    // i = number of elements ≤ pivot
   if (k == i) 
     return arr[q];
-  else if (k < i)        // search in the low end of the array
+  else if (k < i)          // search in the low end of the array
     return quickSelect(arr, left, q-1, k);
-  else                   // search in the high end of the array
+  else                     // search in the high end of the array
     return quickSelect(arr, q+1, right, k-i);
       // we update k to be relative to the new subarray,
       // i.e. we search for the (k-i)th element in the high end

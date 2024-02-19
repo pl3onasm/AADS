@@ -62,6 +62,7 @@ void printSolution (int *stalls, int n, int c, int minDist) {
 int main () {
   int n, c;
   (void)! scanf("%d %d", &n, &c);
+  
   CREATE_ARRAY(int, stalls, n);
   READ_ARRAY(stalls, "%d", n);
 

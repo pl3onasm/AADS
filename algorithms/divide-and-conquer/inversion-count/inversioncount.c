@@ -13,7 +13,7 @@
 
 int merge(int *arr, int left, int mid, int right) {
   /* merges two sorted arrays, and counts the number of inversions */
-  int *temp = safeMalloc((right - left + 1)*sizeof(int));
+  CREATE_ARRAY(int, temp, right - left + 1);
   int l = left, r = mid + 1, t = 0, count = 0;   
   while (l <= mid && r <= right) {
     if (arr[l] <= arr[r]){ 
@@ -47,9 +47,12 @@ int inversionCount(int *arr, int left, int right) {
 }
 
 int main(int argc, char **argv){
-  int size; 
-  scanf("%d\n", &size);
-  int *vect = readIntVector(size); 
+  size_t size; 
+  (void)! scanf("%lu\n", &size);
+  
+  CREATE_ARRAY(int, vect, size);
+  READ_ARRAY(vect, "%d ", size);
+
   printf("%d\n", inversionCount(vect, 0, size - 1));
   free(vect); 
   return 0; 

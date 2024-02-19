@@ -1,15 +1,15 @@
-# Matrix Multiplication Problem (MMP)
+# ${\color{Cadetblue}\text{Matrix Multiplication Problem (MMP)}}$
 
-## Description
+## ${\color{rosybrown}\text{Description}}$
 
 Strassen's matrix multiplication is a divide and conquer algorithm for multiplying square matrices. It is faster than the naive matrix multiplication algorithm, which is in $O(n^3)$. Strassen's algorithm is in $\Theta(n^{\log{7}}) = O(n^{2.8074}) $.
 
-## Standard Matrix Multiplication
+## ${\color{rosybrown}\text{Standard Matrix Multiplication}}$
 
 If we want to multiply two $n \times n$ matrices $A$ and $B$, we can do so by taking the dot product of each row of $A$ with each column of $B$. This is the naive approach, which is shown in the following pseudocode:
 
-```text
-  MatrixMultiply(A, B, C, n)
+```c
+  matrixMultiply(A, B, C, n)
     for i = 1 to n
         for j = 1 to n
           Cᵢⱼ = 0
@@ -60,7 +60,7 @@ By case 1 of the master theorem (CLRS 4.5), we can conclude that $T(n) = \Theta(
 
 Implementation: [Matrix Multiplication - D&C](https://github.com/pl3onasm/AADS/blob/main/algorithms/divide-and-conquer/strassen/mmp-1.c)
 
-## Strassen's Matrix Multiplication
+## ${\color{rosybrown}\text{Strassen's Matrix Multiplication}}$
 
 The idea behind Strassen's algorithm is to reduce the number of multiplications performed at each dividing step from 8 to 7. This will mean that we will have to compute more matrix sums and subtractions, but since these operations are much faster than matrix multiplication, we will still end up with a faster algorithm.
 

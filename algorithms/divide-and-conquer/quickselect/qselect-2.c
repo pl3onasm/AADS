@@ -26,7 +26,7 @@ int partition(int *arr, int left, int right, int pivot) {
   return idx-1;
 }
 
-int select (int *arr, int left, int right, int kth) {
+int select (int *arr, int left, int right, int k) {
   /* returns the k-th smallest element in arr[left..right] */
 
   // makes sure that arr's length is divisible by 5
@@ -34,10 +34,10 @@ int select (int *arr, int left, int right, int kth) {
     for (int j = left + 1; j <= right; j++) 
       // get the minimum at arr[left]
       if (arr[left] > arr[j]) SWAP(arr[left], arr[j]);
-    if (kth == 1) 
+    if (k == 1) 
       return arr[left];
     left++;   // move the left boundary by 1 to the right
-    kth--;      // update k to reflect the new position 
+    k--;      // update k to reflect the new position 
               // of the k-th smallest element
   }
 
@@ -46,9 +46,9 @@ int select (int *arr, int left, int right, int kth) {
 
   // sort each group in place using insertion sort
   for (int j = left; j < left + g; j++) {
-    for (int k = j; k <= right; k += g) {
-      int key = arr[k];
-      int l = k - g;
+    for (int m = j; m <= right; m += g) {
+      int key = arr[m];
+      int l = m - g;
       while (l >= j && arr[l] > key) {
         arr[l + g] = arr[l];
         l -= g;
@@ -64,9 +64,9 @@ int select (int *arr, int left, int right, int kth) {
   int q = partition(arr, left, right, pivot);
 
   int i = q - left + 1;   // number of elements ≤ median
-  if (i == kth) return arr[q];
-  else if (kth < i) return select(arr, left, q - 1, kth);
-  else return select(arr, q + 1, right, kth - i);
+  if (i == k) return arr[q];
+  else if (k < i) return select(arr, left, q - 1, k);
+  else return select(arr, q + 1, right, k - i);
 }
 
 int main () {

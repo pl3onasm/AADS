@@ -9,7 +9,7 @@
 * [String matching](https://github.com/pl3onasm/AADS/tree/main/algorithms/string-matching)
 * [Sorting](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting)
 
-## ${\color{peru}\text{Algorithms}}$
+## ${\color{peru}\text{Data structures in C}}$
 
 * Stacks and queues
 * Lists
