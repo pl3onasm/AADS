@@ -11,15 +11,19 @@ The most straightforward way to solve this problem is to use the elementary scho
 Writing the numbers in base 10, we have:
 
 $\quad x \space = x_{m-1} \cdot 10^{m-1} + \ldots + x_1 \cdot 10 + x_0$  
+
 $\qquad = \sum_{i=0}^{m-1} x_i \cdot 10^i$  
   
 $\quad y \space = y_{n-1} \cdot 10^{n-1} + \ldots + y_1 \cdot 10 + y_0$  
+
 $\qquad = \sum_{i=0}^{n-1} y_i \cdot 10^i$  
 
 The product $z = x \cdot y$ is then given by:
 
 $\quad z \space = x \cdot y$  
+
 $\qquad = \left(\sum_{i=0}^{m-1} x_i10^i\right) \cdot \left(\sum_{i=0}^{n-1} y_i10^i\right)$  
+
 $\qquad = \sum_{i=0}^{m-1} \sum_{j=0}^{n-1} x_i \cdot y_j \cdot 10^{i+j}$  
 
 The product $z$ is thus obtained by multiplying each digit of $x$ by each digit of $y$, and then adding the results, taking into account the position of each digit.
