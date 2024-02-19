@@ -1,4 +1,4 @@
-# ${\color{Cadetblue}\text{Quickselect}}$
+# ${\color{Cadetblue}\text{Q u i c k s e l e c t}}$
 
 ## ${\color{rosybrown}\text{Problem}}$
 
