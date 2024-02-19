@@ -49,10 +49,10 @@ $\quad y = y_1 \cdot 10^{n/2} + y_0$
 
 The product $z = x \cdot y$ is then given by:
 
-$\quad z \space = x \cdot y$
-$\qquad = (x_1 \cdot 10^{n/2} + x_0) \cdot (y_1 \cdot 10^{n/2} + y_0)$
-$\qquad= x_1 \cdot y_1 \cdot 10^n + (x_1 \cdot y_0 + x_0 \cdot y_1) \cdot 10^{n/2}$
-$\qquad\quad+ x_0 \cdot y_0$
+$\quad z \space = x \cdot y$  
+$\qquad = (x_1 \cdot 10^{n/2} + x_0) \cdot (y_1 \cdot 10^{n/2} + y_0)$  
+$\qquad= x_1 \cdot y_1 \cdot 10^n + (x_1 \cdot y_0 + x_0 \cdot y_1) \cdot 10^{n/2}$  
+$\qquad\quad+ x_0 \cdot y_0$  
 
 Karatuba's insight was to observe that we can compute the middle coefficient $(x_1 \cdot y_0 + x_0 \cdot y_1)$ by using the other two products and only one extra multiplication. This is done by using the following identity:
 
