@@ -4,7 +4,7 @@
 
 Given an array of integers, find the number of inversions, i.e. the number of pairs of indices $i < j$ such that $A[i] > A[j]$. In other words, find the number of pairs of elements that are out of order. For example, given the array $[2,3,8,6,1]$, the number of inversions is 5, since the pairs $(2,1)$, $(3,1)$, $(8,6)$, $(8,1)$, and $(6,1)$ are all inversions.
 
-## ${\color{rosybrown}\text{Solution}}$
+## ${\color{darkseagreen}\text{Solution}}$
 
 A solution in linearithmic time that makes use of the divide-and-conquer paradigm can be realized by a modified merge sort. This draws on the observation that the merge step is in fact already checking for inversions when merging both subarrays into a single sorted array. After all, merging is done with the left and right subarrays already sorted on their own, comparing the next element in each subarray to determine which element to add next to the combined sorted array. If the next element in the left subarray is less than the next element in the right subarray, it is less than all the remaining elements in the right subarray (because this subarray is already sorted in increasing order) and so there is no inversion in this case. If, however, the next element in the right subarray is less than the next element in the left subarray, it is less than all the remaining elements in the left subarray (because this subarray is also already sorted in increasing order), meaning that the element in the right subarray forms an inversion with all those elements and so the number of inversions is incremented by the number of elements remaining in the left subarray.[^1]
 

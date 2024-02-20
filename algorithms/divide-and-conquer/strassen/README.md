@@ -1,10 +1,10 @@
-# ${\color{Cadetblue}\text{Matrix Multiplication Problem (MMP)}}$
+# ${\color{Cadetblue}\text{Matrix Multiplication}}$
 
 ## ${\color{rosybrown}\text{Description}}$
 
 Strassen's matrix multiplication is a divide and conquer algorithm for multiplying square matrices. It is faster than the naive matrix multiplication algorithm, which is in $O(n^3)$. Strassen's algorithm is in $\Theta(n^{\log{7}}) = O(n^{2.8074}) $.
 
-## ${\color{rosybrown}\text{Standard Matrix Multiplication}}$
+## ${\color{darkseagreen}\text{Standard Matrix Multiplication}}$
 
 If we want to multiply two $n \times n$ matrices $A$ and $B$, we can do so by taking the dot product of each row of $A$ with each column of $B$. This is the naive approach, which is shown in the following pseudocode:
 
@@ -53,14 +53,14 @@ Repeatedly dividing the matrices in submatrices of size $n/2 \times n/2$ in orde
 Looking at the above formula, we can see that we need to compute 8 products of matrices of size $n/2 \times n/2$ at each dividing step. If we use index calculations to partition the matrices at each step, the partitioning itself only takes $\Theta(1)$ time. All this leads to the following recurrence relation:
 
 $$
-T(n) = 8T(n/2) + \Theta(1)
+\color{mediumorchid}\boxed{\color{cornflowerblue}T(n) = 8T(n/2) + \Theta(1)}
 $$
 
 By case 1 of the master theorem (CLRS 4.5), we can conclude that $T(n) = \Theta(n^3)$, which is the same time complexity as the naive algorithm.
 
 Implementation: [Matrix Multiplication - D&C](https://github.com/pl3onasm/AADS/blob/main/algorithms/divide-and-conquer/strassen/mmp-1.c)
 
-## ${\color{rosybrown}\text{Strassen's Matrix Multiplication}}$
+## ${\color{darkseagreen}\text{Strassen's Matrix Multiplication}}$
 
 The idea behind Strassen's algorithm is to reduce the number of multiplications performed at each dividing step from 8 to 7. This will mean that we will have to compute more matrix sums and subtractions, but since these operations are much faster than matrix multiplication, we will still end up with a faster algorithm.
 
@@ -106,7 +106,7 @@ $$
 Steps 1 and 3 both take $\Theta(n^2)$ time. In step 2, we compute seven multiplications of $n/2 \times n/2$ matrices. Thus we get the recurrence relation:
 
 $$
-T(n) = 7T(n/2) + \Theta(n^2)
+\color{mediumorchid}\boxed{\color{cornflowerblue}T(n) = 7T(n/2) + \Theta(n^2)}
 $$
 
 By case 1 of the master theorem (CLRS 4.5), we can conclude that $T(n) = \Theta(n^{\log{7}}) = O(n^{2.8074})$.  

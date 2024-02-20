@@ -4,7 +4,7 @@
 
 Given an array of numbers, find the $k$-th order statistic, i.e. the $k$-th smallest element. In other words, find the element that would be at index $k$ if the array were sorted. For example, given the array $[3, 1, 4, 2, 5]$ and $k = 3$, the third smallest element is 3.
 
-## ${\color{rosybrown}\text{Solution in expected linear time}}$
+## ${\color{darkseagreen}\text{Solution in expected linear time}}$
 
 The name quickselect is derived from the fact that it uses the same partitioning scheme as the quicksort algorithm in order to select the $k$-th smallest element. The key idea is that it is not necessary to sort the entire array, but only to recursively partition the input array around a randomly picked pivot until the pivot is the $k$-th smallest element.
 
@@ -14,7 +14,7 @@ The algorithm is expected to run in linear time, since the partitioning scheme i
 
 Implementation: [Quickselect 1](https://github.com/pl3onasm/AADS/blob/main/algorithms/divide-and-conquer/quickselect/qselect-1.c)
 
-## ${\color{rosybrown}\text{Solution in linear time}}$
+## ${\color{darkseagreen}\text{Solution in linear time}}$
 
 The worst-case running time of the algorithm can be improved to linear time by using a different partitioning scheme. Instead of picking a random pivot, we can use the median of the medians of $g$ subarrays of size 5, after removing enough elements from the array so that the size of the array is indeed a multiple of 5 (note that all these elements have to be array minima since we are looking for the $k$-th smallest element and that these minima can be found in linear time by swapping pairs of elements). This pivot choice ensures that all partitions are balanced enough to avoid the quadratic worst-case running time. The pivot itself can then be found recursively, after which the current array is partitioned around it. The rest of the algorithm is the same as before.
 

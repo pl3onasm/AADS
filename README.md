@@ -1,4 +1,4 @@
-# ${\color{cadetblue}\text{CLRS: Data Structures and Algorithms}}$ 
+# ${\color{cadetblue}\text{CLRS: Data Structures}}$ ${\color{cadetblue}\text{and Algorithms}}$
 
 ## ${\color{peru}\text{Algorithms in C}}$
 
