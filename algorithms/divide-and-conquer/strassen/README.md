@@ -53,7 +53,7 @@ Repeatedly dividing the matrices in submatrices of size $n/2 \times n/2$ in orde
 Looking at the above formula, we can see that we need to compute 8 products of matrices of size $n/2 \times n/2$ at each dividing step. If we use index calculations to partition the matrices at each step, the partitioning itself only takes $\Theta(1)$ time. All this leads to the following recurrence relation:
 
 $$
-\color{mediumorchid}\boxed{\color{cornflowerblue}T(n) = 8T(n/2) + \Theta(1)}
+\color{saddlebrown}\boxed{\color{rosybrown}\space T(n) = 8T(n/2) + \Theta(1)\space}\\
 $$
 
 By case 1 of the master theorem (CLRS 4.5), we can conclude that $T(n) = \Theta(n^3)$, which is the same time complexity as the naive algorithm.
@@ -106,7 +106,9 @@ $$
 Steps 1 and 3 both take $\Theta(n^2)$ time. In step 2, we compute seven multiplications of $n/2 \times n/2$ matrices. Thus we get the recurrence relation:
 
 $$
-\color{mediumorchid}\boxed{\color{cornflowerblue}T(n) = 7T(n/2) + \Theta(n^2)}
+\color{saddlebrown}\boxed{\\
+\color{rosybrown}\space T(n) = 7T(n/2) + \Theta(n^2) \space\\
+}
 $$
 
 By case 1 of the master theorem (CLRS 4.5), we can conclude that $T(n) = \Theta(n^{\log{7}}) = O(n^{2.8074})$.  
