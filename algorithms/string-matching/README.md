@@ -1,6 +1,8 @@
-# String-matching Algorithms
+# ${\color{Cadetblue}\text{String-matching}}$
 
-| **CLRS³** | **CLRS⁴** | **Link** |
+## ${\color{Rosybrown}\text{Overview}}$
+
+| ${\color{peru}\text{CLRS}^3}$ | ${\color{peru}\text{CLRS}^4}$ | ${\color{peru}\text{Link}}$ |
 |:---:|:---:|:---|
 | Chap 32.1 | Chap 32.1 | [Naive String-matching](https://github.com/pl3onasm/AADS/tree/main/algorithms/string-matching/naive-matching)
 | Chap 32.2 | Chap 32.2 | [Rabin-Karp Algorithm](https://github.com/pl3onasm/AADS/tree/main/algorithms/string-matching/rabin-karp)
@@ -10,7 +12,7 @@
 
 &nbsp;
 
-# String-matching Problem
+## ${\color{Rosybrown}\text{String-matching Problem}}$
 
 String matching is the problem of finding all occurrences of a string pattern $P$ of length $m$ in a text $T$ of lenght $n$, where $m \leq n$. The characters in the pattern and the text come from a finite set $\Sigma$ called the *alphabet*.
 
@@ -18,7 +20,7 @@ We say that pattern $P$ occurs with shift $s$ in text $T$ if $0 \leq s \leq n - 
 
 In other words, the string-matching problem is to find all valid shifts for $P$ in $T$, i.e. the shift set of $P$ in $T$. Using the terminology below, the string-matching problem is to find all shifts $s$ such that $P \sqsupset T_{s+m}$, where $0 \leq s \leq n - m$ and $T_{s + m}$ is the prefix of $T$ of length $s + m$.
 
-## Terminology and properties
+## ${\color{Rosybrown}\text{Terminology and properties}}$
 
 - $\Sigma^*$: the set of all finite-length strings over $\Sigma$
 - $\epsilon$: the empty string, i.e. the string of length $0$

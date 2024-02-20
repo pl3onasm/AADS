@@ -48,7 +48,8 @@ $\qquad\quad+ x_0 \cdot y_0$
 
 Karatuba's insight was to observe that we can compute the middle coefficient $(x_1 \cdot y_0 + x_0 \cdot y_1)$ by using the other two products and only one extra multiplication. This is done by using the following identity:
 
-$\quad x_1 \cdot y_0 + x_0 \cdot y_1$ $= (x_1 + x_0) \cdot (y_1 + y_0)$ $- x_1 \cdot y_1 - x_0 \cdot y_0$
+$\quad x_1 \cdot y_0 + x_0 \cdot y_1$ $= (x_1 + x_0) \cdot (y_1 + y_0)$  
+$\qquad \qquad \qquad \qquad \quad - x_1 \cdot y_1 - x_0 \cdot y_0$
 
 This way, we can compute, at each step, the product $z$ using only three multiplications of numbers of half the size, instead of the four multiplications required by the long multiplication algorithm, at the cost of a few additions and subtractions, which, being linear, do not affect the overall complexity.  
 By keeping dividing the number into halves, we eventually reach the base case, when the numbers have only one digit, in which case the product is simply the product of the two digits. As the recursion unwinds, the results of the subproblems are combined to obtain the final result.

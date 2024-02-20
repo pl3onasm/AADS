@@ -1,28 +1,30 @@
-# Sorting Algorithms
+# ${\color{Cadetblue}\text{Sorting Algorithms}}$
 
-| **Complexity** | **CLRS³⁺⁴** | **Link** |
+## ${\color{Rosybrown}\text{Overview}}$
+
+| ${\color{peru}\text{Complexity}}$ | ${\color{peru}\text{CLRS}^{3+4}}$ | ${\color{peru}\text{Link}}$ |
 |:---|:---:|:---|
-| $\Theta(n + k)$ | Chap 8.2 | [Counting sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/counting-sort)
-| $\Theta(d(n + k))$ | Chap 8.3 | [Radix sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/radix-sort)
-| ~ $\Theta(n)$ [^1] | Chap 8.4 |  [Bucket sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/bucket-sort)
-| $\Theta(n\log n)$ | Chap 2.3 |  [Merge sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/merge-sort)
-| $\Theta(n\log n)$ | n/a |  [WHAM sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/merge-sort#wham-sort)
-| $O(n\log n)$ | Chap 6.4 |   [Heapsort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/heap-sort)
-| ~ $O(n\log n)$ | Chap 7.1-3 |  [Quicksort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/quick-sort)
-| $O(n^2)$ | Chap 2.1-2 |  [Insertion sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/insertion-sort)
-| $O(n^2)$ | Ex 2.2-2 |  [Selection sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/selection-sort)
-| $O(n^2)$ | Prob 2-2 | [Bubble sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/bubble-sort)
+| ${\color{yellowgreen}\Theta(n + k)}$ | Chap 8.2 | [Counting sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/counting-sort)
+| ${\color{yellowgreen}\Theta(d(n + k))}$ | Chap 8.3 | [Radix sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/radix-sort)
+|  ${\color{yellowgreen} \sim \Theta(n)}$ [^1] | Chap 8.4 |  [Bucket sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/bucket-sort)
+| ${\color{yellowgreen}\Theta(n\log n)}$ | Chap 2.3 |  [Merge sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/merge-sort)
+| ${\color{yellowgreen}\Theta(n\log n)}$ | n/a |  [WHAM sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/merge-sort#wham-sort)
+| ${\color{yellowgreen}O(n\log n)}$ | Chap 6.4 |   [Heapsort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/heap-sort)
+| ${\color{yellowgreen}\sim O(n\log n)}$ | Chap 7.1-3 |  [Quicksort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/quick-sort)
+| ${\color{yellowgreen}O(n^2)}$ | Chap 2.1-2 |  [Insertion sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/insertion-sort)
+| ${\color{yellowgreen}O(n^2)}$ | Ex 2.2-2 |  [Selection sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/selection-sort)
+| ${\color{yellowgreen}O(n^2)}$ | Prob 2-2 | [Bubble sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/bubble-sort)
 
 [^1]: The tilde (~) means that this is the expected complexity: the complexity is not guaranteed,  
 but it is the average case complexity. The worst case complexity is higher.
 
 &nbsp;
 
-# Sorting Problem
+## ${\color{Rosybrown}\text{Sorting Problem}}$
 
 The task of sorting is to rearrange a given sequence of elements into a particular order given by a comparison function, denoted by $\leq$, which is defined on the elements of the sequence and is assumed to be total, antisymmetric and transitive. In other words, given a sequence $A = \langle a_1, a_2, \dots, a_n \rangle$, the sorted output should be the permutation $A' = \langle a'_1, a'_2, \dots, a'_n \rangle$ satisfying the condition $a'_1 \leq a'_2 \leq \dots \leq a'_n$.
 
-## Comparison Sorts
+## ${\color{darkseagreen}\text{Comparison Sorts}}$
 
 Most sorting algorithms are comparison sorts: they determine the new order of a sequence by comparing the input elements with one another. Suppose that the input consists of $3$ elements $a, b, c$. Then there are $3! = 6$ possible orderings of these elements. A comparison sort algorithm examines the ordering of each pair of these elements and makes decisions based on the made comparisons.
 
@@ -40,20 +42,20 @@ Let $l$ be the number of leaves in the decision tree. Since a decision tree is a
 
 $$
 \begin{align*}
-\log(n!) &=  \sum_{i=1}^n \log(i)\\
+{\color{olivedrab}\log(n!)} &=  \sum_{i=1}^n \log(i)\\
 &= \sum_{i=1}^{\lfloor n/2 \rfloor} \log(i) + \sum_{i= \lfloor n/2 \rfloor +1}^n \log(i)\\
 & \geq \sum_{i=1}^{\lfloor n/2 \rfloor} 1 + \sum_{i=\lfloor n/2 \rfloor +1}^n \log(n/2)\\
 & \geq \lfloor n/2 \rfloor + \lfloor n/2 \rfloor \log(n/2)\\
 &= \lfloor n/2 \rfloor + \lfloor n/2 \rfloor \log(n) - \lfloor n/2 \rfloor \log(2)\\
 &= \lfloor n/2 \rfloor \log(n) + \lfloor n/2 \rfloor - \lfloor n/2 \rfloor\\
 &= \lfloor n/2 \rfloor \log(n)\\
-&= \Theta(n\log n)
+&{\color{olivedrab}= \Theta(n\log n)}
 \end{align*}
 $$
 
 As a result, $h = \Omega(\log(n!)) = \Omega(n\log n)$. Since the height of the decision tree is the worst-case running time of a comparison sort algorithm, we conclude that any comparison sort algorithm requires $\Omega(n\log n)$ comparisons in the worst case.
 
-## Linear-time Sorts
+## ${\color{darkseagreen}\text{Linear-time Sorts}}$
 
 The only way to escape the $\Omega(n\log n)$ lower bound for comparison sorts is to exploit special properties of the input elements, such as the range of possible values. This is exactly what linear-time sorts do. The most well-known non-comparison sorts are counting sort, radix sort and bucket sort. For example, counting sort assumes that the input elements are integers in the range $0$ to $k$, for some integer $k = O(n)$. Radix sort assumes that the input elements are integers represented in a fixed number of digits in some base $b$. And bucket sort assumes that the input elements are uniformly distributed in the interval $[0, 1)$.
 

@@ -1,6 +1,8 @@
-# Graph Algorithms
+# ${\color{Cadetblue}\text{Graph Algorithms}}$
 
-| **CLRS³** | **CLRS⁴** | **Link** |
+## ${\color{Rosybrown}\text{Overview}}$
+
+| ${\color{peru}\text{CLRS}^3}$ | ${\color{peru}\text{CLRS}^4}$ | ${\color{peru}\text{Link}}$ |
 |:---:|:---:|:---|
 | Chap 22.2 | Chap 20.2 | [Breadth-first search](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/graphs/bfs)
 | Chap 22.3 | Chap 20.3 | [Depth-first search](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/graphs/dfs)
