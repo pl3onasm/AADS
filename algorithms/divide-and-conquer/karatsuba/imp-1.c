@@ -12,6 +12,8 @@
 #include "nat.h"
 
 Nat *mulNat(Nat *a, Nat *b) {
+  // computes a x b using standard long multiplication
+
   Nat *res = newNat(a->size + b->size);
   res->size = a->size + b->size;
 
@@ -22,15 +24,21 @@ Nat *mulNat(Nat *a, Nat *b) {
   // max int value is 9 * 9 = 81, so no overflow
   for (size_t i = a->size - 1; i < a->size; i--) {
     for (size_t j = b->size - 1; j < b->size; j--) {
-      int s = (a->digits[i] - '0') * (b->digits[j] - '0') + res->digits[i + j + 1];
+      int s = (a->digits[i] - '0') * (b->digits[j] - '0') 
+              + res->digits[i + j + 1];
       res->digits[i + j + 1] = s % 10;
       res->digits[i + j] += s / 10;
     }
   }
 
+  // remove leading zeros
+  while (res->size > 0 && res->digits[res->size - 1] == 0) 
+    res->size--;
+
+  // convert back to char
   for (size_t i = 0; i < res->size; i++) 
-    res->digits[i] += '0';    // convert back to char
-  if (isZero(res)) res->size = 1;
+    res->digits[i] += '0';    
+  
   return res;
 }
 

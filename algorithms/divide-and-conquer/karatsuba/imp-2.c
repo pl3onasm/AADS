@@ -4,13 +4,16 @@
   email: pl3onasm@gmail.com
   license: MIT, see LICENSE file in repository root folder
   description: Karatsuba multiplication for natural numbers
-  time complexity: O(n^1.585) 
+  time complexity: O(n^1.585), where n is the number 
+    of digits in the input numbers
 */
 
 #include "../../../lib/clib/clib.h"
 #include "nat.h"
 
 Nat *karatsuba(Nat *x, Nat *y) {
+  // computes x * y using Karatsuba's algorithm
+
   if (isZero(x) || isZero(y)) 
     return zero();
 
@@ -37,7 +40,7 @@ Nat *karatsuba(Nat *x, Nat *y) {
   Nat *z3 = karatsuba(x0, y0);    
 
   // compute second component 
-  // z2 = (x1 + x0) * (y1 + y0) - z1 - z0
+  // z2 = (x1 + x0) * (y1 + y0) - z1 - z3
   Nat *z2 = karatsuba(addNat(x1, x0), addNat(y1, y0));
   z2 = subNat(subNat(z2, z1), z3);
 
