@@ -4,16 +4,16 @@
 
 | ${\color{peru}\text{Complexity}}$ | ${\color{peru}\text{CLRS}^{3+4}}$ | ${\color{peru}\text{Link}}$ |
 |:---|:---:|:---|
-| ${\color{yellowgreen}\Theta(n + k)}$ | Chap 8.2 | [Counting sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/counting-sort)
-| ${\color{yellowgreen}\Theta(d(n + k))}$ | Chap 8.3 | [Radix sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/radix-sort)
-|  ${\color{yellowgreen} \sim \Theta(n)}$ [^1] | Chap 8.4 |  [Bucket sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/bucket-sort)
-| ${\color{yellowgreen}\Theta(n\log n)}$ | Chap 2.3 |  [Merge sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/merge-sort)
-| ${\color{yellowgreen}\Theta(n\log n)}$ | n/a |  [WHAM sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/merge-sort#wham-sort)
-| ${\color{yellowgreen}O(n\log n)}$ | Chap 6.4 |   [Heapsort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/heap-sort)
-| ${\color{yellowgreen}\sim O(n\log n)}$ | Chap 7.1-3 |  [Quicksort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/quick-sort)
-| ${\color{yellowgreen}O(n^2)}$ | Chap 2.1-2 |  [Insertion sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/insertion-sort)
-| ${\color{yellowgreen}O(n^2)}$ | Ex 2.2-2 |  [Selection sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/selection-sort)
-| ${\color{yellowgreen}O(n^2)}$ | Prob 2-2 | [Bubble sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/bubble-sort)
+| ${\color{olive}\Theta(n + k)}$ | Chap 8.2 | [Counting sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/counting-sort)
+| ${\color{olive}\Theta(d(n + k))}$ | Chap 8.3 | [Radix sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/radix-sort)
+|  ${\color{olive} \sim \Theta(n)}$ [^1] | Chap 8.4 |  [Bucket sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/bucket-sort)
+| ${\color{olive}\Theta(n\log n)}$ | Chap 2.3 |  [Merge sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/merge-sort)
+| ${\color{olive}\Theta(n\log n)}$ | n/a |  [WHAM sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/merge-sort#wham-sort)
+| ${\color{olive}O(n\log n)}$ | Chap 6.4 |   [Heapsort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/heap-sort)
+| ${\color{olive}\sim O(n\log n)}$ | Chap 7.1-3 |  [Quicksort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/quick-sort)
+| ${\color{olive}O(n^2)}$ | Chap 2.1-2 |  [Insertion sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/insertion-sort)
+| ${\color{olive}O(n^2)}$ | Ex 2.2-2 |  [Selection sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/selection-sort)
+| ${\color{olive}O(n^2)}$ | Prob 2-2 | [Bubble sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/bubble-sort)
 
 [^1]: The tilde (~) means that this is the expected complexity: the complexity is not guaranteed,  
 but it is the average case complexity. The worst case complexity is higher.
@@ -42,14 +42,14 @@ Let $l$ be the number of leaves in the decision tree. Since a decision tree is a
 
 $$
 \begin{align*}
-{\color{olivedrab}\log(n!)} &=  \sum_{i=1}^n \log(i)\\
+{\color{olive}\log(n!)} &=  \sum_{i=1}^n \log(i)\\
 &= \sum_{i=1}^{\lfloor n/2 \rfloor} \log(i) + \sum_{i= \lfloor n/2 \rfloor +1}^n \log(i)\\
 & \geq \sum_{i=1}^{\lfloor n/2 \rfloor} 1 + \sum_{i=\lfloor n/2 \rfloor +1}^n \log(n/2)\\
 & \geq \lfloor n/2 \rfloor + \lfloor n/2 \rfloor \log(n/2)\\
 &= \lfloor n/2 \rfloor + \lfloor n/2 \rfloor \log(n) - \lfloor n/2 \rfloor \log(2)\\
 &= \lfloor n/2 \rfloor \log(n) + \lfloor n/2 \rfloor - \lfloor n/2 \rfloor\\
 &= \lfloor n/2 \rfloor \log(n)\\
-&{\color{olivedrab}= \Theta(n\log n)}
+&{\color{olive}= \Theta(n\log n)}
 \end{align*}
 $$
 

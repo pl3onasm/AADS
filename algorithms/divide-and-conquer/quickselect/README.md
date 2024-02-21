@@ -21,7 +21,10 @@ The worst-case running time of the algorithm can be improved to linear time by u
 Using this particular partitioning scheme ensures that the size of the subarray on which the algorithm is recursively called is at most $7n/10$ long. This is because $g \leq n/5$ and because the pivot is the median of the medians of these $g$ groups of 5 elements, so that $3g/2$ elements are sure to be smaller than the pivot, and another $3g/2$ to be larger, which means that the size of the subarray (left or right) on which the algorithm is recursively called is at most $5g - 3g/2 = 7g/2 \leq 7n/10$.
 
 Taking this into account, we get the following recurrence relation for the worst-case running time:
-$$T(n) = T(n/5) + T(7n/10) + \Theta(n)$$ The first term is the time needed to find the median of the medians, the second term is the time spent on recursive calls on subarrays of size at most $7n/10$, and the last term represents the time spent outside of recursive calls, i.e. on partitioning the array around the pivot, extracting at most 4 minima to make the size of the array a multiple of 5, and the sorting of $g$ subarrays of size 5 to find the median of the medians (all three of these operations are linear in the size of the array).  
+
+$${\color{saddlebrown}\boxed{\color{rosybrown}\space T(n) = T(n/5) + T(7n/10) + \Theta(n) \space}}$$
+
+The first term is the time needed to find the median of the medians, the second term is the time spent on recursive calls on subarrays of size at most $7n/10$, and the last term represents the time spent outside of recursive calls, i.e. on partitioning the array around the pivot, extracting at most 4 minima to make the size of the array a multiple of 5, and the sorting of $g$ subarrays of size 5 to find the median of the medians (all three of these operations are linear in the size of the array).  
 In order to solve this recurrence relation, we need to show that $T(n) = O(n)$. This can be done using the substitution method. The base case is $T(1) = \Theta(1)$, and we assume that $T(n/5) \leq cn/5$ and $T(7n/10) \leq c7n/10$ for some constant $c$. Using this induction hypothesis, we need to show that $T(n) \leq cn$ for large enough $c$. We have:
 
 $$

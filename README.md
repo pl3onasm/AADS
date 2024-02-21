@@ -1,6 +1,6 @@
 # ${\color{cadetblue}\text{CLRS: Data Structures}}$ ${\color{cadetblue}\text{and Algorithms}}$
 
-## ${\color{peru}\text{Algorithms in C}}$
+## ${\color{rosybrown}\text{Algorithms in C}}$
 
 * [Divide and conquer](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/divide-and-conquer)
 * [Dynamic programming](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/dynamic-programming)
@@ -9,7 +9,7 @@
 * [String matching](https://github.com/pl3onasm/AADS/tree/main/algorithms/string-matching)
 * [Sorting](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting)
 
-## ${\color{peru}\text{Data structures in C}}$
+## ${\color{rosybrown}\text{Data structures in C}}$
 
 * Stacks and queues
 * Lists
@@ -19,7 +19,7 @@
 * Sets
 * Augmented data structures
 
-## ${\color{peru}\text{Notes}}$
+## ${\color{darkseagreen}\text{Notes}}$
 
 The aim is to implement all the algorithms and data structures discussed in the textbook *Introduction to Algorithms* by Thomas H. Cormen, et al. The third edition of this textbook will be referred to as CLRS³, and the fourth edition as CLRS⁴. Folders usually contain several versions of the same algorithm or data structure, in accordance with the different pseudocode and explanations in the textbook.
 
@@ -29,7 +29,7 @@ Please refer to the license if you wish to use any of the code in this repositor
 
 Note that this is a work in progress. Some explanations and summaries are still incomplete or missing and some code is not yet available. Updates will be made regularly.
 
-## ${\color{peru}\text{References}}$
+## ${\color{darkseagreen}\text{References}}$
 
 CLRS³: Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. (2009). [Introduction to algorithms](https://mitpress.mit.edu/9780262533058/introduction-to-algorithms/). MIT press.  
 CLRS⁴: Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. (2022). [Introduction to algorithms](http://mitpress.mit.edu/9780262046305/introduction-to-algorithms/). MIT press.  

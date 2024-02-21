@@ -36,8 +36,8 @@ Implementation: [Long multiplication](imp-1.c)
 
 The Karatsuba algorithm is a divide-and-conquer algorithm was the first multiplication algorithm to break the $\mathcal{O}{(n^2)}$ barrier. The idea is, just like in most divide-and-conquer algorithms, to reduce the original problem into subproblems of half the size, and then combine the results of the subproblems to obtain the final result. Splitting the digit strings into two halves, we have:
 
-$\quad x = x_1 \cdot 10^{n/2} + x_0$
-$\quad y = y_1 \cdot 10^{n/2} + y_0$
+$\quad x = x_1 \cdot 10^{n/2} + x_0$  
+$\quad y = y_1 \cdot 10^{n/2} + y_0$  
 
 The product $z = x \cdot y$ is then given by:
 
@@ -54,7 +54,13 @@ $\qquad \qquad \qquad \qquad \quad - x_1 \cdot y_1 - x_0 \cdot y_0$
 This way, we can compute, at each step, the product $z$ using only three multiplications of numbers of half the size, instead of the four multiplications required by the long multiplication algorithm, at the cost of a few additions and subtractions, which, being linear, do not affect the overall complexity.  
 By keeping dividing the number into halves, we eventually reach the base case, when the numbers have only one digit, in which case the product is simply the product of the two digits. As the recursion unwinds, the results of the subproblems are combined to obtain the final result.
 
-It is precisely the combination of dividing the problem into subproblems half the size and reducing the cost of each recursive step from four multiplications to three that makes the Karatsuba algorithm perform significantly better, much better than the long multiplication algorithm, especially for large numbers. Since at each step we divide the problem into three subproblems half the size, and the cost of combining is linear, the recurrence relation is $T(n) = 3T(n/2) + \Theta(n)$. Using the master theorem, case 1, yields the solution $\Theta(n^{\log 3}) \approx \Theta(n^{1.585})$.
+It is precisely the combination of dividing the problem into subproblems half the size and reducing the cost of each recursive step from four multiplications to three that makes the Karatsuba algorithm perform significantly better, much better than the long multiplication algorithm, especially for large numbers. Since at each step we divide the problem into three subproblems half the size, and the cost of combining is linear, the recurrence relation is given by:
+
+$$
+\color{saddlebrown}\boxed{\color{rosybrown}\space T(n) = 3T(n/2) + \Theta(n)\space}\\
+$$
+
+Using the master theorem, case 1, yields the solution $\Theta(n^{\log 3}) \approx \Theta(n^{1.585})$.
 
 Just like before, the implementation uses char arrays to represent the numbers in order to keep the memory usage to a minimum.
 
