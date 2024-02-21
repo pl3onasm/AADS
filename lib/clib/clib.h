@@ -8,7 +8,7 @@
 
 #include <stdio.h>    // for printf, scanf
 #include <stdlib.h>   // for malloc, calloc, realloc, free
-#include <stddef.h>   // for size_t
+#include <stddef.h>   // for size_t, isdigit, isspace
 #include <stdbool.h>  // for bool
 #include <string.h>   // for memcpy, strlen, etc.
 #include <limits.h>   // for INT_MAX, INT_MIN, etc.
