@@ -52,9 +52,9 @@ $\quad x_1 \cdot y_0 + x_0 \cdot y_1$ $= (x_1 + x_0) \cdot (y_1 + y_0)$
 $\qquad \qquad \qquad \qquad \quad - x_1 \cdot y_1 - x_0 \cdot y_0$
 
 This way, we can compute, at each step, the product $z$ using only three multiplications instead of four, at the cost of a few additions and subtractions, which are much cheaper as they are linear operations.  
-By continually dividing the number into halves, we eventually reach the base case, when the numbers have only one digit, in which case the product is simply the product of the two digits. As the recursion unwinds, the results of the subproblems are combined to obtain the final result.
+By continually dividing the numbers into halves, we eventually reach the base case, when the numbers have only one digit, in which case the product is simply the product of the two digits. As the recursion unwinds, the results of the subproblems are then combined to obtain the final result.
 
-It is precisely the combination of dividing the problem into subproblems half the size and reducing the cost of each recursive step from four multiplications to three that makes the Karatsuba algorithm perform significantly better, much better than the long multiplication algorithm, especially for large numbers. Since at each step we divide the problem into three subproblems half the size, and the cost of combining is linear, the recurrence relation is given by:
+It is precisely the combination of dividing the problem into subproblems half the size and reducing the cost of each recursive step from four multiplications to three that makes the Karatsuba algorithm perform significantly better, much better than the long multiplication algorithm, especially for large numbers. Since at each step we divide the problem into three independent subproblems of the same type, each of half the size, and the cost of combining is linear, the recurrence relation is given by:
 
 $$
 \color{saddlebrown}\boxed{\color{rosybrown}\space T(n) = 3T(n/2) + \Theta(n)\space}\\
