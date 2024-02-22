@@ -46,7 +46,7 @@ $\qquad = (x_1 \cdot 10^{n/2} + x_0) \cdot (y_1 \cdot 10^{n/2} + y_0)$
 $\qquad= x_1 \cdot y_1 \cdot 10^n + (x_1 \cdot y_0 + x_0 \cdot y_1) \cdot 10^{n/2}$  
 $\qquad\quad+ x_0 \cdot y_0$  
 
-Merely turning standard multiplication into a recursive problem like this, does not yield any improvement in the complexity of the algorithm. In fact, the complexity of the algorithm would be the same as the long multiplication algorithm, $\mathcal{O}{(n^2)}$. However, the key insight of Anatoly Karatsuba was to observe that we can compute the products $x_1 \cdot y_1$ and $x_0 \cdot y_0$ using only three multiplications instead of four. This is done by using the following identity:
+Merely turning standard multiplication into a recursive problem like this, does not yield any improvement in the complexity of the algorithm. In fact, the complexity of the algorithm would be the same as the long multiplication algorithm, $\mathcal{O}{(n^2)}$. However, the key insight of Anatoly Karatsuba was to observe that we can compute the middle coefficient using only 1 multiplication instead of 2, after we have computed the other two coefficients. This is done by using the following identity:  
 
 $\quad x_1 \cdot y_0 + x_0 \cdot y_1$ $= (x_1 + x_0) \cdot (y_1 + y_0)$  
 $\qquad \qquad \qquad \qquad \quad - x_1 \cdot y_1 - x_0 \cdot y_0$
