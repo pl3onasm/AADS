@@ -110,8 +110,8 @@ Nat *subNat(Nat *x, Nat *y) {
     offset++;
 
   // move all digits offset positions to the left
-  memmove(diff->digits, diff->digits + offset, diff->size - offset + 1);
   diff->size -= offset;
+  memmove(diff->digits, diff->digits + offset, diff->size);
 
   return diff;
 }

@@ -6,7 +6,7 @@
 |:---:|:---:|:---|
 | Chap 4.1 | n/a | [Maximum Subarray](https://github.com/pl3onasm/CLRS/tree/main/algorithms/divide-and-conquer/max-subarray) |
 | Chap 4.2 | Chap 4.1-2 | [Strassen's Matrix Multiplication](https://github.com/pl3onasm/CLRS/tree/main/algorithms/divide-and-conquer/strassen)|
-| n/a | n/a | [Karatsuba Multiplication](https://github.com/pl3onasm/CLRS/tree/main/algorithms/divide-and-conquer/karatsuba)|
+| n/a | n/a | [Karatsuba's Integer Multiplication](https://github.com/pl3onasm/CLRS/tree/main/algorithms/divide-and-conquer/karatsuba)|
 | Ex 2.3-5 | Ex 2.3-6 | [Binary Search](https://github.com/pl3onasm/CLRS/tree/main/algorithms/divide-and-conquer/binsearch)|
 | Prob 2-4 | Prob 2-4 | [Inversion Count](https://github.com/pl3onasm/CLRS/tree/main/algorithms/divide-and-conquer/inversion-count)|
 | Chap 9.2-3 | Chap 9.2-3 | [Quickselect](https://github.com/pl3onasm/CLRS/tree/main/algorithms/divide-and-conquer/quickselect)|

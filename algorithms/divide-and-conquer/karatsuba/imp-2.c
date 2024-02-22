@@ -5,7 +5,7 @@
   license: MIT, see LICENSE file in repository root folder
   description: Karatsuba multiplication for natural numbers
   time complexity: O(n^1.585), where n is the number 
-    of digits in the input numbers
+    of digits of the maximum of the two input numbers
 */
 
 #include "../../../lib/clib/clib.h"
@@ -25,9 +25,9 @@ Nat *karatsuba(Nat *x, Nat *y) {
   // split x and y into two parts:
   // x = x1 * 10^exp + x0
   // y = y1 * 10^exp + y0
-  Nat *x1 = newNat(x->size);
+  Nat *x1 = newNat(x->size - exp);
   Nat *x0 = newNat(exp);
-  Nat *y1 = newNat(y->size);
+  Nat *y1 = newNat(y->size - exp);
   Nat *y0 = newNat(exp);
 
   splitNat(x, exp, x1, x0);

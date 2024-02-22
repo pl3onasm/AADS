@@ -5,26 +5,26 @@
   license: MIT, see LICENSE file in repository root folder
   description: standard long multiplication
   time complexity: O(n²), where n is the number 
-    of digits in the input numbers
+    of digits of the maximum of the two input numbers
 */
 
 #include "../../../lib/clib/clib.h"
 #include "nat.h"
 
-Nat *mulNat(Nat *a, Nat *b) {
+Nat *mulNat(Nat *x, Nat *y) {
   // computes a x b using standard long multiplication
 
-  Nat *res = newNat(a->size + b->size);
-  res->size = a->size + b->size;
+  Nat *res = newNat(x->size + y->size);
+  res->size = x->size + y->size;
 
   // multiply each digit of a with each digit of b
   // and add the result to the appropriate position in res
   // intermediate results are stored in res->digits as integers
   // and then converted back to char at the end
   // max int value is 9 * 9 = 81, so no overflow
-  for (size_t i = a->size - 1; i < a->size; i--) {
-    for (size_t j = b->size - 1; j < b->size; j--) {
-      int s = (a->digits[i] - '0') * (b->digits[j] - '0') 
+  for (size_t i = x->size - 1; i < x->size; i--) {
+    for (size_t j = y->size - 1; j < y->size; j--) {
+      int s = (x->digits[i] - '0') * (y->digits[j] - '0') 
               + res->digits[i + j + 1];
       res->digits[i + j + 1] = s % 10;
       res->digits[i + j] += s / 10;
@@ -32,8 +32,12 @@ Nat *mulNat(Nat *a, Nat *b) {
   }
 
   // remove leading zeros
-  while (res->size > 0 && res->digits[res->size - 1] == 0) 
-    res->size--;
+  int offset = 0;
+  while (offset < res->size && res->digits[offset] == 0) 
+    offset++;
+
+  res->size -= offset;
+  memmove(res->digits, res->digits + offset, res->size);
 
   // convert back to char
   for (size_t i = 0; i < res->size; i++) 
@@ -43,14 +47,14 @@ Nat *mulNat(Nat *a, Nat *b) {
 }
 
 int main() {
-  Nat *a = readNat();
-  Nat *b = readNat();
+  Nat *x = readNat();
+  Nat *y = readNat();
 
-  Nat *prod = mulNat(a, b);
+  Nat *prod = mulNat(x, y);
   printNat(prod);
   
-  freeNat(a);
-  freeNat(b);
+  freeNat(x);
+  freeNat(y);
   freeNat(prod);
   return 0;
 }

@@ -1,6 +1,6 @@
 # ${\color{cadetblue}\text{CLRS: Data Structures}}$ ${\color{cadetblue}\text{and Algorithms}}$
 
-## ${\color{rosybrown}\text{Algorithms in C}}$
+## ${\color{peru}\text{Algorithms in C}}$
 
 * [Divide and conquer](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/divide-and-conquer)
 * [Dynamic programming](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/dynamic-programming)
@@ -9,7 +9,7 @@
 * [String matching](https://github.com/pl3onasm/AADS/tree/main/algorithms/string-matching)
 * [Sorting](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting)
 
-## ${\color{rosybrown}\text{Data structures in C}}$
+## ${\color{peru}\text{Data structures in C}}$
 
 * Stacks and queues
 * Lists
