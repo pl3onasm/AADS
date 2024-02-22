@@ -8,7 +8,13 @@ Given a sorted array $A$ of $n$ elements, search for a given element $x$ in $A$ 
 
 The fact that the array is sorted is crucial to designing an algorithm in which we can search for $x$ in $\Theta(\log n)$ time. For this, we compare $x$ with the middle element $A[\lfloor n/2 \rfloor]$. If $x$ is equal to the middle element, we are done. If $x$ is less than the middle element, we search the left half of the array, and in the other case, we search the right half of the array. This process is repeated until we find $x$ or have narrowed the search to an empty subarray, in which case we conclude that $x$ is not in the array.
 
-Since the array is halved at each step and comparing takes constant time, the recurrence for the running time is $T(n) = T(n/2) + \Theta(1)$. According to the master theorem, case 2, the solution is then $T(n) = \Theta(\log n)$.
+Since the array is halved at each step and comparing takes constant time, the recurrence for the running time is given by:
+
+$$
+\color{saddlebrown}\boxed{\color{rosybrown}\space T(n) = T(n/2) + \Theta(1) \space}
+$$
+
+According to the master theorem, case 2, the solution is then $T(n) = \Theta(\log n)$.
 
 ## ${\color{yellowgreen}\text{Example 1:}}$ ${\color{olive} \text{ n-th magical number}}$
 

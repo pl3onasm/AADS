@@ -16,12 +16,13 @@ int compare (const void * a, const void * b) {
   return ( *(int*)a - *(int*)b );
 }
 
-bool isSolvable (int *stalls, int n, int c, int minDist) {
+bool isSolvable (int *stalls, size_t n, size_t c, size_t minDist) {
   /* checks whether it is possible to place c cows in n stalls
      such that the minimum distance between any two of them is
      at least minDist */
-  int prev = stalls[0], i, count = 1;
-  for (i = 1; i < n; i++) {
+  int prev = stalls[0];
+  size_t count = 1;
+  for (size_t i = 1; i < n; i++) {
     if (stalls[i] - prev >= minDist) {
       prev = stalls[i];
       count++;
@@ -31,10 +32,10 @@ bool isSolvable (int *stalls, int n, int c, int minDist) {
   return false;
 }
 
-int maxMinDist (int *stalls, int n, int c) {
+int maxMinDist (int *stalls, size_t n, size_t c) {
   /* returns the maximum minimum distance between any 
      two cows, given c cows and n stalls */
-  int left = 0, right = stalls[n-1] - stalls[0], mid;
+  size_t left = 0, right = stalls[n-1] - stalls[0], mid;
   while (left <= right) {
     mid = left + (right - left)/2;
     if (isSolvable(stalls, n, c, mid)) left = mid + 1;
@@ -43,12 +44,13 @@ int maxMinDist (int *stalls, int n, int c) {
   return left - 1;
 }
 
-void printSolution (int *stalls, int n, int c, int minDist) {
+void printSolution (int *stalls, size_t n, size_t c, size_t minDist) {
   /* prints the stalls where the cows should be placed */
-  int prev = stalls[0], i, count = 1;
-  printf("Minimum distance: %d\n", minDist);
+  int prev = stalls[0];
+  size_t count = 1;
+  printf("Minimum distance: %lu\n", minDist);
   printf("Stalls: %d ", stalls[0]);
-  for (i = 0; i < n; i++) {
+  for (size_t i = 0; i < n; i++) {
     if (stalls[i] - prev >= minDist) {
       printf("%d ", stalls[i]);
       prev = stalls[i];
@@ -60,8 +62,8 @@ void printSolution (int *stalls, int n, int c, int minDist) {
 }
 
 int main () {
-  int n, c;
-  (void)! scanf("%d %d", &n, &c);
+  size_t n, c;   // number of stalls and cows
+  (void)! scanf("%lu %lu", &n, &c);
   
   CREATE_ARRAY(int, stalls, n);
   READ_ARRAY(stalls, "%d", n);

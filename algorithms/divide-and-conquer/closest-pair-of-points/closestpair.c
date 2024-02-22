@@ -57,22 +57,22 @@ void setPair (pair *p, point p1, point p2, double dist) {
 
 //::::::::::::::::::::: closest pair algorithm ::::::::::::::::::::://
 
-pair findClosestPairInStrip (point *ypoints, int ysize, 
+pair findClosestPairInStrip (point *ypoints, size_t ysize, 
   double median, double delta) {
   /* finds closest pair in strip of width 2*delta around median */
   CREATE_ARRAY(point, strip, ysize);
-  int len = 0; pair p = {{0,0}, {0,0}, DBL_MAX};
+  size_t len = 0; pair p = {{0,0}, {0,0}, DBL_MAX};
 
   // make strip of points within 2*delta around median
-  for (int i = 0; i < ysize; ++i) 
+  for (size_t i = 0; i < ysize; ++i) 
     if (abs(ypoints[i].x - median) < delta) 
       strip[len++] = ypoints[i];
   
   // pass through strip in groups of 8 points at a time
   // and keep track of the new closest pair (if any)
-  for (int i = 0; i < len; ++i)
+  for (size_t i = 0; i < len; ++i)
     // check next 7 points
-    for (int j = 1; j < 8 && i + j < len; ++j) {  
+    for (size_t j = 1; j < 8 && i + j < len; ++j) {  
       double d = distance (strip[i], strip[i+j]);
       if (d < delta) {  // new closest pair found?
         delta = d;
@@ -84,7 +84,7 @@ pair findClosestPairInStrip (point *ypoints, int ysize,
   return p;
 }
 
-pair findClosestPair(point *xpoints, point *ypoints, int ysize, int n) {
+pair findClosestPair(point *xpoints, point *ypoints, size_t ysize, size_t n) {
   pair minpair, pair1, pair2, pair3; double d1, d2, d3; 
 
   // BASE CASES: brute force for n <= 3
@@ -105,9 +105,9 @@ pair findClosestPair(point *xpoints, point *ypoints, int ysize, int n) {
   //         whether they are left or right of the median
   CREATE_ARRAY(point, yrpoints, ysize);
   CREATE_ARRAY(point, ylpoints, ysize);
-  int yl = 0, yr = 0, mid = n / 2;
-  int median = xpoints[mid].x;
-  for (int i = 0; i < ysize; ++i) {
+  size_t yl = 0, yr = 0, mid = n / 2;
+  size_t median = xpoints[mid].x;
+  for (size_t i = 0; i < ysize; ++i) {
     if (ypoints[i].x < median) 
       ylpoints[yl++] = ypoints[i];
     else 
@@ -133,8 +133,8 @@ pair findClosestPair(point *xpoints, point *ypoints, int ysize, int n) {
 //::::::::::::::::::::::::: main function :::::::::::::::::::::::::://
 
 int main(int argc, char *argv[]) {
-  int n; 
-  (void)! scanf("%d\n", &n);
+  size_t n; 
+  (void)! scanf("%lu\n", &n);
   CREATE_ARRAY(point, xpoints, n);
   CREATE_ARRAY(point, ypoints, n);
 

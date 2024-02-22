@@ -106,9 +106,7 @@ $$
 Steps 1 and 3 both take $\Theta(n^2)$ time. In step 2, we compute seven multiplications of $n/2 \times n/2$ matrices. Thus we get the recurrence relation:
 
 $$
-\color{saddlebrown}\boxed{\\
-\color{rosybrown}\space T(n) = 7T(n/2) + \Theta(n^2) \space\\
-}
+\color{saddlebrown}\boxed{\color{rosybrown}\space T(n) = 7T(n/2) + \Theta(n^2) \space}
 $$
 
 By case 1 of the master theorem (CLRS 4.5), we can conclude that $T(n) = \Theta(n^{\log{7}}) = O(n^{2.8074})$.  

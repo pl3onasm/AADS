@@ -1,8 +1,8 @@
 /* 
-  file: libex2.c
+  file: libex.c
   author: David De Potter
-  description: example program for using the functions library
-  Compile with the functions library, and run with:
+  description: example program for using the clib library
+  Compile with the library, and run with:
     ./a.out <input.txt
 */
 

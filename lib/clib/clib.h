@@ -1,10 +1,11 @@
 /* file: clib.h
    author: David De Potter
-   description: library containing some useful functions
+   description: library containing some useful definitions 
+     and functions
 */
 
-#ifndef FUNCTIONS_H_INCLUDED    
-#define FUNCTIONS_H_INCLUDED
+#ifndef CLIB_H_INCLUDED    
+#define CLIB_H_INCLUDED
 
 #include <stdio.h>    // for printf, scanf
 #include <stdlib.h>   // for malloc, calloc, realloc, free
@@ -16,6 +17,8 @@
 //::::::::::::::::::::::::::: TYPEDEFS ::::::::::::::::::::::::::://
 
 typedef unsigned long long ull;
+typedef long long ll;
+typedef unsigned long ul;
 typedef unsigned int uint;
 typedef unsigned char uc;
 
@@ -96,7 +99,7 @@ typedef unsigned char uc;
   // returns a string containing all chars read
   // and sets size to the number of chars read
   // Examples:  READ_UNTIL(char, myString, "%c", '\n', size);
-  //            READ_UNTIL(int, myInts, "%d", 0, size);
+  //            READ_UNTIL(int, myInts, "%d", -1, size);
 #define READ_UNTIL(type, arr, format, delim, size) \
   type *arr = safeCalloc(100, sizeof(type)); \
   size_t arr##Len = 0; type arr##var; \
@@ -170,4 +173,4 @@ void *safeCalloc(size_t n, size_t size);
   // reallocates memory and checks if it succeeded
 void *safeRealloc(void *ptr, size_t newSize);
     
-#endif // FUNCTIONS_H_INCLUDED
+#endif // CLIB_H_INCLUDED

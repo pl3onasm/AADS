@@ -14,7 +14,13 @@ Implementation: [Quadratic MSP](https://github.com/pl3onasm/AADS/blob/main/algor
 
 Using a divide-and-conquer approach, the problem can be solved in $\Theta(n \log n)$ time. If we divide the array into two halves at each step, the maximum subarray can then be in the left half, in the right half, or it can span the two halves. The first two cases are two instances of the original problem, and can be solved recursively. The third case is part of the combination step, and can be solved in linear time by finding the maximum subarray that starts from the middle element and stretches to the left as far as possible, and the maximum subarray that starts from the middle element and stretches to the right as far as possible, and adding these two parts together. At the end, we compare the three cases, and return the maximum of the three.
 
-Since the problem is divided into two subproblems of half the size, and the cost of combining the solutions is linear, the recurrence relation is $T(n) = 2T(n/2) + \Theta(n)$. Using the master theorem, case 2, yields the solution $\Theta(n \log n)$.
+Since the problem is divided into two subproblems of half the size, and the cost of combining the solutions is linear, the recurrence relation is given by:
+
+$$
+\color{saddlebrown}\boxed{\color{rosybrown}\space T(n) = 2T(n/2) + \Theta(n) \space}
+$$
+
+Using the master theorem, case 2, yields the solution $\Theta(n \log n)$.
 
 Implementation: [Linearithmic MSP](https://github.com/pl3onasm/AADS/blob/main/algorithms/divide-and-conquer/max-subarray/msp-2.c)
 

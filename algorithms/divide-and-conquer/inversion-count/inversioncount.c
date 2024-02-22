@@ -11,10 +11,10 @@
 
 #include "../../../lib/clib/clib.h"
 
-int merge(int *arr, int left, int mid, int right) {
+size_t merge(int *arr, int left, int mid, int right) {
   /* merges two sorted arrays, and counts the number of inversions */
   CREATE_ARRAY(int, temp, right - left + 1);
-  int l = left, r = mid + 1, t = 0, count = 0;   
+  size_t l = left, r = mid + 1, t = 0, count = 0;   
   while (l <= mid && r <= right) {
     if (arr[l] <= arr[r]){ 
       // no inversions in this case 
@@ -26,19 +26,23 @@ int merge(int *arr, int left, int mid, int right) {
       count += mid - l + 1;
     }
   }
+
+  // copy the remaining elements of the left and right halves
   while (l <= mid) temp[t++] = arr[l++]; 
   while (r <= right) temp[t++] = arr[r++];
-  for (int i = left; i <= right; i++) arr[i] = temp[i - left];
+
+  // copy the merged array back to the original array
+  for (size_t i = left; i <= right; i++) arr[i] = temp[i - left];
   free(temp);
   return count;
 }
 
-int inversionCount(int *arr, int left, int right) { 
+size_t inversionCount(int *arr, int left, int right) { 
   /* uses mergesort to count the number of inversions 
      in the array */
-  int count = 0; 
+  size_t count = 0; 
   if (left < right) {
-    int mid = left + (right - left)/2;
+    size_t mid = left + (right - left)/2;
     count += inversionCount(arr, left, mid);
     count += inversionCount(arr, mid + 1, right);
     count += merge(arr, left, mid, right);

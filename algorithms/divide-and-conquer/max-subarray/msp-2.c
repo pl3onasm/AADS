@@ -68,8 +68,8 @@ void getMaxSub (int *arr, Sub *max) {
 }
 
 int main(int argc, char *argv[]) {
-  int n;
-  (void)! scanf("%d", &n);
+  size_t n;
+  (void)! scanf("%lu", &n);
 
   CREATE_ARRAY(int, arr, n);
   READ_ARRAY(arr, "%d", n);

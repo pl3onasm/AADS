@@ -13,24 +13,24 @@
 
 #include "../../../../lib/clib/clib.h"
 
-int gcd (int a, int b) {
+size_t gcd (ull a, ull b) {
   /* returns the greatest common divisor of a and b */
   if (b == 0) return a;
   return gcd(b, a % b);
 }
 
-int lcm (int a, int b) {
+ull lcm (ull a, ull b) {
   /* returns the least common multiple of a and b */
   return (a * b) / gcd(a, b);
 }
 
-ull nthMagicalNumber (int n, int a, int b) {
+ull nthMagicalNumber (size_t n, ull a, ull b) {
   /* returns the n-th magical number */
   if (a > b) 
     return nthMagicalNumber(n, b, a); // make sure a <= b
   
-  ull left = 0, right = n * a, mid;
-  int lcmab = lcm(a, b);
+  size_t left = 0, right = n * a, mid;
+  ull lcmab = lcm(a, b);
 
   while (left < right) {
     mid = left + (right - left) / 2;
@@ -41,8 +41,9 @@ ull nthMagicalNumber (int n, int a, int b) {
 }
 
 int main () {
-  int n, a, b;
-  (void)! scanf("%d %d %d", &n, &a, &b);
+  size_t n;
+  ull a, b;
+  (void)! scanf("%lu %llu %llu", &n, &a, &b);
   printf("%llu\n", nthMagicalNumber(n, a, b));
   return 0;
 }
