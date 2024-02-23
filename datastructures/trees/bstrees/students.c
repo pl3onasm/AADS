@@ -28,12 +28,13 @@
 int main (int argc, char *argv[]) {
   FILE *fp; node *n;
   char buffer[500];
-  short option, d, count = 0;
+  short option, count = 0;
 
   if (argc != 2) {
     printf("Usage: %s <student records file>\n", argv[0]);
     exit(EXIT_FAILURE);
   }
+  
   tree *T = newTree();
   buildTreeFromFile(T, argv[1], sizeof(student),
                     cmpStudents, studentFromStr);
