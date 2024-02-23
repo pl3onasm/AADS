@@ -6,7 +6,7 @@
 #include <stdbool.h>
 
 // constants and macros
-#define ROOT tree->root
+#define ROOT T->root
 
 // data structures and types
 typedef struct node {
@@ -18,21 +18,21 @@ typedef struct node {
 
 typedef struct {
   node *root;
-} bst;
+} tree;
 
 // function prototypes
-bst *newBST (void);
-node *newBSTnode (void *data);
-void BSTinsert (bst *tree, node *n, int (*cmp)(void *, void *));
-void freeBST (bst *tree);
-node *BSTsearch (node *x, void *key, int (*cmp)(void *, void *));
-void BSTdelete (bst *tree, node *z);
-node *BSTminimum (node *x);
-void printBST (node *x, short *count, void (*printData)(void *));
-void printBSTnode(node *x, void (*printData)(void *));
-void writeBSTtoFile (node *x, FILE *fp, 
+tree *newTree (void);
+node *newNode (void *data);
+void insertNode (tree *tree, node *n, int (*cmp)(void *, void *));
+void freeTree (tree *tree);
+node *searchKey (node *x, void *key, int (*cmp)(void *, void *));
+void deleteNode (tree *tree, node *z);
+node *treeMinimum (node *x);
+void printTree (node *x, short *count, void (*printData)(void *));
+void printNode(node *x, void (*printData)(void *));
+void writeTreeToFile (node *x, FILE *fp, 
   void (*printData)(void *, FILE *));
-void readBSTfromFile (bst *tree, char *filename, size_t dataSize,
+void buildTreeFromFile (tree *tree, char *filename, size_t dataSize,
   int (*cmp)(void *, void *), bool (*dataFromStr)(void *, char *));
 
 #endif  // BST_H_INCLUDED

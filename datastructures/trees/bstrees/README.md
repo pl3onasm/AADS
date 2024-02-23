@@ -7,7 +7,5 @@ Usage:
 Compilation:
 
 ```linux
-gcc -O2 -std=c99 -pedantic -o a.out bst.c bststudents.c -lm
+gcc -O2 -std=c99 -pedantic -o a.out bst.c bststudents.c student.c ../../../lib/clib/*.c -lm
 ```
-
-gcc -O2 -std=c99 -pedantic -o a.out bst.c bststudents.c student.c ../../../lib/clib/*.c -lm 

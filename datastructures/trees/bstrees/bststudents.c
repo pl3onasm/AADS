@@ -1,4 +1,4 @@
-/* file: bststudents.c
+/* file: students.c
    author: David De Potter
    email: pl3onasm@gmail.com
    license: MIT, see LICENSE file in repository root folder
@@ -13,9 +13,6 @@
     of the tree. If the tree is balanced, this is O(lg n), where n
     is the number of nodes in the tree. If the tree is unbalanced,
     this is O(n) in the worst case.
-
-    Compilation:
-    $ gcc -O2 -std=c99 -pedantic -o a.out bst.c bststudents.c student.c ../../../lib/clib/*.c -lm
 */
 
 #include "../../../lib/clib/clib.h"
@@ -32,8 +29,8 @@ int main (int argc, char *argv[]) {
     printf("Usage: %s <student records file>\n", argv[0]);
     exit(EXIT_FAILURE);
   }
-  bst *tree = newBST();
-  readBSTfromFile(tree, argv[1], sizeof(student),
+  tree *T = newTree();
+  buildTreeFromFile(T, argv[1], sizeof(student),
                   cmpStudents, studentFromStr);
 
   while (true) {
@@ -57,19 +54,17 @@ int main (int argc, char *argv[]) {
       case 1:
         printf("Enter student id, dob, gpa, first name, last name: ");
         student *s = newStudent();
-        if ((fgets(buffer, 100, stdin) && sscanf(buffer, "%d %s %lf %s %s", 
-            &s->id, s->dob, &s->gpa, s->fname, s->lname) != 5) 
-            || !validStudent(s)) {
+        if (fgets(buffer, 100, stdin) && !studentFromStr(s, buffer)) {
           printf("Error: invalid student record\n");
           free(s);
           clearStdin(buffer);
           continue;
         }
-        n = BSTsearch(ROOT, &(s->id), cmpStudents);
+        n = searchKey(ROOT, &(s->id), cmpStudents);
         if (!n) {
-          // insert into BST
-          n = newBSTnode(s);
-          BSTinsert(tree, n, cmpStudents);
+          // insert into tree
+          n = newNode(s);
+          insertNode(T, n, cmpStudents);
           printf("Inserted student with id %d\n", s->id);
         } else {
           printf("Error: student with id %d already exists\n", s->id);
@@ -86,10 +81,10 @@ int main (int argc, char *argv[]) {
           clearStdin(buffer);
           continue;
         }
-        n = BSTsearch(ROOT, &id, cmpStudentById);
+        n = searchKey(ROOT, &id, cmpStudentById);
         if (n != NULL) {
-          // delete from BST
-          BSTdelete(tree, n);
+          // delete from tree
+          deleteNode(T, n);
           printf("Deleted student with id %d\n", id);
         } else
           printf("Error: student with id %d not found\n", id);
@@ -102,7 +97,7 @@ int main (int argc, char *argv[]) {
           clearStdin(buffer);
           continue;
         }
-        n = BSTsearch(ROOT, &id, cmpStudentById);
+        n = searchKey(ROOT, &id, cmpStudentById);
         if (n != NULL)
           printStudent(n->data);
         else
@@ -110,8 +105,8 @@ int main (int argc, char *argv[]) {
         clearStdin(buffer);
         break;
       case 4:
-        // print all student records in BST in order, using printStudent
-        printBST(ROOT, &count, printStudent);
+        // print all student records in tree in order, using printStudent
+        printTree(ROOT, &count, printStudent);
         count = 0;
         break;
       case 5:
@@ -120,19 +115,19 @@ int main (int argc, char *argv[]) {
         if ((fgets(buffer, 10, stdin) && 
             sscanf(buffer, "%c", &ch) != 1) || ch != 'y')
           continue;
-        freeBST(tree);
+        freeTree(T);
         exit(EXIT_SUCCESS);
       case 6:
-        // overwrite student records file with updated BST
+        // overwrite student records file with updated tree
         fp = fopen(argv[1], "w+");
         if (fp == NULL) {
           printf("Error: could not open file %s\n", argv[1]);
-          freeBST(tree);
+          freeTree(T);
           exit(EXIT_FAILURE);
         }
-        writeBSTtoFile(ROOT, fp, writeStudentToFile);
+        writeTreeToFile(ROOT, fp, writeStudentToFile);
         fclose(fp);
-        freeBST(tree);
+        freeTree(T);
         exit(EXIT_SUCCESS);
       default:
         printf("Error: invalid command\n");
