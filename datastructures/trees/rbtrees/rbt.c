@@ -1,4 +1,9 @@
-/* Implementation of red-black trees, with nodes holding student records */
+/* 
+  Generic red-black tree implementation 
+  Author: David De Potter
+  LICENSE: MIT, see LICENSE file in repository root folder
+*/
+
 #include "rbt.h"
 #include "../../../lib/clib/clib.h"
 

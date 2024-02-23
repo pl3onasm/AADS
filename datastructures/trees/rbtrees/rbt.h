@@ -1,3 +1,9 @@
+/* 
+  Generic red-black tree implementation 
+  Author: David De Potter
+  LICENSE: MIT, see LICENSE file in repository root folder
+*/
+
 #ifndef RBT_H_INCLUDED
 #define RBT_H_INCLUDED
 

@@ -1,3 +1,9 @@
+/* 
+  Generic binary search tree implementation 
+  Author: David De Potter
+  LICENSE: MIT, see LICENSE file in repository root folder
+*/
+
 #ifndef BST_H_INCLUDED
 #define BST_H_INCLUDED
 
