@@ -17,7 +17,7 @@ node *newNode (void *data) {
 }
 
 tree *newTree () {
-  // allocates memory for a new BST 
+  // allocates memory for a new tree
   tree *tree = safeCalloc(1, sizeof(tree));
   return tree;
 }
@@ -40,16 +40,16 @@ void freeNodes (node *x) {
 }
 
 void freeTree (tree *T) {
-  // entirely frees a binary search tree 
+  // entirely frees a tree
   if (T != NULL)
     freeNodes(ROOT);
   free(T);
 }
 
-//::::::::::::::::::::::::: BST operations :::::::::::::::::::::::::://
+//:::::::::::::::::::::::: Tree operations ::::::::::::::::::::::::://
 
 void insertNode (tree *T, node *n, int (*cmp)(void *, void *)) {
-  // inserts a node into the BST, using the given comparison function
+  // inserts a node into the tree, using the given comparison function
   node *y = NULL;
   node *x = ROOT;
 
@@ -71,7 +71,7 @@ void insertNode (tree *T, node *n, int (*cmp)(void *, void *)) {
 }
 
 node *searchKey (node *x, void *key, int (*cmp)(void *, void *)) {
-  // searches for a key in the BST 
+  // searches for a key in the tree 
   if (x == NULL || cmp(x->data, key) == 0)
     return x;
   if (cmp(key, x->data) < 0)
@@ -81,7 +81,7 @@ node *searchKey (node *x, void *key, int (*cmp)(void *, void *)) {
 }
 
 void transplant (tree *T, node *u, node *v) {
-  // replaces node u with node v in the BST 
+  // replaces node u with node v in the tree 
   if (u->parent == NULL)
     ROOT = v;
   else if (u == u->parent->left)
@@ -101,7 +101,7 @@ node *treeMinimum (node *x) {
 }
 
 void deleteNode (tree *T, node *z) {
-  // deletes a node from the BST 
+  // deletes a node from the tree 
   if (z->left == NULL)
     transplant(T, z, z->right);
   else if (z->right == NULL)
@@ -120,8 +120,10 @@ void deleteNode (tree *T, node *z) {
   freeNode(z);
 }
 
+//::::::::::::::::::::::::::: Printing ::::::::::::::::::::::::::::://
+
 void printTree (node *x, short *count, void (*printData)(void *)) {
-  // prints the data in the BST in order, 20 items at a time 
+  // prints the data in the tree in order, 20 items at a time 
   char buffer[100], c;
   if (x != NULL) {
     printTree(x->left, count, printData);
@@ -147,8 +149,10 @@ void printNode (node *n, void (*printData)(void *)) {
     printData(n->data);
 }
 
+//:::::::::::::::::::::::: File operations ::::::::::::::::::::::::://
+
 void writeTreeToFile (node *x, FILE *fp, void (*printData)(void *, FILE *)) {
-  // prints the data in the BST in order to given file 
+  // writes the data in the tree in order to given file 
   if (x != NULL) {
     writeTreeToFile(x->left, fp, printData);
     printData(x->data, fp);
@@ -158,13 +162,14 @@ void writeTreeToFile (node *x, FILE *fp, void (*printData)(void *, FILE *)) {
 
 void buildTreeFromFile (tree *T, char *filename, size_t dataSize,
   int (*cmp)(void *, void *), bool (*dataFromStr)(void *, char *)) {
-  // reads data from input file and inserts it into the BST 
+  // reads data from input file and inserts it into the tree
   FILE *fp; char buffer[100];
   size_t lineNr = 0;
 
   fp = fopen(filename, "r");
   if (fp == NULL) {
     printf("Error: could not open file %s\n", filename);
+    freeTree(T);
     exit(EXIT_FAILURE);
   }
 

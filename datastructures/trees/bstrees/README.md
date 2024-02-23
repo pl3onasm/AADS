@@ -1,11 +1,11 @@
 Usage:
 
-```linux
-./a.out students.txt
+```shell
+./a.out ../data/students.txt
 ```
 
 Compilation:
 
-```linux
-gcc -O2 -std=c99 -pedantic -o a.out bst.c bststudents.c student.c ../../../lib/clib/*.c -lm
+```shell
+gcc -O2 -std=c99 -pedantic -o a.out bst.c bststudents.c ../data/student.c ../../../lib/clib/*.c -lm
 ```

@@ -18,7 +18,7 @@
 #include "../../../lib/clib/clib.h"
 
 #include "bst.h"
-#include "student.h"
+#include "../data/student.h"
 
 int main (int argc, char *argv[]) {
   FILE *fp; node *n;
@@ -31,7 +31,7 @@ int main (int argc, char *argv[]) {
   }
   tree *T = newTree();
   buildTreeFromFile(T, argv[1], sizeof(student),
-                  cmpStudents, studentFromStr);
+                    cmpStudents, studentFromStr);
 
   while (true) {
     
