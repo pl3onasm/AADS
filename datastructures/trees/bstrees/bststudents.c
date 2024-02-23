@@ -13,92 +13,28 @@
     of the tree. If the tree is balanced, this is O(lg n), where n
     is the number of nodes in the tree. If the tree is unbalanced,
     this is O(n) in the worst case.
+
+    Compilation:
+    $ gcc -O2 -std=c99 -pedantic -o a.out bst.c bststudents.c student.c ../../../lib/clib/*.c -lm
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "../../../lib/clib/clib.h"
+
 #include "bst.h"
-
-//::::::::::::::::::::::::: validation functions :::::::::::::::::::://
-
-bool validDOB (char *dob) {
-  /* checks if a date of birth is valid */
-  int day, month, year;
-  if (sscanf(dob, "%d-%d-%d", &year, &month, &day) != 3)
-    return false;
-  if (day < 1 || day > 31)
-    return false;
-  if (month < 1 || month > 12)
-    return false;
-  if (year < 1900 || year > 2017)
-    return false;
-  return true;
-}
-
-bool validStudent (student *s) {
-  /* checks if a student record is valid */
-  if (s->id < 1000000 || s->id > 9999999)
-    return false;
-  if (s->gpa < 0 || s->gpa > 10)
-    return false;
-  if (!validDOB(s->dob))
-    return false;
-  if (strlen(s->fname) < 2 || strlen(s->lname) < 2)
-    return false;
-  return true;
-}
-
-//:::::::::::::::::::::::::: file operations :::::::::::::::::::::::://
-
-void writeToFile (node *x, FILE *fp) {
-  /* prints the student records in the BST in order to given file */
-  if (x != NULL) {
-    writeToFile(x->left, fp);
-    fprintf(fp, "%d %s %.2lf %s %s\n", x->student->id, x->student->dob,
-            x->student->gpa, x->student->fname, x->student->lname);
-    writeToFile(x->right, fp);
-  }
-}
-
-void readFromFile (bst *tree, char *filename) {
-  /* reads student records from input file and inserts them into the BST */
-  FILE *fp; char buffer[1024], c;
-  student *s = newStudent();
-
-  fp = fopen(filename, "r");
-  if (fp == NULL) {
-    printf("Error: could not open file %s\n", filename);
-    exit(EXIT_FAILURE);
-  }
-
-  while (fgets(buffer, 1024, fp) != NULL) {
-    if (sscanf(buffer, "%d %s %lf %s %s %c", &s->id, s->dob, &s->gpa,
-               s->fname, s->lname, &c) != 5 || !validStudent(s)) {
-      fputs(buffer, stdout);
-      printf("Error: invalid student record\n");
-      exit(EXIT_FAILURE);
-    }
-    BSTinsert(tree, s);
-    s = newStudent();
-  }
-  free(s);
-  fclose(fp);
-}
-
-//::::::::::::::::::::::::::::: main :::::::::::::::::::::::::::::::://
+#include "student.h"
 
 int main (int argc, char *argv[]) {
   FILE *fp; node *n;
-  char buffer[1024];
-  short c, d, count = 0;
+  char buffer[500];
+  short option, d, count = 0;
 
   if (argc != 2) {
     printf("Usage: %s <student records file>\n", argv[0]);
     exit(EXIT_FAILURE);
   }
   bst *tree = newBST();
-  readFromFile(tree, argv[1]);
+  readBSTfromFile(tree, argv[1], sizeof(student),
+                  cmpStudents, studentFromStr);
 
   while (true) {
     
@@ -107,42 +43,50 @@ int main (int argc, char *argv[]) {
             "(2) delete\n"
             "(3) search\n"
             "(4) print\n"
-            "(5) save and exit\n\n");
+            "(5) exit\n"
+            "(6) save and exit\n\n");
 
-    if (fgets(buffer, 1024, stdin) && sscanf(buffer, "%hd %hd", &c, &d) != 1) {
+    if (fgets(buffer, 10, stdin) && sscanf(buffer, "%hd", &option) != 1) {
+      // clear input buffer
+      clearStdin(buffer);
       printf("Error: invalid command\n"); 
       continue;
     }
     
-    switch (c) {
+    switch (option) {
       case 1:
         printf("Enter student id, dob, gpa, first name, last name: ");
         student *s = newStudent();
-        if ((fgets(buffer, 1024, stdin) && sscanf(buffer, "%d %s %lf %s %s", 
-        &s->id, s->dob, &s->gpa, s->fname, s->lname) != 5) || !validStudent(s)) {
+        if ((fgets(buffer, 100, stdin) && sscanf(buffer, "%d %s %lf %s %s", 
+            &s->id, s->dob, &s->gpa, s->fname, s->lname) != 5) 
+            || !validStudent(s)) {
           printf("Error: invalid student record\n");
           free(s);
+          clearStdin(buffer);
           continue;
         }
-        n = BSTsearch(ROOT, s->id);
+        n = BSTsearch(ROOT, &(s->id), cmpStudents);
         if (!n) {
-          // insert into BST  
-          BSTinsert(tree, s);
+          // insert into BST
+          n = newBSTnode(s);
+          BSTinsert(tree, n, cmpStudents);
           printf("Inserted student with id %d\n", s->id);
         } else {
           printf("Error: student with id %d already exists\n", s->id);
           free(s);
         }
+        clearStdin(buffer);
         break;
       case 2:
         printf("Enter student id: ");
         int id;
-        if ((fgets(buffer, 1024, stdin) && sscanf(buffer, "%d", &id) != 1)
+        if ((fgets(buffer, 20, stdin) && sscanf(buffer, "%d", &id) != 1)
         || id < 1000000 || id > 9999999) {
           printf("Error: invalid id\n");
+          clearStdin(buffer);
           continue;
         }
-        n = BSTsearch(ROOT, id);
+        n = BSTsearch(ROOT, &id, cmpStudentById);
         if (n != NULL) {
           // delete from BST
           BSTdelete(tree, n);
@@ -152,29 +96,41 @@ int main (int argc, char *argv[]) {
         break;
       case 3:
         printf("Enter student id: ");
-        if ((fgets(buffer, 1024, stdin) && sscanf(buffer, "%d", &id) != 1)
+        if ((fgets(buffer, 20, stdin) && sscanf(buffer, "%d", &id) != 1)
         || id < 1000000 || id > 9999999) {
           printf("Error: invalid id\n");
+          clearStdin(buffer);
           continue;
         }
-        n = BSTsearch(ROOT, id);
+        n = BSTsearch(ROOT, &id, cmpStudentById);
         if (n != NULL)
-          printStudent(n->student);
+          printStudent(n->data);
         else
           printf("Error: student with id %d not found\n", id);
+        clearStdin(buffer);
         break;
       case 4:
-        printBST(ROOT, &count);
+        // print all student records in BST in order, using printStudent
+        printBST(ROOT, &count, printStudent);
         count = 0;
         break;
       case 5:
+        printf("Are you sure you want to exit without saving? (y/n): ");
+        char ch;
+        if ((fgets(buffer, 10, stdin) && 
+            sscanf(buffer, "%c", &ch) != 1) || ch != 'y')
+          continue;
+        freeBST(tree);
+        exit(EXIT_SUCCESS);
+      case 6:
         // overwrite student records file with updated BST
         fp = fopen(argv[1], "w+");
         if (fp == NULL) {
           printf("Error: could not open file %s\n", argv[1]);
+          freeBST(tree);
           exit(EXIT_FAILURE);
         }
-        writeToFile(ROOT, fp);
+        writeBSTtoFile(ROOT, fp, writeStudentToFile);
         fclose(fp);
         freeBST(tree);
         exit(EXIT_SUCCESS);

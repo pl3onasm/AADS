@@ -17,11 +17,10 @@ Nat *mulNat(Nat *x, Nat *y) {
   Nat *res = newNat(x->size + y->size);
   res->size = x->size + y->size;
 
-  // multiply each digit of a with each digit of b
-  // and add the result to the appropriate position in res
+  // multiplies each digit of x with each digit of y
+  // and adds the result to the appropriate position in res
   // intermediate results are stored in res->digits as integers
   // and then converted back to char at the end
-  // max int value is 9 * 9 = 81, so no overflow
   for (size_t i = x->size - 1; i < x->size; i--) {
     for (size_t j = y->size - 1; j < y->size; j--) {
       int s = (x->digits[i] - '0') * (y->digits[j] - '0') 

@@ -9,11 +9,19 @@ void swap(void *a, void *b, size_t size) {
   free(buffer);
 }
 
+  // clears the input buffer
+void clearStdin(char *buffer) {
+  if (buffer[strlen(buffer) - 1] != '\n') {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+  }
+}
+
   // allocates memory and checks whether this was successful
 void *safeMalloc(size_t n) {
   void *ptr = malloc(n);
   if (ptr == NULL) {
-    printf("Error: malloc(%ld) failed. "
+    printf("Error: malloc(%lu) failed. "
            "Out of memory?\n", n);
     exit(EXIT_FAILURE);
   }
@@ -26,7 +34,7 @@ void *safeCalloc(size_t n, size_t size) {
   
   void *ptr = calloc(n, size);
   if (ptr == NULL) {
-    printf("Error: calloc(%ld, %ld) failed. "
+    printf("Error: calloc(%lu, %lu) failed. "
            "Out of memory?\n", n, size);
     exit(EXIT_FAILURE);
   }
@@ -37,7 +45,7 @@ void *safeCalloc(size_t n, size_t size) {
 void *safeRealloc(void *ptr, size_t newSize) {
   ptr = realloc(ptr, newSize);
   if (ptr == NULL) {
-    printf("Error: realloc(%ld) failed. " 
+    printf("Error: realloc(%lu) failed. "
            "Out of memory?\n", newSize);
     exit(EXIT_FAILURE);
   }

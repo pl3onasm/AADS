@@ -9,10 +9,12 @@
 
 #include <stdio.h>    // for printf, scanf
 #include <stdlib.h>   // for malloc, calloc, realloc, free
-#include <stddef.h>   // for size_t, isdigit, isspace
+#include <stddef.h>   // for size_t
 #include <stdbool.h>  // for bool
 #include <string.h>   // for memcpy, strlen, etc.
 #include <limits.h>   // for INT_MAX, INT_MIN, etc.
+#include <ctype.h>    // for isspace, isdigit, etc.
+#include <stdint.h>   // for int32_t, int64_t, etc.
 
 //::::::::::::::::::::::::::: TYPEDEFS ::::::::::::::::::::::::::://
 
@@ -111,7 +113,7 @@ typedef unsigned char uc;
   size = arr##Len;\
   arr[arr##Len] = '\0';
     
-//::::::::::::::::::::::: MEMORY MANAGEMENT::::::::::::::::::::::://
+//::::::::::::::::::::::: MEMORY MANAGEMENT :::::::::::::::::::::://
 
   // macro for creating a 1D array of a given type and length
   // Examples:  CREATE_ARRAY(myInts, int, 10);
@@ -172,5 +174,19 @@ void *safeCalloc(size_t n, size_t size);
     
   // reallocates memory and checks if it succeeded
 void *safeRealloc(void *ptr, size_t newSize);
+
+void clearStdin(char *buffer);
+
+//::::::::::::::::::::::::::: SEARCHING :::::::::::::::::::::::::://
+
+  // generic linear search 
+  // returns index of key in arr, SIZE_MAX if not found
+size_t linSearch(void *arr, size_t len, size_t size, void *key, 
+                int (*cmp)(const void *, const void *));
+
+  // generic binary search
+  // returns index of key in arr, SIZE_MAX if not found
+size_t binSearch(void *arr, size_t len, size_t size, void *key, 
+                int (*cmp)(const void *, const void *));
     
 #endif // CLIB_H_INCLUDED

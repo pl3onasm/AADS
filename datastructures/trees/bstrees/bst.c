@@ -1,48 +1,37 @@
-/* Binary search tree implementation, including the necessary memory
-   management functions. */
+/* 
+  Generic binary search tree implementation 
+  Author: David De Potter
+  LICENSE: MIT, see LICENSE file in repository root folder
+*/
 
 #include "bst.h"
+#include "../../../lib/clib/clib.h"
 
 //::::::::::::::::::::::: memory management :::::::::::::::::::::::://
 
-void *safeCalloc (int n, int size) {
-  /* allocates n elements of size size, initializing them to 0, and
-     checks whether the allocation was successful */
-  void *ptr = calloc(n, size);
-  if (ptr == NULL) {
-    printf("Error: calloc(%d, %d) failed. Out of memory?\n", n, size);
-    exit(EXIT_FAILURE);
-  }
-  return ptr;
-}
-
-student *newStudent () {
-  /* allocates memory for a new student record */
-  student *s = safeCalloc(1, sizeof(student));
-  return s;
-}
-
-node *newNode (student *s) {
-  /* allocates memory for a new node */
+node *newBSTnode (void *data) {
+  // allocates memory for a new node
   node *n = safeCalloc(1, sizeof(node));
-  n->student = s;
+  n->data = data;
   return n;
 }
 
-bst *newBST (void) {
-  /* allocates memory for a new BST */
+bst *newBST () {
+  // allocates memory for a new BST 
   bst *tree = safeCalloc(1, sizeof(bst));
   return tree;
 }
 
 void freeNode (node *n) {
-  /* frees a node */
-  free(n->student);
-  free(n);
+  // frees a node 
+  if (n != NULL){
+    free(n->data);
+    free(n);
+  }
 }
 
 void freeNodes (node *x) {
-  /* frees all nodes in the subtree rooted at x */
+  // frees all nodes in the subtree rooted at x 
   if (x != NULL) {
     freeNodes(x->left);
     freeNodes(x->right);
@@ -51,7 +40,7 @@ void freeNodes (node *x) {
 }
 
 void freeBST (bst *tree) {
-  /* entirely frees a binary search tree */
+  // entirely frees a binary search tree 
   if (tree != NULL)
     freeNodes(ROOT);
   free(tree);
@@ -59,15 +48,14 @@ void freeBST (bst *tree) {
 
 //::::::::::::::::::::::::: BST operations :::::::::::::::::::::::::://
 
-void BSTinsert (bst *tree, student *s) {
-  /* inserts a student record into the BST */
-  node *n = newNode(s);
+void BSTinsert (bst *tree, node *n, int (*cmp)(void *, void *)) {
+  // inserts a node into the BST, using the given comparison function
   node *y = NULL;
   node *x = ROOT;
 
   while (x != NULL) {
     y = x;
-    if (s->id < x->student->id)
+    if (cmp(n->data, x->data) < 0)
       x = x->left;
     else
       x = x->right;
@@ -76,24 +64,24 @@ void BSTinsert (bst *tree, student *s) {
   n->parent = y;
   if (y == NULL)
     ROOT = n;
-  else if (s->id < y->student->id)
+  else if (cmp(n->data, y->data) < 0)
     y->left = n;
   else
     y->right = n;
 }
 
-node *BSTsearch (node *x, int id) {
-  /* searches for a student record in the BST */
-  if (x == NULL || id == x->student->id)
+node *BSTsearch (node *x, void *key, int (*cmp)(void *, void *)) {
+  // searches for a key in the BST 
+  if (x == NULL || cmp(x->data, key) == 0)
     return x;
-  if (id < x->student->id)
-    return BSTsearch(x->left, id);
+  if (cmp(key, x->data) < 0)
+    return BSTsearch(x->left, key, cmp);
   else
-    return BSTsearch(x->right, id);
+    return BSTsearch(x->right, key, cmp);
 }
 
 void BSTtransplant (bst *tree, node *u, node *v) {
-  /* replaces node u with node v in the BST */
+  // replaces node u with node v in the BST 
   if (u->parent == NULL)
     ROOT = v;
   else if (u == u->parent->left)
@@ -105,15 +93,15 @@ void BSTtransplant (bst *tree, node *u, node *v) {
 }
 
 node *BSTminimum (node *x) {
-  /* returns the node with the smallest key in 
-  the subtree rooted at x */
+  // returns the node with the smallest key in 
+  // the subtree rooted at x 
   while (x->left != NULL)
     x = x->left;
   return x;
 }
 
 void BSTdelete (bst *tree, node *z) {
-  /* deletes a node from the BST */
+  // deletes a node from the BST 
   if (z->left == NULL)
     BSTtransplant(tree, z, z->right);
   else if (z->right == NULL)
@@ -132,29 +120,67 @@ void BSTdelete (bst *tree, node *z) {
   freeNode(z);
 }
 
-//::::::::::::::::::::::::: print functions ::::::::::::::::::::::::://
-
-void printStudent (student *s) {
-  /* prints a student record */
-  printf("%d | %s | %.2lf | %s %s\n", s->id, s->dob, s->gpa, s->fname, s->lname);
-}
-
-void printBST (node *x, short *count) {
-  /* prints the student records in order of student ID, 20 at a time */
-  char buffer[1024], c;
+void printBST (node *x, short *count, void (*printData)(void *)) {
+  // prints the data in the BST in order, 20 items at a time 
+  char buffer[100], c;
   if (x != NULL) {
-    printBST(x->left, count);
+    printBST(x->left, count, printData);
     if (*count < 20){
-      printStudent(x->student);
+      printData(x->data);
       *count += 1;
     } else if (*count == 20){
       printf("Print 20 more? (y/n): ");
-      if ((fgets (buffer, 1024, stdin) && 
+      if ((fgets (buffer, 100, stdin) && 
       sscanf(buffer, "%c", &c) != 1) || c != 'y')
         *count = 21;
       else
         *count = 0;
+      clearStdin(buffer);
     }
-    printBST(x->right, count);
+    printBST(x->right, count, printData);
   }
+}
+
+void printBSTnode (node *n, void (*printData)(void *)) {
+  // prints the data in a node 
+  if (n != NULL)
+    printData(n->data);
+}
+
+void writeBSTtoFile (node *x, FILE *fp, void (*printData)(void *, FILE *)) {
+  // prints the data in the BST in order to given file 
+  if (x != NULL) {
+    writeBSTtoFile(x->left, fp, printData);
+    printData(x->data, fp);
+    writeBSTtoFile(x->right, fp, printData);
+  }
+}
+
+void readBSTfromFile (bst *tree, char *filename, size_t dataSize,
+  int (*cmp)(void *, void *), bool (*dataFromStr)(void *, char *)) {
+  // reads data from input file and inserts it into the BST 
+  FILE *fp; char buffer[100];
+  size_t lineNr = 0;
+
+  fp = fopen(filename, "r");
+  if (fp == NULL) {
+    printf("Error: could not open file %s\n", filename);
+    exit(EXIT_FAILURE);
+  }
+
+  while (fgets(buffer, 100, fp) != NULL) {
+    lineNr++;
+    void *data = safeCalloc(1, dataSize);
+    if (! dataFromStr(data, buffer)) {
+      printf("Error: invalid input data on line %lu.\n"
+             "Check file %s for errors and try again.\n", lineNr, filename);
+      free(data);
+      freeBST(tree);
+      fclose(fp);
+      exit(EXIT_FAILURE);
+    }
+    node *n = newBSTnode(data);
+    BSTinsert(tree, n, cmp);
+  }
+  fclose(fp);
 }

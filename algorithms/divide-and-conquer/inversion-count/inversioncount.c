@@ -11,7 +11,7 @@
 
 #include "../../../lib/clib/clib.h"
 
-size_t merge(int *arr, int left, int mid, int right) {
+size_t merge(int *arr, size_t left, size_t mid, size_t right) {
   /* merges two sorted arrays, and counts the number of inversions */
   CREATE_ARRAY(int, temp, right - left + 1);
   size_t l = left, r = mid + 1, t = 0, count = 0;   
@@ -37,7 +37,7 @@ size_t merge(int *arr, int left, int mid, int right) {
   return count;
 }
 
-size_t inversionCount(int *arr, int left, int right) { 
+size_t inversionCount(int *arr, size_t left, size_t right) { 
   /* uses mergesort to count the number of inversions 
      in the array */
   size_t count = 0; 
@@ -57,7 +57,7 @@ int main(int argc, char **argv){
   CREATE_ARRAY(int, vect, size);
   READ_ARRAY(vect, "%d ", size);
 
-  printf("%d\n", inversionCount(vect, 0, size - 1));
+  printf("%lu\n", inversionCount(vect, 0, size - 1));
   free(vect); 
   return 0; 
 }
