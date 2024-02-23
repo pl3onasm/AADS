@@ -1,26 +1,17 @@
-#ifndef RBT_H
-#define RBT_H
+#ifndef RBT_H_INCLUDED
+#define RBT_H_INCLUDED
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <stdbool.h>
 
 // constants and macros
-#define MAX_NAME_LEN 30
-#define NIL   tree->nil
-#define ROOT  tree->root
+#define NIL   T->nil
+#define ROOT  T->root
 
 // data structures and types
-typedef struct {
-  int id;
-  double gpa;
-  char dob[11];
-  char fname[MAX_NAME_LEN];
-  char lname[MAX_NAME_LEN];
-} student;
-
 typedef struct node {
-  student *student;
+  void *data;
   enum {RED, BLACK} color;
   struct node *parent;
   struct node *left;
@@ -29,22 +20,21 @@ typedef struct node {
 
 typedef struct {
   node *root, *nil;
-} rbt; 
-
-typedef enum {
-  false = 0,
-  true = 1
-} bool;
+} tree; 
 
 // function prototypes
-student *newStudent (void);
-rbt *newRBT (void);
-void RBTinsert (rbt *tree, student *s);
-void freeRBT (rbt *tree);
-node *RBTminimum (rbt *tree, node *x);
-node *RBTsearch (rbt *tree, int id);
-void printStudent (student *s);
-void printRBT (rbt *tree, node *root, short *count);
-void RBTdelete (rbt *tree, node *z);
+tree *newTree (void);
+node *newNode (tree *T, void *data);
+void insertNode (tree *T, node *n, int (*cmp)(void *, void *));
+void freeTree (tree *T);
+node *searchKey (tree *T, void *key, int (*cmp)(void *, void *));
+void deleteNode (tree *T, node *z);
+node *treeMinimum (tree *T, node *x);
+void printTree (tree *T, node *x, short *count, void (*printData)(void *));
+void printNode(node *x, void (*printData)(void *));
+void writeTreeToFile (tree *T, node *x, FILE *fp, 
+  void (*printData)(void *, FILE *));
+void buildTreeFromFile (tree *tree, char *filename, size_t dataSize,
+  int (*cmp)(void *, void *), bool (*dataFromStr)(void *, char *));
 
-#endif
+#endif  // RBT_H_INCLUDED

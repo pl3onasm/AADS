@@ -1,23 +1,29 @@
-/* file: students.c
-   author: David De Potter
-   email: pl3onasm@gmail.com
-   license: MIT, see LICENSE file in repository root folder
-   description: this is a simple example of a binary search tree
-    using student records as data.
+/* 
+  file: students.c
+  author: David De Potter
+  email: pl3onasm@gmail.com
+  license: MIT, see LICENSE file in repository root folder
+  description: this is a simple example of using student records
+    as data with a tree as the underlying data structure.
     The student records are stored in a file, one record per line.
-    This file is read into a binary search tree, and the user can
-    then search for a student by id, delete or insert a student,
+    This file is read into a tree, and the user can then
+    search for a student by id, delete or insert a student,
     or print all existing records in the tree. 
     The tree is ordered by student number.
-   time complexity: all operations are in O(h), where h is the height
+  time complexity: all operations are in O(h), where h is the height
     of the tree. If the tree is balanced, this is O(lg n), where n
     is the number of nodes in the tree. If the tree is unbalanced,
     this is O(n) in the worst case.
+  note: this program is implementation agnostic, and can be used with
+    any tree implementation that supports the necessary operations.
+    The tree implementation used here is in bst.c.
+    Look at folder for binary search trees for an example of a 
+    different tree implementation. The only thing that needs to be 
+    changed in this file is the include statement at the top.
 */
 
+#include "rbt.h"
 #include "../../../lib/clib/clib.h"
-
-#include "bst.h"
 #include "../data/student.h"
 
 int main (int argc, char *argv[]) {
@@ -60,10 +66,10 @@ int main (int argc, char *argv[]) {
           clearStdin(buffer);
           continue;
         }
-        n = searchKey(ROOT, &(s->id), cmpStudents);
+        n = searchKey(T, &(s->id), cmpStudents);
         if (!n) {
           // insert into tree
-          n = newNode(s);
+          n = newNode(T, s);
           insertNode(T, n, cmpStudents);
           printf("Inserted student with id %d\n", s->id);
         } else {
@@ -81,7 +87,7 @@ int main (int argc, char *argv[]) {
           clearStdin(buffer);
           continue;
         }
-        n = searchKey(ROOT, &id, cmpStudentById);
+        n = searchKey(T, &id, cmpStudentById);
         if (n != NULL) {
           // delete from tree
           deleteNode(T, n);
@@ -97,7 +103,7 @@ int main (int argc, char *argv[]) {
           clearStdin(buffer);
           continue;
         }
-        n = searchKey(ROOT, &id, cmpStudentById);
+        n = searchKey(T, &id, cmpStudentById);
         if (n != NULL)
           printStudent(n->data);
         else
@@ -106,7 +112,7 @@ int main (int argc, char *argv[]) {
         break;
       case 4:
         // print all student records in tree in order, using printStudent
-        printTree(ROOT, &count, printStudent);
+        printTree(T, ROOT, &count, printStudent);
         count = 0;
         break;
       case 5:
@@ -125,7 +131,7 @@ int main (int argc, char *argv[]) {
           freeTree(T);
           exit(EXIT_FAILURE);
         }
-        writeTreeToFile(ROOT, fp, writeStudentToFile);
+        writeTreeToFile(T, ROOT, fp, writeStudentToFile);
         fclose(fp);
         freeTree(T);
         exit(EXIT_SUCCESS);
@@ -135,5 +141,3 @@ int main (int argc, char *argv[]) {
   }
   return 0;
 }
-
-

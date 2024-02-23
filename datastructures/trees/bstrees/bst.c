@@ -9,17 +9,20 @@
 
 //::::::::::::::::::::::: Memory management :::::::::::::::::::::::://
 
-node *newNode (void *data) {
+node *newNode (tree *T, void *data) {
   // allocates memory for a new node
   node *n = safeCalloc(1, sizeof(node));
   n->data = data;
+  n->parent = n->left = n->right = NIL;
   return n;
 }
 
-tree *newTree () {
+tree *newTree (void) {
   // allocates memory for a new tree
-  tree *tree = safeCalloc(1, sizeof(tree));
-  return tree;
+  tree *T = safeCalloc(1, sizeof(tree));
+  NIL = newNode(T, NULL);
+  ROOT = NIL;
+  return T;
 }
 
 void freeNode (node *n) {
@@ -30,54 +33,58 @@ void freeNode (node *n) {
   }
 }
 
-void freeNodes (node *x) {
+void freeNodes (node *x, tree *T) {
   // frees all nodes in the subtree rooted at x 
-  if (x != NULL) {
-    freeNodes(x->left);
-    freeNodes(x->right);
+  if (x != NIL) {
+    freeNodes(x->left, T);
+    freeNodes(x->right, T);
     freeNode(x);
   }
 }
 
 void freeTree (tree *T) {
   // entirely frees a tree
-  if (T != NULL)
-    freeNodes(ROOT);
-  free(T);
+  if (T){
+    freeNodes(ROOT, T);
+    free(NIL);
+    free(T);
+  }
 }
 
 //:::::::::::::::::::::::: Tree operations ::::::::::::::::::::::::://
 
-void insertNode (tree *T, node *n, int (*cmp)(void *, void *)) {
-  // inserts a node into the tree, using the given comparison function
-  node *y = NULL;
+void insertNode (tree *T, node *z, int (*cmp)(void *, void *)) {
+  // inserts a node into the tree, 
+  // using the given comparison function
+  node *y = NIL;
   node *x = ROOT;
 
-  while (x != NULL) {
+  while (x != NIL) {
     y = x;
-    if (cmp(n->data, x->data) < 0)
+    if (cmp(z->data, x->data) < 0)
       x = x->left;
     else
       x = x->right;
   }
-
-  n->parent = y;
-  if (y == NULL)
-    ROOT = n;
-  else if (cmp(n->data, y->data) < 0)
-    y->left = n;
+  z->parent = y;
+  if (y == NIL)
+    ROOT = z;
+  else if (cmp(z->data, y->data) < 0)
+    y->left = z;
   else
-    y->right = n;
+    y->right = z;
 }
 
-node *searchKey (node *x, void *key, int (*cmp)(void *, void *)) {
+node *searchKey (tree *T, void *key, int (*cmp)(void *, void *)) {
   // searches for a key in the tree 
-  if (x == NULL || cmp(x->data, key) == 0)
-    return x;
-  if (cmp(key, x->data) < 0)
-    return searchKey(x->left, key, cmp);
-  else
-    return searchKey(x->right, key, cmp);
+  node *x = ROOT;
+  while (x != NIL && cmp(x->data, key) != 0){
+    if (cmp(key, x->data) < 0)
+      x = x->left;
+    else
+      x = x->right;
+  }
+  return x;
 }
 
 void transplant (tree *T, node *u, node *v) {
@@ -92,10 +99,10 @@ void transplant (tree *T, node *u, node *v) {
     v->parent = u->parent;
 }
 
-node *treeMinimum (node *x) {
+node *treeMinimum (tree *T, node *x) {
   // returns the node with the smallest key in 
   // the subtree rooted at x 
-  while (x->left != NULL)
+  while (x->left != NIL)
     x = x->left;
   return x;
 }
@@ -107,7 +114,7 @@ void deleteNode (tree *T, node *z) {
   else if (z->right == NULL)
     transplant(T, z, z->left);
   else {
-    node *y = treeMinimum(z->right);
+    node *y = treeMinimum(T, z->right);
     if (y->parent != z) {
       transplant(T, y, y->right);
       y->right = z->right;
@@ -122,46 +129,47 @@ void deleteNode (tree *T, node *z) {
 
 //::::::::::::::::::::::::::: Printing ::::::::::::::::::::::::::::://
 
-void printTree (node *x, short *count, void (*printData)(void *)) {
+void printTree (tree *T, node *x, short *count, 
+    void (*printData)(void *)) {
   // prints the data in the tree in order, 20 items at a time 
-  char buffer[100], c;
-  if (x != NULL) {
-    printTree(x->left, count, printData);
+  char buffer[100], ch;
+  if (x != NIL) {
+    printTree(T, x->left, count, printData);
     if (*count < 20){
       printData(x->data);
       *count += 1;
     } else if (*count == 20){
       printf("Print 20 more? (y/n): ");
       if ((fgets (buffer, 100, stdin) && 
-      sscanf(buffer, "%c", &c) != 1) || c != 'y')
+      sscanf(buffer, "%c", &ch) != 1) || ch != 'y')
         *count = 21;
       else
         *count = 0;
       clearStdin(buffer);
     }
-    printTree(x->right, count, printData);
+    printTree(T, x->right, count, printData);
   }
 }
 
 void printNode (node *n, void (*printData)(void *)) {
   // prints the data in a node 
-  if (n != NULL)
-    printData(n->data);
+  if (n) printData(n->data);
 }
 
 //:::::::::::::::::::::::: File operations ::::::::::::::::::::::::://
 
-void writeTreeToFile (node *x, FILE *fp, void (*printData)(void *, FILE *)) {
+void writeTreeToFile (tree *T, node *x, FILE *fp, 
+    void (*printData)(void *, FILE *)) {
   // writes the data in the tree in order to given file 
-  if (x != NULL) {
-    writeTreeToFile(x->left, fp, printData);
+  if (x != NIL) {
+    writeTreeToFile(T, x->left, fp, printData);
     printData(x->data, fp);
-    writeTreeToFile(x->right, fp, printData);
+    writeTreeToFile(T, x->right, fp, printData);
   }
 }
 
 void buildTreeFromFile (tree *T, char *filename, size_t dataSize,
-  int (*cmp)(void *, void *), bool (*dataFromStr)(void *, char *)) {
+    int (*cmp)(void *, void *), bool (*dataFromStr)(void *, char *)) {
   // reads data from input file and inserts it into the tree
   FILE *fp; char buffer[100];
   size_t lineNr = 0;
@@ -184,8 +192,9 @@ void buildTreeFromFile (tree *T, char *filename, size_t dataSize,
       fclose(fp);
       exit(EXIT_FAILURE);
     }
-    node *n = newNode(data);
+    node *n = newNode(T, data);
     insertNode(T, n, cmp);
   }
+  printf("Data successfully read from file %s\n", filename);
   fclose(fp);
 }
