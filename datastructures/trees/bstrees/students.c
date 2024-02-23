@@ -16,10 +16,9 @@
     this is O(n) in the worst case.
   note: this program is implementation agnostic, and can be used with
     any tree implementation that supports the necessary operations.
-    The tree implementation used here is in bst.c.
-    Look at folder for red-black trees for an example of a different
-    tree implementation. The only thing that needs to be changed is
-    the include statement at the top of this file.
+    Have a look at the folder for red-black trees for an example 
+    of a different tree implementation. The only thing that is 
+    changed in students.c file is the include statement at the top.
 */
 
 #include "bst.h"

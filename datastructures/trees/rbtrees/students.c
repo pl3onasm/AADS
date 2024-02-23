@@ -11,15 +11,14 @@
     or print all existing records in the tree. 
     The tree is ordered by student number.
   time complexity: all operations are in O(h), where h is the height
-    of the tree. If the tree is balanced, this is O(lg n), where n
-    is the number of nodes in the tree. If the tree is unbalanced,
-    this is O(n) in the worst case.
+    of the tree. Since the tree is a red-black tree, the height is
+    guaranteed to be O(lg n), where n is the number of nodes 
+    in the tree.
   note: this program is implementation agnostic, and can be used with
     any tree implementation that supports the necessary operations.
-    The tree implementation used here is in bst.c.
-    Look at folder for binary search trees for an example of a 
-    different tree implementation. The only thing that needs to be 
-    changed in this file is the include statement at the top.
+    Have a look at the folder for binary search trees for an example 
+    of a different tree implementation. The only thing that is 
+    changed in students.c file is the include statement at the top.
 */
 
 #include "rbt.h"
