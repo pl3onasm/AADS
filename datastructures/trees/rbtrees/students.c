@@ -35,9 +35,8 @@ int main (int argc, char *argv[]) {
     exit(EXIT_FAILURE);
   }
 
-  tree *T = newTree();
-  buildTreeFromFile(T, argv[1], sizeof(student),
-                    cmpStudents, studentFromStr);
+  tree *T = buildTreeFromFile(argv[1], sizeof(student),
+                              cmpStudents, studentFromStr);
 
   while (true) {
     

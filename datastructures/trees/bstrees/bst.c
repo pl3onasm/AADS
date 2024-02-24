@@ -168,7 +168,7 @@ void writeTreeToFile (tree *T, node *x, FILE *fp,
   }
 }
 
-void buildTreeFromFile (tree *T, char *filename, size_t dataSize,
+tree *buildTreeFromFile (char *filename, size_t dataSize,
     int (*cmp)(void *, void *), bool (*dataFromStr)(void *, char *)) {
   // reads data from input file and inserts it into the tree
   FILE *fp; char buffer[100];
@@ -177,10 +177,10 @@ void buildTreeFromFile (tree *T, char *filename, size_t dataSize,
   fp = fopen(filename, "r");
   if (fp == NULL) {
     printf("Error: could not open file %s\n", filename);
-    freeTree(T);
     exit(EXIT_FAILURE);
   }
 
+  tree *T = newTree();
   while (fgets(buffer, 100, fp) != NULL) {
     lineNr++;
     void *data = safeCalloc(1, dataSize);
@@ -197,4 +197,5 @@ void buildTreeFromFile (tree *T, char *filename, size_t dataSize,
   }
   printf("Data successfully read from file %s\n", filename);
   fclose(fp);
+  return T;
 }

@@ -18,8 +18,7 @@ Nat *mulNat(Nat *x, Nat *y) {
   res->size = x->size + y->size;
 
   // multiplies each digit of x with each digit of y
-  // and adds the result to the appropriate position in res
-  // intermediate results are stored in res->digits as integers
+  // results are first stored in res->digits as integers
   // and then converted back to char at the end
   for (size_t i = x->size - 1; i < x->size; i--) {
     for (size_t j = y->size - 1; j < y->size; j--) {

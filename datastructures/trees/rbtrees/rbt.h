@@ -40,7 +40,7 @@ void printTree (tree *T, node *x, short *count, void (*printData)(void *));
 void printNode(node *x, void (*printData)(void *));
 void writeTreeToFile (tree *T, node *x, FILE *fp, 
   void (*printData)(void *, FILE *));
-void buildTreeFromFile (tree *tree, char *filename, size_t dataSize,
+tree *buildTreeFromFile (char *filename, size_t dataSize,
   int (*cmp)(void *, void *), bool (*dataFromStr)(void *, char *));
 
 #endif  // RBT_H_INCLUDED
