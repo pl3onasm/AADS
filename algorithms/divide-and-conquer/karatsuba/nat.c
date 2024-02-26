@@ -10,12 +10,12 @@
 #include "nat.h"
 
 
-Nat *newNat(size_t size) {
+Nat *newNat(size_t capacity) {
   // creates a new natural number with the given capacity
   Nat *n = safeMalloc(sizeof(Nat));
-  n->digits = safeMalloc(size * sizeof(char));
+  n->digits = safeMalloc(capacity * sizeof(char));
   n->size = 0;  
-  n->capacity = size;
+  n->capacity = capacity;
   return n;
 }
 
@@ -25,10 +25,10 @@ void freeNat(Nat *n) {
   free(n);
 }
 
-void checkCapacity(Nat *n, size_t cap) {
+void checkCapacity(Nat *n, size_t capacity) {
   // resizes if necessary
-  if (n->capacity < cap) {
-    n->capacity = 2 * cap;
+  if (n->capacity < capacity) {
+    n->capacity = 2 * capacity;
     n->digits = safeRealloc(n->digits, n->capacity * sizeof(char));
   }
 }

@@ -11,14 +11,14 @@
     or print all existing records in the tree. 
     The tree is ordered by student number.
   time complexity: all operations are in O(h), where h is the height
-    of the tree. If the tree is balanced, this is O(lg n), where n
+    of the tree. If the tree is balanced, this is O(log n), where n
     is the number of nodes in the tree. If the tree is unbalanced,
     this is O(n) in the worst case.
   note: this program is implementation agnostic, and can be used with
     any tree implementation that supports the necessary operations.
     Have a look at the folder for red-black trees for an example 
     of a different tree implementation. The only thing that is 
-    changed in students.c file is the include statement at the top.
+    changed in the students.c file is the include statement at the top.
 */
 
 #include "bst.h"

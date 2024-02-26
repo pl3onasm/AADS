@@ -25,10 +25,10 @@ Nat *karatsuba(Nat *x, Nat *y) {
   // split x and y into two parts:
   // x = x1 * 10^exp + x0
   // y = y1 * 10^exp + y0
-  Nat *x1 = newNat(x->size - exp);
-  Nat *x0 = newNat(exp);
-  Nat *y1 = newNat(y->size - exp);
-  Nat *y0 = newNat(exp);
+  Nat *x1 = newNat(x->size);
+  Nat *x0 = newNat(x->size);
+  Nat *y1 = newNat(y->size);
+  Nat *y0 = newNat(y->size);
 
   splitNat(x, exp, x1, x0);
   splitNat(y, exp, y1, y0);
