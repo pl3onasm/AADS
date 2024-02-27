@@ -2,20 +2,20 @@
 
 ## ${\color{peru}\text{Algorithms in C}}$
 
-* [Divide and conquer](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/divide-and-conquer)
-* [Dynamic programming](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/dynamic-programming)
-* [Greedy algorithms](https://github.com/pl3onasm/AADS/tree/main/algorithms/greedy)
-* [Graph algorithms](https://github.com/pl3onasm/AADS/tree/main/algorithms/graphs)
-* [String matching](https://github.com/pl3onasm/AADS/tree/main/algorithms/string-matching)
-* [Sorting](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting)
+* [Divide and conquer](../algorithms/divide-and-conquer)
+* [Dynamic programming](../algorithms/dynamic-programming)
+* [Greedy algorithms](../algorithms/greedy)
+* [Graph algorithms](../algorithms/graphs)
+* [String matching](../algorithms/string-matching)
+* [Sorting](../algorithms/sorting)
 
 ## ${\color{peru}\text{Data structures in C}}$
 
 * Stacks and queues
 * Lists
-* [Trees](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/datastructures/trees)
+* [Trees](../trees)
 * Hash tables
-* Heaps
+* [Heaps](../heaps)
 * Sets
 * Augmented data structures
 
