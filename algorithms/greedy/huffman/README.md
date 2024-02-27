@@ -42,3 +42,9 @@ root
 ```
 
 Implementation: [Huffman](https://github.com/pl3onasm/AADS/tree/main/algorithms/greedy/huffman/huffman.c)
+
+Compilation:
+
+```bash
+cc -O2 -std=c99 -pedantic -o a.out ../../../datastructures/heaps/binheaps/binheap.c huffman.c ../../../lib/clib/*.c -lm
+```

@@ -28,18 +28,18 @@ typedef struct {
 } tree;
 
 // function prototypes
-tree *newTree (void);
-node *newNode (tree *T, void *data);
-void insertNode (tree *tree, node *n, int (*cmp)(void *, void *));
-void freeTree (tree *tree);
-node *searchKey (tree *T, void *key, int (*cmp)(void *, void *));
-void deleteNode (tree *tree, node *z);
-node *treeMinimum (tree *T, node *x);
-void printTree (tree *T, node *x, short *count, void (*printData)(void *));
-void printNode(node *x, void (*printData)(void *));
+tree *newTree(void);
+node *newTreeNode(tree *T, void *data);
+void insertTreeNode(tree *tree, node *n, int (*cmp)(void *, void *));
+void freeTree(tree *tree);
+node *searchTreeForKey(tree *T, void *key, int (*cmp)(void *, void *));
+void deleteTreeNode(tree *tree, node *z);
+node *treeMinimum(tree *T, node *x);
+void printTree(tree *T, node *x, short *count, void (*printData)(void *));
+void printTreeNode(node *x, void (*printData)(void *));
 void writeTreeToFile (tree *T, node *x, FILE *fp, 
   void (*printData)(void *, FILE *));
-tree *buildTreeFromFile (char *filename, size_t dataSize,
+tree *buildTreeFromFile(char *filename, size_t dataSize,
   int (*cmp)(void *, void *), bool (*dataFromStr)(void *, char *));
 
 #endif  // BST_H_INCLUDED

@@ -65,11 +65,11 @@ int main (int argc, char *argv[]) {
           clearStdin(buffer);
           continue;
         }
-        n = searchKey(T, s, cmpStudents);
+        n = searchTreeForKey(T, s, cmpStudents);
         if (n == NIL) {
           // insert into tree
-          n = newNode(T, s);
-          insertNode(T, n, cmpStudents);
+          n = newTreeNode(T, s);
+          insertTreeNode(T, n, cmpStudents);
           printf("Inserted student with id %d\n", s->id);
         } else {
           printf("Error: student with id %d already exists\n", s->id);
@@ -86,10 +86,10 @@ int main (int argc, char *argv[]) {
           clearStdin(buffer);
           continue;
         }
-        n = searchKey(T, &id, cmpStudentById);
+        n = searchTreeForKey(T, &id, cmpStudentById);
         if (n != NIL) {
           // delete from tree
-          deleteNode(T, n);
+          deleteTreeNode(T, n);
           printf("Deleted student with id %d\n", id);
         } else
           printf("Error: student with id %d not found\n", id);
@@ -102,7 +102,7 @@ int main (int argc, char *argv[]) {
           clearStdin(buffer);
           continue;
         }
-        n = searchKey(T, &id, cmpStudentById);
+        n = searchTreeForKey(T, &id, cmpStudentById);
         if (n != NIL)
           printStudent(n->data);
         else

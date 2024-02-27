@@ -22,7 +22,7 @@ typedef unsigned long long ull;
 typedef long long ll;
 typedef unsigned long ul;
 typedef unsigned int uint;
-typedef unsigned char uc;
+typedef unsigned char uchar;
 
 //::::::::::::::::::::::::::::: MATH ::::::::::::::::::::::::::::://
 

@@ -9,7 +9,7 @@
 
 //::::::::::::::::::::::: Memory management :::::::::::::::::::::::://
 
-node *newNode (tree *T, void *data) {
+node *newTreeNode (tree *T, void *data) {
   // allocates memory for a new node
   node *n = safeCalloc(1, sizeof(node));
   n->data = data;
@@ -21,13 +21,13 @@ node *newNode (tree *T, void *data) {
 tree *newTree (void) {
   // allocates memory for a new tree
   tree *T = safeCalloc(1, sizeof(tree));
-  NIL = newNode(T, NULL);
+  NIL = newTreeNode(T, NULL);
   NIL->color = BLACK;
   ROOT = NIL;
   return T;
 }
 
-void freeNode (node *n) {
+void freeTreeNode (node *n) {
   // frees a node 
   if (n != NULL){
     free(n->data);
@@ -35,18 +35,18 @@ void freeNode (node *n) {
   }
 }
 
-void freeNodes (node *x, tree *T) {
+void freeTreeNodes (node *x, tree *T) {
   // frees all nodes in the subtree rooted at x 
   if (x != NIL) {
-    freeNodes(x->left, T);
-    freeNodes(x->right, T);
-    freeNode(x);
+    freeTreeNodes(x->left, T);
+    freeTreeNodes(x->right, T);
+    freeTreeNode(x);
   }
 }
 
 void freeTree (tree *T) {
   // entirely frees a tree
-  freeNodes(ROOT, T);
+  freeTreeNodes(ROOT, T);
   free(NIL);
   free(T);
 }
@@ -61,7 +61,8 @@ node *treeMinimum (tree *T, node *x) {
   return x;
 }
 
-node *searchKey (tree *T, void *key, int (*cmp)(void *, void *)) {
+node *searchTreeForKey (tree *T, void *key, 
+    int (*cmp)(void *, void *)) {
   // searches for a key in the tree 
   node *x = ROOT;
   while (x != NIL && cmp(x->data, key) != 0){
@@ -147,7 +148,7 @@ void insertFixup (tree *T, node *z) {
   ROOT->color = BLACK;
 }
 
-void insertNode (tree *T, node *z, int (*cmp)(void *, void *)) {
+void insertTreeNode (tree *T, node *z, int (*cmp)(void *, void *)) {
   // inserts a node into the tree, 
   // using the given comparison function
   node *y = NIL;
@@ -237,7 +238,7 @@ void deleteFixup (tree *T, node *x) {
   x->color = BLACK;
 }
 
-void deleteNode (tree *T, node *z) {
+void deleteTreeNode (tree *T, node *z) {
   // deletes a node from the tree 
   node *y = z;
   node *x;
@@ -266,7 +267,7 @@ void deleteNode (tree *T, node *z) {
   }
   if (y_originalColor == BLACK)
     deleteFixup(T, x);
-  freeNode(z);
+  freeTreeNode(z);
 }
 
 //::::::::::::::::::::::::::: Printing ::::::::::::::::::::::::::::://
@@ -293,7 +294,7 @@ void printTree (tree *T, node *x, short *count,
   }
 }
 
-void printNode (node *n, void (*printData)(void *)) {
+void printTreeNode (node *n, void (*printData)(void *)) {
   // prints the data in a node 
   if (n) printData(n->data);
 }
@@ -334,8 +335,8 @@ tree *buildTreeFromFile (char *filename, size_t dataSize,
       fclose(fp);
       exit(EXIT_FAILURE);
     }
-    node *n = newNode(T, data);
-    insertNode(T, n, cmp);
+    node *n = newTreeNode(T, data);
+    insertTreeNode(T, n, cmp);
   }
   printf("Data successfully read from file %s\n", filename);
   fclose(fp);
