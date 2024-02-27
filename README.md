@@ -2,20 +2,20 @@
 
 ## ${\color{peru}\text{Algorithms in C}}$
 
-* [Divide and conquer](../algorithms/divide-and-conquer)
-* [Dynamic programming](../algorithms/dynamic-programming)
-* [Greedy algorithms](../algorithms/greedy)
-* [Graph algorithms](../algorithms/graphs)
-* [String matching](../algorithms/string-matching)
-* [Sorting](../algorithms/sorting)
+* [Divide and conquer](algorithms/divide-and-conquer)
+* [Dynamic programming](algorithms/dynamic-programming)
+* [Greedy algorithms](algorithms/greedy)
+* [Graph algorithms](algorithms/graphs)
+* [String matching](algorithms/string-matching)
+* [Sorting](algorithms/sorting)
 
 ## ${\color{peru}\text{Data structures in C}}$
 
 * Stacks and queues
 * Lists
-* [Trees](../trees)
+* [Trees](trees)
 * Hash tables
-* [Heaps](../heaps)
+* [Heaps](heaps)
 * Sets
 * Augmented data structures
 
