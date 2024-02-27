@@ -32,7 +32,5 @@ void *peekAtBinHeap(binheap *H);
 void *popFromBinHeap(binheap *H);
 void insertIntoBinHeap(binheap *H, void *node);
 void heapifyBinHeap(binheap *H, size_t idx);
-binheap *buildBinHeap(void **arr, size_t n, bool isMin, 
-  int (*cmp)(const void *, const void *), size_t elemSize);
 
 #endif  // BINMINHEAP_H_INCLUDED

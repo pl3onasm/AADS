@@ -79,16 +79,6 @@ void heapifyBinHeap(binheap *H, size_t idx) {
   }
 }
 
-// build a heap from an array
-binheap *buildBinHeap(void **arr, size_t n, bool isMin,
-    int (*cmp)(const void *, const void *), size_t elemSize) {
-  binheap *H = newBinHeap(n, isMin, cmp);
-  for (size_t i = 0; i < n; i += elemSize)
-    H->arr[i] = arr[i];
-  H->size = n;
-  for (size_t i = n / 2; i > 0; --i)
-    heapifyBinHeap(H, i);
-}
 
 
 
