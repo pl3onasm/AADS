@@ -89,14 +89,13 @@ node *searchKey (tree *T, void *key, int (*cmp)(void *, void *)) {
 
 void transplant (tree *T, node *u, node *v) {
   // replaces node u with node v in the tree 
-  if (u->parent == NULL)
+  if (u->parent == NIL)
     ROOT = v;
   else if (u == u->parent->left)
     u->parent->left = v;
   else
     u->parent->right = v;
-  if (v != NULL)
-    v->parent = u->parent;
+  v->parent = u->parent;
 }
 
 node *treeMinimum (tree *T, node *x) {
@@ -109,9 +108,9 @@ node *treeMinimum (tree *T, node *x) {
 
 void deleteNode (tree *T, node *z) {
   // deletes a node from the tree 
-  if (z->left == NULL)
+  if (z->left == NIL)
     transplant(T, z, z->right);
-  else if (z->right == NULL)
+  else if (z->right == NIL)
     transplant(T, z, z->left);
   else {
     node *y = treeMinimum(T, z->right);

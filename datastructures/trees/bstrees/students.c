@@ -65,8 +65,8 @@ int main (int argc, char *argv[]) {
           clearStdin(buffer);
           continue;
         }
-        n = searchKey(T, &(s->id), cmpStudents);
-        if (!n) {
+        n = searchKey(T, s, cmpStudents);
+        if (n == NIL) {
           // insert into tree
           n = newNode(T, s);
           insertNode(T, n, cmpStudents);
@@ -87,7 +87,7 @@ int main (int argc, char *argv[]) {
           continue;
         }
         n = searchKey(T, &id, cmpStudentById);
-        if (n != NULL) {
+        if (n != NIL) {
           // delete from tree
           deleteNode(T, n);
           printf("Deleted student with id %d\n", id);
@@ -103,7 +103,7 @@ int main (int argc, char *argv[]) {
           continue;
         }
         n = searchKey(T, &id, cmpStudentById);
-        if (n != NULL)
+        if (n != NIL)
           printStudent(n->data);
         else
           printf("Error: student with id %d not found\n", id);

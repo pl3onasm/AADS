@@ -39,11 +39,9 @@ int cmpStudents(void *a, void *b) {
   return s1->id - s2->id;
 }
 
-int cmpStudentById(void *a, void *b) {
+int cmpStudentById(void *s, void *id) {
   /* compares a student record with an id */
-  student *s = (student *)a;
-  int *id = (int *)b;
-  return s->id - *id;
+  return ((student *)s)->id - *((int *)id);
 }
 
 //::::::::::::::::::::::::::: memory management ::::::::::::::::::::://
