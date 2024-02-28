@@ -34,6 +34,6 @@ void insertIntoBinHeap(binheap *H, void *node);
 void heapifyBinHeap(binheap *H, size_t idx);
 binheap *buildBinHeap(void *arr, size_t size, size_t elemSize,
   bool isMin, int (*cmp)(const void *, const void *));
-void showBinHeap(binheap *H, void (*showData)(const void *));
+void showBinHeap(binheap *H, char *delim, void (*showData)(const void *));
 
 #endif  // BINHEAP_H_INCLUDED

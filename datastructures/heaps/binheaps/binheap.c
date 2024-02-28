@@ -1,3 +1,9 @@
+/* 
+  Generic binary heap implementation
+  Author: David De Potter
+  LICENSE: MIT, see LICENSE file in repository root folder
+*/
+
 #include "binheap.h"
 #include "../../../lib/clib/clib.h"
 
@@ -93,10 +99,12 @@ binheap *buildBinHeap(void *arr, size_t len, size_t elemSize,
   return H;
 }
 
-void showBinHeap(binheap *H, void (*showData)(const void *)) {
+void showBinHeap(binheap *H, char *delim, 
+    void (*showData)(const void *)) {
+  
   for (size_t i = 0; i < H->size; i++) {
     showData(H->arr[i]);
-    printf(i < H->size - 1 ? ", " : "");
+    printf(i < H->size - 1 ? "%s" : "", delim);
   }
   printf("\n");
 }

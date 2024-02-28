@@ -49,8 +49,9 @@ int main (int argc, char *argv[]){
                              false, intCmp);
   heapsort(hp);
   
-  showBinHeap (hp, printInt);
+  showBinHeap (hp, ", ", printInt);
   printf("\n");
+  freeBinHeap(hp);
 
   // build a min heap, sorts in descending order
   hp = buildBinHeap(arr, size, sizeof(int),
@@ -58,8 +59,7 @@ int main (int argc, char *argv[]){
 
   heapsort(hp);
 
-  showBinHeap (hp, printInt);
-  
+  showBinHeap (hp, ", ", printInt);
   freeBinHeap(hp);
   free(arr);
   return 0;
