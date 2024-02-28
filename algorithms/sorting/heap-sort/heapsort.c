@@ -6,9 +6,6 @@
    time complexity: O(nlogn)
 */
 
-#include <stdlib.h>
-#include <stdio.h>
-
 #include "../../../datastructures/heaps/binheaps/binheap.h"
 #include "../../../lib/clib/clib.h"
 
@@ -39,7 +36,7 @@ void heapsort(binheap *H){
   H->size = size;
 }
 
-int main (int argc, char *argv[]){
+int main (){
   size_t size = 0;
   // read the input array, set the size
   READ(int, arr, "%d", size);

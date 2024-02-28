@@ -31,16 +31,12 @@ typedef struct pair {
 
 int compareXs(const void *a, const void *b) {
   /* compares two points by x-coordinate */
-  point *p1 = (point*) a;
-  point *p2 = (point*) b;
-  return p1->x - p2->x;
+  return ((point*) a)->x - ((point*) b)->x;
 }
 
 int compareYs(const void *a, const void *b) {
   /* compares two points by y-coordinate */
-  point *p1 = (point*) a;
-  point *p2 = (point*) b;
-  return p1->y - p2->y;
+  return ((point*) a)->y - ((point*) b)->y;
 }
 
 double distance(point p1, point p2) {

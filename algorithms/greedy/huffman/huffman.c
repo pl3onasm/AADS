@@ -71,7 +71,7 @@ binheap *readInput (void) {
       node *n = newNode();
       n->ch = i;
       n->freq = freqs[i];
-      insertIntoBinHeap(H, n);
+      pushToBinHeap(H, n);
     }
   return H;
 }
@@ -129,7 +129,7 @@ node *huffman (binheap *H) {
     z->left = popFromBinHeap(H);
     z->right = popFromBinHeap(H);
     z->freq = z->left->freq + z->right->freq;
-    insertIntoBinHeap(H, z);
+    pushToBinHeap(H, z);
   }
   return popFromBinHeap(H);
 }

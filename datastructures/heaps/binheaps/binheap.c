@@ -87,13 +87,15 @@ void heapifyBinHeap(binheap *H, size_t idx) {
 
 binheap *buildBinHeap(void *arr, size_t len, size_t elemSize, 
     bool isMin, int (*cmp)(const void *, const void *)) {
+
   binheap *H = newBinHeap(len, isMin, cmp);
+  
   // copy the array into the heap
   for (size_t i = 0; i < len; i++) 
     H->arr[i] = (char *)arr + i * elemSize;
  
   H->size = len;
-  for (size_t i = len / 2 - 1; i--; ) 
+  for (size_t i = len / 2; i--; ) 
     heapifyBinHeap(H, i);
   
   return H;
