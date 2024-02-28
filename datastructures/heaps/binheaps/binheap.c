@@ -40,12 +40,12 @@ void insertIntoBinHeap(binheap *H, void *node) {
   H->arr[H->size] = node;
   size_t i = H->size;
   H->size++;
-  if (H->isMin) {
+  if (H->isMin) {             // min heap
     while (i > 0 && H->cmp(H->arr[i], H->arr[PARENT(i)]) < 0) {
       SWAP(H->arr[i], H->arr[PARENT(i)]);
       i = PARENT(i);
     }
-  } else {
+  } else {                    // max heap
     while (i > 0 && H->cmp(H->arr[i], H->arr[PARENT(i)]) > 0) {
       SWAP(H->arr[i], H->arr[PARENT(i)]);
       i = PARENT(i);
@@ -79,6 +79,27 @@ void heapifyBinHeap(binheap *H, size_t idx) {
   }
 }
 
+binheap *buildBinHeap(void *arr, size_t len, size_t elemSize, 
+    bool isMin, int (*cmp)(const void *, const void *)) {
+  binheap *H = newBinHeap(len, isMin, cmp);
+  // copy the array into the heap
+  for (size_t i = 0; i < len; i++) 
+    H->arr[i] = (char *)arr + i * elemSize * sizeof(char);
+ 
+  H->size = len;
+  for (size_t i = len / 2 - 1; i--; ) 
+    heapifyBinHeap(H, i);
+  
+  return H;
+}
+
+void showBinHeap(binheap *H, void (*showData)(const void *)) {
+  for (size_t i = 0; i < H->size; i++) {
+    showData(H->arr[i]);
+    printf(i < H->size - 1 ? ", " : "");
+  }
+  printf("\n");
+}
 
 
 
