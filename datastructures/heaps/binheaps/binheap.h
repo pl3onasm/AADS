@@ -11,11 +11,12 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-// constants and macros
+// macros
 #define RIGHT(i) (2 * i + 2)
 #define LEFT(i) (2 * i + 1)
 #define PARENT(i) ((i - 1) / 2)
 
+// binary heap structure
 typedef struct {     
   void **arr;                  // array of void pointers
   size_t size;                 // number of nodes in the heap
@@ -30,7 +31,7 @@ binheap *newBinHeap(size_t capacity, bool isMin,
 void freeBinHeap(binheap *H);
 void *peekAtBinHeap(binheap *H);
 void *popFromBinHeap(binheap *H);
-void insertIntoBinHeap(binheap *H, void *node);
+void pushToBinHeap(binheap *H, void *node);
 void heapifyBinHeap(binheap *H, size_t idx);
 binheap *buildBinHeap(void *arr, size_t size, size_t elemSize,
   bool isMin, int (*cmp)(const void *, const void *));

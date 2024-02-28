@@ -38,7 +38,7 @@ void *popFromBinHeap(binheap *H) {
   return top;
 }
 
-void insertIntoBinHeap(binheap *H, void *node) {
+void pushToBinHeap(binheap *H, void *node) {
   if (H->size == H->capacity) {
     H->capacity *= 2;
     H->arr = safeRealloc(H->arr, H->capacity * sizeof(void *));
@@ -90,7 +90,7 @@ binheap *buildBinHeap(void *arr, size_t len, size_t elemSize,
   binheap *H = newBinHeap(len, isMin, cmp);
   // copy the array into the heap
   for (size_t i = 0; i < len; i++) 
-    H->arr[i] = (char *)arr + i * elemSize * sizeof(char);
+    H->arr[i] = (char *)arr + i * elemSize;
  
   H->size = len;
   for (size_t i = len / 2 - 1; i--; ) 
