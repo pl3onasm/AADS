@@ -88,12 +88,18 @@ void heapifyBinHeap(binheap *H, size_t idx) {
 binheap *buildBinHeap(void *arr, size_t len, size_t elemSize, 
     bool isMin, int (*cmp)(const void *, const void *)) {
 
+  if (len == 0) {
+    fprintf(stderr, "Error: cannot build a heap from an empty array\n");
+    exit(EXIT_FAILURE);
+  }
+
   binheap *H = newBinHeap(len, isMin, cmp);
   
-  // copy the array into the heap
+  // copy the array into the heap 
   for (size_t i = 0; i < len; i++) 
     H->arr[i] = (char *)arr + i * elemSize;
  
+  // heapify the heap, starting from the last non-leaf node
   H->size = len;
   for (size_t i = len / 2; i--; ) 
     heapifyBinHeap(H, i);
