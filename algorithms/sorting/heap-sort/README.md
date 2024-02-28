@@ -13,6 +13,5 @@ Implementation: [Heapsort](https://github.com/pl3onasm/CLRS/tree/main/algorithms
 Compilation:
 
 ```bash
-gcc -O2 -std=c99 -pedantic -o a.out ../../../datastructures/hea
-ps/binheaps/binheap.c heapsort.c ../../../lib/clib/*.c -lm
+gcc -O2 -std=c99 -pedantic -o a.out ../../../datastructures/heaps/binheaps/binheap.c heapsort.c ../../../lib/clib/*.c -lm
 ```
