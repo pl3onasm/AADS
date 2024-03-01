@@ -42,22 +42,22 @@ int main (){
   READ(int, arr, "%d", size);
 
   // build a max heap, sorts in ascending order
-  binheap *hp = buildBinHeap(arr, size, sizeof(int),
-                             false, intCmp);
-  heapsort(hp);
+  binheap *H = buildBinHeap(arr, size, sizeof(int),
+                            MAX, intCmp);
+  heapsort(H);
   
-  showBinHeap (hp, ", ", printInt);
+  showBinHeap (H, ", ", printInt);
   printf("\n");
-  freeBinHeap(hp);
+  freeBinHeap(H);
 
   // build a min heap, sorts in descending order
-  hp = buildBinHeap(arr, size, sizeof(int),
-                    true, intCmp);
+  H = buildBinHeap(arr, size, sizeof(int),
+                   MIN, intCmp);
 
-  heapsort(hp);
+  heapsort(H);
 
-  showBinHeap (hp, ", ", printInt);
-  freeBinHeap(hp);
+  showBinHeap (H, ", ", printInt);
+  freeBinHeap(H);
   free(arr);
   return 0;
 }

@@ -1,11 +1,5 @@
-Usage:
+# Binary search trees
 
-```shell
-./a.out ../data/students.txt
-```
+## Example applications
 
-Compilation:
-
-```shell
-gcc -O2 -std=c99 -pedantic -o a.out bst.c students.c ../data/student.c ../../../lib/clib/*.c -lm
-```
+- [student database](../application/bststudents.c)

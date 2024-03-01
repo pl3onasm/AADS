@@ -9,11 +9,11 @@
 |  ${\color{olive} \sim \Theta(n)}$ [^1] | Chap 8.4 |  [Bucket sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/bucket-sort)
 | ${\color{olive}\Theta(n\log n)}$ | Chap 2.3 |  [Merge sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/merge-sort)
 | ${\color{olive}\Theta(n\log n)}$ | n/a |  [WHAM sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/merge-sort#wham-sort)
-| ${\color{olive}O(n\log n)}$ | Chap 6.4 |   [Heapsort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/heap-sort)
-| ${\color{olive}\sim O(n\log n)}$ | Chap 7.1-3 |  [Quicksort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/quick-sort)
-| ${\color{olive}O(n^2)}$ | Chap 2.1-2 |  [Insertion sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/insertion-sort)
-| ${\color{olive}O(n^2)}$ | Ex 2.2-2 |  [Selection sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/selection-sort)
-| ${\color{olive}O(n^2)}$ | Prob 2-2 | [Bubble sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/bubble-sort)
+| ${\color{olive}\mathcal{O}(n\log n)}$ | Chap 6.4 |   [Heapsort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/heap-sort)
+| ${\color{olive}\sim \mathcal{O}(n\log n)}$ | Chap 7.1-3 |  [Quicksort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/quick-sort)
+| ${\color{olive}\mathcal{O}(n^2)}$ | Chap 2.1-2 |  [Insertion sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/insertion-sort)
+| ${\color{olive}\mathcal{O}(n^2)}$ | Ex 2.2-2 |  [Selection sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/selection-sort)
+| ${\color{olive}\mathcal{O}(n^2)}$ | Prob 2-2 | [Bubble sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/bubble-sort)
 
 [^1]: The tilde (~) means that this is the expected complexity: the complexity is not guaranteed,  
 but it is the average case complexity. The worst case complexity is higher.
@@ -57,7 +57,7 @@ As a result, $h = \Omega(\log(n!)) = \Omega(n\log n)$. Since the height of the d
 
 ## ${\color{darkseagreen}\text{Linear-time Sorts}}$
 
-The only way to escape the $\Omega(n\log n)$ lower bound for comparison sorts is to exploit special properties of the input elements, such as the range of possible values. This is exactly what linear-time sorts do. The most well-known non-comparison sorts are counting sort, radix sort and bucket sort. For example, counting sort assumes that the input elements are integers in the range $0$ to $k$, for some integer $k = O(n)$. Radix sort assumes that the input elements are integers represented in a fixed number of digits in some base $b$. And bucket sort assumes that the input elements are uniformly distributed in the interval $[0, 1)$.
+The only way to escape the $\Omega(n\log n)$ lower bound for comparison sorts is to exploit special properties of the input elements, such as the range of possible values. This is exactly what linear-time sorts do. The most well-known non-comparison sorts are counting sort, radix sort and bucket sort. For example, counting sort assumes that the input elements are integers in the range $0$ to $k$, for some integer $k = \mathcal{O}(n)$. Radix sort assumes that the input elements are integers represented in a fixed number of digits in some base $b$. And bucket sort assumes that the input elements are uniformly distributed in the interval $[0, 1)$.
 
 [^2]: If all elements are distinct, each permutation appears on exactly one leaf: l = n!.
 If some elements are equal, some permutations appear on more than one leaf: l > n!.

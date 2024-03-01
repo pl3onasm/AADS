@@ -13,7 +13,7 @@
 
 #include "../../../../lib/clib/clib.h"
 
-size_t gcd (ull a, ull b) {
+ull gcd (ull a, ull b) {
   /* returns the greatest common divisor of a and b */
   if (b == 0) return a;
   return gcd(b, a % b);

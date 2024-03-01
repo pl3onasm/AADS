@@ -65,7 +65,7 @@ binheap *readInput (void) {
     if (ch >= 32 && ch < LENGTH)  // only printable characters
       freqs[ch-0]++;
   // make nodes for all characters with non-zero frequency
-  binheap *H = newBinHeap(LENGTH, true, cmpNodesByFreq);
+  binheap *H = newBinHeap(LENGTH, MIN, cmpNodesByFreq);
   for (size_t i = 0; i < LENGTH; ++i)
     if (freqs[i]) {
       node *n = newNode();

@@ -7,14 +7,14 @@
 #include "binheap.h"
 #include "../../../lib/clib/clib.h"
 
-binheap *newBinHeap(size_t capacity, bool isMin,
+binheap *newBinHeap(size_t capacity, hpType hpType,
     int (*cmp)(const void *, const void *)) {
   binheap *h = safeCalloc(1, sizeof(binheap));
   h->capacity = capacity;
   h->size = 0;
   h->cmp = cmp;
   h->arr = safeCalloc(capacity, sizeof(void *));
-  h->isMin = isMin;
+  h->hpType = hpType;
   return h;
 }
 
@@ -46,7 +46,7 @@ void pushToBinHeap(binheap *H, void *node) {
   H->arr[H->size] = node;
   size_t i = H->size;
   H->size++;
-  if (H->isMin) {             // min heap
+  if (H->hpType == MIN) {     // min heap
     while (i > 0 && H->cmp(H->arr[i], H->arr[PARENT(i)]) < 0) {
       SWAP(H->arr[i], H->arr[PARENT(i)]);
       i = PARENT(i);
@@ -62,7 +62,7 @@ void pushToBinHeap(binheap *H, void *node) {
 void heapifyBinHeap(binheap *H, size_t idx) {
   size_t l = LEFT(idx);
   size_t r = RIGHT(idx);
-  if (H->isMin) {             // min heap 
+  if (H->hpType == MIN) {     // min heap 
     size_t smallest = idx;
     if (l < H->size && H->cmp(H->arr[l], H->arr[smallest]) < 0)
       smallest = l;
@@ -86,14 +86,14 @@ void heapifyBinHeap(binheap *H, size_t idx) {
 }
 
 binheap *buildBinHeap(void *arr, size_t len, size_t elemSize, 
-    bool isMin, int (*cmp)(const void *, const void *)) {
+    hpType hpType, int (*cmp)(const void *, const void *)) {
 
   if (len == 0) {
     fprintf(stderr, "Error: cannot build a heap from an empty array\n");
     exit(EXIT_FAILURE);
   }
 
-  binheap *H = newBinHeap(len, isMin, cmp);
+  binheap *H = newBinHeap(len, hpType, cmp);
   
   // copy the array into the heap 
   for (size_t i = 0; i < len; i++) 

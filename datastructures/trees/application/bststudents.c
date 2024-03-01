@@ -1,5 +1,5 @@
 /* 
-  file: students.c
+  file: bststudents.c
   author: David De Potter
   email: pl3onasm@gmail.com
   license: MIT, see LICENSE file in repository root folder
@@ -11,19 +11,19 @@
     or print all existing records in the tree. 
     The tree is ordered by student number.
   time complexity: all operations are in O(h), where h is the height
-    of the tree. Since the tree is a red-black tree, the height is
-    guaranteed to be O(log n), where n is the number of nodes 
-    in the tree.
+    of the tree. If the tree is balanced, this is O(log n), where n
+    is the number of nodes in the tree. If the tree is unbalanced,
+    this is O(n) in the worst case.
   note: this program is implementation agnostic, and can be used with
     any tree implementation that supports the necessary operations.
-    Have a look at the folder for binary search trees for an example 
-    of a different tree implementation. The only thing that is 
-    changed in the students.c file is the include statement at the top.
+    The only thing that is changed in this file is the include 
+    statement at the top, so that we use a binary search tree instead
+    of a red-black tree.
 */
 
-#include "rbt.h"
+#include "../bstrees/bst.h"
 #include "../../../lib/clib/clib.h"
-#include "../data/student.h"
+#include "student/student.h"
 
 int main (int argc, char *argv[]) {
   FILE *fp; node *n;
@@ -140,3 +140,5 @@ int main (int argc, char *argv[]) {
   }
   return 0;
 }
+
+

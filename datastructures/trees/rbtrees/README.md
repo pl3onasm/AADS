@@ -1,11 +1,5 @@
-Usage:
+# Red-black trees
 
-```shell
-./a.out ../data/students.txt
-```
+## Example applications
 
-Compilation:
-
-```shell
-gcc -O2 -std=c99 -pedantic -o a.out rbt.c students.c ../data/student.c ../../../lib/clib/*.c -lm
-```
+- [student database](../application/rbtstudents.c)
