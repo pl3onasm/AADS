@@ -288,7 +288,7 @@ void htShow(ht *H) {
   
   if (H->label) 
     printf("----------------\n"
-           "%s[%zu]\n"
+           "%s [%zu]\n"
            "----------------\n", H->label, H->nKeys);
 
   while ((entry = htNext(H))) {

@@ -3,11 +3,6 @@
   Author: David De Potter
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-
-extern void *strdup(void *data);
-
 #include "sshtable.h" // use the string-string hash table
 
 int main (){
@@ -44,19 +39,26 @@ int main (){
     // if the hash table is case sensitive,
     // a new key is added, otherwise the
     // value is added to the existing key
-  ssHtAddKey(ht, "Five", "Fünf");
+  ssHtAddKey(ht, "Five", "fünf");
 
     // deletes the key "three"
   ssHtDelKey(ht, "three");
 
     // removes values from the key "two"
   ssHtDelVal(ht, "two", "due");
+    // after this, the key "two" is removed
+    // because it has no values left
   ssHtDelVal(ht, "two", "deux");
 
-    // tries to remove a deleted value
-    // nothing happens because the key is
-    // removed when it has no values left
+    // tries to remove a value from a 
+    // non-existing key
+    // nothing happens because the key is not there
   ssHtDelVal(ht, "two", "deux");
+
+    // tries to remove a non-existing value from an 
+    // existing key
+    // nothing happens because the value is not there
+  ssHtDelVal(ht, "nine", "tre");
 
   ssHtSetLabel(ht, "Test HT");
   ssHtShow(ht);
