@@ -14,7 +14,7 @@
 * Stacks and queues
 * [Lists](datastructures/lists)
 * [Trees](datastructures/trees)
-* [Hash tables](datastructures/hash-tables)
+* [Hash tables](datastructures/htables)
 * [Heaps](datastructures/heaps)
 * Sets
 * Augmented data structures
