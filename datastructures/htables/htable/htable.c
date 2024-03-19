@@ -63,6 +63,7 @@ void htFree(ht *H) {
         if (H->freeKey)
           H->freeKey(entry->key);
         dllFree(entry->values);
+        free(entry);
       }
       dllFree(bucket);
     }
@@ -122,6 +123,7 @@ void htRehash(ht *H) {
     dll *bucket = H->buckets[i];
     if (! bucket)
       continue;
+    
     htEntry *entry;
     dllFirst(bucket);
     // rehash all entries in the bucket to the new buckets
@@ -224,6 +226,8 @@ void htDelKey(ht *H, void *key) {
         H->freeKey(entry->key);    
         // free the list of values 
       dllFree(entry->values);
+        // free the entry itself
+      free(entry);
         // remove the entry from the bucket
       dllDelete(bucket, bucket->iter->prev);
         // one key less

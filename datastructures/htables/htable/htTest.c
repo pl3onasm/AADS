@@ -106,5 +106,3 @@ int main (){
   ssHtFree(ht);  
 }
 
-// The rehash is still leaking some memory. 
-// To be fixed. 
