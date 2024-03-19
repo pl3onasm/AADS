@@ -133,21 +133,10 @@ void htRehash(ht *H) {
         newBuckets[newIndex] = dllNew();
       dllPush(newBuckets[newIndex], entry);
     }
-    // remove the old entry from the old bucket
-    // by freeing the DLL without freeing the data
+    // remove the old bucket without freeing the entries
     dllFree(bucket);
-    H->buckets[i] = NULL;
   }
 
-  // show the old buckets
-  printf("Old capacity: %zu\n", oldCapacity);
-  printf("New capacity: %zu\n", H->capacity);
-  for (size_t i = 0; i < oldCapacity; i++) {
-    if (H->buckets[i]) {
-      printf("Old bucket %zu: ", i);
-      dllShow(H->buckets[i]);
-    }
-  }
     // free the old buckets
   free(H->buckets);
 
