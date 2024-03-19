@@ -12,7 +12,7 @@
 ## ${\color{peru}\text{Data structures in C}}$
 
 * Stacks and queues
-* Lists
+* [Lists](datastructures/lists)
 * [Trees](datastructures/trees)
 * Hash tables
 * [Heaps](datastructures/heaps)
