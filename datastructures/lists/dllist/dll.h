@@ -48,7 +48,7 @@ dll *dllNew();
   // freeing it when the DLL is freed
 void dllOwnData(dll *L, dllFreeData freeData);
 
-  // Set the DLL to make copies of its data
+  // Sets the DLL to make copies of the input data
   // If set, the DLL will only free the copies
 void dllCopyData(dll *L, dllCpyData copyData, 
                     dllFreeData freeData);
@@ -68,20 +68,22 @@ void dllSetCmp(dll *L, dllCmpData cmp);
   // Sets the size of the data in the DLL
 void dllSetDataSize(dll *L, size_t dataSize);
 
-  // Frees the DLL, including all nodes and their data
+  // Frees the DLL
+  // Input data is freed if the DLL owns it
 void dllFree(dll *L);
 
-  // Makes the DLL empty, freeing all nodes
-  // and their data, leaving only the NIL node
+  // Makes the DLL empty
 void dllEmpty(dll *L);
 
   // Makes a copy of the DLL
-dll *dllCopy(dll *L, dllCpyData copyData, dllFreeData freeData);
+dll *dllCopy(dll *L, dllCpyData copyData, 
+             dllFreeData freeData);
 
   // Creates a new DLL node
 dllNode *dllNewNode();
 
-  // Frees a DLL node, including its data
+  // Frees a DLL node, including its data 
+  // if the DLL owns it
 void dllFreeNode(dll *L, dllNode *node);
 
   // Pushes data to the front of the DLL
@@ -104,7 +106,7 @@ void dllDeleteData(dll *L, void *data);
 void *dllSearch(dll *L, void *key);
 
   // Shows the DLL using the showData function 
-  // and the delimiter function
+  // and the delimiter string (default is ", ")
 void dllShow(dll *L);
 
   // Sets the list iterator to the first node

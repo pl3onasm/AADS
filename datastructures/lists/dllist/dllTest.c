@@ -9,7 +9,7 @@ typedef struct {
   int age;
 } person;
 
-// string copy functions
+// copy functions
 static void *copyStr(void *data) {
   char *new = safeCalloc(strlen((char *)data) + 1, sizeof(char));
   strcpy(new, (char *)data);
