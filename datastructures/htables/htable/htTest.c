@@ -10,8 +10,8 @@ int main (){
   ssHt *ht = ssHtNew(CASE_INSENSITIVE);
   
     // makes the hash table copy the keys and values
-    // if set: total number of frees is 211
-    // if not set: total number of frees is 159
+    // if set: total number of frees is 381
+    // if not set: total number of frees is 303
   ssHtCopyKeys(ht);  
   ssHtCopyVals(ht);
 
@@ -85,6 +85,19 @@ int main (){
   ssHtAddKey(ht, "twentytwo", "ventidue");
   ssHtAddKey(ht, "twentythree", "ventitre");
   ssHtAddKey(ht, "twentyfour", "ventiquattro");
+  ssHtAddKey(ht, "twentyfive", "venticinque");
+  ssHtAddKey(ht, "twentysix", "ventisei");
+  ssHtAddKey(ht, "twentyseven", "ventisette");
+  ssHtAddKey(ht, "twentyeight", "ventotto");
+  ssHtAddKey(ht, "twentynine", "ventinove");
+  ssHtAddKey(ht, "thirty", "trenta");
+  ssHtAddKey(ht, "thirtyone", "trentuno");
+  ssHtAddKey(ht, "thirtytwo", "trentadue");
+  ssHtAddKey(ht, "thirtythree", "trentatre");
+  ssHtAddKey(ht, "thirtyfour", "trentaquattro");
+  ssHtAddKey(ht, "thirtyfive", "trentacinque");
+  ssHtAddKey(ht, "thirtysix", "trentasei");
+  ssHtAddKey(ht, "thirtyseven", "trentasette");
 
     // results in a different order of the keys
     // because of the rehashing
@@ -92,3 +105,6 @@ int main (){
 
   ssHtFree(ht);  
 }
+
+// The rehash is still leaking some memory. 
+// To be fixed. 

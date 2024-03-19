@@ -110,28 +110,45 @@ void htRehash(ht *H) {
   
   if (H->nKeys < 0.75 * H->capacity)
     return;
-
+  
     // create new buckets
   size_t oldCapacity = H->capacity;
   H->capacity *= 2;
   dll **newBuckets = safeCalloc(H->capacity, sizeof(dll*));
   
-    // rehash all elements
+    // rehash old entries
   for (size_t i = 0; i < oldCapacity; i++) {
+    
     dll *bucket = H->buckets[i];
     if (! bucket)
       continue;
     htEntry *entry;
     dllFirst(bucket);
+    // rehash all entries in the bucket to the new buckets
     while ((entry = dllNext(bucket))) {
       size_t newIndex = getIndex(H, entry->key);
       if (! newBuckets[newIndex]) 
         newBuckets[newIndex] = dllNew();
       dllPush(newBuckets[newIndex], entry);
     }
+    // remove the old entry from the old bucket
+    // by freeing the DLL without freeing the data
+    dllFree(bucket);
+    H->buckets[i] = NULL;
   }
-    // free old buckets
-  htFree(H);
+
+  // show the old buckets
+  printf("Old capacity: %zu\n", oldCapacity);
+  printf("New capacity: %zu\n", H->capacity);
+  for (size_t i = 0; i < oldCapacity; i++) {
+    if (H->buckets[i]) {
+      printf("Old bucket %zu: ", i);
+      dllShow(H->buckets[i]);
+    }
+  }
+    // free the old buckets
+  free(H->buckets);
+
     // set new buckets
   H->buckets = newBuckets;
 }
@@ -142,9 +159,7 @@ static void htPutKey(ht *H, void *key, void *value) {
   
   if (H->buckets[index] == NULL) {
     H->buckets[index] = dllNew();
-      // set ownership for the bucket 
-      // to free the entry structs
-    dllOwnData(H->buckets[index], free);
+    // no ownership, because of the rehash
   }
   
     // if the key exists, add the value to its value list
