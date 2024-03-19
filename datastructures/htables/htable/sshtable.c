@@ -45,7 +45,7 @@ static int cmpStrCS(void *str1, void *str2) {
   // returns negative if str1 < str2
   // returns 0 if str1 == str2
   // returns positive if str1 > str2
-static int comStrCI(void *str1, void *str2) {
+static int cmpStrCI(void *str1, void *str2) {
   char *s1 = (char *)str1;
   char *s2 = (char *)str2;
   while (*s1 && *s2) {
@@ -74,7 +74,7 @@ ssHt *ssHtNew(ssHtCase htCase) {
   htHash hash = htCase == CASE_SENSITIVE ? hashCS : hashCI;
   htCmpKey cmpKey; 
   htCmpValue cmpVal;
-  cmpKey = cmpVal = htCase == CASE_SENSITIVE ? cmpStrCS : comStrCI;
+  cmpKey = cmpVal = htCase == CASE_SENSITIVE ? cmpStrCS : cmpStrCI;
   ht *ht = htNew(hash, cmpKey, cmpVal);
   htSetShow(ht, showStr, showStr);
   return (ssHt *)ht;

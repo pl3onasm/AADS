@@ -10,8 +10,8 @@ int main (){
   ssHt *ht = ssHtNew(CASE_INSENSITIVE);
   
     // makes the hash table copy the keys and values
-    // if set: total number of frees is 95
-    // if not set: total number of frees is 72
+    // if set: total number of frees is 211
+    // if not set: total number of frees is 159
   ssHtCopyKeys(ht);  
   ssHtCopyVals(ht);
 
@@ -41,13 +41,18 @@ int main (){
     // value is added to the existing key
   ssHtAddKey(ht, "Five", "fünf");
 
+    // adds a value with case differences
+    // if the hash table is case sensitive,
+    // a new value is added, otherwise nothing
+  ssHtAddKey(ht, "Five", "Fünf");
+
     // deletes the key "three"
   ssHtDelKey(ht, "three");
 
     // removes values from the key "two"
   ssHtDelVal(ht, "two", "due");
-    // after this, the key "two" is removed
-    // because it has no values left
+    // after the following statement, the key "two" 
+    // is removed because it has no values left
   ssHtDelVal(ht, "two", "deux");
 
     // tries to remove a value from a 
@@ -61,6 +66,28 @@ int main (){
   ssHtDelVal(ht, "nine", "tre");
 
   ssHtSetLabel(ht, "Test HT");
+  ssHtShow(ht);
+
+    // add more keys to test the rehashing
+    // a table starts with 32 buckets, and  
+    // rehashes at 75% load factor
+  ssHtAddKey(ht, "eleven", "undici");
+  ssHtAddKey(ht, "twelve", "dodici");
+  ssHtAddKey(ht, "thirteen", "tredici");
+  ssHtAddKey(ht, "fourteen", "quattordici");
+  ssHtAddKey(ht, "fifteen", "quindici");
+  ssHtAddKey(ht, "sixteen", "sedici");
+  ssHtAddKey(ht, "seventeen", "diciassette");
+  ssHtAddKey(ht, "eighteen", "diciotto");
+  ssHtAddKey(ht, "nineteen", "diciannove");
+  ssHtAddKey(ht, "twenty", "venti");
+  ssHtAddKey(ht, "twentyone", "ventuno");
+  ssHtAddKey(ht, "twentytwo", "ventidue");
+  ssHtAddKey(ht, "twentythree", "ventitre");
+  ssHtAddKey(ht, "twentyfour", "ventiquattro");
+
+    // results in a different order of the keys
+    // because of the rehashing
   ssHtShow(ht);
 
   ssHtFree(ht);  

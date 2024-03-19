@@ -16,12 +16,7 @@ dll *dllNew () {
   L->NIL->prev = L->NIL;
   L->NIL->dllData = NULL;
   L->iter = L->NIL;
-  L->cmp = NULL;
-  L->showData = NULL;
   L->delim = ", ";
-  L->label = NULL;
-  L->freeData = NULL;
-  L->copyData = NULL;
   return L;
 }
 

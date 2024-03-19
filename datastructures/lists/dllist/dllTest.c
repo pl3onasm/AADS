@@ -75,9 +75,8 @@ int main (){
   // Tests
   // Data set 1
   dll *N = dllNew();
-  for (int i = 0; i < 10; ++i) {
+  for (int i = 0; i < 10; ++i) 
     dllPushBack(N, numbers[i]);
-  }
   
   dllSetLabel(N, "Numbers");
   dllSetShow(N, showStr);
@@ -121,9 +120,8 @@ int main (){
 
   // Data set 3
   dll *P = dllNew();
-  for (int i = 0; i < 7; ++i) {
+  for (int i = 0; i < 7; ++i) 
     dllPush(P, people[i]);
-  }
 
   dllSetLabel(P, "People");
   dllSetShow(P, showPerson);

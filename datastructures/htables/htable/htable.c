@@ -296,6 +296,8 @@ void htShow(ht *H) {
     printf("[%zu]: ", dllSize(entry->values));
     dllShow(entry->values);
   }
+
+  printf("\n");
 }
 
 
