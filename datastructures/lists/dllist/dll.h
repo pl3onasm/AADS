@@ -15,7 +15,6 @@
 // function pointers for the DLL
 typedef int (*dllCmpData)(void *a, void *b);
 typedef void (*dllShowData)(void *data);
-typedef char *(*dllDelim)(void *prev, void *next);
 typedef void *(*dllCpyData)(void *data);
 typedef void (*dllFreeData)(void *data);
 
@@ -34,7 +33,6 @@ typedef struct {
   dllShowData showData;   // show data function
   dllFreeData freeData;   // free data function
   dllCpyData copyData;    // copy data function
-  size_t dataSize;        // size of the data
   char *delim;            // delimiter string
   char *label;            // label for the DLL
 } dll;
@@ -64,9 +62,6 @@ void dllSetShow(dll *L, dllShowData showData);
 
   // Sets the comparison function for the DLL
 void dllSetCmp(dll *L, dllCmpData cmp);
-
-  // Sets the size of the data in the DLL
-void dllSetDataSize(dll *L, size_t dataSize);
 
   // Frees the DLL
   // Input data is freed if the DLL owns it
@@ -103,7 +98,7 @@ void dllDeleteData(dll *L, void *data);
 
   // Searches for a node in the DLL with a given key
   // returns the data of the node if found, NULL otherwise
-void *dllSearch(dll *L, void *key);
+void *dllFind(dll *L, void *key);
 
   // Shows the DLL using the showData function 
   // and the delimiter string (default is ", ")

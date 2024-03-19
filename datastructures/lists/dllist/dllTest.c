@@ -1,3 +1,8 @@
+/* 
+  Some tests for the doubly linked list
+  Author: David De Potter
+*/
+
 #include <string.h>
 
 #include "dll.h" 
@@ -127,7 +132,7 @@ int main (){
 
   // search for a person
   dllSetCmp(P, cmpPerson);
-  person *p = dllSearch(P, &(char *){"Frank"});
+  person *p = dllFind(P, &(char *){"Frank"});
   if (p) showPerson(p);
 
   dllFree(N);

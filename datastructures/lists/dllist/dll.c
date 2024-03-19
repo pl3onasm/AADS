@@ -22,17 +22,16 @@ dll *dllNew () {
   L->label = NULL;
   L->freeData = NULL;
   L->copyData = NULL;
-  L->dataSize = 0;
   return L;
 }
 
-  // Sets the DLL to own the data,
+  // Sets the DLL to own the input data,
   // freeing it when the DLL is freed
 void dllOwnData (dll *L, dllFreeData freeData) {
   L->freeData = freeData;
 }
 
-  // Set the DLL to make copies of the data
+  // Sets the DLL to make copies of the data
   // If set, the DLL will only free the copies
 void dllCopyData (dll *L, dllCpyData copyData, 
                      dllFreeData freeData) {
@@ -58,11 +57,6 @@ void dllSetCmp (dll *L, dllCmpData cmp) {
   // Sets the label for the DLL
 void dllSetLabel (dll *L, char *label) {
   L->label = label;
-}
-
-  // Sets the size of the data in the DLL
-void dllSetDataSize (dll *L, size_t dataSize) {
-  L->dataSize = dataSize;
 }
 
   // Makes a copy of the DLL
@@ -218,9 +212,9 @@ void dllDeleteData (dll *L, void *data) {
 
   // Searches for the first node with a given key
   // returns the data of the node if found, NULL otherwise
-void *dllSearch (dll *L, void *key) {
+void *dllFind (dll *L, void *key) {
   if (! L->cmp) {
-    fprintf(stderr, "dllSearch: comparison function not set\n");
+    fprintf(stderr, "dllFind: comparison function not set\n");
     return NULL;
   }
   L->NIL->dllData = key;
