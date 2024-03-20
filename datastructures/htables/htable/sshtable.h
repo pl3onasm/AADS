@@ -21,6 +21,9 @@ ssHt *ssHtNew(ssHtCase c);
 
 void ssHtSetLabel(ssHt *ht, char *label);
 
+void ssHtSetValDelim(ssHt *ht, 
+  char *valDelim);
+
 void ssHtOwnKeys(ssHt *ht);
 
 void ssHtOwnVals(ssHt *ht);
@@ -36,8 +39,12 @@ bool ssHtGetKeyVals(ssHt *ht,
 
 dll *ssHtGetVals(ssHt *ht, char *value);
 
-void ssHtAddKey(ssHt *ht, 
-  char *key, char *value);
+void ssHtAddKey(ssHt *ht, char *key, 
+  char *value);
+
+  // same as above, but with an array of values
+void ssHtAddKeyVals(ssHt *ht, char *key, 
+  char **values, size_t len);
 
 void ssHtDelKey(ssHt *ht, char *key);
 

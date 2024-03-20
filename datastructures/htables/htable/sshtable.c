@@ -84,6 +84,10 @@ void ssHtSetLabel(ssHt *ssht, char *label) {
   htSetLabel((ht *)ssht, label);
 }
 
+void ssHtSetValDelim(ssHt *ssht, char *valDelim) {
+  htSetValDelim((ht *)ssht, valDelim);
+}
+
 void ssHtOwnKeys(ssHt *ssht) {
   htOwnKeys((ht *)ssht, free);
 }
@@ -110,6 +114,11 @@ dll *ssHtGetVals(ssHt *ssht, char *key) {
 
 void ssHtAddKey(ssHt *ssht, char *key, char *value) {
   htAddKey((ht *)ssht, (void *)key, (void *)value);
+}
+
+void ssHtAddKeyVals(ssHt *ssht, char *key, char **values, size_t len) {
+  for (size_t i = 0; i < len; i++)
+    ssHtAddKey(ssht, key, values[i]);
 }
 
 void ssHtDelKey(ssHt *ssht, char *key) {

@@ -23,8 +23,14 @@ ht *htNew(htHash hash, htCmpKey cmpKey,
   return H;
 }
 
+  // setters
+
 void htSetLabel(ht *H, char *label) {
   H->label = label;
+}
+
+void htSetValDelim(ht *H, char *valDelim) {
+  H->valDelim = valDelim;
 }
 
 void htSetShow(ht *H, htShowKey showKey, 
@@ -41,20 +47,19 @@ void htOwnVals(ht *H, htFreeValue freeValue) {
   H->freeValue = freeValue;
 }
 
-  // sets the optional function for copying keys
 void htCopyKeys(ht *H, htCopyKey copyKey, 
                htFreeKey freeKey) {
   H->copyKey = copyKey;
   H->freeKey = freeKey;
 }
 
-  // sets the optional function for copying values
 void htCopyVals(ht *H, htCopyValue copyValue, 
                  htFreeValue freeValue) {
   H->copyValue = copyValue;
   H->freeValue = freeValue;
 }
 
+  // deallocates the hash table
 void htFree(ht *H) {
   for (size_t i = 0; i < H->capacity; i++) {
     if (H->buckets[i]) {
@@ -74,6 +79,7 @@ void htFree(ht *H) {
   free(H);
 }
 
+  // returns the index of the bucket for a key
 static size_t getIndex(ht *H, void *key) {
   return (H->hash(key, H->seed) % H->capacity);
 }
@@ -109,7 +115,7 @@ dll *htGetVals(ht *H, void *key) {
 
   // rehashes the hash table if the number of 
   // keys exceeds 75% of the capacity
-void htRehash(ht *H) {
+static void htRehash(ht *H) {
   
   if (H->nKeys < 0.75 * H->capacity)
     return;
@@ -118,6 +124,7 @@ void htRehash(ht *H) {
   size_t oldCapacity = H->capacity;
   H->capacity *= 2;
   dll **newBuckets = safeCalloc(H->capacity, sizeof(dll*));
+  H->nFilled = H->nCollisions = 0;
   
     // rehash old entries
   for (size_t i = 0; i < oldCapacity; i++) {
@@ -131,8 +138,11 @@ void htRehash(ht *H) {
     // rehash all entries in the bucket to new buckets
     while ((entry = dllNext(bucket))) {
       size_t newIndex = getIndex(H, entry->key);
-      if (! newBuckets[newIndex]) 
+      if (! newBuckets[newIndex]) {
         newBuckets[newIndex] = dllNew();
+        H->nFilled++;
+      }
+      else H->nCollisions++;
       dllPush(newBuckets[newIndex], entry);
     }
     // remove the old bucket without freeing the entries
@@ -149,21 +159,26 @@ void htRehash(ht *H) {
   // adds a new key-value pair to the hash table
 static void htAddNewkey(ht *H, void *key, void *value, dll *bucket) {
 
+  if (! dllIsEmpty(bucket)) 
+    H->nCollisions++;
   htEntry *entry = safeCalloc(1, sizeof(htEntry));
   entry->key = key;
+
     // copy the key if a copy function is provided
   if (H->copyKey)
     entry->key = H->copyKey(key);
     // create a new value list
   entry->values = dllNew();
-    // set ownership
+    // set ownership of the value list
   if (H->copyValue)
     dllCopyData(entry->values, H->copyValue, H->freeValue);
   else if (H->freeValue)
     dllOwnData(entry->values, H->freeValue);
-    // set show and comparison functions
+    // set different functions for the value list
   dllSetShow(entry->values, H->showValue);
   dllSetCmp(entry->values, H->cmpVal);
+  if (H->valDelim)
+    dllSetDelim(entry->values, H->valDelim);
 
     // add the value to the new value list
   dllPush(entry->values, value);
@@ -185,7 +200,7 @@ void htAddKey(ht *H, void *key, void *value) {
 
   size_t index = getIndex(H, key);
   
-  if (H->buckets[index] == NULL) {
+  if (! H->buckets[index]) {
     H->buckets[index] = dllNew();
     // no ownership for the entries, since we want
     // to keep the entries when rehashing
@@ -235,9 +250,14 @@ void htDelKey(ht *H, void *key) {
       dllDelete(bucket, bucket->iter->prev);
         // one key less
       H->nKeys--;
-      return;
+      break;
     }
   }
+    // update statistics
+  if (dllIsEmpty(bucket))
+    H->nFilled--;
+  else
+    H->nCollisions--;
 }
 
   // deletes a value from the value list of a key
@@ -308,9 +328,11 @@ void htStats(ht *H) {
          "   Buckets used.......: %zu\n"
          "   Number of keys.....: %zu\n"
          "   Load factor........: %.2f\n"
-         "   Maximum bucket size: %zu\n\n\n",
+         "   Maximum bucket size: %zu\n"
+         "   Collisions.........: %zu\n\n\n",
          H->capacity, H->nFilled, H->nKeys,
-         (double)H->nKeys / H->capacity, H->maxLen);
+         (double)H->nKeys / H->capacity, 
+         H->maxLen, H->nCollisions);
 }
 
   // shows the hash table
@@ -324,9 +346,9 @@ void htShow(ht *H) {
   htEntry *entry;
   
   if (H->label) 
-    printf("----------------\n"
-           "%s [%zu]\n"
-           "----------------\n", H->label, H->nKeys);
+    printf("\n--------------------\n"
+           "  %s [%zu]\n"
+           "--------------------\n\n", H->label, H->nKeys);
 
   while ((entry = htNext(H))) {
     H->showKey(entry->key);

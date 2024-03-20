@@ -45,6 +45,7 @@ typedef struct {
   size_t nFilled;         // number of filled buckets
   size_t maxLen;          // maximum length of a bucket
   char *label;            // label for the hash table
+  char *valDelim;         // delimiter for the values
 } ht;
 
 typedef struct {          // key-value pair
@@ -60,6 +61,10 @@ ht *htNew(htHash hash, htCmpKey cmpKey,
 
   // sets the label for the hash table
 void htSetLabel(ht *H, char *label);
+
+  // sets the string delimiter for the values
+  // default is ", "
+void htSetValDelim(ht *H, char *delim);
 
   // sets the show functions for the hash table
 void htSetShow(ht *H, htShowKey showKey, 
