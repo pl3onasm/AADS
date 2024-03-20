@@ -10,14 +10,16 @@
 
 ht *htNew(htHash hash, htCmpKey cmpKey, 
           htCmpValue cmpVal) {
+  
   ht *H = safeCalloc(1, sizeof(ht));
   H->capacity = 32;
   H->buckets = safeCalloc(H->capacity, sizeof(dll*));
   H->hash = hash;
   H->cmpKey = cmpKey;
   H->cmpVal = cmpVal;
-  H->seed = (uint)time(NULL);
-  H->seed ^= (H->seed << 13);
+  srand(time(NULL));
+  H->seed = rand();
+  H->seed ^= (uint)time(NULL);
   return H;
 }
 
@@ -126,7 +128,7 @@ void htRehash(ht *H) {
     
     htEntry *entry;
     dllFirst(bucket);
-    // rehash all entries in the bucket to the new buckets
+    // rehash all entries in the bucket to new buckets
     while ((entry = dllNext(bucket))) {
       size_t newIndex = getIndex(H, entry->key);
       if (! newBuckets[newIndex]) 
@@ -144,31 +146,10 @@ void htRehash(ht *H) {
   H->buckets = newBuckets;
 }
 
-  // adds a key-value pair to the hash table
-static void htPutKey(ht *H, void *key, void *value) {
-  size_t index = getIndex(H, key);
-  
-  if (H->buckets[index] == NULL) {
-    H->buckets[index] = dllNew();
-    // no ownership, because of the rehash
-  }
-  
-    // if the key exists, add the value to its value list
-    // if the value is not yet in the list
-  dll *bucket = H->buckets[index];
-  dllFirst(bucket);
-  htEntry *entry;
-  while ((entry = dllNext(bucket))) {
-    if (! H->cmpKey(key, entry->key)) {
-      if (! dllFind(entry->values, value))
-        dllPush(entry->values, value);
-      return;
-    }
-  }
+  // adds a new key-value pair to the hash table
+static void htAddNewkey(ht *H, void *key, void *value, dll *bucket) {
 
-    // if the key does not exist,
-    // add a new key-value pair
-  entry = safeCalloc(1, sizeof(htEntry));
+  htEntry *entry = safeCalloc(1, sizeof(htEntry));
   entry->key = key;
     // copy the key if a copy function is provided
   if (H->copyKey)
@@ -188,18 +169,51 @@ static void htPutKey(ht *H, void *key, void *value) {
   dllPush(entry->values, value);
     // add the new key-value pair to the bucket
   dllPush(bucket, entry);
+    // update the maximum length of a bucket
+  if (dllSize(bucket) > H->maxLen)
+    H->maxLen = dllSize(bucket);
+    // one key more
   H->nKeys++;
 }
 
+  // tries to add a key-value pair to the hash table
 void htAddKey(ht *H, void *key, void *value) {
-  
+    
   if (!H || !key) return;
-    // check if a rehash is needed
+    // rehash if necessary
   htRehash(H);
-    // add the key-value pair
-  htPutKey(H, key, value);
+
+  size_t index = getIndex(H, key);
+  
+  if (H->buckets[index] == NULL) {
+    H->buckets[index] = dllNew();
+    // no ownership for the entries, since we want
+    // to keep the entries when rehashing
+    H->nFilled++;
+  }
+  
+    // if the key exists, add the value to its value list
+    // if the value is not yet in the list
+  dll *bucket = H->buckets[index];
+  dllFirst(bucket);
+  htEntry *entry;
+  while ((entry = dllNext(bucket))) {
+    if (! H->cmpKey(key, entry->key)) {
+      if (! dllFind(entry->values, value))
+        dllPush(entry->values, value);
+      // update the maximum length of a bucket
+      if (dllSize(bucket) > H->maxLen)
+        H->maxLen = dllSize(bucket);
+      return;
+    }
+  }
+
+    // if the key does not exist,
+    // add a new key-value pair
+  htAddNewkey(H, key, value, bucket);
 }
 
+  // deletes a key from the hash table
 void htDelKey(ht *H, void *key) {
   size_t index = getIndex(H, key);
   dll *bucket = H->buckets[index];
@@ -237,7 +251,6 @@ void htDelVal(ht *H, void *key, void *value) {
     htDelKey(H, key);
 }
 
-
   // resets the iterator
 void htReset(ht *H) {
   H->iterBucket = 0;
@@ -248,17 +261,16 @@ void htReset(ht *H) {
   // and sets the iterator to the next key-value pair
   // returns NULL if the end of the hash table is reached
 htEntry *htNext(ht *H) {
-  htEntry *entry;
- 
+
+    // if the end of the table is reached, reset the iterator
   if (H->iterBucket >= H->capacity) {
-    // reset the iterator for the next iteration
     htReset(H);
     return NULL;
   }
 
-  if (H->iterBucket < H->capacity && 
-        (H->buckets[H->iterBucket] == NULL ||
-        dllIsEmpty(H->buckets[H->iterBucket]))) {
+    // skip empty buckets
+  if (H->buckets[H->iterBucket] == NULL ||
+      dllIsEmpty(H->buckets[H->iterBucket])) {
     H->iterBucket++;
     H->iterNode = NULL;
     return htNext(H);
@@ -280,15 +292,32 @@ htEntry *htNext(ht *H) {
 
     // return the current entry and move the iterator
     // to the next node
-  entry = (htEntry *)H->iterNode->dllData;
+  htEntry *entry = H->iterNode->dllData;
   H->iterNode = H->iterNode->next;
   
   return entry; 
 }
 
+  // Gives an overview of the distribution of keys 
+  // over the buckets
+void htStats(ht *H) {
+  printf("\n+---------------------------+\n"
+         "|   Hash table statistics   |\n"
+         "+---------------------------+\n\n"
+         "   Number of buckets..: %zu\n"
+         "   Buckets used.......: %zu\n"
+         "   Number of keys.....: %zu\n"
+         "   Load factor........: %.2f\n"
+         "   Maximum bucket size: %zu\n\n\n",
+         H->capacity, H->nFilled, H->nKeys,
+         (double)H->nKeys / H->capacity, H->maxLen);
+}
+
+  // shows the hash table
 void htShow(ht *H) {
   if (!H->showKey || !H->showValue) {
-    fprintf(stderr, "htShow: showKey or showValue function not set\n");
+    fprintf(stderr, "htShow: showKey or " 
+                    "showValue function not set\n");
     return;
   }
   htReset(H);
@@ -304,8 +333,5 @@ void htShow(ht *H) {
     printf("[%zu]: ", dllSize(entry->values));
     dllShow(entry->values);
   }
-
   printf("\n");
 }
-
-

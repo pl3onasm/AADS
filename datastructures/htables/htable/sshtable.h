@@ -46,6 +46,8 @@ void ssHtDelVal(ssHt *ht,
 
 void ssHtShow(ssHt *ht);
 
+void ssHtStats(ssHt *ht);
+
 size_t ssHtSize(ssHt *ht);
 
 bool ssHtIsEmpty(ssHt *ht);

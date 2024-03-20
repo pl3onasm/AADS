@@ -109,7 +109,6 @@ dll *ssHtGetVals(ssHt *ssht, char *key) {
 }
 
 void ssHtAddKey(ssHt *ssht, char *key, char *value) {
-  // make a copy of the key and value
   htAddKey((ht *)ssht, (void *)key, (void *)value);
 }
 
@@ -123,6 +122,10 @@ void ssHtDelVal(ssHt *ssht, char *key, char *value) {
 
 void ssHtShow(ssHt *ssht) {
   htShow((ht *)ssht);
+}
+
+void ssHtStats(ssHt *ssht) {
+  htStats((ht *)ssht);
 }
 
 void ssHtFree(ssHt *ssht) {

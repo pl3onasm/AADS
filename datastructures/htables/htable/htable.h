@@ -41,6 +41,9 @@ typedef struct {
   htFreeValue freeValue;  // function to free the value
   htCopyKey copyKey;      // function to copy the key
   htCopyValue copyValue;  // function to copy the value
+  size_t nCollisions;     // number of collisions
+  size_t nFilled;         // number of filled buckets
+  size_t maxLen;          // maximum length of a bucket
   char *label;            // label for the hash table
 } ht;
 
@@ -106,6 +109,9 @@ void htDelVal(ht *H, void *key, void *value);
 
   // prints the hash table
 void htShow(ht *H);
+
+  // shows distribution statistics
+void htStats(ht *H);
 
   // returns the number of keys in the hash table
 inline size_t htSize(ht *H) {

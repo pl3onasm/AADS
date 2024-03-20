@@ -103,6 +103,9 @@ int main (){
     // because of the rehashing
   ssHtShow(ht);
 
+    // shows some statistics
+  ssHtStats(ht);
+
   ssHtFree(ht);  
 }
 

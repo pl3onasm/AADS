@@ -51,7 +51,7 @@ void dllOwnData(dll *L, dllFreeData freeData);
 void dllCopyData(dll *L, dllCpyData copyData, 
                     dllFreeData freeData);
 
-  // Sets the delimiter function for the DLL
+  // Sets the delimiter string for the DLL
 void dllSetDelim(dll *L, char *delim);
 
   // Sets the label for the DLL
