@@ -70,12 +70,12 @@ static void *copyStr(void *str) {
 }
 
   // creates a new string-string hash table
-ssHt *ssHtNew(ssHtCase htCase) {
+ssHt *ssHtNew(ssHtCase htCase, size_t capacity) {
   htHash hash = htCase == CASE_SENSITIVE ? hashCS : hashCI;
   htCmpKey cmpKey; 
   htCmpValue cmpVal;
   cmpKey = cmpVal = htCase == CASE_SENSITIVE ? cmpStrCS : cmpStrCI;
-  ht *ht = htNew(hash, cmpKey, cmpVal);
+  ht *ht = htNew(hash, cmpKey, cmpVal, capacity);
   htSetShow(ht, showStr, showStr);
   return (ssHt *)ht;
 }
@@ -104,21 +104,29 @@ void ssHtCopyVals(ssHt *ssht) {
   htCopyVals((ht *)ssht, copyStr, free);
 }
 
-bool ssHtGetKeyVals(ssHt *ssht, char *key, dll **values) {
-  return (ssHt *)htGetKeyVals((ht *)ssht, (void *)key, values);
+bool ssHtHasKeyVals(ssHt *ssht, char *key, dll **values) {
+  return (ssHt *)htHasKeyVals((ht *)ssht, (void *)key, values);
 }
 
 dll *ssHtGetVals(ssHt *ssht, char *key) {
   return htGetVals((ht *)ssht, (void *)key);
 }
 
-void ssHtAddKey(ssHt *ssht, char *key, char *value) {
-  htAddKey((ht *)ssht, (void *)key, (void *)value);
+void ssHtAddKey(ssHt *ssht, char *key) {
+  htAddKey((ht *)ssht, (void *)key);
+}
+
+void ssHtAddKeyVal(ssHt *ssht, char *key, char *value) {
+  htAddKeyVal((ht *)ssht, (void *)key, (void *)value);
+}
+
+bool ssHtHasKey(ssHt *ssht, char *key) {
+  return htHasKey((ht *)ssht, (void *)key);
 }
 
 void ssHtAddKeyVals(ssHt *ssht, char *key, char **values, size_t len) {
   for (size_t i = 0; i < len; i++)
-    ssHtAddKey(ssht, key, values[i]);
+    ssHtAddKeyVal(ssht, key, values[i]);
 }
 
 void ssHtDelKey(ssHt *ssht, char *key) {
@@ -131,6 +139,10 @@ void ssHtDelVal(ssHt *ssht, char *key, char *value) {
 
 void ssHtShow(ssHt *ssht) {
   htShow((ht *)ssht);
+}
+
+void ssHtShowEntry(ssHt *ssht, char *key) {
+  htShowEntry((ht *)ssht, (void *)key);
 }
 
 void ssHtStats(ssHt *ssht) {
@@ -147,6 +159,10 @@ size_t ssHtSize(ssHt *ssht) {
 
 bool ssHtIsEmpty(ssHt *ssht) {
   return htIsEmpty((ht *)ssht);
+}
+
+size_t ssHtKeySize(ssHt *ssht, char *key) {
+  return htKeySize((ht *)ssht, (void *)key);
 }
 
 void ssHtReset(ssHt *ssht) {

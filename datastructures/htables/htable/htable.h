@@ -14,7 +14,7 @@
 #include "../../../lib/clib/clib.h"
 
   // function pointer types
-typedef uint (*htHash)(void *key, uint seed);
+typedef uint (*htHash)(void *hashKey, uint seed);
 typedef int (*htCmpKey)(void *key1, void *key2);
 typedef int (*htCmpValue)(void *value1, void *value2);
 typedef void (*htShowKey)(void *key);
@@ -57,7 +57,7 @@ typedef struct {          // key-value pair
 
   // creates a new hash table
 ht *htNew(htHash hash, htCmpKey cmpKey, 
-          htCmpValue cmpVal);
+          htCmpValue cmpVal, size_t capacity);
 
   // sets the label for the hash table
 void htSetLabel(ht *H, char *label);
@@ -94,17 +94,30 @@ void htFree(ht *H);
   // sets the value pointer to the value list associated 
   // with the key, set to NULL if the key has no values
   // returns true if the key exists
-bool htGetKeyVals(ht *H, void *key, dll **value);
+bool htHasKeyVals(ht *H, void *key, dll **values);
+
+  // returns true if the key-value pair exists
+bool htHasKeyVal(ht *H, void *key, void *value);
 
   // returns the value list associated with the key
   // returns NULL if the value or key is not found
 dll *htGetVals(ht *H, void *key);
 
+  // adds a key to the hash table
+void htAddKey(ht *H, void *key);
+
+  // adds a key-value pair to the hash table
   // if the key is already in the hash table, the 
   // new value is added to the list
   // if the key is not in the hash table, 
   // a new key-value pair is added
-void htAddKey(ht *H, void *key, void *value);
+void htAddKeyVal(ht *H, void *key, void *value);
+
+  // returns true if the key exists in the hash table
+bool htHasKey(ht *H, void *key);
+
+  // returns the key given a hash key
+void *htGetKey(ht *H, void *hashKey);
 
   // removes the key and its value list 
 void htDelKey(ht *H, void *key);
@@ -112,8 +125,11 @@ void htDelKey(ht *H, void *key);
   // removes a value from the key's value list
 void htDelVal(ht *H, void *key, void *value);
 
-  // prints the hash table
+  // shows the hash table
 void htShow(ht *H);
+
+  // shows a key and its values
+void htShowEntry(ht *H, void *key);
 
   // shows distribution statistics
 void htStats(ht *H);
@@ -127,6 +143,9 @@ inline size_t htSize(ht *H) {
 inline bool htIsEmpty(ht *H) {
   return H->nKeys == 0;
 }
+
+  // returns the number of values associated with a key
+size_t htKeySize(ht *H, void *key);
 
   // resets the iterator
 void htReset(ht *H);

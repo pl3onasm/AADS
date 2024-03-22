@@ -87,18 +87,15 @@ int main (){
   dllDeleteData(N, "five");
   dllDeleteData(N, "zero");
   
-  dllLast(N);
-  char *data;
-  while ((data = dllPrev(N))) {
+  for (char *data = dllLast(N); data; data = dllPrev(N)) {
     showStr(data);
-    printf(dllEnd(N) ? "\n" : ", ");
+    printf(dllStart(N) ? "\n" : ", ");
   }
 
   dll *N2 = dllCopy(N, copyStr, free);
   dllPushBack(N2, "eleven");
 
-  dllFirst(N2);
-  while ((data = dllNext(N2))) {
+  for (char *data = dllFirst(N2); data; data = dllNext(N2)) {
     showStr(data);
     printf(dllEnd(N2) ? "\n" : ", ");
   }
@@ -133,6 +130,7 @@ int main (){
   person *p = dllFind(P, &(char *){"Frank"});
   if (p) showPerson(p);
 
+  printf("\n");
   dllFree(N);
   dllFree(N2);
   dllFree(D);

@@ -105,22 +105,27 @@ void *dllFind(dll *L, void *key);
 void dllShow(dll *L);
 
   // Sets the list iterator to the first node
-void dllFirst(dll *L);
+  // and returns the data of the first node
+void *dllFirst(dll *L);
 
   // Sets the list iterator to the last node
-void dllLast(dll *L);
+  // and returns the data of the last node
+void *dllLast(dll *L);
 
-  // Returns true if the iterator has reached
-  // the end of the DLL
+  // Returns true if the next node is the end of the DLL
 bool dllEnd(dll *L);
 
-  // Returns the data of the current node
-  // and updates the list iterator to the next node
+  // Returns true if the previous node is the 
+  // beginning of the DLL
+bool dllStart(dll *L);
+
+  // Updates the list iterator to the next node
+  // and returns the data of that node
   // value is NULL if the end of the DLL is reached
 void *dllNext(dll *L);
 
-  // Returns the data of the current node
-  // and updates the list iterator to the previous node
+  // Updates the list iterator to the previous node
+  // and returns the data of that node
   // value is NULL if the beginning of the DLL is reached
 void *dllPrev(dll *L);
 

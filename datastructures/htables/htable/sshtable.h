@@ -17,7 +17,8 @@ typedef enum {
   CASE_INSENSITIVE
 } ssHtCase;
 
-ssHt *ssHtNew(ssHtCase c);
+ssHt *ssHtNew(ssHtCase htCase, 
+  size_t capacity);
 
 void ssHtSetLabel(ssHt *ht, char *label);
 
@@ -34,17 +35,21 @@ void ssHtCopyVals(ssHt *ht);
 
 void ssHtFree(ssHt *ht);
 
-bool ssHtGetKeyVals(ssHt *ht, 
+bool ssHtHasKeyVals(ssHt *ht, 
   char *key, dll **values);
 
 dll *ssHtGetVals(ssHt *ht, char *value);
 
-void ssHtAddKey(ssHt *ht, char *key, 
+void ssHtAddKey(ssHt *ht, char *key);
+
+void ssHtAddKeyVal(ssHt *ht, char *key, 
   char *value);
 
-  // same as above, but with an array of values
+// same as above, but with an array of values
 void ssHtAddKeyVals(ssHt *ht, char *key, 
   char **values, size_t len);
+
+bool ssHtHasKey(ssHt *H, char *key);
 
 void ssHtDelKey(ssHt *ht, char *key);
 
@@ -53,11 +58,15 @@ void ssHtDelVal(ssHt *ht,
 
 void ssHtShow(ssHt *ht);
 
+void ssHtShowEntry(ssHt *H, char *key);
+
 void ssHtStats(ssHt *ht);
 
 size_t ssHtSize(ssHt *ht);
 
 bool ssHtIsEmpty(ssHt *ht);
+
+size_t ssHtKeySize(ssHt *ht, char *key);
 
 void ssHtReset(ssHt *ht);
 

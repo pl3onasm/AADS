@@ -196,6 +196,8 @@ void dllDeleteData (dll *L, void *data) {
     fprintf(stderr, "dllDeleteData: comparison function not set\n");
     return;
   }
+  if (dllIsEmpty(L)) 
+    return;
   L->NIL->dllData = data;
   dllNode *n = L->NIL->next;
   while (L->cmp(n->dllData, data))
@@ -245,39 +247,51 @@ void dllShow (dll *L) {
 }
 
   // Sets the list iterator to the data of the first node
-void dllFirst(dll *L) {
+  // and returns the data
+void *dllFirst(dll *L) {
   L->iter = L->NIL->next;
+  if (L->iter == L->NIL) 
+    return NULL;
+  return L->iter->dllData;
 }
 
   // Sets the list iterator to the data of the last node  
-void dllLast(dll *L) {
+  // and returns the data
+void *dllLast(dll *L) {
   L->iter = L->NIL->prev;
+  if (L->iter == L->NIL) 
+    return NULL;
+  return L->iter->dllData;
 }
 
-  // Returns true if the iterator has reached
-  // the start or end of the DLL
+  // Returns true if the next 
+  // node is the end of the DLL
 bool dllEnd(dll *L) {
-  return L->iter == L->NIL;
+  return L->iter->next == L->NIL;
+}
+  // Returns true if the previous
+  // node is the beginning of the DLL
+bool dllStart(dll *L) {
+  return L->iter->prev == L->NIL;
 }
 
-  // Returns the data of the current node
-  // and updates the list iterator to the next node
+  // Updates the list iterator to the next node
+  // and returns the data of that node
   // value is NULL if the end of the DLL is reached
 void *dllNext(dll *L) {
+  L->iter = L->iter->next;
   if (L->iter == L->NIL) 
     return NULL;
-  void *data = L->iter->dllData;
-  L->iter = L->iter->next;
-  return data;
+  return L->iter->dllData;
 }
 
-  // Returns the data of the current node
-  // and updates the list iterator to the previous node
+  // Updates the list iterator to the previous node
+  // and returns the data of that node
   // value is NULL if the beginning of the DLL is reached
 void *dllPrev(dll *L) {
+  L->iter = L->iter->prev;
   if (L->iter == L->NIL) 
     return NULL;
-  void *data = L->iter->dllData;
-  L->iter = L->iter->prev;
-  return data;
+  return L->iter->dllData;
 }
+
