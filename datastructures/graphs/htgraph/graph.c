@@ -1,17 +1,19 @@
 #include "graph.h"
 #include "../../../lib/clib/clib.h"
+#include <ctype.h>
 
 #define MAXLABEL 50
 
 //=================================================================
 // FNV-1a hash function
-static uint hash(void *key, uint seed) {
+static uint64_t hash(void *key, uint64_t seed) {
   char *str = ((vertex *)key)->label;
-  uint hash = 0;
   char ch;
+  // FNV offset basis and magic seed
+  uint64_t hash = 14695981039346656037ULL + 64 * seed;  
   while ((ch = *str++)) {
     hash ^= ch;
-    hash *= 16777619; // FNV prime
+    hash *= 1099511628211ULL;  // FNV prime
   }
   return hash;
 }
@@ -193,7 +195,7 @@ void addVertex(graph *G, char *label) {
 }
 
 //=================================================================
-// Adds a vertex to the graph and returns it
+// Adds a vertex to the graph by label and returns a pointer to it
 vertex *addVertexR(graph *G, char *label) {
   G->v->label = label;
   vertex *v = htGetKey(G->V, G->v);
@@ -274,7 +276,7 @@ void addEdgeL(graph *G, char *from, char *to) {
 }
 
 //=================================================================
-// Returns true if the vertex is in the graph
+// Returns true if the vertex exists in the graph
 bool hasVertex(graph *G, char *label) {
   if (! G || ! label) 
     return false;
@@ -283,7 +285,7 @@ bool hasVertex(graph *G, char *label) {
 }
 
 //=================================================================
-// Returns true if the vertex is in the graph, given the label
+// Returns true if the vertex exists in the graph, given a label
 bool inGraphL(graph *G, char *label) {
   if (! G || ! label) 
     return false;
@@ -419,7 +421,7 @@ vertex *firstV(graph *G) {
 }
 
 //=================================================================
-// Returns the next vertex that is in the graph
+// Returns the next vertex in the graph
 // NULL if we have reached the end
 vertex *nextV(graph *G) {
   if (! G) return NULL;

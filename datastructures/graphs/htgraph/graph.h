@@ -1,14 +1,14 @@
 /* 
   Generic graph implementation
   Description: 
-    A graph G = (V, E) is represented as a hash table, 
+    A graph G = (V, E) is implemented as a hash table, 
     where the keys are the vertices and the values are
     the adjacency lists. The adjacency lists are doubly
     linked lists of edges, which contain a pointer to the
     destination vertex, and the weight of the edge.
     The graph can be directed or undirected, and the
     edges can be weighted or unweighted.
-    Nodes are represented as vertex structs, which are 
+    Nodes are implemented as vertex structs, which are 
     defined in vertex.h. They can have different definitions
     depending on the application or algorithm. You can even
     make one with a void pointer to satelite data.
@@ -72,10 +72,10 @@ vertex *getVertex(graph *G, char *label);
 void addVertex(graph *G, char *label);
 
   // Same as addVertex, but returns a 
-  // pointer to the vertex
+  // pointer to the added vertex
 vertex *addVertexR(graph *G, char *label);
 
-  // Returns true if the vertex is in the graph
+  // Returns true if the vertex exists in the graph
 bool hasVertex(graph *G, char *label);
 
   // Gets the edge between two vertices
