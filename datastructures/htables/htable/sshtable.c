@@ -10,27 +10,27 @@
 #include "sshtable.h"
 
   // FNV-1a hash function
-static uint ssHtHash(void *key, uint seed, 
-                     ssHtCase htCase) {
-  uint hash = 0;
+static uint64_t ssHtHash(void *key, uint64_t seed, 
+                         ssHtCase htCase) {
+
   char *str = (char *)key;
   char ch;
+  // FNV offset basis and magic seed
+  uint64_t hash = 14695981039346656037ULL + 64 * seed;  
   while ((ch = *str++)) {
-    if (htCase == CASE_SENSITIVE)
-      ch = tolower(ch);
     hash ^= ch;
-    hash *= 16777619; // FNV prime
+    hash *= 1099511628211ULL;  // FNV prime
   }
   return hash;
 }
 
   // case sensitive hash
-static uint hashCS(void *key, uint seed) {
+static uint64_t hashCS(void *key, uint64_t seed) {
   return ssHtHash(key, seed, CASE_SENSITIVE);
 }
 
   // case insensitive hash
-static uint hashCI(void *key, uint seed) {
+static uint64_t hashCI(void *key, uint64_t seed) {
   return ssHtHash(key, seed, CASE_INSENSITIVE);
 }
 

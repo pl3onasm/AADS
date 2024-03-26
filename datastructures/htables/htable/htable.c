@@ -21,7 +21,7 @@ ht *htNew(htHash hash, htCmpKey cmpKey,
   H->label = "Hash table";
   srand(time(NULL));
   H->seed = rand();
-  H->seed ^= (uint)time(NULL) << 16;
+  H->seed ^= (uint64_t)time(NULL) << 16;
   return H;
 }
 

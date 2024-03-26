@@ -20,7 +20,7 @@ void printPath(vertex *src, vertex *d) {
   if (src == d) 
     printf("%s", src->label);
   else if (! d->parent) 
-    printf("No path from %s to %s exists.", src->label, d->label);
+    printf("There is no path from %s to %s.", src->label, d->label);
   else {
     printPath(src, d->parent);
     printf(", %s", d->label);
@@ -30,8 +30,8 @@ void printPath(vertex *src, vertex *d) {
 //==================================================================
 // Prints the result of the search
 void printResult(graph *G, vertex *src, vertex *d) {
-    printf("\nDistance from %s to %s: %d\n", src->label, 
-            d->label, d->dist);
+    printf("\nDistance from %s to %s: %d.\n", src->label, 
+           d->label, d->dist == 0 ? (d == src ? 0 : -1) : d->dist);  
     printf("Path: ");
     printPath(src, d);
     printf("\n");
@@ -54,7 +54,6 @@ void bfs(graph *G, vertex *src) {
       // set its parent and its distance from the source
     for (edge *e = firstE(edges); e; e = nextE(edges)) 
       if (! e->to->visited) {
-        // set parent and update distance
         e->to->parent = v;
         e->to->dist = v->dist + 1;
         e->to->visited = true;

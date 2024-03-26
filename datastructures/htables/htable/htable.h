@@ -8,13 +8,13 @@
 #define HTABLE_H_INCLUDED
 
 #include <stdbool.h>
-#include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include "../../lists/dllist/dll.h"
 #include "../../../lib/clib/clib.h"
 
   // function pointer types
-typedef uint (*htHash)(void *hashKey, uint seed);
+typedef uint64_t (*htHash)(void *hashKey, uint64_t seed);
 typedef int (*htCmpKey)(void const *key1, void const *key2);
 typedef int (*htCmpValue)(void const *value1, void const *value2);
 typedef void (*htShowKey)(void *key);
@@ -32,7 +32,7 @@ typedef struct {
   htHash hash;            // hash function
   htCmpValue cmpVal;      // comparison function for the values
   htCmpKey cmpKey;        // comparison function for the keys
-  uint seed;              // random seed for the hash table
+  uint64_t seed;          // magic seed for the hash table
   size_t iterBucket;      // current bucket for the iterator
   dllNode *iterNode;      // current node for the iterator
   htShowKey showKey;      // function to show the key
