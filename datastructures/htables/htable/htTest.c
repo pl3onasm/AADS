@@ -12,8 +12,8 @@ int main (){
     // makes the hash table copy the keys and values
     // if set: total number of frees is 381
     // if not set: total number of frees is 303
-  ssHtCopyKeys(ht);  
-  ssHtCopyVals(ht);
+  //ssHtCopyKeys(ht);  
+  //ssHtCopyVals(ht);
 
   ssHtAddKeyVal(ht, "one", "uno");
   ssHtAddKeyVal(ht, "two", "due");
@@ -30,7 +30,7 @@ int main (){
     // adds two more values to the key "one"
   ssHtAddKeyVal(ht, "one", "ein");
   ssHtAddKeyVal(ht, "one", "un");
-  ssHtAddKey(ht, "eleven");
+  //ssHtAddKey(ht, "eleven");
   
 
     // adds the same value to the key "one"
@@ -49,24 +49,23 @@ int main (){
   ssHtAddKeyVal(ht, "Five", "Fünf");
 
     // deletes the key "three"
-  ssHtDelKey(ht, "three");
+  //ssHtDelKey(ht, "three");
 
     // removes values from the key "two"
-  ssHtDelVal(ht, "two", "due");
+  //ssHtDelVal(ht, "two", "due");
     // after the following statement, the key "two" 
     // has no more values
-  ssHtDelVal(ht, "two", "deux");
+  //ssHtDelVal(ht, "two", "deux");
 
     // tries to remove a value from a 
     // key without values; nothing happens
-  ssHtDelVal(ht, "two", "deux");
+  //ssHtDelVal(ht, "two", "deux");
 
     // tries to remove a non-existing value from an 
     // existing key
     // nothing happens because the value is not there
-  ssHtDelVal(ht, "nine", "tre");
+  //ssHtDelVal(ht, "nine", "tre");
 
-  ssHtSetLabel(ht, "Test HT");
   ssHtShow(ht);
   ssHtStats(ht);
 

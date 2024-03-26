@@ -7,7 +7,8 @@
 #include "../../../lib/clib/clib.h"
 #include "dll.h"
 
-  // Creates a new DLL
+//=================================================================
+// Creates a new DLL
 dll *dllNew () {
   dll *L = safeCalloc(1, sizeof(dll));
   L->NIL = safeCalloc(1, sizeof(dllNode));
@@ -20,42 +21,56 @@ dll *dllNew () {
   return L;
 }
 
-  // Sets the DLL to own the input data,
-  // freeing it when the DLL is freed
+//=================================================================
+// SETTERS
+// Sets the DLL to own the input data,
+// freeing it when the DLL is freed
 void dllOwnData (dll *L, dllFreeData freeData) {
   L->freeData = freeData;
 }
 
-  // Sets the DLL to make copies of the data
-  // If set, the DLL will only free the copies
+
+// Sets the DLL to make copies of the data
+// If set, the DLL will only free the copies
 void dllCopyData (dll *L, dllCpyData copyData, 
                      dllFreeData freeData) {
   L->freeData = freeData;
   L->copyData = copyData;
 }
 
-  // Sets the delimiter function for the DLL
+// Sets the delimiter function for the DLL
 void dllSetDelim (dll *L, char* delim) {
   L->delim = delim;
 }
 
-  // Sets the showData function for the DLL
+// Sets the showData function for the DLL
 void dllSetShow (dll *L, dllShowData showData) {
   L->showData = showData;
 }
   
-  // Sets the comparison function for the DLL
+// Sets the comparison function for the DLL
 void dllSetCmp (dll *L, dllCmpData cmp) {
   L->cmp = cmp;
 }
 
-  // Sets the label for the DLL
+// Sets the label for the DLL
 void dllSetLabel (dll *L, char *label) {
   L->label = label;
 }
 
-  // Makes a copy of the DLL
+//=================================================================
+// Makes a copy of the DLL
 dll *dllCopy (dll *L, dllCpyData copyData, dllFreeData freeData) {
+  if (! L) 
+    return NULL;
+  if (! copyData) {
+    fprintf(stderr, "dllCopy: copyData function not set\n");
+    return NULL;
+  }
+  if (! freeData) {
+    fprintf(stderr, "dllCopy: freeData function not set\n");
+    return NULL;
+  }
   dll *new = dllNew();
   new->cmp = L->cmp;
   new->showData = L->showData;
@@ -70,22 +85,29 @@ dll *dllCopy (dll *L, dllCpyData copyData, dllFreeData freeData) {
   return new;
 }
 
-  // Creates a new DLL node
+//=================================================================
+// Creates a new DLL node
 dllNode *dllNewNode () {
   dllNode *node = safeCalloc(1, sizeof(dllNode));
   node->dllData = NULL;
   return node;
 }
 
-  // Deallocates a DLL node
+//=================================================================
+// Deallocates a DLL node
 void dllFreeNode (dll *L, dllNode *node) {
+  if (! node || ! L)
+    return;
   if (L->freeData) 
     L->freeData(node->dllData);
   free(node);
 }
 
-  // Makes the DLL empty
+//=================================================================
+// Makes the DLL empty
 void dllEmpty (dll *L) {
+  if (! L) 
+    return;
   dllNode *node = L->NIL->next; 
   while (node != L->NIL) {
     dllNode *next = node->next;
@@ -97,8 +119,11 @@ void dllEmpty (dll *L) {
   L->size = 0;
 }
 
-  // Frees the entire DLL
+//=================================================================
+// Frees the entire DLL
 void dllFree (dll *L) {
+  if (! L) 
+    return;
   dllNode *node = L->NIL->next;
   while (node != L->NIL) {
     dllNode *next = node->next;
@@ -109,10 +134,14 @@ void dllFree (dll *L) {
   free(L);
 }
 
-  // Prepends a node to the DLL 
+//=================================================================
+// Prepends a node to the DLL 
 void dllPush (dll *L, void *data) {
+  if (! L) 
+    return;
+    // create a new first node
   dllNode *n = dllNewNode();
-    // first node becomes the second node
+    // current first node becomes the second node
   n->next = L->NIL->next;
   L->NIL->next->prev = n;
     // the new node becomes the first node
@@ -126,8 +155,11 @@ void dllPush (dll *L, void *data) {
     n->dllData = data;
 }
 
-  // Inserts a node in a sorted DLL
+//=================================================================
+// Inserts a node in a sorted DLL
 void dllInsert (dll *L, void *data) {
+  if (! L) 
+    return;
   if (dllIsEmpty(L)) {
     dllPush(L, data);
     return;
@@ -163,8 +195,12 @@ void dllInsert (dll *L, void *data) {
   L->size++;
 }
 
-  // Appends a node to the DLL
+//=================================================================
+// Appends a node to the DLL
 void dllPushBack (dll *L, void *data) {
+  if (! L) 
+    return;
+    // create a new node (last node
   dllNode *n = dllNewNode();
     // the last node becomes the penultimate node
   n->prev = L->NIL->prev;
@@ -180,8 +216,11 @@ void dllPushBack (dll *L, void *data) {
     n->dllData = data;
 }
 
-  // Deletes a node from the DLL
+//=================================================================
+// Deletes a node from the DLL
 void dllDelete (dll *L, dllNode *node) {
+  if (! L) 
+    return;
   if (node == L->NIL) 
     return;
   node->prev->next = node->next;
@@ -190,26 +229,35 @@ void dllDelete (dll *L, dllNode *node) {
   L->size--;
 }
 
-  // Deletes the first node with a given key
-void dllDeleteData (dll *L, void *data) {
+//=================================================================
+// Deletes the first node with a given key
+// Returns true if the node was found and deleted
+// Returns false otherwise
+bool dllDeleteData (dll *L, void *data) {
+  if (! L) 
+    return false;
   if (! L->cmp) {
     fprintf(stderr, "dllDeleteData: comparison function not set\n");
-    return;
+    return false;
   }
   if (dllIsEmpty(L)) 
-    return;
+    return false;
   L->NIL->dllData = data;
   dllNode *n = L->NIL->next;
   while (L->cmp(n->dllData, data))
     n = n->next;
   if (n == L->NIL)
-    return;
+    return false;
   dllDelete(L, n);
+  return true;
 }
 
-  // Searches for the first node with a given key
-  // returns the data of the node if found, NULL otherwise
+//=================================================================
+// Searches for the first node with a given key
+// returns the data of the node if found, NULL otherwise
 void *dllFind (dll *L, void *key) {
+  if (! L) 
+    return NULL;
   if (! L->cmp) {
     fprintf(stderr, "dllFind: comparison function not set\n");
     return NULL;
@@ -223,9 +271,10 @@ void *dllFind (dll *L, void *key) {
   return n->dllData;
 }
 
-  // Shows the DLL, prints delimiter (default: ", ")
+//=================================================================
+// Shows the DLL, prints delimiter (default: ", ")
 void dllShow (dll *L) {
-  if (dllIsEmpty(L)) 
+  if (!L || dllIsEmpty(L)) 
     return;
   if (! L->showData){
     fprintf(stderr, "dllShow: showData function not set\n");  
@@ -246,49 +295,68 @@ void dllShow (dll *L) {
   printf("\n");
 }
 
-  // Sets the list iterator to the data of the first node
-  // and returns the data
+//=================================================================
+// Sets the list iterator to the data of the first node
+// and returns the data
 void *dllFirst(dll *L) {
+  if (! L) 
+    return NULL;
   L->iter = L->NIL->next;
   if (L->iter == L->NIL) 
     return NULL;
   return L->iter->dllData;
 }
 
-  // Sets the list iterator to the data of the last node  
-  // and returns the data
+//=================================================================
+// Sets the list iterator to the data of the last node  
+// and returns the data
 void *dllLast(dll *L) {
+  if (! L) 
+    return NULL;
   L->iter = L->NIL->prev;
   if (L->iter == L->NIL) 
     return NULL;
   return L->iter->dllData;
 }
 
-  // Returns true if the next 
-  // node is the end of the DLL
+//=================================================================
+// Returns true if the next 
+// node is the end of the DLL
 bool dllEnd(dll *L) {
+  if (! L) 
+    return true;
   return L->iter->next == L->NIL;
 }
-  // Returns true if the previous
-  // node is the beginning of the DLL
+
+//=================================================================
+// Returns true if the previous
+// node is the beginning of the DLL
 bool dllStart(dll *L) {
+  if (! L) 
+    return true;
   return L->iter->prev == L->NIL;
 }
 
-  // Updates the list iterator to the next node
-  // and returns the data of that node
-  // value is NULL if the end of the DLL is reached
+//=================================================================
+// Updates the list iterator to the next node
+// and returns the data of that node
+// value is NULL if the end of the DLL is reached
 void *dllNext(dll *L) {
+  if (! L) 
+    return NULL;
   L->iter = L->iter->next;
   if (L->iter == L->NIL) 
     return NULL;
   return L->iter->dllData;
 }
 
-  // Updates the list iterator to the previous node
-  // and returns the data of that node
-  // value is NULL if the beginning of the DLL is reached
+//=================================================================
+// Updates the list iterator to the previous node
+// and returns the data of that node
+// value is NULL if the beginning of the DLL is reached
 void *dllPrev(dll *L) {
+  if (! L) 
+    return NULL;
   L->iter = L->iter->prev;
   if (L->iter == L->NIL) 
     return NULL;

@@ -13,7 +13,7 @@
 #include <stdbool.h>
 
 // function pointers for the DLL
-typedef int (*dllCmpData)(void *a, void *b);
+typedef int (*dllCmpData)(void const *a, void const *b);
 typedef void (*dllShowData)(void *data);
 typedef void *(*dllCpyData)(void *data);
 typedef void (*dllFreeData)(void *data);
@@ -94,7 +94,9 @@ void dllPushBack(dll *L, void *data);
 void dllDelete(dll *L, dllNode *node);
 
   // Deletes a node from the DLL given its data
-void dllDeleteData(dll *L, void *data);
+  // Returns true if the node was found and deleted
+  // Returns false otherwise
+bool dllDeleteData(dll *L, void *data);
 
   // Searches for a node in the DLL with a given key
   // returns the data of the node if found, NULL otherwise
@@ -131,17 +133,17 @@ void *dllPrev(dll *L);
 
   // Checks if the DLL is empty
 inline bool dllIsEmpty (dll *L) {
-  return L->NIL->next == L->NIL;
+  return L ? L->size == 0 : true;
 }
 
   // Gets the size of the DLL
 inline size_t dllSize (dll *L) {
-  return L->size;
+  return L ? L->size : 0;
 }
 
   // Gets the dllData of a node
 inline void *dllData (dllNode *node) {
-  return node->dllData;
+  return node ? node->dllData : NULL;
 }
 
 #endif // _DLL_H_INCLUDED_

@@ -13,14 +13,15 @@ ht *htNew(htHash hash, htCmpKey cmpKey,
           htCmpValue cmpVal, size_t capacity) {
   
   ht *H = safeCalloc(1, sizeof(ht));
-  H->capacity = capacity < 32 ? capacity : 32;
+  H->capacity = capacity < 32 ? 32 : capacity;
   H->buckets = safeCalloc(H->capacity, sizeof(dll*));
   H->hash = hash;
   H->cmpKey = cmpKey;
   H->cmpVal = cmpVal;
+  H->label = "Hash table";
   srand(time(NULL));
   H->seed = rand();
-  H->seed ^= (uint)time(NULL);
+  H->seed ^= (uint)time(NULL) << 16;
   return H;
 }
 
@@ -78,7 +79,7 @@ void htFree(ht *H) {
       dll *bucket = H->buckets[i];
       for (htEntry *e = dllFirst(bucket); e; e = dllNext(bucket)) {
         if (H->freeKey)
-          H->freeKey(e->key);
+          H->freeKey(e->key);         
         dllFree(e->values);
         free(e);
       }
@@ -100,7 +101,7 @@ static size_t getIndex(ht *H, void *key) {
 bool htHasKey(ht *H, void *key) {
   size_t index = getIndex(H, key);
   dll *bucket = H->buckets[index];
-  if (! bucket) 
+  if (! bucket || dllIsEmpty(bucket))
     return false;
   for (htEntry *e = dllFirst(bucket); e; e = dllNext(bucket)) {
     if (! H->cmpKey(key, e->key))
@@ -110,17 +111,26 @@ bool htHasKey(ht *H, void *key) {
 }
 
 //=================================================================
-// Returns the key from the table given a hash key
-void *htGetKey(ht *H, void *hashKey) {
-  size_t index = getIndex(H, hashKey);
+// Returns the key from the table given an identifying key
+void *htGetKey(ht *H, void *key) {
+  size_t index = getIndex(H, key);
   dll *bucket = H->buckets[index];
   if (! bucket) 
     return NULL;
   for (htEntry *e = dllFirst(bucket); e; e = dllNext(bucket)) {
-    if (! H->cmpKey(hashKey, e->key))
+    if (! H->cmpKey(key, e->key))
       return e->key;
   }
   return NULL;
+}
+
+//=================================================================
+// Returns the value associated with the key
+void *htGetVal(ht *H, void *key, void *value) {
+  dll *values;
+  if (! htHasKeyVals(H, key, &values))
+    return NULL;
+  return dllFind(values, value);
 }
 
 //=================================================================
@@ -150,7 +160,9 @@ bool htHasKeyVal(ht *H, void *key, void *value) {
   dll *values;
   if (! htHasKeyVals(H, key, &values))
     return false;
-  return dllFind(values, value);
+  if (dllFind(values, value))
+    return true;
+  return false;
 }
 
 //=================================================================
@@ -195,10 +207,8 @@ static void htRehash(ht *H) {
     dllFree(bucket);
   }
 
-    // free the old buckets
+    // free the old buckets and set the new ones
   free(H->buckets);
-
-    // set new buckets
   H->buckets = newBuckets;
 }
 
@@ -244,7 +254,6 @@ static void htAddNewkeyVal(ht *H, void *key, void *value,
 // tries to add a key-value pair to the table
 void htAddKeyVal(ht *H, void *key, void *value) {
     
-  if (!H || !key) return;
     // rehash if necessary
   htRehash(H);
 
@@ -281,8 +290,6 @@ void htAddKeyVal(ht *H, void *key, void *value) {
 // adds new key to the table without a value
 void htAddKey(ht *H, void *key) {
   if (!H || !key) return;
-    // rehash if necessary
-  htRehash(H);
 
   size_t index = getIndex(H, key);
 
@@ -307,11 +314,12 @@ void htAddKey(ht *H, void *key) {
 
 //=================================================================
 // deletes a key from the hash table
-void htDelKey(ht *H, void *key) {
+// returns true if the key was removed, false if not found
+bool htDelKey(ht *H, void *key) {
   size_t index = getIndex(H, key);
   dll *bucket = H->buckets[index];
   if (! bucket) 
-    return;
+    return false;
   
   for (htEntry *e = dllFirst(bucket); e; e = dllNext(bucket)) {
     if (! H->cmpKey(key, e->key)) {
@@ -326,23 +334,25 @@ void htDelKey(ht *H, void *key) {
       dllDelete(bucket, bucket->iter);
         // one key less
       H->nKeys--;
-      break;
+        // update statistics
+      if (dllIsEmpty(bucket))
+        H->nFilled--;
+      else
+        H->nCollisions--;
+      return true;
     }
   }
-    // update statistics
-  if (dllIsEmpty(bucket))
-    H->nFilled--;
-  else
-    H->nCollisions--;
+  return false;
 }
   
 //=================================================================
 // deletes a value from the value list of a key
-void htDelVal(ht *H, void *key, void *value) {
+// returns true if the value was removed, false if not found
+bool htDelVal(ht *H, void *key, void *value) {
   dll *values = NULL;
   if (! htHasKeyVals(H, key, &values) || !values)
-    return;
-  dllDeleteData(values, value);
+    return false;
+  return dllDeleteData(values, value);
 }
 
 //=================================================================
@@ -425,11 +435,11 @@ void htShow(ht *H) {
   htReset(H);
   htEntry *entry;
   
-  if (H->label) 
-    printf("\n--------------------\n"
-           "  %s [%zu]\n"
-           "--------------------\n\n", 
-           H->label, H->nKeys);
+  
+  printf("\n--------------------\n"
+          "  %s [%zu]\n"
+          "--------------------\n\n", 
+          H->label, H->nKeys);
 
   while ((entry = htNext(H))) {
     H->showKey(entry->key);

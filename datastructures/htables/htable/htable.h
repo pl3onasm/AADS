@@ -4,8 +4,8 @@
   LICENSE: MIT, see LICENSE file in repository root folder
 */
 
-#ifndef _HTABLE_H_INCLUDED_
-#define _HTABLE_H_INCLUDED_
+#ifndef HTABLE_H_INCLUDED
+#define HTABLE_H_INCLUDED
 
 #include <stdbool.h>
 #include <stdio.h>
@@ -15,8 +15,8 @@
 
   // function pointer types
 typedef uint (*htHash)(void *hashKey, uint seed);
-typedef int (*htCmpKey)(void *key1, void *key2);
-typedef int (*htCmpValue)(void *value1, void *value2);
+typedef int (*htCmpKey)(void const *key1, void const *key2);
+typedef int (*htCmpValue)(void const *value1, void const *value2);
 typedef void (*htShowKey)(void *key);
 typedef void (*htShowValue)(void *value);
 typedef void (*htFreeKey)(void *key);
@@ -60,6 +60,7 @@ ht *htNew(htHash hash, htCmpKey cmpKey,
           htCmpValue cmpVal, size_t capacity);
 
   // sets the label for the hash table
+  // default is "hash table"
 void htSetLabel(ht *H, char *label);
 
   // sets the string delimiter for the values
@@ -99,16 +100,21 @@ bool htHasKeyVals(ht *H, void *key, dll **values);
   // returns true if the key-value pair exists
 bool htHasKeyVal(ht *H, void *key, void *value);
 
+  // returns a value associated with the key
+  // returns NULL if the value or key is not found
+void *htGetVal(ht *H, void *key, void *value);
+
   // returns the value list associated with the key
   // returns NULL if the value or key is not found
 dll *htGetVals(ht *H, void *key);
 
   // adds a key to the hash table
+  // if the key exists, nothing happens
 void htAddKey(ht *H, void *key);
 
   // adds a key-value pair to the hash table
-  // if the key is already in the hash table, the 
-  // new value is added to the list
+  // if the key exists, the value is added to the its
+  // value list, if the value is not already in there
   // if the key is not in the hash table, 
   // a new key-value pair is added
 void htAddKeyVal(ht *H, void *key, void *value);
@@ -116,14 +122,19 @@ void htAddKeyVal(ht *H, void *key, void *value);
   // returns true if the key exists in the hash table
 bool htHasKey(ht *H, void *key);
 
-  // returns the key given a hash key
-void *htGetKey(ht *H, void *hashKey);
+  // returns the key if it exists in the hash table
+  // returns NULL if the key is not found
+void *htGetKey(ht *H, void *key);
 
   // removes the key and its value list 
-void htDelKey(ht *H, void *key);
+  // true if the key was removed
+  // false if the key was not found
+bool htDelKey(ht *H, void *key);
 
   // removes a value from the key's value list
-void htDelVal(ht *H, void *key, void *value);
+  // true if the value was removed
+  // false if the key or value was not found
+bool htDelVal(ht *H, void *key, void *value);
 
   // shows the hash table
 void htShow(ht *H);
@@ -155,4 +166,4 @@ void htReset(ht *H);
   // returns NULL if the end of the hash table is reached
 htEntry *htNext(ht *H);
 
-#endif // _HTABLE_H_INCLUDED_
+#endif  // HTABLE_H_INCLUDED

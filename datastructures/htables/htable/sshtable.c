@@ -36,7 +36,7 @@ static uint hashCI(void *key, uint seed) {
 
   // case sensitive comparison
   // same for keys and values
-static int cmpStrCS(void *str1, void *str2) {
+static int cmpStrCS(void const *str1, void const *str2) {
   return strcmp((char *)str1, (char *)str2);
 }
 
@@ -45,7 +45,7 @@ static int cmpStrCS(void *str1, void *str2) {
   // returns negative if str1 < str2
   // returns 0 if str1 == str2
   // returns positive if str1 > str2
-static int cmpStrCI(void *str1, void *str2) {
+static int cmpStrCI(void const *str1, void const *str2) {
   char *s1 = (char *)str1;
   char *s2 = (char *)str2;
   while (*s1 && *s2) {

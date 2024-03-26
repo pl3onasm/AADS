@@ -9,22 +9,22 @@
 #include "../../../datastructures/heaps/binheaps/binheap.h"
 #include "../../../lib/clib/clib.h"
 
-void printInt(const void *a) {
+void showInt(void const *a) {
   // print function for integers
   printf("%d", *(int *)a);
 }
 
-int intCmp(const void *a, const void *b) {
+int cmpInts(void const *a, void const *b) {
   // compares two integers and
-  // returns -1 if a < b, 0 if a == b, 1 if a > b
+  // returns < 0 if a < b, 0 if a == b, > 0 if a > b
   return *(int *)a - *(int *)b;
 }
 
 void heapsort(binheap *H){
-  /* sorts the heap */
+  // sorts the heap
   size_t size = H->size;
   for (size_t i = H->size - 1; i >= 1; --i) {
-    // swap the root with the last element of the heap
+    // swap the root with the heap's last element
    SWAP(H->arr[0], H->arr[i]);
     // remove the last element from the heap 
     // by decreasing its size
@@ -32,31 +32,32 @@ void heapsort(binheap *H){
     // restore the bin heap property
     heapifyBinHeap(H, 0);
   }
-  // restore the original size of the heap
+    // restore the original size of the heap
   H->size = size;
 }
 
 int main (){
   size_t size = 0;
-  // read the input array, set the size
+  
+    // reads the input array, set the size
   READ(int, arr, "%d", size);
 
-  // build a max heap, sorts in ascending order
+    // builds a max heap, sorts in ascending order
   binheap *H = buildBinHeap(arr, size, sizeof(int),
-                            MAX, intCmp);
+                            MAX, cmpInts);
   heapsort(H);
   
-  showBinHeap (H, ", ", printInt);
+  showBinHeap (H, ", ", showInt);
   printf("\n");
   freeBinHeap(H);
 
-  // build a min heap, sorts in descending order
+    // builds a min heap, sorts in descending order
   H = buildBinHeap(arr, size, sizeof(int),
-                   MIN, intCmp);
+                   MIN, cmpInts);
 
   heapsort(H);
 
-  showBinHeap (H, ", ", printInt);
+  showBinHeap (H, ", ", showInt);
   freeBinHeap(H);
   free(arr);
   return 0;
