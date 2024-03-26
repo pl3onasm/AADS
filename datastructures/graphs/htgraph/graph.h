@@ -9,10 +9,9 @@
     edge.
     The graph can be directed or undirected, and the
     edges can be weighted or unweighted.
-    Nodes are represented as vertex structs, which contain
-    a void pointer to data, which can be anything, such as
-    info about a path, involving parent or distance from 
-    source, depending on the application or algorithm. 
+    Nodes are represented as vertex structs, which are 
+    defined in vertex.h. They can have different definitions
+    depending on the application or algorithm.
   Author: David De Potter
   LICENSE: MIT, see LICENSE file in repository root folder
 */
