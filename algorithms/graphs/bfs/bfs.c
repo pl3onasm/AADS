@@ -10,13 +10,12 @@
     by defining it from the command line using -D VERTEX_TYPE2
 */
 
-
 #include "../../../datastructures/graphs/htgraph/vertex.h"
 #include "../../../datastructures/graphs/htgraph/graph.h"
 #include "../../../datastructures/queues/queue.h"
 
-
-  // prints the path from the source to the destination
+//==================================================================
+// prints the path from the source to the destination
 void printPath(vertex *src, vertex *d) {
   if (src == d) 
     printf("%s", src->label);
@@ -28,7 +27,8 @@ void printPath(vertex *src, vertex *d) {
   }
 }
 
-  // prints the result of the search
+//==================================================================
+// Prints the result of the search
 void printResult(graph *G, vertex *src, vertex *d) {
     printf("\nDistance from %s to %s: %d\n", src->label, 
             d->label, d->dist);
@@ -37,15 +37,11 @@ void printResult(graph *G, vertex *src, vertex *d) {
     printf("\n");
 }
 
-void showSt(void *data) {
-  printf("%s", ((vertex *)data)->label);
-}
-
-  // builds a breadth-first search tree from the source node
+//==================================================================
+// Builds a breadth-first search tree from the source node
 void bfs(graph *G, vertex *src) {
   
   queue *q = newQueue(nVertices(G));
-  setQueueShow(q, showSt);
   enqueue(q, src);
   src->visited = true;
 
@@ -68,17 +64,13 @@ void bfs(graph *G, vertex *src) {
   freeQueue(q);
 }
 
-//::::::::::::::::::::::::: main function :::::::::::::::::::::::::://
+//==================================================================
+// Reads source and destination nodes and builds the graph  
 
 int main () {
     // source and destination nodes
   char s[50], d[50];              
   (void)! scanf("%s %s", s, d);
-
-  if (!strcmp(s, d)) {
-    printf("Distance from %s to %s: 0\n", s, d);
-    return 0;
-  }
   
   graph *G = newGraph(50, DIRECTED, UNWEIGHTED);
   

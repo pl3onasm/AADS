@@ -4,20 +4,20 @@
     A graph G = (V, E) is represented as a hash table, 
     where the keys are the vertices and the values are
     the adjacency lists. The adjacency lists are doubly
-    linked lists of edges, which contain pointers to the
-    source and destination vertices, and the weight of the
-    edge.
+    linked lists of edges, which contain a pointer to the
+    destination vertex, and the weight of the edge.
     The graph can be directed or undirected, and the
     edges can be weighted or unweighted.
     Nodes are represented as vertex structs, which are 
     defined in vertex.h. They can have different definitions
-    depending on the application or algorithm.
+    depending on the application or algorithm. You can even
+    make one with a void pointer to satelite data.
   Author: David De Potter
   LICENSE: MIT, see LICENSE file in repository root folder
 */
 
-#ifndef GRAPH_H_INCLUDED_
-#define GRAPH_H_INCLUDED_
+#ifndef GRAPH_H_INCLUDED
+#define GRAPH_H_INCLUDED
 
 #include "../../htables/htable/htable.h"
 #include "vertex.h"
