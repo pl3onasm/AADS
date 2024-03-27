@@ -1,0 +1,34 @@
+
+--------------------
+ Graph
+ Undirected
+ Unweighted
+ Vertices: 22
+ Edges: 30
+--------------------
+
+   alexandre[4]: xavier, lucille, michelle, léo
+   amélie[2]: gabriel, michelle
+   brigitte[2]: gabriel, françois
+   christophe[1]: xavier
+   françois[5]: timothée, murielle, léo, brigitte, michelle
+   gabriel[3]: amélie, brigitte, thomas
+   hélène[1]: léo
+   jacob[1]: michelle
+   jérémy[1]: philippe
+   jérôme[3]: xavier, philippe, léo
+   lucille[2]: alexandre, timothée
+   léo[8]: vincent, romain, alexandre, philippe, thomas, hélène, françois, jérôme
+   michelle[6]: alexandre, pauline, françois, thomas, amélie, jacob
+   murielle[2]: françois, xavier
+   pauline[1]: michelle
+   philippe[3]: léo, jérémy, jérôme
+   romain[2]: vincent, léo
+   sébastien[1]: timothée
+   thomas[3]: gabriel, léo, michelle
+   timothée[3]: sébastien, lucille, françois
+   vincent[2]: léo, romain
+   xavier[4]: alexandre, christophe, jérôme, murielle
+
+Distance from jérôme to amélie: 4.
+Path: jérôme, xavier, alexandre, michelle, amélie

@@ -2,7 +2,10 @@
 #include "../../../lib/clib/clib.h"
 #include <ctype.h>
 
-#define MAXLABEL 50
+#ifndef MAXVERTEXLABEL
+#define MAXVERTEXLABEL 50
+#endif
+
 
 //=================================================================
 // FNV-1a hash function
@@ -10,7 +13,7 @@ static uint64_t hash(void *key, uint64_t seed) {
   char *str = ((vertex *)key)->label;
   char ch;
   // FNV offset basis and magic seed
-  uint64_t hash = 14695981039346656037ULL + 64 * seed;  
+  uint64_t hash = 14695981039346656037ULL + seed;
   while ((ch = *str++)) {
     hash ^= ch;
     hash *= 1099511628211ULL;  // FNV prime
@@ -140,8 +143,7 @@ void showGraph(graph *G) {
 
 //=================================================================
 // Creates a new graph
-graph *newGraph (size_t capacity, graphType type, 
-                 edgeType weight) {
+graph *newGraph (size_t capacity, edgeType weight) {
 
   graph *G = safeCalloc(1, sizeof(graph));
   G->u = safeCalloc(1, sizeof(vertex));
@@ -154,7 +156,7 @@ graph *newGraph (size_t capacity, graphType type,
   htOwnKeys(G->V, freeVertex);
   htOwnVals(G->V, free);
   G->V->label = "Graph";
-  G->type = type;
+  G->type = DIRECTED;
   G->weight = weight;
   return G;
 }
@@ -169,6 +171,14 @@ void freeGraph(graph *G) {
   free(G->v);
   free(G->e);
   free(G);
+}
+
+//=================================================================
+// Sets the graph type to undirected
+void setUndirected(graph *G) {
+  if (! G) 
+    return;
+  G->type = UNDIRECTED;
 }
 
 //=================================================================
@@ -369,7 +379,7 @@ void delEdgeL(graph *G, char *from, char *to) {
 
 //=================================================================
 // Gets the first edge from the adjacency list of a vertex
-// Skips edges to vertices that are not in the graph
+// Sets the iterator to the next edge in the list
 edge *firstE(dll *adjList) {
   if (! adjList)
     return NULL;
@@ -378,7 +388,6 @@ edge *firstE(dll *adjList) {
 
 //=================================================================
 // Gets the next edge from the adjacency list of a vertex
-// Skips edges to vertices that are not in the graph
 edge *nextE(dll *adjList) {
   if (! adjList)
     return NULL;
@@ -386,11 +395,42 @@ edge *nextE(dll *adjList) {
 }
 
 //=================================================================
+// Case insensitive comparison for strings; 
+// used for reading the graph
+static int cmpStrCI(void const *str1, void const *str2) {
+  char *s1 = (char *)str1;
+  char *s2 = (char *)str2;
+  while (*s1 && *s2) {
+    int diff = tolower(*s1) - tolower(*s2);
+    if (diff)
+      return diff;
+    s1++;
+    s2++;
+  }
+  return *s1 - *s2;
+}
+
+//=================================================================
 // Reads a graph from stdin
 void readGraph(graph *G) {
-  char from[MAXLABEL], to[MAXLABEL];
-  double weight = 0;
+  char from[MAXVERTEXLABEL], to[MAXVERTEXLABEL];
   vertex *u = NULL, *v = NULL;
+  
+  // check if the graph is set to undirected
+  if (scanf ("%s", from) && 
+     (cmpStrCI(from, "undirected") == 0)) {
+    setUndirected(G);
+  } else {
+    u = addVertexR(G, from);
+    if (scanf("%s", to) == 1)
+      v = addVertexR(G, to);
+    else {
+      fprintf(stderr, "Error reading the graph\n");
+      exit(EXIT_FAILURE);
+    }
+    addEdge(G, u, v);
+  }
+  
   if (G->weight == UNWEIGHTED) {
     while (scanf("%s %s", from, to) == 2) {
       u = addVertexR(G, from);
@@ -400,6 +440,7 @@ void readGraph(graph *G) {
         addEdge(G, v, u);
     }
   } else {
+    double weight = 0;
     while (scanf("%s %s %lf", from, to, &weight) == 3) {
       u = addVertexR(G, from);
       v = addVertexR(G, to);

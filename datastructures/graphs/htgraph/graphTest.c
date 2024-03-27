@@ -1,7 +1,8 @@
 #include "graph.h"
 
 int main() {
-  graph *G = newGraph(20, DIRECTED, UNWEIGHTED);
+  graph *G = newGraph(20, UNWEIGHTED);
+  // setUndirected(G);   // uncomment to make the graph undirected
   setGLabel(G, "ANIMAL GRAPH");
   addVertex(G, "cat");
   addVertex(G, "dog");
@@ -81,7 +82,7 @@ int main() {
   printf("\n\nAfter adding and removing some edges and vertices:\n\n");
 
     // shows the resulting graph
-      showGraph(G);
+  showGraph(G);
 
     // checks if the edges are in the graph
   printf("\n\nEdge %s-%s is in the graph: %s\n", "cat", "bird", 

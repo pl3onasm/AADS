@@ -20,22 +20,20 @@
 #define GRAPH_H_INCLUDED
 
 #include "../../htables/htable/htable.h"
+#include "edge.h"
 #include "vertex.h"
+
 
   // graph types
 typedef enum { WEIGHTED, UNWEIGHTED } edgeType;
 typedef enum { DIRECTED, UNDIRECTED } graphType;
 
   // graph data structure
-typedef struct {      
-  vertex *to;         // pointer to the destination vertex
-  double weight;      // weight of the edge
-} edge;
-
 typedef struct {
   ht *V;              // hash table of vertices
   size_t nEdges;      // number of edges in the graph
-  graphType type;     // directed or undirected
+  graphType type;     // directed or undirected, 
+                      // set to directed by default
   edgeType weight;    // weighted or unweighted
   edge *e;            // dummy edge 
   vertex *u;          // dummy vertex
@@ -43,11 +41,13 @@ typedef struct {
 } graph;
 
 
-  // Creates a new graph; requires the initial capacity,
-  // the type of the graph (directed/undirected) and the
+  // Creates a new graph; requires the initial capacity
   // type of the edges (weighted/unweighted)
-graph *newGraph (size_t capacity, graphType type, 
-                 edgeType weight);
+  // By default, the graph is directed 
+graph *newGraph (size_t capacity, edgeType weight);
+
+  // Sets the graph type to undirected
+void setUndirected(graph *G);
 
   // Deallocates the graph
 void freeGraph(graph *G);

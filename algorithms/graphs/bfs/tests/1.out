@@ -1,0 +1,34 @@
+
+--------------------
+ Graph
+ Directed
+ Unweighted
+ Vertices: 22
+ Edges: 30
+--------------------
+
+   alexandre[2]: michelle, léo
+   amélie[1]: michelle
+   brigitte[1]: françois
+   christophe[1]: xavier
+   françois[0]
+   gabriel[3]: amélie, brigitte, thomas
+   hélène[1]: léo
+   jacob[0]
+   jérémy[1]: philippe
+   jérôme[1]: philippe
+   lucille[2]: alexandre, timothée
+   léo[4]: philippe, thomas, françois, jérôme
+   michelle[2]: françois, jacob
+   murielle[1]: françois
+   pauline[1]: michelle
+   philippe[0]
+   romain[1]: léo
+   sébastien[1]: timothée
+   thomas[1]: michelle
+   timothée[1]: françois
+   vincent[2]: léo, romain
+   xavier[3]: alexandre, jérôme, murielle
+
+Distance from jérôme to amélie: -1.
+Path: no path from jérôme to amélie.

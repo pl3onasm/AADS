@@ -65,7 +65,7 @@ void enqueue (queue *Q, void *item) {
 // Dequeues an item from the queue and returns it
 void *dequeue (queue *Q) {
   
-  if (qIsEmpty(Q)) {
+  if (isEmptyQueue(Q)) {
     fprintf(stderr, "Dequeue error: Queue is empty\n");
     exit(EXIT_FAILURE);
   }
@@ -79,20 +79,16 @@ void *dequeue (queue *Q) {
 //=================================================================
 // Peeks at the front of the queue
 void *peekHead (queue *Q) {
-  if (qIsEmpty(Q)) {
-    fprintf(stderr, "PeekHead error: Queue is empty\n");
-    exit(EXIT_FAILURE);
-  }
+  if (isEmptyQueue(Q)) 
+    return NULL;
   return Q->buffer[Q->head];
 }
 
 //=================================================================
 // Peeks at the back of the queue
 void *peekTail (queue *Q) {
-  if (qIsEmpty(Q)) {
-    fprintf(stderr, "PeekTail error: Queue is empty\n");
-    exit(EXIT_FAILURE);
-  }
+  if (isEmptyQueue(Q)) 
+    return NULL;
   return Q->buffer[(Q->tail - 1) % Q->capacity];
 }
 

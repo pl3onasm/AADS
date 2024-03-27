@@ -9,9 +9,8 @@
 
 #include <stdbool.h>
 #include <stdlib.h>
-#include <ctype.h>
+#include <stdint.h>   // uint64_t
 #include "../../lists/dllist/dll.h"
-#include "../../../lib/clib/clib.h"
 
   // function pointer types
 typedef uint64_t (*htHash)(void *hashKey, uint64_t seed);

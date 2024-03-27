@@ -5,8 +5,8 @@
   LICENSE: MIT, see LICENSE file in repository root folder
 */
 
-#ifndef SSHTABLE_H
-#define SSHTABLE_H
+#ifndef SSHTABLE_H_INCLUDED
+#define SSHTABLE_H_INCLUDED
 
 #include "htable.h"
 
@@ -72,4 +72,4 @@ void ssHtReset(ssHt *ht);
 
 htEntry *ssHtNext(ssHt *ht);
 
-#endif // SSHTABLE_H
+#endif // SSHTABLE_H_INCLUDED

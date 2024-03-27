@@ -7,27 +7,27 @@
     with a queue implemented as a circular array and a graph
     implemented as a hash table of vertices.
   note: make sure to use VERTEX_TYPE2 in the vertex.h file
-    by defining it from the command line using -D VERTEX_TYPE2
+    by defining it from the command line using
+    $ gcc -D VERTEX_TYPE2 ...
 */
 
-#include "../../../datastructures/graphs/htgraph/vertex.h"
 #include "../../../datastructures/graphs/htgraph/graph.h"
 #include "../../../datastructures/queues/queue.h"
 
-//==================================================================
+//===================================================================
 // prints the path from the source to the destination
 void printPath(vertex *src, vertex *d) {
   if (src == d) 
     printf("%s", src->label);
   else if (! d->parent) 
-    printf("There is no path from %s to %s.", src->label, d->label);
+    printf("no path from %s to %s.", src->label, d->label);
   else {
     printPath(src, d->parent);
     printf(", %s", d->label);
   }
 }
 
-//==================================================================
+//===================================================================
 // Prints the result of the search
 void printResult(graph *G, vertex *src, vertex *d) {
     printf("\nDistance from %s to %s: %d.\n", src->label, 
@@ -37,7 +37,7 @@ void printResult(graph *G, vertex *src, vertex *d) {
     printf("\n");
 }
 
-//==================================================================
+//===================================================================
 // Builds a breadth-first search tree from the source node
 void bfs(graph *G, vertex *src) {
   
@@ -45,7 +45,7 @@ void bfs(graph *G, vertex *src) {
   enqueue(q, src);
   src->visited = true;
 
-  while (! qIsEmpty(q)) {
+  while (! isEmptyQueue(q)) {
       // get outgoing edges of the node at the front of the queue
     vertex *v = dequeue(q);
     dll *edges = getNeighbors(G, v);
@@ -63,21 +63,26 @@ void bfs(graph *G, vertex *src) {
   freeQueue(q);
 }
 
-//==================================================================
-// Reads source and destination nodes and builds the graph  
-
+//===================================================================
+ 
 int main () {
     // source and destination nodes
   char s[50], d[50];              
   (void)! scanf("%s %s", s, d);
   
-  graph *G = newGraph(50, DIRECTED, UNWEIGHTED);
+  graph *G = newGraph(50, UNWEIGHTED);
   
   readGraph(G);
   showGraph(G);
 
   vertex *src = getVertex(G, s);
   vertex *dest = getVertex(G, d);
+
+  if (! src || ! dest) {
+    fprintf(stderr, "Error: source or destination node not found.\n");
+    freeGraph(G);
+    return 1;
+  }
 
   bfs(G, src);
   

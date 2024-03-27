@@ -30,48 +30,52 @@ int main (){
     // adds two more values to the key "one"
   ssHtAddKeyVal(ht, "one", "ein");
   ssHtAddKeyVal(ht, "one", "un");
-  //ssHtAddKey(ht, "eleven");
+  ssHtAddKey(ht, "eleven");
   
+  ssHtShow(ht);
 
-    // adds the same value to the key "one"
+    // tries to add the same value to the key "one"
     // nothing happens because the value is already there
   ssHtAddKeyVal(ht, "one", "uno");
 
-    // adds the same key with case differences;
+    // tries to add the same key with case differences;
     // if the hash table is case sensitive,
     // a new key is added, otherwise the
     // value is added to the existing key
   ssHtAddKeyVal(ht, "Five", "fünf");
 
-    // adds the same value with case differences;
+    // tries to add the same value with case differences;
     // if the hash table is case sensitive,
     // a new value is added, otherwise nothing
   ssHtAddKeyVal(ht, "Five", "Fünf");
 
-    // deletes the key "three"
-  //ssHtDelKey(ht, "three");
+    // deletes some keys
+  ssHtDelKey(ht, "three");
+  ssHtDelKey(ht, "four");
+  ssHtDelKey(ht, "five");
 
     // removes values from the key "two"
-  //ssHtDelVal(ht, "two", "due");
+  ssHtDelVal(ht, "two", "due");
     // after the following statement, the key "two" 
     // has no more values
-  //ssHtDelVal(ht, "two", "deux");
+  ssHtDelVal(ht, "two", "deux");
 
     // tries to remove a value from a 
     // key without values; nothing happens
-  //ssHtDelVal(ht, "two", "deux");
+  ssHtDelVal(ht, "two", "deux");
 
     // tries to remove a non-existing value from an 
     // existing key
     // nothing happens because the value is not there
-  //ssHtDelVal(ht, "nine", "tre");
+  ssHtDelVal(ht, "nine", "tre");
 
+  printf("\nAfter adding and removing some keys and values:\n\n");
   ssHtShow(ht);
   ssHtStats(ht);
 
-    // add more keys to test the rehashing
-    // a table starts with 32 buckets, and  
-    // rehashes at 75% load factor
+    // add more keys to trigger the rehashing;
+    // a table starts with 32 buckets at minimum
+    // and rehashes at 75% load factor
   ssHtAddKeyVal(ht, "eleven", "undici");
   ssHtAddKeyVal(ht, "twelve", "dodici");
   ssHtAddKeyVal(ht, "thirteen", "tredici");

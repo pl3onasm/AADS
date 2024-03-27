@@ -1,44 +1,72 @@
-Discovery and finish times
 
-   Node   Discovery    Finish
-  label        time      time
-      0           1        20
-      1          21        26
-      2          22        25
-      3          27        28
-      4          18        19
-      5           2        17
-      6          23        24
-      7          14        15
-      8          13        16
-      9           4        11
-     10           7        10
-     11           5         6
-     12           3        12
-     13           8         9
+--------------------
+ Graph
+ Directed
+ Unweighted
+ Vertices: 14
+ Edges: 21
+--------------------
 
-Edge classification
+   m[3]: r, x, q
+   n[3]: o, u, q
+   o[3]: v, s, r
+   p[3]: z, s, o
+   q[1]: t
+   r[2]: y, u
+   s[1]: r
+   t[0]
+   u[1]: t
+   v[2]: x, w
+   w[1]: z
+   x[0]
+   y[1]: v
+   z[0]
 
-  Starting   Ending      Edge
-      node     node      type
-         0        5         T
-         0       11         F
-         0        4         T
-         1        2         T
-         1        8         C
-         1        4         C
-         2        9         C
-         2        6         T
-         2        5         C
-         3       13         C
-         3        6         C
-         3        2         C
-         4        7         C
-         5       12         T
-         5        8         T
-         6        5         C
-         8        7         T
-         9       11         T
-         9       10         T
-        10       13         T
-        12        9         T
+
+VERTEX DISCOVERY AND FINISH TIMES
+---------------------------------
+
+Label: discovery time, finish time
+
+   q: 1, 4
+   o: 5, 22
+   t: 2, 3
+   p: 23, 24
+   y: 16, 17
+   n: 25, 26
+   w: 9, 12
+   s: 14, 21
+   x: 7, 8
+   v: 6, 13
+   m: 27, 28
+   r: 15, 20
+   u: 18, 19
+   z: 10, 11
+
+
+EDGE CLASSIFICATION
+-------------------
+
+Source -> Destination: edge type
+
+   q -> t:  T
+   o -> v:  T
+   o -> s:  T
+   o -> r:  F
+   p -> z:  C
+   p -> s:  C
+   p -> o:  C
+   y -> v:  C
+   n -> o:  C
+   n -> u:  C
+   n -> q:  C
+   w -> z:  T
+   s -> r:  T
+   v -> x:  T
+   v -> w:  T
+   m -> r:  C
+   m -> x:  C
+   m -> q:  C
+   r -> y:  T
+   r -> u:  T
+   u -> t:  C

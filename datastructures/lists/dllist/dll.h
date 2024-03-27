@@ -5,8 +5,8 @@
 */
 
 
-#ifndef _DLL_H_INCLUDED_
-#define _DLL_H_INCLUDED_
+#ifndef DLL_H_INCLUDED
+#define DLL_H_INCLUDED
 
 #include <stdlib.h>
 #include <stdio.h>  
@@ -146,4 +146,4 @@ inline void *dllData (dllNode *node) {
   return node ? node->dllData : NULL;
 }
 
-#endif // _DLL_H_INCLUDED_
+#endif // DLL_H_INCLUDED

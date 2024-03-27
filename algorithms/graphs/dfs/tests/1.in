@@ -1,38 +1,20 @@
-9
-
-0 1
-0 2
-0 5
-1 3
-2 4
-1 4
-2 3
-2 0
-3 7
-3 8
-2 1
-4 1
-4 5
-5 0
-5 8
-5 6
-6 7
-6 8
-4 7
-7 1
-8 6
-
-
-Source 
-======
-CLRS⁴ Figure 20.3, but directed
-and leaving out some edges.
-r = 0
-s = 1
-t = 2
-u = 3
-v = 4
-w = 5
-x = 6
-y = 7
-z = 8
+r s
+r t
+r w
+s u
+t v
+s v
+t u
+t r
+u y
+u z
+t s
+v s
+v w
+w z
+w x
+x y
+x z
+v y
+y s
+z x

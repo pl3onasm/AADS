@@ -6,6 +6,7 @@
 
 #include <time.h>
 #include "htable.h"
+#include "../../../lib/clib/clib.h"
 
 //=================================================================
 // creates a new hash table

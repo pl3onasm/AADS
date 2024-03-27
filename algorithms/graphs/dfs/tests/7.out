@@ -1,0 +1,127 @@
+
+--------------------
+ Graph
+ Undirected
+ Unweighted
+ Vertices: 22
+ Edges: 30
+--------------------
+
+   alexandre[5]: vincent, xavier, lucille, michelle, léo
+   amélie[2]: gabriel, michelle
+   brigitte[2]: gabriel, françois
+   christophe[1]: xavier
+   françois[5]: timothée, murielle, léo, brigitte, michelle
+   gabriel[4]: amélie, brigitte, thomas, hélène
+   hélène[1]: gabriel
+   jacob[1]: michelle
+   jérémy[1]: philippe
+   jérôme[3]: xavier, philippe, vincent
+   lucille[2]: alexandre, timothée
+   léo[5]: romain, alexandre, philippe, thomas, françois
+   michelle[6]: alexandre, pauline, françois, thomas, amélie, jacob
+   murielle[2]: françois, xavier
+   pauline[1]: michelle
+   philippe[3]: léo, jérémy, jérôme
+   romain[2]: vincent, léo
+   sébastien[1]: timothée
+   thomas[3]: gabriel, léo, michelle
+   timothée[3]: sébastien, lucille, françois
+   vincent[3]: alexandre, romain, jérôme
+   xavier[4]: alexandre, christophe, jérôme, murielle
+
+
+VERTEX DISCOVERY AND FINISH TIMES
+---------------------------------
+
+Label: discovery time, finish time
+
+   xavier: 1, 44
+   brigitte: 27, 28
+   jérôme: 9, 10
+   jérémy: 7, 8
+   hélène: 34, 35
+   murielle: 25, 26
+   vincent: 3, 40
+   léo: 5, 38
+   romain: 4, 39
+   philippe: 6, 11
+   timothée: 19, 24
+   françois: 18, 29
+   pauline: 16, 17
+   michelle: 15, 32
+   thomas: 12, 37
+   alexandre: 2, 41
+   christophe: 42, 43
+   gabriel: 13, 36
+   amélie: 14, 33
+   lucille: 22, 23
+   sébastien: 20, 21
+   jacob: 30, 31
+
+
+EDGE CLASSIFICATION
+-------------------
+
+Source -> Destination: edge type
+
+   xavier -> alexandre:  T
+   xavier -> christophe:  T
+   xavier -> jérôme:  F
+   xavier -> murielle:  F
+   brigitte -> gabriel:  B
+   brigitte -> françois:  B
+   jérôme -> xavier:  B
+   jérôme -> philippe:  B
+   jérôme -> vincent:  B
+   jérémy -> philippe:  B
+   hélène -> gabriel:  B
+   murielle -> françois:  B
+   murielle -> xavier:  B
+   vincent -> alexandre:  B
+   vincent -> romain:  T
+   vincent -> jérôme:  F
+   léo -> romain:  B
+   léo -> alexandre:  B
+   léo -> philippe:  T
+   léo -> thomas:  T
+   léo -> françois:  F
+   romain -> vincent:  B
+   romain -> léo:  T
+   philippe -> léo:  B
+   philippe -> jérémy:  T
+   philippe -> jérôme:  T
+   timothée -> sébastien:  T
+   timothée -> lucille:  T
+   timothée -> françois:  B
+   françois -> timothée:  T
+   françois -> murielle:  T
+   françois -> léo:  B
+   françois -> brigitte:  T
+   françois -> michelle:  B
+   pauline -> michelle:  B
+   michelle -> alexandre:  B
+   michelle -> pauline:  T
+   michelle -> françois:  T
+   michelle -> thomas:  B
+   michelle -> amélie:  B
+   michelle -> jacob:  T
+   thomas -> gabriel:  T
+   thomas -> léo:  B
+   thomas -> michelle:  F
+   alexandre -> vincent:  T
+   alexandre -> xavier:  B
+   alexandre -> lucille:  F
+   alexandre -> michelle:  F
+   alexandre -> léo:  F
+   christophe -> xavier:  B
+   gabriel -> amélie:  T
+   gabriel -> brigitte:  F
+   gabriel -> thomas:  B
+   gabriel -> hélène:  T
+   amélie -> gabriel:  B
+   amélie -> michelle:  T
+   lucille -> alexandre:  B
+   lucille -> timothée:  B
+   sébastien -> timothée:  B
+   jacob -> michelle:  B

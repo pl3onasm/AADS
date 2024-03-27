@@ -16,7 +16,7 @@ static uint64_t ssHtHash(void *key, uint64_t seed,
   char *str = (char *)key;
   char ch;
   // FNV offset basis and magic seed
-  uint64_t hash = 14695981039346656037ULL + 64 * seed;  
+  uint64_t hash = 14695981039346656037ULL + seed;  
   while ((ch = *str++)) {
     hash ^= ch;
     hash *= 1099511628211ULL;  // FNV prime

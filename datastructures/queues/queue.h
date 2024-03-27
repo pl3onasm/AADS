@@ -53,7 +53,7 @@ void showQueue(queue* Q);
 
 
   // True if the queue is empty
-inline bool qIsEmpty(queue* Q) {
+inline bool isEmptyQueue(queue* Q) {
   return Q->head == Q->tail;
 }
 

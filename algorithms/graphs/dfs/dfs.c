@@ -1,203 +1,101 @@
-/* file: dfs.c
-   author: David De Potter
-   email: pl3onasm@gmail.com
-   license: MIT, see LICENSE file in repository root folder
-   description: depth-first search,
-     with a queue implemented as a circular array and a graph
-     implemented as an array of nodes with adjacency lists
-   assumption: nodes are numbered 0..n-1
-   input: directed graph 
-   output: discovery and finish times for each node and
-           the edge types (tree, back, forward, cross)
+/* 
+  file: dfs.c
+  author: David De Potter
+  email: pl3onasm@gmail.com
+  license: MIT, see LICENSE file in repository root folder
+  description: depth-first search,
+    with a queue implemented as a circular array and a graph
+    implemented as a hash table of vertices.
+  input: directed graph 
+  output: discovery and finish times for each node and
+          the edge types (tree, back, forward, cross)
+  note: make sure to use VERTEX_TYPE1 in the vertex.h file
+        and EDGE_TYPE1 in the edge.h file by defining them
+        from the command line when compiling:
+        $ gcc -D VERTEX_TYPE1 -D EDGE_TYPE1 ...
 */
 
-#include <stdio.h>
-#include <stdlib.h>
+#define EDGE_TYPE1
+#define VERTEX_TYPE1
+#include "../../../datastructures/graphs/htgraph/graph.h"
+#include "../../../datastructures/queues/queue.h"
 
-//:::::::::::::::::::::::: data structures ::::::::::::::::::::::::://
-
-typedef struct list list;    // forward declaration
-
-typedef struct node {
-  int id, parent;            // node id and parent id
-  int dTime, fTime;          // discovery and finish times
-  list *adj;                 // adjacency list
-  enum {WHITE,               // node colors: undiscovered,
-    GRAY, BLACK} color;      // discovered, finished
-} node;              
-
-struct list {
-  node *nbr;                 // pointer to neighbor node
-  list *next;                // pointer to next node in the list
-  enum {TREE, BACK, FORWARD, // edge types
-    CROSS} type;                  
-};
-
-const char types[] = "TBFC"; // edge type characters
-
-typedef struct graph {
-  int nNodes, nEdges;        // number of nodes and edges in the graph
-  node **vertices;           // array of pointers to nodes
-} graph;
-
-//::::::::::::::::::::::: memory management :::::::::::::::::::::::://
-
-void *safeCalloc (int n, int size) {
-  /* allocates n elements of size size, initializing them to 0, and
-     checks whether the allocation was successful */
-  void *ptr = calloc(n, size);
-  if (ptr == NULL) {
-    printf("Error: calloc(%d, %d) failed. Out of memory?\n", n, size);
-    exit(EXIT_FAILURE);
-  }
-  return ptr;
-}
-
-void *safeRealloc (void *ptr, int newSize) {
-  /* reallocates memory and checks whether the allocation was successful */
-  ptr = realloc(ptr, newSize);
-  if (ptr == NULL) {
-    printf("Error: realloc(%d) failed. Out of memory?\n", newSize);
-    exit(EXIT_FAILURE);
-  }
-  return ptr;
-}
-
-//::::::::::::::::::::::::: list functions ::::::::::::::::::::::::://
-
-list *newList() {
-  /* creates an empty list */
-  return NULL;
-}
-
-void printList(list *L) {
-  /* prints the list L */
-  if (!L) return;
-  printf("%d", L->nbr->id);
-  if (L->next) printf(", ");
-  printList(L->next);
-}
-
-void freeList(list *L) {
-  /* frees all memory allocated for the list */
-  if (!L) return;
-  freeList(L->next);
-  free(L);
-}
-
-list *listInsert (list *L, node *n) {
-  /* inserts the node n at the beginning of the list L */
-  list *new = safeCalloc(1, sizeof(list));
-  new->nbr = n;
-  new->next = L;
-  return new;
-}
-
-//:::::::::::::::::::::::: graph functions ::::::::::::::::::::::::://
-
-node *newNode(int id) {
-  /* creates a node with given id */
-  node *n = safeCalloc(1, sizeof(node));
-  n->id = id;
-  n->dTime = -1;    
-  n->parent = -1;   // still an orphan node :'(
-  n->color = WHITE; // waiting to be adopted   
-  n->adj = newList();
-  return n;
-}
-
-graph *newGraph(int n) {
-  /* creates a graph with n vertices */
-  graph *G = safeCalloc(1, sizeof(graph));
-  G->nNodes = n;
-  G->nEdges = 0;
-  G->vertices = safeCalloc(n, sizeof(node*));
-  for (int i = 0; i < n; i++)
-    G->vertices[i] = newNode(i);
-  return G;
-}
-
-void freeGraph(graph *G) {
-  /* frees all memory allocated for the graph */
-  for (int i = 0; i < G->nNodes; i++) {
-    freeList(G->vertices[i]->adj);
-    free(G->vertices[i]);
-  }
-  free(G->vertices);
-  free(G);
-}
-
-void buildGraph(graph *G) {
-  /* reads edges from stdin and adds them to the directed graph */
-  int u, v;
-  while (scanf("%d %d", &u, &v) == 2) {
-    node *n = G->vertices[u];
-    G->nEdges++;
-    n->adj = listInsert(n->adj, G->vertices[v]);
-  }
-}
-
-//::::::::::::::::::::::::: dfs functions :::::::::::::::::::::::::://
-
+//===================================================================
+// Prints the discovery and finish times of the nodes in the graph G
+// and the type of each edge
 void printResults(graph *G) {
-  /* prints the discovery and finish times of the nodes in the graph G 
-     and the type of each edge */
-  printf("Discovery and finish times\n\n   Node   Discovery    Finish\n"
-         "  label        time      time\n");
-  for (int i = 0; i < G->nNodes; i++) {
-    node *n = G->vertices[i];
-    printf("%7d %11d %9d\n", n->id, n->dTime, n->fTime);
+
+  printf("\n\nVERTEX DISCOVERY AND FINISH TIMES\n"
+         "---------------------------------\n\n"
+         "Label: discovery time, finish time\n\n");
+
+  for (vertex *v = firstV(G); v; v = nextV(G)) 
+    printf("   %s: %zu, %zu\n", v->label, v->dTime, v->fTime);
+
+  printf("\n\nEDGE CLASSIFICATION\n"
+         "-------------------\n\n"
+         "Source -> Destination: edge type\n\n");
+
+  for (vertex *v = firstV(G); v; v = nextV(G)) {
+    dll *edges = getNeighbors(G, v);
+    for (edge *e = firstE(edges); e; e = nextE(edges)) 
+      printf("   %s -> %s:  %c\n", 
+              v->label, e->to->label, e->type);
   }
-  printf("\nEdge classification\n\n  Starting   Ending      Edge\n"
-         "      node     node      type\n");
-  for (int i = 0; i < G->nNodes; i++) {
-    node *n = G->vertices[i];
-    for (list *a = n->adj; a; a = a->next) {
-      printf("%10d %8d %9c\n", n->id, a->nbr->id, types[a->type]);
-    }
-  }
+  printf("\n");
 }
 
-void dfsVisit(graph *G, node *u, int *time) {
-  /* visits the node u and its descendants in the graph G */
+//===================================================================
+// Visits the node u and its descendants in the graph G
+void dfsVisit(graph *G, vertex *u, size_t *time) {
   u->dTime = ++*time;
-  u->color = GRAY;       // u is discovered
+  u->color = GRAY;            // u is discovered: turns gray
+
+  dll *edges = getNeighbors(G, u);
   
-  for (list *L = u->adj; L; L = L->next) {
-    node *v = L->nbr;
-    if (v->color == WHITE) {
-      L->type = TREE;    // if v is undiscovered, (u, v) is a tree edge
-      v->parent = u->id;
+  for (edge *e = firstE(edges); e; e = nextE(edges)) {
+    vertex *v = e->to;
+    
+    if (v->color == WHITE) {  // if v is undiscovered
+      e->type = TREE;         // then u->v is a tree edge
+      v->parent = u;
       dfsVisit(G, v, time);
     } 
+
     else if (v->color == GRAY)
-      L->type = BACK;    // v is an ancestor of u in the same dfs tree
+      e->type = BACK;         // v is an ancestor of u 
+                              // in same dfs tree
     else if (v->dTime > u->dTime)  
-      L->type = FORWARD; // v is a descendant of u in the same dfs tree
+      e->type = FORWARD;      // v is a descendant of u 
+                              // in the same dfs tree
     else if (v->dTime < u->dTime) 
-      L->type = CROSS;   // rest of the cases; v can be in another dfs tree
+      e->type = CROSS;        // rest of the cases; 
+                              // v can be in another dfs tree
   }
   u->fTime = ++*time;
-  u->color = BLACK;      // u is finished
+  u->color = BLACK;           // u is finished: turns black
 }
 
-void dfs(graph *G, int *time) {
-  /* performs a depth-first search on the graph G */
-  for (int i = 0; i < G->nNodes; i++) {   
-    node *n = G->vertices[i];
-    if (n->color == WHITE)    // discover all white nodes
-      dfsVisit(G, n, time);
+//===================================================================
+// Builds a depth-first search forest for the graph G
+void dfs(graph *G, size_t *time) {
+  
+    // Discover all white nodes in the graph
+  for (vertex *v = firstV(G); v; v = nextV(G)) {
+    if (v->color == WHITE)      
+      dfsVisit(G, v, time);
   }
 }
 
-//::::::::::::::::::::::::: main function :::::::::::::::::::::::::://
+//===================================================================
 
 int main (int argc, char *argv[]) {
-  int n, time = 0;  // n = number of nodes
-  scanf("%d", &n); 
+  size_t time = 0;
 
-  graph *G = newGraph(n); 
-  buildGraph(G);    // read edges from stdin
+  graph *G = newGraph(50, UNWEIGHTED);
+
+  readGraph(G);    
+  showGraph(G);
 
   dfs(G, &time);  
   printResults(G);
