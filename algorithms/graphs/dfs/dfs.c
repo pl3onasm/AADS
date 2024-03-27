@@ -15,8 +15,6 @@
         $ gcc -D VERTEX_TYPE1 -D EDGE_TYPE1 ...
 */
 
-#define EDGE_TYPE1
-#define VERTEX_TYPE1
 #include "../../../datastructures/graphs/htgraph/graph.h"
 #include "../../../datastructures/queues/queue.h"
 
@@ -46,7 +44,8 @@ void printResults(graph *G) {
 }
 
 //===================================================================
-// Visits the node u and its descendants in the graph G
+// Visits the node u and its descendants, marking the edges on the
+// way as tree, back, forward or cross edges
 void dfsVisit(graph *G, vertex *u, size_t *time) {
   u->dTime = ++*time;
   u->color = GRAY;            // u is discovered: turns gray
