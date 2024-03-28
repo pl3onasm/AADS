@@ -67,7 +67,7 @@ void dfsVisit(graph *G, vertex *u, size_t *time) {
     else if (v->dTime > u->dTime)  
       e->type = FORWARD;      // v is a descendant of u 
                               // in the same dfs tree
-    else if (v->dTime < u->dTime) 
+    else 
       e->type = CROSS;        // rest of the cases; 
                               // v can be in another dfs tree
   }
@@ -77,6 +77,9 @@ void dfsVisit(graph *G, vertex *u, size_t *time) {
 
 //===================================================================
 // Builds a depth-first search forest for the graph G
+// Since the graph is implemented as a hash table, the
+// graph traversal and thus the edge classification may
+// differ from one run to another
 void dfs(graph *G, size_t *time) {
   
     // Discover all white nodes in the graph

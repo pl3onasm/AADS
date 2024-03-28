@@ -21,7 +21,7 @@
 
 
 //===================================================================
-// VERTEX TYPE 1  (application examples: DFS, Topological Sort)
+// VERTEX TYPE 1  (application example: DFS)
 #if defined (VERTEX_TYPE1)      
 
   typedef enum {
@@ -45,6 +45,15 @@
   typedef struct vertex {
     struct vertex *parent;    // pointer to the parent vertex
     size_t dist;              // distance from the source vertex
+    char *label;              // the label of the vertex
+    bool visited;             // marks the vertex as visited
+  } vertex;
+
+//===================================================================
+// VERTEX TYPE 3  (application example: topological sort, SCC)
+#elif defined (VERTEX_TYPE3)
+
+  typedef struct vertex {
     char *label;              // the label of the vertex
     bool visited;             // marks the vertex as visited
   } vertex;

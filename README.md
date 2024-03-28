@@ -18,8 +18,6 @@
 * [Hash tables](datastructures/htables)
 * [Heaps](datastructures/heaps)
 * [Graphs](datastructures/graphs)
-* Sets
-* Augmented data structures
 
 ## ${\color{darkseagreen}\text{Notes}}$
 

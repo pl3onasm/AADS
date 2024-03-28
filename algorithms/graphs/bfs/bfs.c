@@ -31,10 +31,10 @@ void printPath(vertex *src, vertex *d) {
 // Prints the result of the search
 void printResult(graph *G, vertex *src, vertex *d) {
     if (! d->visited) 
-      printf("Distance from %s to %s: INF.\n", 
+      printf("\nDistance from %s to %s: INF.\n", 
               src->label, d->label);
     else 
-      printf("Distance from %s to %s: %zu\n", 
+      printf("\nDistance from %s to %s: %zu\n", 
               src->label, d->label, d->dist);
     printf("Path: ");
     printPath(src, d);

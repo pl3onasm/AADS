@@ -1,5 +1,25 @@
-Strongly connected components:
-{0, 4, 1}
-{2, 3}
-{5, 6}
-{7}
+
+--------------------
+ Graph
+ Directed
+ Unweighted
+ Vertices: 8
+ Edges: 14
+--------------------
+
+   a[1]: b
+   b[3]: f, c, e
+   c[2]: g, d
+   d[2]: h, c
+   e[2]: f, a
+   f[1]: g
+   g[2]: h, f
+   h[1]: h
+
+
+Strongly connected components
+-----------------------------
+1: {h}
+2: {g, f}
+3: {c, d}
+4: {b, a, e}

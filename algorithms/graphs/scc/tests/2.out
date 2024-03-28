@@ -1,6 +1,28 @@
-Strongly connected components:
-{1}
-{4}
-{0, 8, 3}
-{6, 5, 2}
-{7, 9}
+
+--------------------
+ Graph
+ Directed
+ Unweighted
+ Vertices: 10
+ Edges: 14
+--------------------
+
+   q[3]: t, w, s
+   r[2]: u, y
+   s[1]: v
+   t[2]: y, x
+   u[1]: y
+   v[1]: w
+   w[1]: s
+   x[1]: z
+   y[1]: q
+   z[1]: x
+
+
+Strongly connected components
+-----------------------------
+1: {x, z}
+2: {w, v, s}
+3: {y, t, q}
+4: {u}
+5: {r}

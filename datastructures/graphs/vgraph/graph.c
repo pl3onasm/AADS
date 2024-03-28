@@ -416,7 +416,7 @@ void readGraph(graph *G) {
   char from[MAX_VERTEX_LABEL], to[MAX_VERTEX_LABEL];
   vertex *u, *v;
   
-  // check if the graph is set to undirected
+    // check if the graph is set to undirected
   if (scanf ("%s", from) && 
      (cmpStrCI(from, "undirected") == 0)) {
     setUndirected(G);
@@ -469,4 +469,21 @@ vertex *nextV(graph *G) {
   if (! G) return NULL;
   htEntry *entry = htNext(G->V);
   return entry ? (vertex *)entry->key : NULL;
+}
+
+//=================================================================
+// Returns the transposed graph of G
+// This is a copy of G but with the edges reversed
+graph *transposeGraph(graph *G) {
+  if (! G) return NULL;
+  graph *T = newGraph(nVertices(G), G->weight);
+  T->type = G->type;
+  for (vertex *v = firstV(G); v; v = nextV(G))
+    addVertex(T, v->label);
+  for (vertex *v = firstV(G); v; v = nextV(G)) {
+    dll *edges = getNeighbors(G, v);
+    for (edge *e = firstE(edges); e; e = nextE(edges)) 
+      addEdgeWL(T, e->to->label, v->label, e->weight);
+  }
+  return T;
 }

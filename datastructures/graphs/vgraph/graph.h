@@ -125,6 +125,10 @@ void showVertexL(graph *G, char *label);
   // Reads a graph from standard input
 void readGraph(graph *G);
 
+  // Returns the transposed graph of G
+  // which is a copy of G with all edges reversed
+graph *transposeGraph(graph *G);
+
   // Checks if a vertex is in the graph
   // A vertex is in the graph if it has at least
   // one edge in its adjacency list
