@@ -27,7 +27,7 @@ void dfsVisit(graph *G, vertex *u, dll *list) {
 }
 
 //===================================================================
-// Builds a depth-first forest for the graph G
+// Sorts the vertices in the graph G in topological order
 dll *topSort(graph *G) {
   dll *sorted = dllNew();
   
@@ -73,7 +73,7 @@ void decompose(graph *Gt, dll *Gs) {
   dllFree(scc);
 }
 
-//:::::::::::::::::::::::: main function ::::::::::::::::::::::::::://
+//===================================================================
 
 int main (int argc, char *argv[]) {
 
