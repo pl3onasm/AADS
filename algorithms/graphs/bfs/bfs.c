@@ -11,7 +11,7 @@
     $ gcc -D VERTEX_TYPE2 ...
 */
 
-#include "../../../datastructures/graphs/htgraph/graph.h"
+#include "../../../datastructures/graphs/vgraph/graph.h"
 #include "../../../datastructures/queues/queue.h"
 
 //===================================================================
@@ -30,8 +30,12 @@ void printPath(vertex *src, vertex *d) {
 //===================================================================
 // Prints the result of the search
 void printResult(graph *G, vertex *src, vertex *d) {
-    printf("\nDistance from %s to %s: %d.\n", src->label, 
-           d->label, d->dist == 0 ? (d == src ? 0 : -1) : d->dist);  
+    if (! d->visited) 
+      printf("Distance from %s to %s: INF.\n", 
+              src->label, d->label);
+    else 
+      printf("Distance from %s to %s: %zu\n", 
+              src->label, d->label, d->dist);
     printf("Path: ");
     printPath(src, d);
     printf("\n");

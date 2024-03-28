@@ -30,5 +30,5 @@
    vincent[2]: léo, romain
    xavier[3]: alexandre, jérôme, murielle
 
-Distance from jérôme to amélie: -1.
+Distance from jérôme to amélie: INF.
 Path: no path from jérôme to amélie.

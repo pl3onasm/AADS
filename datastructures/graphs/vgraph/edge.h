@@ -4,9 +4,9 @@
   Description:
     Defines different flavors of edges for a graph.
     To use an augmented edge structure, define the desired
-    EDGE_TYPE from the command line using -D EDGE_TYPE1:
+    EDGE_TYPE from the command line using a flag, e.g.:
 
-    gcc -O2 -D EDGE_TYPE1 ...
+    $ gcc -O2 -D EDGE_TYPE1 ...
     
     If not defined, the default edge structure is used, which
     only contains a pointer to the destination vertex and the

@@ -1,2 +1,9 @@
-Topological sort:
-[6, 0, 1, 5, 4, 2, 3]
+TOPOLOGICAL SORT
+----------------
+0
+6
+1
+2
+5
+4
+3

@@ -2,13 +2,13 @@
 #include "../../../lib/clib/clib.h"
 #include <ctype.h>
 
-#ifndef MAXVERTEXLABEL
-#define MAXVERTEXLABEL 50
+#ifndef MAX_VERTEX_LABEL
+#define MAX_VERTEX_LABEL 50
 #endif
-
 
 //=================================================================
 // FNV-1a hash function
+// (http://www.isthe.com/chongo/tech/comp/fnv/index.html)
 static uint64_t hash(void *key, uint64_t seed) {
   char *str = ((vertex *)key)->label;
   char ch;
@@ -102,7 +102,7 @@ void showVertexL(graph *G, char *label) {
 
 //=================================================================
 // Comparison function between vertices for qsort
-int cmpVertex(void const *v1, void const *v2) {
+static int cmpVertex(void const *v1, void const *v2) {
   return strcmp((*(vertex **)v1)->label, (*(vertex **)v2)->label);
 }
 
@@ -413,8 +413,8 @@ static int cmpStrCI(void const *str1, void const *str2) {
 //=================================================================
 // Reads a graph from stdin
 void readGraph(graph *G) {
-  char from[MAXVERTEXLABEL], to[MAXVERTEXLABEL];
-  vertex *u = NULL, *v = NULL;
+  char from[MAX_VERTEX_LABEL], to[MAX_VERTEX_LABEL];
+  vertex *u, *v;
   
   // check if the graph is set to undirected
   if (scanf ("%s", from) && 
@@ -426,6 +426,7 @@ void readGraph(graph *G) {
       v = addVertexR(G, to);
     else {
       fprintf(stderr, "Error reading the graph\n");
+      freeGraph(G);
       exit(EXIT_FAILURE);
     }
     addEdge(G, u, v);

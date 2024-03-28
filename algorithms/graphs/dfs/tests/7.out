@@ -33,7 +33,6 @@
 
 VERTEX DISCOVERY AND FINISH TIMES
 ---------------------------------
-
 Label: discovery time, finish time
 
    xavier: 1, 44
@@ -62,7 +61,6 @@ Label: discovery time, finish time
 
 EDGE CLASSIFICATION
 -------------------
-
 Source -> Destination: edge type
 
    xavier -> alexandre:  T

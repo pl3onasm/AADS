@@ -19,7 +19,6 @@
 
 VERTEX DISCOVERY AND FINISH TIMES
 ---------------------------------
-
 Label: discovery time, finish time
 
    y: 1, 8
@@ -34,7 +33,6 @@ Label: discovery time, finish time
 
 EDGE CLASSIFICATION
 -------------------
-
 Source -> Destination: edge type
 
    y -> x:  T

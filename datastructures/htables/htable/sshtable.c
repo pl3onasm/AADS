@@ -9,7 +9,9 @@
 #include <string.h>
 #include "sshtable.h"
 
-  // FNV-1a hash function
+//===================================================================
+// FNV-1a hash function
+// (http://www.isthe.com/chongo/tech/comp/fnv/index.html)
 static uint64_t ssHtHash(void *key, uint64_t seed, 
                          ssHtCase htCase) {
 
@@ -24,27 +26,31 @@ static uint64_t ssHtHash(void *key, uint64_t seed,
   return hash;
 }
 
-  // case sensitive hash
+//===================================================================
+// case sensitive hash
 static uint64_t hashCS(void *key, uint64_t seed) {
   return ssHtHash(key, seed, CASE_SENSITIVE);
 }
 
-  // case insensitive hash
+//===================================================================
+// case insensitive hash
 static uint64_t hashCI(void *key, uint64_t seed) {
   return ssHtHash(key, seed, CASE_INSENSITIVE);
 }
 
-  // case sensitive comparison
-  // same for keys and values
+//===================================================================
+// case sensitive comparison
+// same for keys and values
 static int cmpStrCS(void const *str1, void const *str2) {
   return strcmp((char *)str1, (char *)str2);
 }
 
-  // case insensitive comparison
-  // same for keys and values
-  // returns negative if str1 < str2
-  // returns 0 if str1 == str2
-  // returns positive if str1 > str2
+//===================================================================
+// case insensitive comparison
+// same for keys and values
+// returns negative if str1 < str2
+// returns 0 if str1 == str2
+// returns positive if str1 > str2
 static int cmpStrCI(void const *str1, void const *str2) {
   char *s1 = (char *)str1;
   char *s2 = (char *)str2;
@@ -58,18 +64,22 @@ static int cmpStrCI(void const *str1, void const *str2) {
   return *s1 - *s2;
 }
 
-  // shows the key or value
+//===================================================================
+// shows the key or value
 static void showStr(void *str) {
   printf("%s", (char *)str);
 }
 
+//===================================================================
+// Copy function for key or value
 static void *copyStr(void *str) {
   char *newKey = safeMalloc(strlen((char *)str) + 1);
   strcpy(newKey, (char *)str);
   return newKey;
 }
 
-  // creates a new string-string hash table
+//===================================================================
+// creates a new string-string hash table
 ssHt *ssHtNew(ssHtCase htCase, size_t capacity) {
   htHash hash = htCase == CASE_SENSITIVE ? hashCS : hashCI;
   htCmpKey cmpKey; 
@@ -79,6 +89,9 @@ ssHt *ssHtNew(ssHtCase htCase, size_t capacity) {
   htSetShow(ht, showStr, showStr);
   return (ssHt *)ht;
 }
+
+//===================================================================
+// Casts
 
 void ssHtSetLabel(ssHt *ssht, char *label) {
   htSetLabel((ht *)ssht, label);

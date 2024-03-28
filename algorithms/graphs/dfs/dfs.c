@@ -15,7 +15,7 @@
         $ gcc -D VERTEX_TYPE1 -D EDGE_TYPE1 ...
 */
 
-#include "../../../datastructures/graphs/htgraph/graph.h"
+#include "../../../datastructures/graphs/vgraph/graph.h"
 #include "../../../datastructures/queues/queue.h"
 
 //===================================================================
@@ -24,14 +24,14 @@
 void printResults(graph *G) {
 
   printf("\n\nVERTEX DISCOVERY AND FINISH TIMES\n"
-         "---------------------------------\n\n"
+         "---------------------------------\n"
          "Label: discovery time, finish time\n\n");
 
   for (vertex *v = firstV(G); v; v = nextV(G)) 
     printf("   %s: %zu, %zu\n", v->label, v->dTime, v->fTime);
 
   printf("\n\nEDGE CLASSIFICATION\n"
-         "-------------------\n\n"
+         "-------------------\n"
          "Source -> Destination: edge type\n\n");
 
   for (vertex *v = firstV(G); v; v = nextV(G)) {
@@ -63,7 +63,7 @@ void dfsVisit(graph *G, vertex *u, size_t *time) {
 
     else if (v->color == GRAY)
       e->type = BACK;         // v is an ancestor of u 
-                              // in same dfs tree
+                              // in the same dfs tree
     else if (v->dTime > u->dTime)  
       e->type = FORWARD;      // v is a descendant of u 
                               // in the same dfs tree
@@ -80,10 +80,9 @@ void dfsVisit(graph *G, vertex *u, size_t *time) {
 void dfs(graph *G, size_t *time) {
   
     // Discover all white nodes in the graph
-  for (vertex *v = firstV(G); v; v = nextV(G)) {
+  for (vertex *v = firstV(G); v; v = nextV(G)) 
     if (v->color == WHITE)      
       dfsVisit(G, v, time);
-  }
 }
 
 //===================================================================

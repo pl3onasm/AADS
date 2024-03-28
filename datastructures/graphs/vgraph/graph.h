@@ -8,10 +8,9 @@
     destination vertex, and the weight of the edge.
     The graph can be directed or undirected, and the
     edges can be weighted or unweighted.
-    Nodes are implemented as vertex structs, which are 
-    defined in vertex.h. They can have different definitions
-    depending on the application or algorithm. You can even
-    make one with a void pointer to satelite data.
+    Nodes and edges can have different flavors and are
+    defined in vertex.h and edge.h. You can add your own
+    vertex and edge types by modifying these headers.
   Author: David De Potter
   LICENSE: MIT, see LICENSE file in repository root folder
 */
@@ -22,7 +21,6 @@
 #include "../../htables/htable/htable.h"
 #include "edge.h"
 #include "vertex.h"
-
 
   // graph types
 typedef enum { WEIGHTED, UNWEIGHTED } edgeType;
@@ -42,7 +40,7 @@ typedef struct {
 
 
   // Creates a new graph; requires the initial capacity
-  // type of the edges (weighted/unweighted)
+  // and type of the edges (weighted/unweighted)
   // By default, the graph is directed 
 graph *newGraph (size_t capacity, edgeType weight);
 
@@ -84,7 +82,7 @@ edge *getEdge(graph *G, vertex *from, vertex *to);
   // Adds an unweighted edge to the destination 
   // vertex's adjList
   // In an undirected graph, the edge is also 
-  // added to the source vertex's adjList
+  // added to the destination vertex's adjList
 void addEdge(graph *G, vertex *from, vertex *to);
 
   // Same as addEdge, but for a weighted edge

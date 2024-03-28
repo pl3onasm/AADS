@@ -3,10 +3,10 @@
   License: MIT, see LICENSE file in repository root folder
   Description:
     Defines different flavors of a vertex for a graph.
-    To use an augmented vertex structure, compile the program 
-    using a compiler flag, like this:
+    To use an augmented vertex structure, define the desired
+    VERTEX_TYPE from the command line using a flag, e.g.:
 
-    gcc -O2 -D VERTEX_TYPE1 ...
+    $ gcc -O2 -D VERTEX_TYPE1 ...
     
     If no flag is set, the default vertex structure is used,
     which only contains a label.
@@ -21,8 +21,8 @@
 
 
 //===================================================================
-// VERTEX TYPE 1  (application example: DFS)
-#if defined (VERTEX_TYPE1)      // usage example: DFS
+// VERTEX TYPE 1  (application examples: DFS, Topological Sort)
+#if defined (VERTEX_TYPE1)      
 
   typedef enum {
     WHITE,
@@ -36,7 +36,6 @@
     clr color;                // color of the vertex
     size_t dTime;             // discovery time
     size_t fTime;             // finish time
-    size_t dist;              // distance from the source
   } vertex;
 
 //===================================================================
@@ -45,11 +44,10 @@
 
   typedef struct vertex {
     struct vertex *parent;    // pointer to the parent vertex
-    int dist;                 // distance from the source vertex
+    size_t dist;              // distance from the source vertex
     char *label;              // the label of the vertex
     bool visited;             // marks the vertex as visited
   } vertex;
-
 
 //===================================================================
 // DEFAULT VERTEX TYPE

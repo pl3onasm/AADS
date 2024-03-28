@@ -25,7 +25,6 @@
 
 VERTEX DISCOVERY AND FINISH TIMES
 ---------------------------------
-
 Label: discovery time, finish time
 
    q: 1, 4
@@ -46,7 +45,6 @@ Label: discovery time, finish time
 
 EDGE CLASSIFICATION
 -------------------
-
 Source -> Destination: edge type
 
    q -> t:  T
