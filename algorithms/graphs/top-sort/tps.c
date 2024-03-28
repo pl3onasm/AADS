@@ -27,21 +27,18 @@ void dfsVisit(graph *G, vertex *u, dll *sorted) {
 }
 
 //===================================================================
-// Builds a depth-first forest for the graph G
+// Sorts the vertices in the graph G in topological order
 // Since the graph is implemented as a hash table, the
-// sorting may differ from one run to another
-void dfs(graph *G, dll *sorted) {
+// sorting may differ from one run to another as a topological
+// sort is not unique.
+dll *topSort(graph *G) {
+  dll *sorted = dllNew();  
   
+    // visit all undiscovered vertices in G
   for (vertex *v = firstV(G); v; v = nextV(G)) 
     if (! v->visited)
       dfsVisit(G, v, sorted);
-}
 
-//===================================================================
-// Sorts the vertices in the graph G in topological order
-dll *topSort(graph *G) {
-  dll *sorted = dllNew();       // stores the topological sort   
-  dfs(G, sorted);
   return sorted;
 }
 

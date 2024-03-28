@@ -28,12 +28,15 @@ void dfsVisit(graph *G, vertex *u, dll *list) {
 
 //===================================================================
 // Builds a depth-first forest for the graph G
-void dfsG(graph *G, dll *Gs) {
+dll *topSort(graph *G) {
+  dll *sorted = dllNew();
   
     // visit all undiscovered vertices in G
   for (vertex *v = firstV(G); v; v = nextV(G)) 
     if (! v->visited)
-      dfsVisit(G, v, Gs);
+      dfsVisit(G, v, sorted);
+
+  return sorted;
 }
 
 //===================================================================
@@ -51,14 +54,6 @@ dll *dfsGt(graph *Gt, dll *Gs) {
     }
   }
   return scc;
-}
-
-//===================================================================
-// Sorts the vertices in the graph G in topological order
-dll *topSort(graph *G) {
-  dll *Gs = dllNew();
-  dfsG(G, Gs);
-  return Gs;
 }
 
 //===================================================================
