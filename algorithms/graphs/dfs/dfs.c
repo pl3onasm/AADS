@@ -36,7 +36,7 @@ void printResults(graph *G) {
 
   for (vertex *v = firstV(G); v; v = nextV(G)) {
     dll *edges = getNeighbors(G, v);
-    for (edge *e = firstE(edges); e; e = nextE(edges)) 
+    for (edge *e = dllFirst(edges); e; e = dllNext(edges)) 
       printf("   %s -> %s:  %c\n", 
               v->label, e->to->label, e->type);
   }
@@ -52,7 +52,7 @@ void dfsVisit(graph *G, vertex *u, size_t *time) {
 
   dll *edges = getNeighbors(G, u);
   
-  for (edge *e = firstE(edges); e; e = nextE(edges)) {
+  for (edge *e = dllFirst(edges); e; e = dllNext(edges)) {
     vertex *v = e->to;
     
     if (v->color == WHITE) {  // if v is undiscovered

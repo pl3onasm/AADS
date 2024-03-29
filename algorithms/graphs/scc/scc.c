@@ -19,7 +19,7 @@ void dfsVisit(graph *G, vertex *u, dll *list) {
   u->visited = true;         // u is discovered
 
   dll *adj = getNeighbors(G, u);
-  for (edge *e = firstE(adj); e; e = nextE(adj)) 
+  for (edge *e = dllFirst(adj); e; e = dllNext(adj)) 
     if (! e->to->visited)    // undiscovered?
       dfsVisit(G, e->to, list);
   

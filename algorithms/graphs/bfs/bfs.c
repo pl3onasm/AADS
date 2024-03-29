@@ -56,7 +56,7 @@ void bfs(graph *G, vertex *src) {
 
       // for each neighbor, if it has not been visited, 
       // set its parent and its distance from the source
-    for (edge *e = firstE(edges); e; e = nextE(edges)) 
+    for (edge *e = dllFirst(edges); e; e = dllNext(edges)) 
       if (! e->to->visited) {
         e->to->parent = v;
         e->to->dist = v->dist + 1;

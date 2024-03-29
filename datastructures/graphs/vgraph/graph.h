@@ -33,9 +33,11 @@ typedef struct {
   graphType type;     // directed or undirected, 
                       // set to directed by default
   edgeType weight;    // weighted or unweighted
-  edge *e;            // dummy edge 
-  vertex *u;          // dummy vertex
-  vertex *v;          // dummy vertex
+  edge *e;            // dummy edge for lookup
+  dll *adjList;       // dummy adjacency list
+  vertex *u;          // dummy vertex for lookup
+  vertex *v;          // dummy vertex for lookup  
+  vertex *z;          // dummy vertex for iteration
 } graph;
 
 
@@ -45,12 +47,13 @@ typedef struct {
 graph *newGraph (size_t capacity, edgeType weight);
 
   // Sets the graph type to undirected
+  // Should be called before adding any edges
 void setUndirected(graph *G);
 
   // Deallocates the graph
 void freeGraph(graph *G);
 
-  // Sets the pointer to the adjacency list of a vertex
+  // Sets the pointer to the adjList of a vertex
   // If the vertex has no adj list or is not in the graph,
   // the pointer is set to NULL
   // Returns true if the source vertex is in the graph
@@ -65,12 +68,12 @@ dll *getNeighborsL(graph *G, char *label);
   // Gets the vertex given its label
 vertex *getVertex(graph *G, char *label);
 
-  // Adds a node with the given label to the graph; 
-  // the data of the node is set to NULL
+  // Adds a vertex with given label to the graph; 
+  // the vertex is not added if it already exists
 void addVertex(graph *G, char *label);
 
   // Same as addVertex, but returns a 
-  // pointer to the added vertex
+  // pointer to the vertex
 vertex *addVertexR(graph *G, char *label);
 
   // Returns true if the vertex exists in the graph
@@ -91,10 +94,22 @@ void addEdgeW(graph *G, vertex *from, vertex *to,
 
   // Adds an unweighted edge given the labels of 
   // the source and destination vertices
+  // In an undirected graph, the edge is also
+  // added to the destination vertex's adjList
 void addEdgeL(graph *G, char *from, char *to);
 
   // Same as addEdgeL, but for a weighted edge
 void addEdgeWL(graph *G, char *from, char *to, 
+               double weight);
+
+  // Adds the vertices if they do not exist, and
+  // adds the edge between them with the given weight
+  // In an undirected graph, the edge is also added
+  // to the destination vertex's adjList
+void addVandE(graph *G, char *from, char *to);
+
+  // Same as addVandE, but for a weighted edge
+void addVandEW(graph *G, char *from, char *to, 
                double weight);
 
   // Returns true if the edge exists in the graph
@@ -133,16 +148,18 @@ graph *transposeGraph(graph *G);
   // A vertex is in the graph if it has at least
   // one edge in its adjacency list
 inline bool inGraph(graph *G, vertex *v) {
-  return dllSize(getNeighbors(G, v)) > 0;
+  return dllSize(getNeighbors(G, v));
 }
 
   // Same as above, but by label
 bool inGraphL(graph *G, char *label);
 
+  // Returns the number of vertices in the graph
 inline size_t nVertices(graph *G) {
   return htSize(G->V);
 }
 
+  // Returns the number of edges in the graph
 inline size_t nEdges(graph *G) {
   return G->nEdges;
 }
@@ -178,22 +195,22 @@ inline bool graphIsEmpty(graph *G) {
   return htIsEmpty(G->V);
 }
 
-  // Returns the first edge in the adjacency list
-  // and sets the iterator to the next edge;
-  // returns NULL if the list is empty
-edge *firstE(dll *adjList);
+  // Returns the first edge in the graph
+  // returns NULL if there are no edges
+edge *firstE(graph *G);
 
-  // Returns the current edge in the adjacency list
-  // and updates the iterator to the next edge;
-  // NULL if the end of the list is reached
-edge *nextE(dll *adjList);
+  // Returns the current edge of the iteration
+  // and sets the iterator to the next edge in G;
+  // returns NULL if there are no more edges
+edge *nextE(graph *G);
 
   // Returns the first vertex in the graph
   // and sets the iterator to the next vertex
 vertex *firstV(graph *G);
 
   // Returns the current vertex in the graph
-  // and updates the iterator to the next vertex
+  // and updates the iterator to the next vertex;
+  // returns NULL if there are no more vertices
 vertex *nextV(graph *G);
   
 #endif // GRAPH_H_INCLUDED_

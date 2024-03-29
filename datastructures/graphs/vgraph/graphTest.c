@@ -100,5 +100,10 @@ int main() {
   printf("Vertex %s is in the graph: %s\n\n", "mouse", 
          inGraphL(G, "mouse") ? "true" : "false");
 
+    // tests the edge iterator over the graph
+  size_t n = 0;
+  for (edge *e = firstE(G); e; e = nextE(G))
+    printf("%zu: Edge to %s\n", ++n, e->to->label);
+
   freeGraph(G);
 } 

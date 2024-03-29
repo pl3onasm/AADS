@@ -378,20 +378,34 @@ void delEdgeL(graph *G, char *from, char *to) {
 }
 
 //=================================================================
-// Gets the first edge from the adjacency list of a vertex
-// Sets the iterator to the next edge in the list
-edge *firstE(dll *adjList) {
-  if (! adjList)
+// Gets the 'first' edge in the graph and sets the iterator
+// to the next edge
+edge *firstE(graph *G) {
+  if (! G)
     return NULL;
-  return dllFirst(adjList);
+  G->z = firstV(G); 
+  if (G->z && outDegree(G, G->z) == 0) 
+    while ((G->z = nextV(G)) && outDegree(G, G->z) == 0)
+  if (! G->z) 
+    return NULL;
+  G->adjList = getNeighbors(G, G->z);
+  return dllFirst(G->adjList);
 }
 
 //=================================================================
-// Gets the next edge from the adjacency list of a vertex
-edge *nextE(dll *adjList) {
-  if (! adjList)
+// Gets the next edge in the graph
+edge *nextE(graph *G) {
+  if (! G)
     return NULL;
-  return dllNext(adjList);
+  edge *e = dllNext(G->adjList);
+  if (! e) {
+    while ((G->z = nextV(G)) && outDegree(G, G->z) == 0);
+    if (G->z) {
+      G->adjList = getNeighbors(G, G->z);
+      e = dllFirst(G->adjList);
+    } 
+  }
+  return e;
 }
 
 //=================================================================
@@ -411,44 +425,55 @@ static int cmpStrCI(void const *str1, void const *str2) {
 }
 
 //=================================================================
+// Adds source and destination vertices if they do not exist
+// and adds an edge between them with the given weight
+// If the graph is undirected, the edge is added in both directions
+void addVandEW(graph *G, char *from, char *to, 
+                     double weight) {
+  vertex *u = addVertexR(G, from);
+  vertex *v = addVertexR(G, to);
+  addEdgeW(G, u, v, weight);
+  if (G->type == UNDIRECTED) 
+    addEdgeW(G, v, u, weight);
+}
+
+//=================================================================
+// Same as addVandEW, but for an unweighted edge
+void addVandE(graph *G, char *from, char *to) {
+  addVandEW(G, from, to, 1);
+}
+
+//=================================================================
 // Reads a graph from stdin
 void readGraph(graph *G) {
   char from[MAX_VERTEX_LABEL], to[MAX_VERTEX_LABEL];
   vertex *u, *v;
-  
+  double weight = 1;
+  size_t n;
+
     // check if the graph is set to undirected
-  if (scanf ("%s", from) && 
+  if (scanf ("%s", from) == 1 && 
      (cmpStrCI(from, "undirected") == 0)) {
     setUndirected(G);
   } else {
-    u = addVertexR(G, from);
-    if (scanf("%s", to) == 1)
-      v = addVertexR(G, to);
-    else {
-      fprintf(stderr, "Error reading the graph\n");
-      freeGraph(G);
+    // add the first edge
+    if ((n = G->weight == UNWEIGHTED ? 
+        scanf("%s", to) : 
+        scanf("%s %lf", to, &weight)) == 1 || n == 2) {
+      addVandEW(G, from, to, weight);
+    } else {
+      fprintf(stderr, "Error reading graph\n");
       exit(EXIT_FAILURE);
     }
-    addEdge(G, u, v);
   }
   
+    // read the rest of the graph
   if (G->weight == UNWEIGHTED) {
-    while (scanf("%s %s", from, to) == 2) {
-      u = addVertexR(G, from);
-      v = addVertexR(G, to);
-      addEdge(G, u, v);
-      if (G->type == UNDIRECTED) 
-        addEdge(G, v, u);
-    }
+    while (scanf("%s %s", from, to) == 2) 
+      addVandEW(G, from, to, 1);
   } else {
-    double weight = 0;
-    while (scanf("%s %s %lf", from, to, &weight) == 3) {
-      u = addVertexR(G, from);
-      v = addVertexR(G, to);
-      addEdgeW(G, u, v, weight);
-      if (G->type == UNDIRECTED) 
-        addEdgeW(G, v, u, weight);
-    }
+    while (scanf("%s %s %lf", from, to, &weight) == 3) 
+      addVandEW(G, from, to, weight);
   }
 }
 
@@ -482,7 +507,7 @@ graph *transposeGraph(graph *G) {
     addVertex(T, v->label);
   for (vertex *v = firstV(G); v; v = nextV(G)) {
     dll *edges = getNeighbors(G, v);
-    for (edge *e = firstE(edges); e; e = nextE(edges)) 
+    for (edge *e = dllFirst(edges); e; e = dllNext(edges)) 
       addEdgeWL(T, e->to->label, v->label, e->weight);
   }
   return T;
