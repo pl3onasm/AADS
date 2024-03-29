@@ -101,9 +101,11 @@ int main() {
          inGraphL(G, "mouse") ? "true" : "false");
 
     // tests the edge iterator over the graph
+  printf("All edges in the graph:\n");
   size_t n = 0;
-  for (edge *e = firstE(G); e; e = nextE(G))
-    printf("%zu: Edge to %s\n", ++n, e->to->label);
+  vertex *src;
+  for (edge *e = firstE(G, &src); e; e = nextE(G, &src))
+    printf("%zu: Edge %s-%s\n", ++n, src->label, e->to->label);
 
   freeGraph(G);
 } 

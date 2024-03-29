@@ -195,14 +195,17 @@ inline bool graphIsEmpty(graph *G) {
   return htIsEmpty(G->V);
 }
 
-  // Returns the first edge in the graph
-  // returns NULL if there are no edges
-edge *firstE(graph *G);
+  // Returns the first edge in the graph and
+  // sets the edge iterator to the next edge
+  // Pointer to v is set to the source vertex
+  // Returns NULL if there are no edges
+edge *firstE(graph *G, vertex **v);
 
   // Returns the current edge of the iteration
-  // and sets the iterator to the next edge in G;
-  // returns NULL if there are no more edges
-edge *nextE(graph *G);
+  // and sets the edge iterator to the next edge;
+  // Pointer to v is set to the source vertex
+  // Returns NULL if there are no more edges
+edge *nextE(graph *G, vertex **v);
 
   // Returns the first vertex in the graph
   // and sets the iterator to the next vertex

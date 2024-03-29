@@ -379,8 +379,8 @@ void delEdgeL(graph *G, char *from, char *to) {
 
 //=================================================================
 // Gets the 'first' edge in the graph and sets the iterator
-// to the next edge
-edge *firstE(graph *G) {
+// to the next edge; updates the vertex pointer to the source vertex
+edge *firstE(graph *G, vertex **v) {
   if (! G)
     return NULL;
   G->z = firstV(G); 
@@ -389,12 +389,15 @@ edge *firstE(graph *G) {
   if (! G->z) 
     return NULL;
   G->adjList = getNeighbors(G, G->z);
+  *v = G->z;
   return dllFirst(G->adjList);
 }
 
 //=================================================================
-// Gets the next edge in the graph
-edge *nextE(graph *G) {
+// Gets the next edge in the graph and sets the iterator to the
+// next edge; updates the vertex pointer to the source vertex
+// If there are no more edges, it returns NULL
+edge *nextE(graph *G, vertex **v) {
   if (! G)
     return NULL;
   edge *e = dllNext(G->adjList);
@@ -405,6 +408,7 @@ edge *nextE(graph *G) {
       e = dllFirst(G->adjList);
     } 
   }
+  *v = G->z;
   return e;
 }
 
