@@ -487,8 +487,8 @@ void readGraph(graph *G) {
 // NULL if the graph is empty
 vertex *firstV(graph *G) {
   if (! G) return NULL;
-  htReset(G->V);
-  return nextV(G);
+  htEntry *entry = htFirst(G->V);
+  return entry ? (vertex *)entry->key : NULL;
 }
 
 //=================================================================

@@ -221,11 +221,9 @@ static void htAddNewkeyVal(ht *H, void *key, void *value,
   if (! dllIsEmpty(bucket)) 
     H->nCollisions++;
   htEntry *entry = safeCalloc(1, sizeof(htEntry));
-  entry->key = key;
 
     // copy the key if a copy function is provided
-  if (H->copyKey)
-    entry->key = H->copyKey(key);
+  entry->key = H->copyKey ? H->copyKey(key) : key;
     // create a new value list
   entry->values = dllNew();
     // set ownership of the value list
@@ -275,9 +273,6 @@ void htAddKeyVal(ht *H, void *key, void *value) {
     if (! H->cmpKey(key, e->key)) {
       if (! dllFind(e->values, value))
         dllPush(e->values, value);
-      // update the maximum length of a bucket
-      if (dllSize(bucket) > H->maxLen)
-        H->maxLen = dllSize(bucket);
       return;
     }
   }
@@ -357,10 +352,13 @@ bool htDelVal(ht *H, void *key, void *value) {
 }
 
 //=================================================================
-// resets the iterator
-void htReset(ht *H) {
+// returns the first key-value pair in the table and sets the
+// iterator to the next key-value pair; 
+// returns NULL if the table is empty
+htEntry *htFirst(ht *H) {
   H->iterBucket = 0;
   H->iterNode = NULL;
+  return htNext(H);
 }
 
 //=================================================================
@@ -370,12 +368,9 @@ void htReset(ht *H) {
 // returns NULL if end of the table is reached
 htEntry *htNext(ht *H) {
 
-    // if the end of the table is reached, 
-    // reset the iterator
-  if (H->iterBucket >= H->capacity) {
-    htReset(H);
+    // end of the table reached
+  if (H->iterBucket >= H->capacity) 
     return NULL;
-  }
 
     // skip empty buckets
   if (H->buckets[H->iterBucket] == NULL ||
@@ -433,21 +428,14 @@ void htShow(ht *H) {
                     "showValue function not set\n");
     return;
   }
-  htReset(H);
-  htEntry *entry;
-  
   
   printf("\n--------------------\n"
           "  %s [%zu]\n"
           "--------------------\n\n", 
           H->label, H->nKeys);
 
-  while ((entry = htNext(H))) {
-    H->showKey(entry->key);
-    printf("[%zu]", dllSize(entry->values));
-    printf(dllIsEmpty(entry->values) ? "\n" : ": ");
-    dllShow(entry->values);
-  }
+  for (htEntry *e = htFirst(H); e; e = htNext(H)) 
+    htShowEntry(H, e->key);
   printf("\n");
 }
 

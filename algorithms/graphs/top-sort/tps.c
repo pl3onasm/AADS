@@ -30,7 +30,7 @@ void dfsVisit(graph *G, vertex *u, dll *sorted) {
 // Sorts the vertices in the graph G in topological order
 // Since the graph is implemented as a hash table, the
 // sorting may differ from one run to another as a topological
-// sort is not unique.
+// sort is not necessarily unique
 dll *topSort(graph *G) {
   dll *sorted = dllNew();  
   

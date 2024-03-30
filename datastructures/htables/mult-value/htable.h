@@ -1,5 +1,6 @@
 /* 
-  Generic hash table, using separate chaining
+  Generic hash table implementation, using separate chaining
+  Keys can have multiple values
   Author: David De Potter
   LICENSE: MIT, see LICENSE file in repository root folder
 */
@@ -157,8 +158,10 @@ inline bool htIsEmpty(ht *H) {
   // returns the number of values associated with a key
 size_t htKeySize(ht *H, void *key);
 
-  // resets the iterator
-void htReset(ht *H);
+  // returns the first key-value pair in the hash table
+  // and updates the iterator to the next pair
+  // returns NULL if the hash table is empty
+htEntry *htFirst(ht *H);
 
   // returns the key-value pair of the current iterator position
   // and sets the iterator to the next key-value pair

@@ -8,6 +8,7 @@
 #include <ctype.h>
 #include <string.h>
 #include "sshtable.h"
+#include "../../../lib/clib/clib.h"
 
 //===================================================================
 // FNV-1a hash function
@@ -150,16 +151,16 @@ void ssHtDelVal(ssHt *ssht, char *key, char *value) {
   htDelVal((ht *)ssht, (void *)key, (void *)value);
 }
 
-void ssHtShow(ssHt *ssht) {
-  htShow((ht *)ssht);
-}
-
 void ssHtShowEntry(ssHt *ssht, char *key) {
   htShowEntry((ht *)ssht, (void *)key);
 }
 
 void ssHtStats(ssHt *ssht) {
   htStats((ht *)ssht);
+}
+
+void ssHtShow(ssHt *ssht) {
+  htShow((ht *)ssht);
 }
 
 void ssHtFree(ssHt *ssht) {
@@ -178,8 +179,8 @@ size_t ssHtKeySize(ssHt *ssht, char *key) {
   return htKeySize((ht *)ssht, (void *)key);
 }
 
-void ssHtReset(ssHt *ssht) {
-  htReset((ht *)ssht);
+htEntry *ssHtFirst(ssHt *ssht) {
+  return (htEntry *)htFirst((ht *)ssht);
 }
 
 htEntry *ssHtNext(ssHt *ssht) {

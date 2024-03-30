@@ -117,5 +117,7 @@ int main (){
   ssHtStats(ht);
 
   ssHtFree(ht);  
+
+  return 0;
 }
 

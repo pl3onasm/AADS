@@ -56,11 +56,11 @@ void ssHtDelKey(ssHt *ht, char *key);
 void ssHtDelVal(ssHt *ht, 
   char *key, char *value);
 
-void ssHtShow(ssHt *ht);
-
 void ssHtShowEntry(ssHt *H, char *key);
 
 void ssHtStats(ssHt *ht);
+
+void ssHtShow(ssHt *ht);
 
 size_t ssHtSize(ssHt *ht);
 
@@ -68,7 +68,7 @@ bool ssHtIsEmpty(ssHt *ht);
 
 size_t ssHtKeySize(ssHt *ht, char *key);
 
-void ssHtReset(ssHt *ht);
+htEntry *ssHtFirst(ssHt *ht);
 
 htEntry *ssHtNext(ssHt *ht);
 

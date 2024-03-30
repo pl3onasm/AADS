@@ -18,7 +18,7 @@
 #ifndef GRAPH_H_INCLUDED
 #define GRAPH_H_INCLUDED
 
-#include "../../htables/htable/htable.h"
+#include "../../htables/mult-value/htable.h"
 #include "edge.h"
 #include "vertex.h"
 
@@ -216,4 +216,4 @@ vertex *firstV(graph *G);
   // returns NULL if there are no more vertices
 vertex *nextV(graph *G);
   
-#endif // GRAPH_H_INCLUDED_
+#endif // GRAPH_H_INCLUDED

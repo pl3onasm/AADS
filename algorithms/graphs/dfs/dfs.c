@@ -78,8 +78,8 @@ void dfsVisit(graph *G, vertex *u, size_t *time) {
 //===================================================================
 // Builds a depth-first search forest for the graph G
 // Since the graph is implemented as a hash table, the
-// graph traversal and thus the edge classification may
-// differ from one run to another
+// graph traversal and thus the corresponding edge 
+// classification may differ from one run to another
 void dfs(graph *G, size_t *time) {
   
     // Discover all white nodes in the graph
