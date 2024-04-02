@@ -1,3 +1,9 @@
+/* 
+  Generic graph implementation
+  Some tests with a fictional animal graph
+  Author: David De Potter
+*/
+
 #include "graph.h"
 
 int main() {

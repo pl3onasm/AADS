@@ -1,3 +1,10 @@
+/* 
+  Generic priority queue interface, using binary heaps
+  Some tests with a priority queue of tasks having a name,
+  a section and a duration
+  Author: David De Potter
+*/
+
 #include "bpqueue.h"  
 #include <string.h>
 #include <time.h>

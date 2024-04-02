@@ -1,3 +1,13 @@
+/* 
+  Generic priority queue interface, using binary heaps
+  Supports updating priorities using a hash table
+    mapping data to indices in the queue (str(data) -> idx)
+    String representation of data should be unique for each 
+    data item
+  Author: David De Potter
+  LICENSE: MIT, see LICENSE file in repository root folder
+*/
+
 #include "bpqueue.h"
 #include "../../lib/clib/clib.h"
 

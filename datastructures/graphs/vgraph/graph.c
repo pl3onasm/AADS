@@ -1,3 +1,9 @@
+/* 
+  Generic graph implementation using a hash table
+  Author: David De Potter
+  LICENSE: MIT, see LICENSE file in repository root folder
+*/
+
 #include "graph.h"
 #include "../../../lib/clib/clib.h"
 #include <ctype.h>
@@ -507,11 +513,8 @@ graph *copyGraph(graph *G) {
   copy->type = G->type;
   vertex *src;
   double weight = 1;
-  for (edge *e = firstE(G, &src); e; e = nextE(G, &src)) {
-    if (e->weight != UNWEIGHTED) 
-      weight = e->weight;
-    addVandEW(copy, src->label, e->to->label, weight);
-  }
+  for (edge *e = firstE(G, &src); e; e = nextE(G, &src)) 
+    addVandEW(copy, src->label, e->to->label, e->weight);
   return copy;
 }
 
@@ -523,12 +526,8 @@ graph *transposeGraph(graph *G) {
   graph *T = newGraph(nVertices(G), G->weight);
   T->type = G->type;
   vertex *src;
-  double weight = 1;
-  for (edge *e = firstE(G, &src); e; e = nextE(G, &src)) {
-    if (e->weight != UNWEIGHTED) 
-      weight = e->weight;
-    addVandEW(T, e->to->label, src->label, weight);
-  }
+  for (edge *e = firstE(G, &src); e; e = nextE(G, &src)) 
+    addVandEW(T, e->to->label, src->label, e->weight);
   return T;
 }
 
