@@ -211,7 +211,7 @@ void *bpqGetKey(bpqueue *pq, void *data) {
 }
 
 //===================================================================
-// Updates the priority of a node in the heap by updating the key
+// Updates the priority of a node in the queue by updating the key
 // and reordering the heap if necessary
 void bpqUpdateKey(bpqueue *pq, void *data, void *newKey) {
 

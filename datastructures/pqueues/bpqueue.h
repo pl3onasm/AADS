@@ -49,8 +49,8 @@ typedef struct {
   bpqCpyData copyData;   // function to copy data
   bpqFreeKey freeKey;    // function to free key
   bpqCopyKey copyKey;    // function to copy key
-  bpqType type;          // type of heap (MIN or MAX)
-  char *label;           // label for the heap
+  bpqType type;          // type of priority queue (MIN or MAX)
+  char *label;           // label for the priority queue
                          // default is "BINARY PQ"
   char *delim;           // string delimter for show
                          // default is ", "
@@ -59,23 +59,23 @@ typedef struct {
 // function prototypes
 
   // creates a new priority queue, with given capacity, 
-  // type (MIN / MAX), key comparison function,
-  // and function to convert data to string
+  // type (MIN / MAX), key comparison function, key copy
+  // function, key free function, and data to string function
 bpqueue *bpqNew(size_t capacity, bpqType type, 
                 bpqCompKey cmp, bpqCopyKey copyKey,
                 bpqFreeKey freeKey, bpqToString toString);
 
-  // sets the show function for the heap
+  // sets the show function for the priority queue
 void bpqSetShow(bpqueue *pq, bpqShowKey show, 
                 bpqShowData showData);
 
-  // sets the label for the heap
+  // sets the label for the priority queue
 void bpqSetLabel(bpqueue *pq, char *label);
 
   // sets the delimiter for the show function
 void bpqSetDelim(bpqueue *pq, char *delim);
 
-  // deallocates the binary heap
+  // deallocates the priority queue
 void bpqFree(bpqueue *pq);
 
   // sets the queue to own the input data;
@@ -110,7 +110,7 @@ void bpqPush(bpqueue *pq, void *data, void *key);
   // shows the priority queue
 void bpqShow(bpqueue *pq);
 
-  // true if the heap is empty
+  // true if the queue is empty
 inline bool bpqIsEmpty(bpqueue *pq) {
   return pq->size == 0;
 } 
