@@ -11,8 +11,8 @@
 
 //=================================================================
 // Creates a new map
-map *newMap(mapHash hash, mapCmpKey cmpKey, 
-            size_t capacity) {
+map *mapNew(mapHash hash, size_t capacity, 
+            mapCompKey cmpKey) {
   
   map *M = safeCalloc(1, sizeof(map));
   M->capacity = capacity < 32 ? 32 : capacity;
@@ -123,6 +123,15 @@ void *mapGetKey(map *M, void *key) {
 }
 
 //=================================================================
+// Returns the value given a key; 
+// returns NULL if the key is not found
+void *mapGetVal(map *M, void *key) {
+  void *value = NULL;
+  mapHasKeyVal(M, key, &value);
+  return value;
+}
+
+//=================================================================
 // rehashes the hash table if the number of 
 // keys exceeds 75% of the capacity
 static void mapRehash(map *M) {
@@ -134,7 +143,7 @@ static void mapRehash(map *M) {
   size_t oldCapacity = M->capacity;
   M->capacity *= 2;
   dll **newBuckets = safeCalloc(M->capacity, sizeof(dll*));
-  M->nFilled = M->nCollisions = M->maxLen = 0;
+  M->nFilled = 0;
   
     // rehash old entries
   for (size_t i = 0; i < oldCapacity; i++) {
@@ -143,16 +152,16 @@ static void mapRehash(map *M) {
     if (! bucket)
       continue;
     
-    // rehash all entries in the bucket to new buckets
+      // rehash all entries in the bucket to new buckets
     for (mapEntry *e = dllFirst(bucket); e; e = dllNext(bucket)) {
       size_t newIndex = getIndex(M, e->key);
       if (! newBuckets[newIndex]) {
         newBuckets[newIndex] = dllNew();
         M->nFilled++;
-      } else M->nCollisions++;
+      } 
       dllPush(newBuckets[newIndex], e);
     }
-    // remove the old bucket without freeing the entries
+      // remove the old bucket without freeing the entries
     dllFree(bucket);
   }
 
@@ -165,9 +174,7 @@ static void mapRehash(map *M) {
 // Adds a new key-value pair to the map
 static void mapAddNewkeyVal(map *M, void *key, void *value, 
                             dll *bucket) {
-
-  if (! dllIsEmpty(bucket)) 
-    M->nCollisions++;
+  
   mapEntry *entry = safeCalloc(1, sizeof(mapEntry));
 
     // copy the key if a copy function is provided
@@ -178,17 +185,14 @@ static void mapAddNewkeyVal(map *M, void *key, void *value,
 
     // add the new key-value pair to the bucket
   dllPush(bucket, entry);
-    // update the maximum length of a bucket
-  if (dllSize(bucket) > M->maxLen)
-    M->maxLen = dllSize(bucket);
     // one key more
   M->nKeys++;
 }
 
 //=================================================================
 // Tries to add a key-value pair to the table; if the key
-// already exists, the value is updated with the new value
-void mapAddKeyVal(map *M, void *key, void *value) {
+// already exists, its value is updated with the new value
+void mapAddKey(map *M, void *key, void *value) {
     
     // rehash if necessary
   mapRehash(M);
@@ -203,15 +207,18 @@ void mapAddKeyVal(map *M, void *key, void *value) {
     M->nFilled++;
   }
   
-    // if the key exists, update the value and return
+    // if the key exists, update the value
   dll *bucket = M->buckets[index];
-  for (mapEntry *e = dllFirst(bucket); e; e = dllNext(bucket)) {
+  for (mapEntry *e = dllFirst(bucket); e; e = dllNext(bucket)) 
     if (! M->cmpKey(key, e->key)) {
-      if (M->freeValue)
+        // free the old value if a free function is provided
+      if (M->freeValue) 
         M->freeValue(e->value);
-      e->value = value;
+      
+        // copy the new value if a copy function is provided
+      e->value = M->copyValue ? M->copyValue(value) : value;
+      return;
     }
-  }
 
     // if the key does not exist,
     // add a new key-value pair
@@ -244,8 +251,6 @@ bool mapDelKey(map *M, void *key) {
         // update statistics
       if (dllIsEmpty(bucket))
         M->nFilled--;
-      else
-        M->nCollisions--;
       return true;
     }
   }
@@ -303,6 +308,16 @@ mapEntry *mapNext(map *M) {
 }
 
 //=================================================================
+// Computes the maximum size of the buckets
+size_t mapMaxBucketSize(map *M) {
+  size_t max = 0;
+  for (size_t i = 0; i < M->capacity; i++) 
+    if (M->buckets[i] && M->buckets[i]->size > max)
+      max = M->buckets[i]->size;
+  return max;
+}
+
+//=================================================================
 // Gives an overview of the distribution of keys 
 // over the buckets
 void mapStats(map *M) {
@@ -313,11 +328,12 @@ void mapStats(map *M) {
          "   Buckets used.......: %zu\n"
          "   Number of keys.....: %zu\n"
          "   Load factor........: %.2f\n"
-         "   Maximum bucket size: %zu\n"
+         "   Max. bucket size...: %zu\n"
          "   Collisions.........: %zu\n\n\n",
          M->capacity, M->nFilled, M->nKeys,
          (double)M->nKeys / M->capacity, 
-         M->maxLen, M->nCollisions);
+         mapMaxBucketSize(M),
+         M->nKeys - M->nFilled);
 }
 
 //=================================================================
@@ -331,13 +347,13 @@ void mapShow(map *M) {
   
   printf("\n--------------------\n"
           "  %s [%zu]\n"
-          "--------------------\n\n", 
+          "--------------------\n", 
           M->label, M->nKeys);
 
   for (mapEntry *e = mapFirst(M); e; e = mapNext(M)) 
     mapShowEntry(M, e->key);
   
-  printf("\n");
+  printf("--------------------\n\n");
 }
 
 //=================================================================

@@ -13,8 +13,8 @@
 //===================================================================
 // FNV-1a hash function
 // (http://www.isthe.com/chongo/tech/comp/fnv/index.html)
-static uint64_t ssHtHash(void *key, uint64_t seed, 
-                         ssHtCase htCase) {
+static uint64_t sshtHash(void *key, uint64_t seed, 
+                         sshtCase htCase) {
 
   char *str = (char *)key;
   char ch;
@@ -30,13 +30,13 @@ static uint64_t ssHtHash(void *key, uint64_t seed,
 //===================================================================
 // case sensitive hash
 static uint64_t hashCS(void *key, uint64_t seed) {
-  return ssHtHash(key, seed, CASE_SENSITIVE);
+  return sshtHash(key, seed, CASE_SENSITIVE);
 }
 
 //===================================================================
 // case insensitive hash
 static uint64_t hashCI(void *key, uint64_t seed) {
-  return ssHtHash(key, seed, CASE_INSENSITIVE);
+  return sshtHash(key, seed, CASE_INSENSITIVE);
 }
 
 //===================================================================
@@ -81,110 +81,110 @@ static void *copyStr(void *str) {
 
 //===================================================================
 // creates a new string-string hash table
-ssHt *ssHtNew(ssHtCase htCase, size_t capacity) {
+sshtable *sshtNew(sshtCase htCase, size_t capacity) {
   htHash hash = htCase == CASE_SENSITIVE ? hashCS : hashCI;
   htCmpKey cmpKey; 
   htCmpValue cmpVal;
   cmpKey = cmpVal = htCase == CASE_SENSITIVE ? cmpStrCS : cmpStrCI;
-  ht *ht = htNew(hash, cmpKey, cmpVal, capacity);
+  htable *ht = htNew(hash, cmpKey, cmpVal, capacity);
   htSetShow(ht, showStr, showStr);
-  return (ssHt *)ht;
+  return (sshtable *)ht;
 }
 
 //===================================================================
 // Casts
 
-void ssHtSetLabel(ssHt *ssht, char *label) {
-  htSetLabel((ht *)ssht, label);
+void sshtSetLabel(sshtable *ssht, char *label) {
+  htSetLabel((htable *)ssht, label);
 }
 
-void ssHtSetValDelim(ssHt *ssht, char *valDelim) {
-  htSetValDelim((ht *)ssht, valDelim);
+void sshtSetValDelim(sshtable *ssht, char *valDelim) {
+  htSetValDelim((htable *)ssht, valDelim);
 }
 
-void ssHtOwnKeys(ssHt *ssht) {
-  htOwnKeys((ht *)ssht, free);
+void sshtOwnKeys(sshtable *ssht) {
+  htOwnKeys((htable *)ssht, free);
 }
 
-void ssHtOwnVals(ssHt *ssht) {
-  htOwnVals((ht *)ssht, free);
+void sshtOwnVals(sshtable *ssht) {
+  htOwnVals((htable *)ssht, free);
 }
 
-void ssHtCopyKeys(ssHt *ssht) {
-  htCopyKeys((ht *)ssht, copyStr, free);
+void sshtCopyKeys(sshtable *ssht) {
+  htCopyKeys((htable *)ssht, copyStr, free);
 }
 
-void ssHtCopyVals(ssHt *ssht) {
-  htCopyVals((ht *)ssht, copyStr, free);
+void sshtCopyVals(sshtable *ssht) {
+  htCopyVals((htable *)ssht, copyStr, free);
 }
 
-bool ssHtHasKeyVals(ssHt *ssht, char *key, dll **values) {
-  return (ssHt *)htHasKeyVals((ht *)ssht, (void *)key, values);
+bool sshtHasKeyVals(sshtable *ssht, char *key, dll **values) {
+  return (sshtable *)htHasKeyVals((htable *)ssht, (void *)key, values);
 }
 
-dll *ssHtGetVals(ssHt *ssht, char *key) {
-  return htGetVals((ht *)ssht, (void *)key);
+dll *sshtGetVals(sshtable *ssht, char *key) {
+  return htGetVals((htable *)ssht, (void *)key);
 }
 
-void ssHtAddKey(ssHt *ssht, char *key) {
-  htAddKey((ht *)ssht, (void *)key);
+void sshtAddKey(sshtable *ssht, char *key) {
+  htAddKey((htable *)ssht, (void *)key);
 }
 
-void ssHtAddKeyVal(ssHt *ssht, char *key, char *value) {
-  htAddKeyVal((ht *)ssht, (void *)key, (void *)value);
+void sshtAddKeyVal(sshtable *ssht, char *key, char *value) {
+  htAddKeyVal((htable *)ssht, (void *)key, (void *)value);
 }
 
-bool ssHtHasKey(ssHt *ssht, char *key) {
-  return htHasKey((ht *)ssht, (void *)key);
+bool sshtHasKey(sshtable *ssht, char *key) {
+  return htHasKey((htable *)ssht, (void *)key);
 }
 
-void ssHtAddKeyVals(ssHt *ssht, char *key, char **values, size_t len) {
+void sshtAddKeyVals(sshtable *ssht, char *key, char **values, size_t len) {
   for (size_t i = 0; i < len; i++)
-    ssHtAddKeyVal(ssht, key, values[i]);
+    sshtAddKeyVal(ssht, key, values[i]);
 }
 
-void ssHtDelKey(ssHt *ssht, char *key) {
-  htDelKey((ht *)ssht, (void *)key);
+void sshtDelKey(sshtable *ssht, char *key) {
+  htDelKey((htable *)ssht, (void *)key);
 }
 
-void ssHtDelVal(ssHt *ssht, char *key, char *value) {
-  htDelVal((ht *)ssht, (void *)key, (void *)value);
+void sshtDelVal(sshtable *ssht, char *key, char *value) {
+  htDelVal((htable *)ssht, (void *)key, (void *)value);
 }
 
-void ssHtShowEntry(ssHt *ssht, char *key) {
-  htShowEntry((ht *)ssht, (void *)key);
+void sshtShowEntry(sshtable *ssht, char *key) {
+  htShowEntry((htable *)ssht, (void *)key);
 }
 
-void ssHtStats(ssHt *ssht) {
-  htStats((ht *)ssht);
+void sshtStats(sshtable *ssht) {
+  htStats((htable *)ssht);
 }
 
-void ssHtShow(ssHt *ssht) {
-  htShow((ht *)ssht);
+void sshtShow(sshtable *ssht) {
+  htShow((htable *)ssht);
 }
 
-void ssHtFree(ssHt *ssht) {
-  htFree((ht *)ssht);
+void sshtFree(sshtable *ssht) {
+  htFree((htable *)ssht);
 }
 
-size_t ssHtSize(ssHt *ssht) {
-  return htSize((ht *)ssht);
+size_t sshtSize(sshtable *ssht) {
+  return htSize((htable *)ssht);
 }
 
-bool ssHtIsEmpty(ssHt *ssht) {
-  return htIsEmpty((ht *)ssht);
+bool sshtIsEmpty(sshtable *ssht) {
+  return htIsEmpty((htable *)ssht);
 }
 
-size_t ssHtKeySize(ssHt *ssht, char *key) {
-  return htKeySize((ht *)ssht, (void *)key);
+size_t sshtKeySize(sshtable *ssht, char *key) {
+  return htKeySize((htable *)ssht, (void *)key);
 }
 
-htEntry *ssHtFirst(ssHt *ssht) {
-  return (htEntry *)htFirst((ht *)ssht);
+htEntry *sshtFirst(sshtable *ssht) {
+  return (htEntry *)htFirst((htable *)ssht);
 }
 
-htEntry *ssHtNext(ssHt *ssht) {
-  return (htEntry *)htNext((ht *)ssht);
+htEntry *sshtNext(sshtable *ssht) {
+  return (htEntry *)htNext((htable *)ssht);
 }
 
 

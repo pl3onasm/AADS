@@ -41,12 +41,10 @@ typedef struct {
   htFreeValue freeValue;  // function to free the value
   htCopyKey copyKey;      // function to copy the key
   htCopyValue copyValue;  // function to copy the value
-  size_t nCollisions;     // number of collisions
   size_t nFilled;         // number of filled buckets
-  size_t maxLen;          // maximum length of a bucket
   char *label;            // label for the hash table
   char *valDelim;         // delimiter for the values
-} ht;
+} htable;
 
 typedef struct {          // key-value pair
   void *key;              // key
@@ -56,116 +54,116 @@ typedef struct {          // key-value pair
   // hash table function prototypes
 
   // creates a new hash table
-ht *htNew(htHash hash, htCmpKey cmpKey, 
+htable *htNew(htHash hash, htCmpKey cmpKey, 
           htCmpValue cmpVal, size_t capacity);
 
   // sets the label for the hash table
   // default is "hash table"
-void htSetLabel(ht *H, char *label);
+void htSetLabel(htable *H, char *label);
 
   // sets the string delimiter for the values
   // default is ", "
-void htSetValDelim(ht *H, char *delim);
+void htSetValDelim(htable *H, char *delim);
 
   // sets the show functions for the hash table
-void htSetShow(ht *H, htShowKey showKey, 
+void htSetShow(htable *H, htShowKey showKey, 
                htShowValue showValue);
 
   // sets the table to make copies of the keys
   // if set, the table will only free the copies
-void htCopyKeys(ht *H, htCopyKey copyKey, 
+void htCopyKeys(htable *H, htCopyKey copyKey, 
                 htFreeKey freeKey);
 
   // sets the table to make copies of the values
   // if set, the table will only free the copies
-void htCopyVals(ht *H, htCopyValue copyValue, 
+void htCopyVals(htable *H, htCopyValue copyValue, 
                 htFreeValue freeValue);
 
   // sets the table to own the input keys,
   // freeing them when the table is freed
-void htOwnKeys(ht *H, htFreeKey freeKey);
+void htOwnKeys(htable *H, htFreeKey freeKey);
 
   // sets the table to own the input values,
   // freeing them when the table is freed
-void htOwnVals(ht *H, htFreeValue freeValue);
+void htOwnVals(htable *H, htFreeValue freeValue);
 
   // frees the hash table
-void htFree(ht *H);
+void htFree(htable *H);
 
   // sets the value pointer to the value list associated 
   // with the key, set to NULL if the key has no values
   // returns true if the key exists
-bool htHasKeyVals(ht *H, void *key, dll **values);
+bool htHasKeyVals(htable *H, void *key, dll **values);
 
   // returns true if the key-value pair exists
-bool htHasKeyVal(ht *H, void *key, void *value);
+bool htHasKeyVal(htable *H, void *key, void *value);
 
   // returns a value associated with the key
   // returns NULL if the value or key is not found
-void *htGetVal(ht *H, void *key, void *value);
+void *htGetVal(htable *H, void *key, void *value);
 
   // returns the value list associated with the key
   // returns NULL if the value or key is not found
-dll *htGetVals(ht *H, void *key);
+dll *htGetVals(htable *H, void *key);
 
   // adds a key to the hash table
   // if the key exists, nothing happens
-void htAddKey(ht *H, void *key);
+void htAddKey(htable *H, void *key);
 
   // adds a key-value pair to the hash table
   // if the key exists, the value is added to the its
   // value list, if the value is not already in there
   // if the key is not in the hash table, 
   // a new key-value pair is added
-void htAddKeyVal(ht *H, void *key, void *value);
+void htAddKeyVal(htable *H, void *key, void *value);
 
   // returns true if the key exists in the hash table
-bool htHasKey(ht *H, void *key);
+bool htHasKey(htable *H, void *key);
 
   // returns the key if it exists in the hash table
   // returns NULL if the key is not found
-void *htGetKey(ht *H, void *key);
+void *htGetKey(htable *H, void *key);
 
   // removes the key and its value list 
   // true if the key was removed
   // false if the key was not found
-bool htDelKey(ht *H, void *key);
+bool htDelKey(htable *H, void *key);
 
   // removes a value from the key's value list
   // true if the value was removed
   // false if the key or value was not found
-bool htDelVal(ht *H, void *key, void *value);
+bool htDelVal(htable *H, void *key, void *value);
 
   // shows the hash table
-void htShow(ht *H);
+void htShow(htable *H);
 
   // shows a key and its values
-void htShowEntry(ht *H, void *key);
+void htShowEntry(htable *H, void *key);
 
   // shows distribution statistics
-void htStats(ht *H);
+void htStats(htable *H);
 
   // returns the number of keys in the hash table
-inline size_t htSize(ht *H) {
+inline size_t htSize(htable *H) {
   return H->nKeys;
 }
 
   // returns true if the hash table is empty
-inline bool htIsEmpty(ht *H) {
+inline bool htIsEmpty(htable *H) {
   return H->nKeys == 0;
 }
 
   // returns the number of values associated with a key
-size_t htKeySize(ht *H, void *key);
+size_t htKeySize(htable *H, void *key);
 
   // returns the first key-value pair in the hash table
   // and updates the iterator to the next pair
   // returns NULL if the hash table is empty
-htEntry *htFirst(ht *H);
+htEntry *htFirst(htable *H);
 
   // returns the key-value pair of the current iterator position
   // and sets the iterator to the next key-value pair
   // returns NULL if the end of the hash table is reached
-htEntry *htNext(ht *H);
+htEntry *htNext(htable *H);
 
 #endif  // HTABLE_H_INCLUDED

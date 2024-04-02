@@ -7,28 +7,59 @@
 #include "binheap.h"
 #include "../../../lib/clib/clib.h"
 
+#define RIGHT(i) (2 * i + 2)
+#define LEFT(i) (2 * i + 1)
+#define PARENT(i) ((i - 1) / 2)
+
+//===================================================================
+// Creates a new binary heap
 binheap *newBinHeap(size_t capacity, hpType hpType,
-    int (*cmp)(const void *, const void *)) {
+                    hpCompData cmp) {
   binheap *h = safeCalloc(1, sizeof(binheap));
   h->capacity = capacity;
-  h->size = 0;
   h->cmp = cmp;
   h->arr = safeCalloc(capacity, sizeof(void *));
   h->hpType = hpType;
+  h->label = "BINARY HEAP";
+  h->delim = ", ";
   return h;
 }
 
+//===================================================================
+// Deallocates the binary heap
 void freeBinHeap(binheap *H) {
   if (!H) return;
   free(H->arr);
   free(H);
 }
 
+//===================================================================
+// Sets the show function for the heap
+void setBinHeapShow(binheap *H, hpShowData show) {
+  H->show = show;
+}
+
+//===================================================================
+// Sets the label for the heap
+void setBinHeapLabel(binheap *H, char *label) {
+  H->label = label;
+}
+
+//===================================================================
+// Sets the delimiter for the show function
+void setBinHeapDelim(binheap *H, char *delim) {
+  H->delim = delim;
+}
+
+//===================================================================
+// Returns the top element of the heap without removing it
 void *peekAtBinHeap(binheap *H) {
   if (H->size == 0) return NULL;
   return H->arr[0];
 }
 
+//===================================================================
+// Removes the top element from the heap
 void *popFromBinHeap(binheap *H) {
   if (H->size == 0) return NULL;
   void *top = H->arr[0];
@@ -38,6 +69,8 @@ void *popFromBinHeap(binheap *H) {
   return top;
 }
 
+//===================================================================
+// Adds a new node to the heap
 void pushToBinHeap(binheap *H, void *node) {
   if (H->size == H->capacity) {
     H->capacity *= 2;
@@ -59,6 +92,8 @@ void pushToBinHeap(binheap *H, void *node) {
   }
 }
 
+//===================================================================
+// Heapifies the binary heap starting from the given index
 void heapifyBinHeap(binheap *H, size_t idx) {
   size_t l = LEFT(idx);
   size_t r = RIGHT(idx);
@@ -85,21 +120,25 @@ void heapifyBinHeap(binheap *H, size_t idx) {
   }
 }
 
-binheap *buildBinHeap(void *arr, size_t len, size_t elemSize, 
-    hpType hpType, int (*cmp)(const void *, const void *)) {
+//===================================================================
+// Builds a binary heap from an array
+binheap *buildBinHeap(void *arr, size_t len, size_t elemSize,
+                      hpType hpType, hpCompData cmp) {
 
   if (len == 0) {
-    fprintf(stderr, "Error: cannot build a heap from an empty array\n");
+    fprintf(stderr, "Error: cannot build a heap "
+                    "from an empty array\n");
     exit(EXIT_FAILURE);
   }
 
   binheap *H = newBinHeap(len, hpType, cmp);
-  
-  // copy the array into the heap 
+
+    // copy the array into the heap 
   for (size_t i = 0; i < len; i++) 
     H->arr[i] = (char *)arr + i * elemSize;
  
-  // heapify the heap, starting from the last non-leaf node
+    // heapify the heap, 
+    // starting from the last non-leaf node
   H->size = len;
   for (size_t i = len / 2; i--; ) 
     heapifyBinHeap(H, i);
@@ -107,15 +146,28 @@ binheap *buildBinHeap(void *arr, size_t len, size_t elemSize,
   return H;
 }
 
-void showBinHeap(binheap *H, char *delim, 
-    void (*showData)(const void *)) {
-  
+//===================================================================
+// Shows the binary heap
+void showBinHeap(binheap *H) {
+  printf("--------------------\n"
+         "%s\n"
+         "Type: %s\n"
+         "Size: %zu\n"
+         "--------------------\n",
+          H->label, 
+          H->hpType == MIN ? "MIN" : "MAX", 
+          H->size);
+
   for (size_t i = 0; i < H->size; i++) {
-    showData(H->arr[i]);
-    printf(i < H->size - 1 ? "%s" : "", delim);
+    H->show(H->arr[i]);
+    printf(i < H->size - 1 ? "%s" : "\n", H->delim);
   }
-  printf("\n");
+
+  printf("--------------------\n\n");
 }
 
-
-
+//===================================================================
+// End of file
+#undef RIGHT
+#undef LEFT
+#undef PARENT

@@ -2,7 +2,7 @@
 
 int main() {
   graph *G = newGraph(20, UNWEIGHTED);
-  // setUndirected(G);   // uncomment to make the graph undirected
+  //setUndirected(G);   // uncomment to make the graph undirected
   setGLabel(G, "ANIMAL GRAPH");
   addVertex(G, "cat");
   addVertex(G, "dog");
@@ -79,12 +79,13 @@ int main() {
   delEdgeL(G, "rabbit", "bear");
   delEdgeL(G, "cat", "cat");
 
-  printf("\n\nAfter adding and removing some edges and vertices:\n\n");
+  printf("\nAfter adding and removing some edges and vertices:\n\n");
 
     // shows the resulting graph
   showGraph(G);
 
     // checks if the edges are in the graph
+  printf("\nChecking if some edges are in the graph:\n");
   printf("\n\nEdge %s-%s is in the graph: %s\n", "cat", "bird", 
          hasEdgeL(G, "cat", "bird") ? "true" : "false");
   printf("Edge %s-%s is in the graph: %s\n", "mouse", "chicken",
@@ -101,11 +102,19 @@ int main() {
          inGraphL(G, "mouse") ? "true" : "false");
 
     // tests the edge iterator over the graph
-  printf("All edges in the graph:\n");
+  printf("\nAll edges in the graph:\n");
   size_t n = 0;
   vertex *src;
   for (edge *e = firstE(G, &src); e; e = nextE(G, &src))
     printf("%zu: Edge %s-%s\n", ++n, src->label, e->to->label);
 
+    // tests the transpose of the graph
+  graph *GT = transposeGraph(G);
+  setGLabel(GT, "TRANSPOSE OF\n ANIMAL GRAPH");
+
+  showGraph(GT);
+
   freeGraph(G);
+  freeGraph(GT);
+  return 0;
 } 

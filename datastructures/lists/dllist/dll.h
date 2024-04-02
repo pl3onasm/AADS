@@ -49,7 +49,7 @@ void dllOwnData(dll *L, dllFreeData freeData);
   // Sets the DLL to make copies of the input data
   // If set, the DLL will only free the copies
 void dllCopyData(dll *L, dllCpyData copyData, 
-                    dllFreeData freeData);
+                 dllFreeData freeData);
 
   // Sets the delimiter string for the DLL
 void dllSetDelim(dll *L, char *delim);

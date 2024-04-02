@@ -17,6 +17,7 @@
 * [Trees](datastructures/trees)
 * [Hash tables](datastructures/htables)
 * [Heaps](datastructures/heaps)
+* [Priority queues](datastructures/pqueues)
 * [Graphs](datastructures/graphs)
 
 ## ${\color{darkseagreen}\text{Notes}}$

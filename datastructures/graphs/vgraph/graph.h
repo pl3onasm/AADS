@@ -28,7 +28,7 @@ typedef enum { DIRECTED, UNDIRECTED } graphType;
 
   // graph data structure
 typedef struct {
-  ht *V;              // hash table of vertices
+  htable *V;              // hash table of vertices
   size_t nEdges;      // number of edges in the graph
   graphType type;     // directed or undirected, 
                       // set to directed by default
@@ -141,7 +141,7 @@ void showVertexL(graph *G, char *label);
 void readGraph(graph *G);
 
   // Returns the transposed graph of G
-  // which is a copy of G with all edges reversed
+  // This is a copy of G with all edges reversed
 graph *transposeGraph(graph *G);
 
   // Checks if a vertex is in the graph

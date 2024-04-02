@@ -10,10 +10,10 @@
 
 //=================================================================
 // creates a new hash table
-ht *htNew(htHash hash, htCmpKey cmpKey, 
+htable *htNew(htHash hash, htCmpKey cmpKey, 
           htCmpValue cmpVal, size_t capacity) {
   
-  ht *H = safeCalloc(1, sizeof(ht));
+  htable *H = safeCalloc(1, sizeof(htable));
   H->capacity = capacity < 32 ? 32 : capacity;
   H->buckets = safeCalloc(H->capacity, sizeof(dll*));
   H->hash = hash;
@@ -29,35 +29,35 @@ ht *htNew(htHash hash, htCmpKey cmpKey,
 //=================================================================
 // setters
 
-void htSetLabel(ht *H, char *label) {
+void htSetLabel(htable *H, char *label) {
   H->label = label;
 }
 
-void htSetValDelim(ht *H, char *valDelim) {
+void htSetValDelim(htable *H, char *valDelim) {
   H->valDelim = valDelim;
 }
 
-void htSetShow(ht *H, htShowKey showKey, 
+void htSetShow(htable *H, htShowKey showKey, 
                htShowValue showValue) {
   H->showKey = showKey;
   H->showValue = showValue;
 }
 
-void htOwnKeys(ht *H, htFreeKey freeKey) {
+void htOwnKeys(htable *H, htFreeKey freeKey) {
   H->freeKey = freeKey;
 }
 
-void htOwnVals(ht *H, htFreeValue freeValue) {
+void htOwnVals(htable *H, htFreeValue freeValue) {
   H->freeValue = freeValue;
 }
 
-void htCopyKeys(ht *H, htCopyKey copyKey, 
+void htCopyKeys(htable *H, htCopyKey copyKey, 
                htFreeKey freeKey) {
   H->copyKey = copyKey;
   H->freeKey = freeKey;
 }
 
-void htCopyVals(ht *H, htCopyValue copyValue, 
+void htCopyVals(htable *H, htCopyValue copyValue, 
                  htFreeValue freeValue) {
   H->copyValue = copyValue;
   H->freeValue = freeValue;
@@ -65,7 +65,7 @@ void htCopyVals(ht *H, htCopyValue copyValue,
 
 //=================================================================
 // gets number of values associated with a key
-size_t htKeySize(ht *H, void *key) {
+size_t htKeySize(htable *H, void *key) {
   dll *values;
   if (! htHasKeyVals(H, key, &values))
     return 0;
@@ -74,7 +74,7 @@ size_t htKeySize(ht *H, void *key) {
 
 //=================================================================
 // deallocates the hash table
-void htFree(ht *H) {
+void htFree(htable *H) {
   for (size_t i = 0; i < H->capacity; i++) {
     if (H->buckets[i]) {
       dll *bucket = H->buckets[i];
@@ -93,13 +93,13 @@ void htFree(ht *H) {
 
 //=================================================================
 // returns the index of the bucket for a key
-static size_t getIndex(ht *H, void *key) {
+static size_t getIndex(htable *H, void *key) {
   return (H->hash(key, H->seed) % H->capacity);
 }
 
 //=================================================================
 // returns true if the key exists
-bool htHasKey(ht *H, void *key) {
+bool htHasKey(htable *H, void *key) {
   size_t index = getIndex(H, key);
   dll *bucket = H->buckets[index];
   if (! bucket || dllIsEmpty(bucket))
@@ -113,7 +113,7 @@ bool htHasKey(ht *H, void *key) {
 
 //=================================================================
 // Returns the key from the table given an identifying key
-void *htGetKey(ht *H, void *key) {
+void *htGetKey(htable *H, void *key) {
   size_t index = getIndex(H, key);
   dll *bucket = H->buckets[index];
   if (! bucket) 
@@ -127,7 +127,7 @@ void *htGetKey(ht *H, void *key) {
 
 //=================================================================
 // Returns the value associated with the key
-void *htGetVal(ht *H, void *key, void *value) {
+void *htGetVal(htable *H, void *key, void *value) {
   dll *values;
   if (! htHasKeyVals(H, key, &values))
     return NULL;
@@ -138,7 +138,7 @@ void *htGetVal(ht *H, void *key, void *value) {
 // sets the value pointer to values associated 
 // with the key; set to NULL if the key has no 
 // values; returns true if the key exists
-bool htHasKeyVals(ht *H, void *key, dll **values) {
+bool htHasKeyVals(htable *H, void *key, dll **values) {
   size_t index = getIndex(H, key);
   dll *bucket = H->buckets[index];
   *values = NULL;
@@ -157,7 +157,7 @@ bool htHasKeyVals(ht *H, void *key, dll **values) {
 
 //=================================================================
 // returns true if the value is associated with the key
-bool htHasKeyVal(ht *H, void *key, void *value) {
+bool htHasKeyVal(htable *H, void *key, void *value) {
   dll *values;
   if (! htHasKeyVals(H, key, &values))
     return false;
@@ -168,7 +168,7 @@ bool htHasKeyVal(ht *H, void *key, void *value) {
 
 //=================================================================
 // gets the value list associated with the key
-dll *htGetVals(ht *H, void *key) {
+dll *htGetVals(htable *H, void *key) {
   dll *values;
   htHasKeyVals(H, (void*)key, &values);
   return values;
@@ -177,7 +177,7 @@ dll *htGetVals(ht *H, void *key) {
 //=================================================================
 // rehashes the hash table if the number of 
 // keys exceeds 75% of the capacity
-static void htRehash(ht *H) {
+static void htRehash(htable *H) {
   
   if (H->nKeys < 0.75 * H->capacity)
     return;
@@ -186,7 +186,7 @@ static void htRehash(ht *H) {
   size_t oldCapacity = H->capacity;
   H->capacity *= 2;
   dll **newBuckets = safeCalloc(H->capacity, sizeof(dll*));
-  H->nFilled = H->nCollisions = H->maxLen = 0;
+  H->nFilled = 0;
   
     // rehash old entries
   for (size_t i = 0; i < oldCapacity; i++) {
@@ -201,7 +201,7 @@ static void htRehash(ht *H) {
       if (! newBuckets[newIndex]) {
         newBuckets[newIndex] = dllNew();
         H->nFilled++;
-      } else H->nCollisions++;
+      } 
       dllPush(newBuckets[newIndex], e);
     }
     // remove the old bucket without freeing the entries
@@ -215,11 +215,9 @@ static void htRehash(ht *H) {
 
 //=================================================================
 // adds a new key-value pair to the hash table
-static void htAddNewkeyVal(ht *H, void *key, void *value, 
+static void htAddNewkeyVal(htable *H, void *key, void *value, 
                            dll *bucket) {
 
-  if (! dllIsEmpty(bucket)) 
-    H->nCollisions++;
   htEntry *entry = safeCalloc(1, sizeof(htEntry));
 
     // copy the key if a copy function is provided
@@ -242,16 +240,13 @@ static void htAddNewkeyVal(ht *H, void *key, void *value,
     dllPush(entry->values, value);
     // add the new key-value pair to the bucket
   dllPush(bucket, entry);
-    // update the maximum length of a bucket
-  if (dllSize(bucket) > H->maxLen)
-    H->maxLen = dllSize(bucket);
     // one key more
   H->nKeys++;
 }
 
 //=================================================================
 // tries to add a key-value pair to the table
-void htAddKeyVal(ht *H, void *key, void *value) {
+void htAddKeyVal(htable *H, void *key, void *value) {
     
     // rehash if necessary
   htRehash(H);
@@ -284,7 +279,7 @@ void htAddKeyVal(ht *H, void *key, void *value) {
 
 //=================================================================
 // adds new key to the table without a value
-void htAddKey(ht *H, void *key) {
+void htAddKey(htable *H, void *key) {
   if (!H || !key) return;
 
   size_t index = getIndex(H, key);
@@ -311,7 +306,7 @@ void htAddKey(ht *H, void *key) {
 //=================================================================
 // deletes a key from the hash table
 // returns true if the key was removed, false if not found
-bool htDelKey(ht *H, void *key) {
+bool htDelKey(htable *H, void *key) {
   size_t index = getIndex(H, key);
   dll *bucket = H->buckets[index];
   if (! bucket) 
@@ -333,8 +328,6 @@ bool htDelKey(ht *H, void *key) {
         // update statistics
       if (dllIsEmpty(bucket))
         H->nFilled--;
-      else
-        H->nCollisions--;
       return true;
     }
   }
@@ -344,7 +337,7 @@ bool htDelKey(ht *H, void *key) {
 //=================================================================
 // deletes a value from the value list of a key
 // returns true if the value was removed, false if not found
-bool htDelVal(ht *H, void *key, void *value) {
+bool htDelVal(htable *H, void *key, void *value) {
   dll *values = NULL;
   if (! htHasKeyVals(H, key, &values) || !values)
     return false;
@@ -355,7 +348,7 @@ bool htDelVal(ht *H, void *key, void *value) {
 // returns the first key-value pair in the table and sets the
 // iterator to the next key-value pair; 
 // returns NULL if the table is empty
-htEntry *htFirst(ht *H) {
+htEntry *htFirst(htable *H) {
   H->iterBucket = 0;
   H->iterNode = NULL;
   return htNext(H);
@@ -366,7 +359,7 @@ htEntry *htFirst(ht *H) {
 // iterator position and sets the iterator to  
 // the next key-value pair
 // returns NULL if end of the table is reached
-htEntry *htNext(ht *H) {
+htEntry *htNext(htable *H) {
 
     // end of the table reached
   if (H->iterBucket >= H->capacity) 
@@ -403,9 +396,19 @@ htEntry *htNext(ht *H) {
 }
 
 //=================================================================
+// Computes the maximum bucket size
+size_t htMaxBucketSize(htable *H) {
+  size_t max = 0;
+  for (size_t i = 0; i < H->capacity; i++) 
+    if (H->buckets[i] && dllSize(H->buckets[i]) > max)
+      max = dllSize(H->buckets[i]);
+  return max;
+}
+
+//=================================================================
 // Gives an overview of the distribution of keys 
 // over the buckets
-void htStats(ht *H) {
+void htStats(htable *H) {
   printf("\n+---------------------------+\n"
          "|   Hash table statistics   |\n"
          "+---------------------------+\n\n"
@@ -413,16 +416,17 @@ void htStats(ht *H) {
          "   Buckets used.......: %zu\n"
          "   Number of keys.....: %zu\n"
          "   Load factor........: %.2f\n"
-         "   Maximum bucket size: %zu\n"
+         "   Max. bucket size...: %zu\n"
          "   Collisions.........: %zu\n\n\n",
          H->capacity, H->nFilled, H->nKeys,
          (double)H->nKeys / H->capacity, 
-         H->maxLen, H->nCollisions);
+         htMaxBucketSize(H),
+         H->nKeys - H->nFilled);
 }
 
 //=================================================================
 // shows the hash table
-void htShow(ht *H) {
+void htShow(htable *H) {
   if (!H->showKey || !H->showValue) {
     fprintf(stderr, "htShow: showKey or " 
                     "showValue function not set\n");
@@ -431,17 +435,17 @@ void htShow(ht *H) {
   
   printf("\n--------------------\n"
           "  %s [%zu]\n"
-          "--------------------\n\n", 
+          "--------------------\n", 
           H->label, H->nKeys);
 
   for (htEntry *e = htFirst(H); e; e = htNext(H)) 
     htShowEntry(H, e->key);
-  printf("\n");
+  printf("--------------------\n\n");
 }
 
 //=================================================================
 // shows a key-value pair
-void htShowEntry(ht *H, void *key) {
+void htShowEntry(htable *H, void *key) {
   if (!H->showKey || !H->showValue) {
     fprintf(stderr, "htShowEntry: showKey or " 
                     "showValue function not set\n");

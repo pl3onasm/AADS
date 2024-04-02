@@ -93,12 +93,16 @@ static void *copySizet(void *size) {
 
 //===================================================================
 // creates a new map
-sstMap *sstNewMap(sstMapCase mapCase, size_t capacity) {
-  mapHash hash = mapCase == CASE_SENSITIVE ? hashCS : hashCI;
-  mapCmpKey cmpKey = mapCase == CASE_SENSITIVE ? cmpStrCS : cmpStrCI;
-  map *M = newMap(hash, cmpKey, capacity);
+sstMap *sstMapNew(sstMapCase mapCase, size_t capacity) {
+  mapHash hash = mapCase == CASE_SENSITIVE ? 
+                            hashCS : hashCI;
+  mapCompKey cmpKey = mapCase == CASE_SENSITIVE ? 
+                                 cmpStrCS : cmpStrCI;
+  map *M = mapNew(hash, capacity, cmpKey); 
   mapSetLabel(M, "sstMap");
   mapSetShow(M, showStr, showSize);
+  mapOwnVals(M, free);  // we make copies of the size_t values, 
+                        // so we have to free them at the end
   return (sstMap *)M;
 }
 
@@ -121,18 +125,6 @@ void sstMapOwnKeys(sstMap *M) {
 }
 
 //===================================================================
-// sets the map to copy the values
-void sstMapCopyVals(sstMap *M) {
-  mapCopyVals((map *)M, copySizet, free);
-}
-
-//===================================================================
-// sets the map to own the values
-void sstMapOwnVals(sstMap *M) {
-  mapOwnVals((map *)M, free);
-}
-
-//===================================================================
 // deallocates the map
 void sstMapFree(sstMap *M) {
   mapFree((map *)M);
@@ -141,8 +133,13 @@ void sstMapFree(sstMap *M) {
 //===================================================================
 // returns true if the key exists and sets the
 // value pointer to the value associated with the key
-bool sstMapHasKeyVal(sstMap *M, char *key, size_t **value) {
-  return mapHasKeyVal((map *)M, (void *)key, (void **)value);
+bool sstMapHasKeyVal(sstMap *M, char *key, size_t *value) {
+  size_t *val = mapGetVal((map *)M, (void *)key);
+  if (val) {
+    *value = *val;
+    return true;
+  }
+  return false;
 }
 
 //===================================================================
@@ -153,9 +150,21 @@ bool sstMapHasKey(sstMap *M, char *key) {
 
 //===================================================================
 // adds a key-value pair to the map; if the key
-// exists, the value is updated to the new value
-void sstMapAddKeyVal(sstMap *M, char *key, size_t *value) {
-  mapAddKeyVal((map *)M, (void *)key, (void *)value);
+// exists, the value is updated
+void sstMapAddKey(sstMap *M, char *key, size_t value) {
+  size_t *val = safeCalloc(1, sizeof(size_t));
+  *val = value;
+  mapAddKey((map *)M, (void *)key, (void *)val);
+}
+
+//===================================================================
+// returns the value associated with the key
+// returns 0 if the key is not found
+size_t sstMapGetVal(sstMap *M, char *key) {
+  size_t *val = (size_t *)mapGetVal((map *)M, (void *)key);
+  if (val)
+    return *val;
+  return 0;
 }
 
 //===================================================================

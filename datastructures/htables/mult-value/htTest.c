@@ -7,7 +7,7 @@
 
 int main (){
   
-  ssHt *ht = ssHtNew(CASE_INSENSITIVE, 40);
+  sshtable *ht = sshtNew(CASE_INSENSITIVE, 40);
   
     // makes the hash table copy the keys and values
     // if set: total number of frees is 381
@@ -15,108 +15,108 @@ int main (){
   //ssHtCopyKeys(ht);  
   //ssHtCopyVals(ht);
 
-  ssHtAddKeyVal(ht, "one", "uno");
-  ssHtAddKeyVal(ht, "two", "due");
+  sshtAddKeyVal(ht, "one", "uno");
+  sshtAddKeyVal(ht, "two", "due");
     // adds a second value to the key "two"
-  ssHtAddKeyVal(ht, "two", "deux");   
-  ssHtAddKeyVal(ht, "three", "tre");
-  ssHtAddKeyVal(ht, "four", "quattro");
-  ssHtAddKeyVal(ht, "five", "cinque");
-  ssHtAddKeyVal(ht, "six", "sei");
-  ssHtAddKeyVal(ht, "seven", "sette");
-  ssHtAddKeyVal(ht, "eight", "otto");
-  ssHtAddKeyVal(ht, "nine", "nove");
-  ssHtAddKeyVal(ht, "ten", "dieci");
+  sshtAddKeyVal(ht, "two", "deux");   
+  sshtAddKeyVal(ht, "three", "tre");
+  sshtAddKeyVal(ht, "four", "quattro");
+  sshtAddKeyVal(ht, "five", "cinque");
+  sshtAddKeyVal(ht, "six", "sei");
+  sshtAddKeyVal(ht, "seven", "sette");
+  sshtAddKeyVal(ht, "eight", "otto");
+  sshtAddKeyVal(ht, "nine", "nove");
+  sshtAddKeyVal(ht, "ten", "dieci");
     // adds two more values to the key "one"
-  ssHtAddKeyVal(ht, "one", "ein");
-  ssHtAddKeyVal(ht, "one", "un");
-  ssHtAddKey(ht, "eleven");
+  sshtAddKeyVal(ht, "one", "ein");
+  sshtAddKeyVal(ht, "one", "un");
+  sshtAddKey(ht, "eleven");
   
-  ssHtShow(ht);
+  sshtShow(ht);
 
     // tries to add the same value to the key "one"
     // nothing happens because the value is already there
-  ssHtAddKeyVal(ht, "one", "uno");
+  sshtAddKeyVal(ht, "one", "uno");
 
     // tries to add the same key with case differences;
     // if the hash table is case sensitive,
     // a new key is added, otherwise the
     // value is added to the existing key
-  ssHtAddKeyVal(ht, "Five", "fünf");
+  sshtAddKeyVal(ht, "Five", "fünf");
 
     // tries to add the same value with case differences;
     // if the hash table is case sensitive,
     // a new value is added, otherwise nothing
-  ssHtAddKeyVal(ht, "Five", "Fünf");
+  sshtAddKeyVal(ht, "Five", "Fünf");
 
     // deletes some keys
-  ssHtDelKey(ht, "three");
-  ssHtDelKey(ht, "four");
-  ssHtDelKey(ht, "five");
+  sshtDelKey(ht, "three");
+  sshtDelKey(ht, "four");
+  sshtDelKey(ht, "five");
 
     // removes values from the key "two"
-  ssHtDelVal(ht, "two", "due");
+  sshtDelVal(ht, "two", "due");
     // after the following statement, the key "two" 
     // has no more values
-  ssHtDelVal(ht, "two", "deux");
+  sshtDelVal(ht, "two", "deux");
 
     // tries to remove a value from a 
     // key without values; nothing happens
-  ssHtDelVal(ht, "two", "deux");
+  sshtDelVal(ht, "two", "deux");
 
     // tries to remove a non-existing value from an 
     // existing key
     // nothing happens because the value is not there
-  ssHtDelVal(ht, "nine", "tre");
+  sshtDelVal(ht, "nine", "tre");
 
   printf("\nAfter adding and removing some keys and values:\n\n");
-  ssHtShow(ht);
-  ssHtStats(ht);
+  sshtShow(ht);
+  sshtStats(ht);
 
     // add more keys to trigger the rehashing;
     // a table starts with 32 buckets at minimum
     // and rehashes at 75% load factor
-  ssHtAddKeyVal(ht, "eleven", "undici");
-  ssHtAddKeyVal(ht, "twelve", "dodici");
-  ssHtAddKeyVal(ht, "thirteen", "tredici");
-  ssHtAddKeyVal(ht, "fourteen", "quattordici");
-  ssHtAddKeyVal(ht, "fifteen", "quindici");
-  ssHtAddKeyVal(ht, "sixteen", "sedici");
-  ssHtAddKeyVal(ht, "seventeen", "diciassette");
-  ssHtAddKeyVal(ht, "eighteen", "diciotto");
-  ssHtAddKeyVal(ht, "nineteen", "diciannove");
-  ssHtAddKeyVal(ht, "twenty", "venti");
-  ssHtAddKeyVal(ht, "twenty-one", "ventuno");
-  ssHtAddKeyVal(ht, "twenty-two", "ventidue");
-  ssHtAddKeyVal(ht, "twenty-three", "ventitre");
-  ssHtAddKeyVal(ht, "twenty-four", "ventiquattro");
-  ssHtAddKeyVal(ht, "twenty-five", "venticinque");
-  ssHtAddKeyVal(ht, "twenty-six", "ventisei");
-  ssHtAddKeyVal(ht, "twenty-seven", "ventisette");
-  ssHtAddKeyVal(ht, "twenty-eight", "ventotto");
-  ssHtAddKeyVal(ht, "twenty-nine", "ventinove");
-  ssHtAddKeyVal(ht, "thirty", "trenta");
-  ssHtAddKeyVal(ht, "thirty-one", "trentuno");
-  ssHtAddKeyVal(ht, "thirty-two", "trentadue");
-  ssHtAddKeyVal(ht, "thirty-three", "trentatre");
-  ssHtAddKeyVal(ht, "thirty-four", "trentaquattro");
-  ssHtAddKeyVal(ht, "thirty-five", "trentacinque");
-  ssHtAddKeyVal(ht, "thirty-six", "trentasei");
-  ssHtAddKeyVal(ht, "thirty-seven", "trentasette");
-  ssHtAddKeyVals(ht, "thirty-eight", 
+  sshtAddKeyVal(ht, "eleven", "undici");
+  sshtAddKeyVal(ht, "twelve", "dodici");
+  sshtAddKeyVal(ht, "thirteen", "tredici");
+  sshtAddKeyVal(ht, "fourteen", "quattordici");
+  sshtAddKeyVal(ht, "fifteen", "quindici");
+  sshtAddKeyVal(ht, "sixteen", "sedici");
+  sshtAddKeyVal(ht, "seventeen", "diciassette");
+  sshtAddKeyVal(ht, "eighteen", "diciotto");
+  sshtAddKeyVal(ht, "nineteen", "diciannove");
+  sshtAddKeyVal(ht, "twenty", "venti");
+  sshtAddKeyVal(ht, "twenty-one", "ventuno");
+  sshtAddKeyVal(ht, "twenty-two", "ventidue");
+  sshtAddKeyVal(ht, "twenty-three", "ventitre");
+  sshtAddKeyVal(ht, "twenty-four", "ventiquattro");
+  sshtAddKeyVal(ht, "twenty-five", "venticinque");
+  sshtAddKeyVal(ht, "twenty-six", "ventisei");
+  sshtAddKeyVal(ht, "twenty-seven", "ventisette");
+  sshtAddKeyVal(ht, "twenty-eight", "ventotto");
+  sshtAddKeyVal(ht, "twenty-nine", "ventinove");
+  sshtAddKeyVal(ht, "thirty", "trenta");
+  sshtAddKeyVal(ht, "thirty-one", "trentuno");
+  sshtAddKeyVal(ht, "thirty-two", "trentadue");
+  sshtAddKeyVal(ht, "thirty-three", "trentatre");
+  sshtAddKeyVal(ht, "thirty-four", "trentaquattro");
+  sshtAddKeyVal(ht, "thirty-five", "trentacinque");
+  sshtAddKeyVal(ht, "thirty-six", "trentasei");
+  sshtAddKeyVal(ht, "thirty-seven", "trentasette");
+  sshtAddKeyVals(ht, "thirty-eight", 
     (char *[]){"trentotto", "trente-huit", "achtunddreißig"}, 3);
-  ssHtAddKeyVals(ht, "thirty-nine", 
+  sshtAddKeyVals(ht, "thirty-nine", 
     (char *[]){"trentanove", "trente-neuf", "neununddreißig"}, 3);
-  ssHtAddKeyVals(ht, "forty", 
+  sshtAddKeyVals(ht, "forty", 
     (char *[]){"quaranta", "quarante", "vierzig"}, 3);
     
     // results in a different order of the keys
     // because of the rehashing
   printf("\nAfter rehashing:\n\n");
-  ssHtShow(ht);
-  ssHtStats(ht);
+  sshtShow(ht);
+  sshtStats(ht);
 
-  ssHtFree(ht);  
+  sshtFree(ht);  
 
   return 0;
 }

@@ -2,9 +2,7 @@
 #include "../../../lib/clib/clib.h"
 #include <ctype.h>
 
-#ifndef MAX_VERTEX_LABEL
 #define MAX_VERTEX_LABEL 50
-#endif
 
 //=================================================================
 // FNV-1a hash function
@@ -115,7 +113,7 @@ void showGraph(graph *G) {
           " %s\n"
           " Vertices: %zu\n"
           " Edges: %zu\n"
-          "--------------------\n\n", 
+          "--------------------\n", 
           G->V->label, 
           G->type == DIRECTED ? "Directed" : "Undirected",
           G->weight == UNWEIGHTED ? "Unweighted" : "Weighted",
@@ -138,6 +136,7 @@ void showGraph(graph *G) {
     showVertex(G, vertices[i]);
   }
 
+  printf("--------------------\n\n");
   free(vertices);
 }
 
@@ -501,18 +500,37 @@ vertex *nextV(graph *G) {
 }
 
 //=================================================================
+// Returns a copy of the graph
+graph *copyGraph(graph *G) {
+  if (! G) return NULL;
+  graph *copy = newGraph(nVertices(G), G->weight);
+  copy->type = G->type;
+  vertex *src;
+  double weight = 1;
+  for (edge *e = firstE(G, &src); e; e = nextE(G, &src)) {
+    if (e->weight != UNWEIGHTED) 
+      weight = e->weight;
+    addVandEW(copy, src->label, e->to->label, weight);
+  }
+  return copy;
+}
+
+//=================================================================
 // Returns the transposed graph of G
 // This is a copy of G but with the edges reversed
 graph *transposeGraph(graph *G) {
   if (! G) return NULL;
   graph *T = newGraph(nVertices(G), G->weight);
   T->type = G->type;
-  for (vertex *v = firstV(G); v; v = nextV(G))
-    addVertex(T, v->label);
-  for (vertex *v = firstV(G); v; v = nextV(G)) {
-    dll *edges = getNeighbors(G, v);
-    for (edge *e = dllFirst(edges); e; e = dllNext(edges)) 
-      addEdgeWL(T, e->to->label, v->label, e->weight);
+  vertex *src;
+  double weight = 1;
+  for (edge *e = firstE(G, &src); e; e = nextE(G, &src)) {
+    if (e->weight != UNWEIGHTED) 
+      weight = e->weight;
+    addVandEW(T, e->to->label, src->label, weight);
   }
   return T;
 }
+
+//=================================================================
+#undef MAX_VERTEX_LABEL

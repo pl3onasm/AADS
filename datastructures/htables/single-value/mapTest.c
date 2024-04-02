@@ -7,41 +7,57 @@
 
 int main (){
   
-  sstMap *map = sstNewMap(CASE_INSENSITIVE, 40);
+  sstMap *map = sstMapNew(CASE_INSENSITIVE, 40);
   
-    // set ownership of keys and values so all
+    // set ownership of keys so all extra
     // allocated memory is freed when the map is freed
   sstMapOwnKeys(map);  
-  sstMapOwnVals(map);
 
   sstMapSetLabel(map, "Test map");
 
     // add some key-value pairs
   for (size_t i = 0; i < 100; i++) {
     char *key = calloc(10, sizeof(char));
-    size_t *val = calloc(1, sizeof(size_t));
     sprintf(key, "key%zu", i);
-    *val = i;
-    sstMapAddKeyVal(map, key, val);
+    sstMapAddKey(map, key, i);
+  }
+  printf("\nAdded 100 keys to the map\n");
+  sstMapShow(map);
+
+      // update some values
+  for (size_t i = 1; i < 100; i += 20) {
+    char key[10];
+    sprintf(key, "key%zu", i);
+    printf("Updating value of %s to %zu\n", key, i * 1000);
+    sstMapAddKey(map, key, i * 1000);
   }
 
     // delete some keys
-  for (size_t i = 0; i < 100; i += 5) {
+  for (size_t i = 0; i < 100; i += 10) {
     char key[10];
     sprintf(key, "key%zu", i);
+    printf("\nDeleting %s", key);
     sstMapDelKey(map, key);
   }
 
-    // check if the keys are still there
+    // check some keys to see if they are still there
+  printf("\n\nChecking if keys are still there...\n\n");
   for (size_t i = 0; i < 100; i += 5) {
     char key[10];
     sprintf(key, "key%zu", i);
-    if (sstMapHasKey(map, key))
-      printf("Key %s is still there\n", key);
-    else
-      printf("Key %s is gone\n", key);
+    printf("%s is %s", key,
+      sstMapHasKey(map, key) ? "present\n" : "gone\n");
   }
 
+    // get the values of some keys
+  printf("\nGetting values of some keys...\n");
+  for (size_t i = 0; i < 100; i += 13) {
+    char key[10];
+    sprintf(key, "key%zu", i);
+    printf("\nValue of key %s is %zu", key, sstMapGetVal(map, key));
+  }
+
+  printf("\n\n");
   sstMapShow(map);
 
   sstMapStats(map);

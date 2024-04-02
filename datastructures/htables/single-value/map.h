@@ -1,6 +1,6 @@
 /* 
   Generic map implementation, using separate chaining
-  Keys can have only one value
+  Keys have exactly one value associated with them
   Author: David De Potter
   LICENSE: MIT, see LICENSE file in repository root folder
 */
@@ -15,7 +15,7 @@
 
   // function pointer types
 typedef uint64_t (*mapHash)(void *hashKey, uint64_t seed);
-typedef int (*mapCmpKey)(void const *key1, void const *key2);
+typedef int (*mapCompKey)(void const *key1, void const *key2);
 typedef void (*mapShowKey)(void *key);
 typedef void (*mapShowValue)(void *value);
 typedef void (*mapFreeKey)(void *key);
@@ -29,7 +29,7 @@ typedef struct {
   size_t nKeys;           // number of keys
   dll **buckets;          // array of doubly linked lists
   mapHash hash;           // hash function
-  mapCmpKey cmpKey;       // comparison function for the keys
+  mapCompKey cmpKey;      // comparison function for the keys
   uint64_t seed;          // magic seed for the map
   size_t iterBucket;      // current bucket for the iterator
   dllNode *iterNode;      // current node for the iterator
@@ -39,9 +39,7 @@ typedef struct {
   mapFreeValue freeValue; // function to free the value
   mapCopyKey copyKey;     // function to copy the key
   mapCopyValue copyValue; // function to copy the value
-  size_t nCollisions;     // number of collisions
   size_t nFilled;         // number of filled buckets
-  size_t maxLen;          // maximum length of a bucket
   char *label;            // label for the map
 } map;
 
@@ -53,8 +51,8 @@ typedef struct {          // key-value pair
   // map function prototypes
 
   // creates a new map
-map *newMap(mapHash hash, mapCmpKey cmpKey, 
-            size_t capacity);
+map *mapNew(mapHash hash, size_t capacity, 
+            mapCompKey cmpKey);
 
   // sets the label for the map
   // default is "map"
@@ -93,12 +91,16 @@ bool mapHasKeyVal(map *M, void *key, void **value);
 bool mapHasKey(map *M, void *key);
 
   // adds a key-value pair to the map; if the key 
-  // exists, the value is updated to the new value
-void mapAddKeyVal(map *M, void *key, void *value);
+  // exists, the value is updated
+void mapAddKey(map *M, void *key, void *value);
 
   // returns the key if it exists in the map
   // returns NULL if the key is not found
 void *mapGetKey(map *M, void *key);
+
+  // returns the value associated with the key
+  // returns NULL if the key is not found
+void *mapGetVal(map *M, void *key);
 
   // removes the key and its value 
   // true if the key was removed

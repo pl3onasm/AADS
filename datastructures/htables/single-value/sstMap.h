@@ -17,7 +17,7 @@ typedef enum {
   CASE_INSENSITIVE
 } sstMapCase;
 
-sstMap *sstNewMap(sstMapCase c, size_t capacity);
+sstMap *sstMapNew(sstMapCase c, size_t capacity);
 
 void sstMapFree(sstMap *M);
 
@@ -25,17 +25,15 @@ void sstMapSetLabel(sstMap *M, char *label);
 
 void sstMapCopyKeys(sstMap *M);
 
-void sstMapCopyVals(sstMap *M);
-
 void sstMapOwnKeys(sstMap *M);
 
-void sstMapOwnVals(sstMap *M);
-
-bool sstMapHasKeyVal(sstMap *M, char *key, size_t **val);
+bool sstMapHasKeyVal(sstMap *M, char *key, size_t *val);
 
 bool sstMapHasKey(sstMap *M, char *key);
 
-void sstMapAddKeyVal(sstMap *M, char *key, size_t *val);
+void sstMapAddKey(sstMap *M, char *key, size_t val);
+
+size_t sstMapGetVal(sstMap *M, char *key);
 
 bool sstMapDelKey(sstMap *M, char *key);
 

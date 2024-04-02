@@ -47,7 +47,8 @@ int main (){
                             MAX, cmpInts);
   heapsort(H);
   
-  showBinHeap (H, ", ", showInt);
+  setBinHeapShow(H, showInt);
+  showBinHeap (H);
   printf("\n");
   freeBinHeap(H);
 
@@ -57,7 +58,8 @@ int main (){
 
   heapsort(H);
 
-  showBinHeap (H, ", ", showInt);
+  setBinHeapShow(H, showInt);
+  showBinHeap (H);
   freeBinHeap(H);
   free(arr);
   return 0;
