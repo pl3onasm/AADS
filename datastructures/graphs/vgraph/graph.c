@@ -69,10 +69,12 @@ void freeVertex(void *v) {
 //=================================================================
 // Creates a new edge, from -> to
 // An edge is the value of a key (vertex) in the hash table
-edge *newEdge(vertex *from, vertex *to, double weight) {
+edge *newEdge(vertex *from, vertex *to, double weight, 
+              weightType w) {
   edge *e = safeCalloc(1, sizeof(edge));
   e->to = to;
   e->weight = weight;
+  e->wType = w;
   return e;
 }
 
@@ -83,7 +85,7 @@ void showEdge(void *val) {
   edge *e = val;   
   if (!e) 
     return;
-  if (e->weight == UNWEIGHTED) 
+  if (e->wType == UNWEIGHTED)
     printf("%s",  e->to->label);
   else
     printf("%s (%.3g)", e->to->label, e->weight);
@@ -138,7 +140,7 @@ void showGraph(graph *G) {
 
   // show the vertices and their adjacency lists
   for (i = 0; i < n; i++) {
-    printf("   ");
+    printf("  ");
     showVertex(G, vertices[i]);
   }
 
@@ -148,7 +150,7 @@ void showGraph(graph *G) {
 
 //=================================================================
 // Creates a new graph
-graph *newGraph (size_t capacity, edgeType weight) {
+graph *newGraph (size_t capacity, weightType weight) {
 
   graph *G = safeCalloc(1, sizeof(graph));
   G->u = safeCalloc(1, sizeof(vertex));
@@ -234,10 +236,10 @@ void addEdgeW(graph *G, vertex *from, vertex *to, double weight) {
   if (htHasKeyVal(G->V, from, G->e)) 
     return;
 
-  edge *e = newEdge(from, to, weight);
+  edge *e = newEdge(from, to, weight, G->weight);
   htAddKeyVal(G->V, from, e);
   if (G->type == UNDIRECTED) {
-    e = newEdge(to, from, weight);
+    e = newEdge(to, from, weight, G->weight);
     htAddKeyVal(G->V, to, e);
   }
   G->nEdges++;
@@ -466,15 +468,12 @@ void readGraph(graph *G) {
     setUndirected(G);
   } else {
     // add the first edge
-    if ((n = G->weight == UNWEIGHTED ? 
-        scanf("%s", to) : 
-        scanf("%s %lf", to, &weight)) == 1 || n == 2) {
-      addVandEW(G, from, to, weight);
-    } else {
-      fprintf(stderr, "Error reading graph\n");
-      exit(EXIT_FAILURE);
-    }
-  }
+    if (G->weight == UNWEIGHTED)
+      assert(scanf("%s", to) == 1);
+    else 
+      assert(scanf("%s %lf", to, &weight) == 2);
+    addVandEW(G, from, to, weight);
+  } 
   
     // read the rest of the graph
   if (G->weight == UNWEIGHTED) {

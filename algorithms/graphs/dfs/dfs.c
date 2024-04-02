@@ -34,11 +34,10 @@ void printResults(graph *G) {
          "-------------------\n"
          "Source -> Destination: edge type\n\n");
 
-  for (vertex *v = firstV(G); v; v = nextV(G)) {
-    dll *edges = getNeighbors(G, v);
-    for (edge *e = dllFirst(edges); e; e = dllNext(edges)) 
+  vertex *src;
+  for (edge *e = firstE(G, &src); e; e = nextE(G, &src)) {
       printf("   %s -> %s:  %c\n", 
-              v->label, e->to->label, e->type);
+              src->label, e->to->label, e->type);
   }
   printf("\n");
 }

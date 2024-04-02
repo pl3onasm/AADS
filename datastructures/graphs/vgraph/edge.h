@@ -21,6 +21,8 @@
 #include <stdbool.h>
 #include "vertex.h"
 
+typedef enum { WEIGHTED, UNWEIGHTED } weightType; 
+
 //===================================================================
 // EDGE TYPE 1  (application example: DFS)
 #if defined (EDGE_TYPE1)        
@@ -45,6 +47,7 @@
 
   typedef struct edge {         
     vertex *to;                 // pointer to the destination vertex
+    weightType wType;           // weighted or unweighted 
     double weight;              // weight of the edge
   } edge;
 

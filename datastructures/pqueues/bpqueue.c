@@ -47,6 +47,14 @@ bpqNode *bpqNodeNew(void *data, void *key) {
 }
 
 //===================================================================
+// Initializes the priority queue by setting all keys (priorities)
+// to a given value 
+void bpqInit(bpqueue *pq, void *initKey) {
+  for (size_t i = 0; i < pq->size; i++) 
+    pq->arr[i]->key = pq->copyKey(initKey);
+}
+
+//===================================================================
 // Deallocates the priority queue
 void bpqFree(bpqueue *pq) {
   if (!pq) return;
@@ -151,22 +159,29 @@ static void bpqHeapify(bpqueue *pq, size_t idx) {
 //===================================================================
 // Removes the top element from the priority queue
 void *bpqPop(bpqueue *pq) {
-  if (pq->size == 0) 
+  if (bpqIsEmpty(pq))
     return NULL;
+    // get the top element
   void *top = pq->arr[0]->data;
     // remove the string(data) -> idx mapping
   sstMapDelKey(pq->map, pq->toString(top));
-    // free the bpqNode, obviously NOT the data
+    // free the key
   pq->freeKey(pq->arr[0]->key);
-  free(pq->arr[0]);   
+    // free the bpqNode, obviously NOT the data
+  free(pq->arr[0]); 
+    // decrease the size of the queue
+  pq->size--;
+
+    // if this was the last node, we are done
+  if (bpqIsEmpty(pq))
+    return top;
+      
     // move the last node to the top
-  pq->arr[0] = pq->arr[pq->size - 1];
+  pq->arr[0] = pq->arr[pq->size];
     // avoid dangling pointers
-  pq->arr[pq->size - 1] = NULL;   
+  pq->arr[pq->size] = NULL;   
     // update the map
   sstMapAddKey(pq->map, pq->toString(pq->arr[0]->data), 0);
-    // queue is one node smaller
-  pq->size--;
     // restore the heap property
   bpqHeapify(pq, 0);
   return top;
@@ -182,7 +197,7 @@ void bpqPush(bpqueue *pq, void *data, void *key) {
   }
     // create a new node
   pq->arr[pq->size] = bpqNodeNew(data, pq->copyKey(key));
-    // add a string(data) -> idx mapping
+    // index of the new node
   size_t idx = pq->size;
     // queue is one node larger
   pq->size++;
@@ -275,8 +290,8 @@ void bpqShow(bpqueue *pq) {
     return;
   }
   printf("--------------------\n"
-          "%s\n"
-          "Size: %zu\n"
+          " %s\n"
+          " Size: %zu\n"
           "--------------------\n",
           pq->label, pq->size);
   for (size_t i = 0; i < pq->size; i++) {

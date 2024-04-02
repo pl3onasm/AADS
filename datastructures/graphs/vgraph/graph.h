@@ -22,8 +22,7 @@
 #include "edge.h"
 #include "vertex.h"
 
-  // graph types
-typedef enum { WEIGHTED, UNWEIGHTED } edgeType;
+  // graph type
 typedef enum { DIRECTED, UNDIRECTED } graphType;
 
   // graph data structure
@@ -32,7 +31,7 @@ typedef struct {
   size_t nEdges;      // number of edges in the graph
   graphType type;     // directed or undirected, 
                       // set to directed by default
-  edgeType weight;    // weighted or unweighted
+  weightType weight;  // weighted or unweighted
   edge *e;            // dummy edge for lookup
   dll *adjList;       // dummy adjacency list
   vertex *u;          // dummy vertex for lookup
@@ -44,7 +43,7 @@ typedef struct {
   // Creates a new graph; requires the initial capacity
   // and type of the edges (weighted/unweighted)
   // By default, the graph is directed 
-graph *newGraph (size_t capacity, edgeType weight);
+graph *newGraph (size_t capacity, weightType weight);
 
   // Sets the graph type to undirected
   // Should be called before adding any edges

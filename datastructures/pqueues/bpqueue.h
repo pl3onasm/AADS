@@ -65,6 +65,10 @@ bpqueue *bpqNew(size_t capacity, bpqType type,
                 bpqCompKey cmp, bpqCopyKey copyKey,
                 bpqFreeKey freeKey, bpqToString toString);
 
+  // initializes the priority queue by setting all keys
+  // (priorities) to a given value
+void bpqInit(bpqueue *pq, void *initKey);
+
   // sets the show function for the priority queue
 void bpqSetShow(bpqueue *pq, bpqShowKey show, 
                 bpqShowData showData);

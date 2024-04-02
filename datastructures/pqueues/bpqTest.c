@@ -1,7 +1,7 @@
 /* 
   Generic priority queue interface, using binary heaps
-  Some tests with a priority queue of tasks having a name,
-  a section and a duration
+  Some tests with a priority queue of tasks having 
+    a name, and a duration
   Author: David De Potter
 */
 
@@ -12,7 +12,6 @@
 
 typedef struct {
   char *name;
-  char *section;
   double duration;
 } task;
 
@@ -48,10 +47,9 @@ void showKey(void const *key) {
 }
 
   // create a new task
-task *newTask(char *name, char *section, double duration) {
+task *newTask(char *name, double duration) {
   task *t = safeCalloc(1, sizeof(task));
   t->name = name;
-  t->section = section;
   t->duration = duration;
   return t;
 }
@@ -66,7 +64,7 @@ void freeTask(void *data) {
     // show a task
 void showTask(void const *data) {
   task *t = (task *)data;
-  printf("%s (%s) - %.2fs", t->name, t->section, t->duration);
+  printf("%s - %.2fs", t->name, t->duration);
 }
 
   // convert a task to a string
@@ -84,10 +82,6 @@ int main () {
   bpqSetLabel(pq, "Task queue");
   bpqSetDelim(pq, " | ");
   bpqOwnData(pq, freeTask);
- 
-  char *sections[] = {"Section 1", "Section 2", 
-                      "Section 3", "Section 4",
-                      "Section 5"};
 
     // create some random tasks
   task *tasks[20];
@@ -98,8 +92,7 @@ int main () {
     sprintf(duration, "%d", rand() % 60);
     sprintf(duration + strlen(duration), ".%02d", rand() % 60);
     
-    tasks[i] = newTask(name, sections[rand() % 5], 
-                       atof(duration));
+    tasks[i] = newTask(name, atof(duration));
   }
 
     // push the tasks with their priorities
@@ -128,17 +121,13 @@ int main () {
     // show the updated queue
   bpqShow(pq);
 
-    // pop some tasks
-  printf("Popping 10 tasks..\n\n");
-  for (size_t i = 0; i < 10; i++) {
+    // pop all tasks
+  printf("Popping all tasks..\n\n");
+  while (! bpqIsEmpty(pq)) {
     task *t = bpqPop(pq);
     printf("Popped: %s\n", t->name);
     freeTask(t);
   }
-  printf("\n");
-
-    // show the updated queue
-  bpqShow(pq);
   
   bpqFree(pq);
 
