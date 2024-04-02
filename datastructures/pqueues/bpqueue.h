@@ -107,6 +107,14 @@ void bpqUpdateKey(bpqueue *pq, void *data,
   // the given data and key (priority)
 void bpqPush(bpqueue *pq, void *data, void *key);
 
+  // returns true if the data is in the queue
+bool bpqContains(bpqueue *pq, void *data);
+
+  // returns the key (priority) of the data
+  // in the queue; returns NULL if the data
+  // is not in the queue
+void *bpqGetKey(bpqueue *pq, void *data);
+
   // shows the priority queue
 void bpqShow(bpqueue *pq);
 
@@ -114,5 +122,10 @@ void bpqShow(bpqueue *pq);
 inline bool bpqIsEmpty(bpqueue *pq) {
   return pq->size == 0;
 } 
+
+  // returns the number of items in the queue
+inline size_t bpqSize(bpqueue *pq) {
+  return pq->size;
+}
 
 #endif  // BPQUEUE_H_INCLUDED
