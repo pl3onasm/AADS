@@ -35,7 +35,7 @@ typedef struct {
   void *data;            // data associated with the key
 } bpqNode;
 
-// binary heap structure
+// priority queue
 typedef struct {     
   bpqNode **arr;         // array of nodes
   sstMap *map;           // maps input to indices in the queue

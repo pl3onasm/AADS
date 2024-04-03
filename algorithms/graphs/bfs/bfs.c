@@ -30,11 +30,11 @@ void printPath(vertex *src, vertex *d) {
 //===================================================================
 // Prints the result of the search
 void printResult(graph *G, vertex *src, vertex *d) {
-    if (! d->visited) 
+    if (! d->parent) 
       printf("\nDistance from %s to %s: INF.\n", 
               src->label, d->label);
     else 
-      printf("\nDistance from %s to %s: %zu\n", 
+      printf("\nDistance from %s to %s: %g\n", 
               src->label, d->label, d->dist);
     printf("Path: ");
     printPath(src, d);
@@ -47,7 +47,6 @@ void bfs(graph *G, vertex *src) {
   
   queue *q = newQueue(nVertices(G));
   enqueue(q, src);
-  src->visited = true;
 
   while (! isEmptyQueue(q)) {
       // get outgoing edges of the node at the front of the queue
@@ -57,10 +56,9 @@ void bfs(graph *G, vertex *src) {
       // for each neighbor, if it has not been visited, 
       // set its parent and its distance from the source
     for (edge *e = dllFirst(edges); e; e = dllNext(edges)) 
-      if (! e->to->visited) {
+      if (! e->to->parent) {
         e->to->parent = v;
         e->to->dist = v->dist + 1;
-        e->to->visited = true;
         enqueue(q, e->to);
       }
   }

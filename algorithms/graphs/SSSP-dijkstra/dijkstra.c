@@ -1,12 +1,16 @@
-/* file: dijkstra-1.c
-   author: David De Potter
-   email: pl3onasm@gmail.com
-   license: MIT, see LICENSE file in repository root folder
-   description: Dijkstra's shortest paths algorithm
-     using a priority queue implemented with a binary heap
+/* 
+  file: dijkstra-1.c
+  author: David De Potter
+  email: pl3onasm@gmail.com
+  license: MIT, see LICENSE file in repository root folder
+  description: Dijkstra's shortest paths algorithm
+  time complexity: O(E log V) using a binary heap, 
+    O(E + V log V) using a Fibonacci heap
+  note: make sure to use VERTEX_TYPE2 in the vertex.h file
+    by defining it from the command line using
+    $ gcc -D VERTEX_TYPE2 ...
 */
 
-#define VERTEX_TYPE2
 #include "../../../datastructures/pqueues/bpqueue.h"
 #include "../../../datastructures/graphs/vgraph/graph.h"
 #include "../../../lib/clib/clib.h"
@@ -50,7 +54,7 @@ bool relax(vertex *u, vertex *v, double w) {
 }
 
 //===================================================================
-// Initializes the priority queue
+// Generates and initializes the min priority queue
 // All vertices are added to the priority queue with infinite
 // distance from the source node and likewise infinite priority
 bpqueue *initPQ(graph *G) {
@@ -66,7 +70,7 @@ bpqueue *initPQ(graph *G) {
 }
 
 //===================================================================
-// Computes the shortest paths from node s to all other nodes
+// Computes the shortest paths from vertex src to all other nodes
 void dijkstra(graph *G, vertex *src) {
     
     // genereate a new priority queue and initialize it
@@ -130,3 +134,4 @@ int main (int argc, char *argv[]) {
   freeGraph(G);
   return 0;
 }
+

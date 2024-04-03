@@ -39,14 +39,13 @@
   } vertex;
 
 //===================================================================
-// VERTEX TYPE 2  (application example: BFS)
+// VERTEX TYPE 2  (application example: BFS, Dijkstra, Prim)
 #elif defined (VERTEX_TYPE2)
 
   typedef struct vertex {
     struct vertex *parent;    // pointer to the parent vertex
     double dist;              // distance from the source vertex
     char *label;              // the label of the vertex
-    bool visited;             // marks the vertex as visited
   } vertex;
 
 //===================================================================
