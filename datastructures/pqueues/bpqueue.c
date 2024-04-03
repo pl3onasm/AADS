@@ -108,7 +108,7 @@ void bpqCopyData(bpqueue *pq, bpqCpyData copyData,
 // Returns the top element of the priority queue without removing it
 // from the queue; returns NULL if the queue is empty
 void *bpqPeek(bpqueue *pq) {
-  if (pq->size == 0) 
+  if (bpqIsEmpty(pq))
     return NULL;
   return pq->arr[0]->data;
 }
@@ -239,7 +239,7 @@ void *bpqGetKey(bpqueue *pq, void *data) {
 // Updates the priority of a node in the queue by updating the key
 // and reordering the heap if necessary
 void bpqUpdateKey(bpqueue *pq, void *data, void *newKey) {
-
+  
     // get the index of the node in the queue
   size_t idx = 0;
   if (!sstMapHasKeyVal(pq->map, pq->toString(data), &idx) ||
@@ -281,7 +281,7 @@ void bpqUpdateKey(bpqueue *pq, void *data, void *newKey) {
 //===================================================================
 // Shows the priority queue
 void bpqShow(bpqueue *pq) {
-  if (pq->size == 0) {
+  if (bpqIsEmpty(pq)) {
     printf("Priority queue is empty\n");
     return;
   }

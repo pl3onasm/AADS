@@ -36,11 +36,6 @@ void *copyKey(void *key) {
   return copy;
 }
 
-  // deallocate a size_t key
-void freeKey(void *key) {
-  free(key);
-}
-
   // show a size_t key
 void showKey(void const *key) {
   printf("%zu", *(size_t *)key);
@@ -77,7 +72,7 @@ char *taskToString(void const *data) {
 int main () {
   srand(time(NULL));
   bpqueue *pq = bpqNew(10, MIN, compKey, copyKey, 
-                       freeKey, taskToString);
+                       free, taskToString);
   bpqSetShow(pq, showKey, showTask);
   bpqSetLabel(pq, "Task queue");
   bpqSetDelim(pq, " | ");

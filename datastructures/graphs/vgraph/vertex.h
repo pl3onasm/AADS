@@ -44,7 +44,7 @@
 
   typedef struct vertex {
     struct vertex *parent;    // pointer to the parent vertex
-    size_t dist;              // distance from the source vertex
+    double dist;              // distance from the source vertex
     char *label;              // the label of the vertex
     bool visited;             // marks the vertex as visited
   } vertex;

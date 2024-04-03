@@ -1,0 +1,56 @@
+
+--------------------
+ Graph
+ Undirected
+ Weighted
+ Vertices: 20
+ Edges: 23
+--------------------
+  Arad[3]: Sibiu (140), Timisoara (118), Zerind (75)
+  Bucharest[4]: Urziceni (85), Giurgiu (90), Pitesti (101), Fagaras (211)
+  Craiova[3]: Pitesti (138), Rimnicu_Vilcea (146), Drobeta (120)
+  Drobeta[2]: Craiova (120), Mehadia (75)
+  Eforie[1]: Hirsova (86)
+  Fagaras[2]: Bucharest (211), Sibiu (99)
+  Giurgiu[1]: Bucharest (90)
+  Hirsova[2]: Eforie (86), Urziceni (98)
+  Iasi[2]: Neamt (87), Vaslui (92)
+  Lugoj[2]: Mehadia (70), Timisoara (111)
+  Mehadia[2]: Drobeta (75), Lugoj (70)
+  Neamt[1]: Iasi (87)
+  Oradea[2]: Sibiu (151), Zerind (71)
+  Pitesti[3]: Craiova (138), Bucharest (101), Rimnicu_Vilcea (97)
+  Rimnicu_Vilcea[3]: Pitesti (97), Sibiu (80), Craiova (146)
+  Sibiu[4]: Oradea (151), Arad (140), Fagaras (99), Rimnicu_Vilcea (80)
+  Timisoara[2]: Lugoj (111), Arad (118)
+  Urziceni[3]: Hirsova (98), Vaslui (142), Bucharest (85)
+  Vaslui[2]: Iasi (92), Urziceni (142)
+  Zerind[2]: Arad (75), Oradea (71)
+--------------------
+
+
+Shortest paths
+Source: Bucharest
+---------------------------------
+Vertex: Parent, Distance from src
+---------------------------------
+Pitesti: Bucharest, 101.00
+Oradea: Sibiu, 429.00
+Vaslui: Urziceni, 227.00
+Giurgiu: Bucharest, 90.00
+Sibiu: Rimnicu_Vilcea, 278.00
+Craiova: Pitesti, 239.00
+Drobeta: Craiova, 359.00
+Timisoara: Arad, 536.00
+Mehadia: Drobeta, 434.00
+Lugoj: Mehadia, 504.00
+Iasi: Vaslui, 319.00
+Arad: Sibiu, 418.00
+Neamt: Iasi, 406.00
+Hirsova: Urziceni, 183.00
+Rimnicu_Vilcea: Pitesti, 198.00
+Fagaras: Bucharest, 211.00
+Zerind: Arad, 493.00
+Bucharest: NIL, 0.00
+Eforie: Hirsova, 269.00
+Urziceni: Bucharest, 85.00

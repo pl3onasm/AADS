@@ -1,6 +1,26 @@
-Node   Distance   Parent
-   0       3.00      src
-   1       6.00        0
-   2       7.00      src
-   3       8.00        0
- src       0.00        -
+
+--------------------
+ Graph
+ Directed
+ Weighted
+ Vertices: 5
+ Edges: 10
+--------------------
+  s[2]: y (5), t (3)
+  t[2]: y (2), x (6)
+  x[1]: z (2)
+  y[3]: z (6), x (4), t (1)
+  z[2]: x (7), s (3)
+--------------------
+
+
+Shortest paths
+Source: z
+---------------------------------
+Vertex: Parent, Distance from src
+---------------------------------
+z: NIL, 0.00
+t: s, 6.00
+y: s, 8.00
+s: z, 3.00
+x: z, 7.00
