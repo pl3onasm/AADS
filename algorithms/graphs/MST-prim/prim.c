@@ -96,9 +96,9 @@ vertex **mstPrim(graph *G) {
 }
 
 //===================================================================
-
+// Prints the edges forming the minimum spanning tree and its weight
 void printMST(graph *G, vertex **mst) {
-  /* prints the edges of the MST and its total weight */
+ 
   printf("----------------------------\n"
          "MST edges in insertion order \n"
          "----------------------------\n");
