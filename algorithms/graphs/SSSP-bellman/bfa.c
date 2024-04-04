@@ -9,7 +9,6 @@
       $ gcc -D VERTEX_TYPE2 ...
 */
 
-#define VERTEX_TYPE2
 #include "../../../datastructures/graphs/vgraph/graph.h"
 #include "../../../lib/clib/clib.h"
 #include <float.h>
