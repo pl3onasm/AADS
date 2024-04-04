@@ -39,7 +39,8 @@
   } vertex;
 
 //===================================================================
-// VERTEX TYPE 2  (application example: BFS, Dijkstra, Prim)
+// VERTEX TYPE 2  (application example: BFS, Dijkstra, Prim, 
+//                 Bellman-Ford)
 #elif defined (VERTEX_TYPE2)
 
   typedef struct vertex {

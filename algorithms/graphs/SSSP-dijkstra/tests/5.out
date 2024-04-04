@@ -34,23 +34,24 @@ Source: Oradea
 ---------------------------------
 Vertex: Parent, Distance from src
 ---------------------------------
-Neamt: Iasi, 835.00
-Lugoj: Timisoara, 375.00
-Giurgiu: Bucharest, 519.00
-Zerind: Oradea, 71.00
-Rimnicu_Vilcea: Sibiu, 231.00
-Eforie: Hirsova, 698.00
-Drobeta: Craiova, 497.00
-Sibiu: Oradea, 151.00
-Timisoara: Arad, 264.00
-Iasi: Vaslui, 748.00
-Vaslui: Urziceni, 656.00
-Bucharest: Pitesti, 429.00
-Craiova: Rimnicu_Vilcea, 377.00
-Pitesti: Rimnicu_Vilcea, 328.00
-Fagaras: Sibiu, 250.00
-Mehadia: Lugoj, 445.00
-Arad: Zerind, 146.00
-Oradea: NIL, 0.00
-Urziceni: Bucharest, 514.00
-Hirsova: Urziceni, 612.00
+  Neamt: Iasi, 835.00
+  Lugoj: Timisoara, 375.00
+  Giurgiu: Bucharest, 519.00
+  Zerind: Oradea, 71.00
+  Rimnicu_Vilcea: Sibiu, 231.00
+  Eforie: Hirsova, 698.00
+  Drobeta: Craiova, 497.00
+  Sibiu: Oradea, 151.00
+  Timisoara: Arad, 264.00
+  Iasi: Vaslui, 748.00
+  Vaslui: Urziceni, 656.00
+  Bucharest: Pitesti, 429.00
+  Craiova: Rimnicu_Vilcea, 377.00
+  Pitesti: Rimnicu_Vilcea, 328.00
+  Fagaras: Sibiu, 250.00
+  Mehadia: Lugoj, 445.00
+  Arad: Zerind, 146.00
+  Oradea: NIL, 0.00
+  Urziceni: Bucharest, 514.00
+  Hirsova: Urziceni, 612.00
+---------------------------------

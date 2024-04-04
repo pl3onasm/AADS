@@ -1,18 +1,13 @@
-5 4
+z
 
-0 1 6
-0 3 7
-1 3 8
-4 0 2
-1 2 5
-2 1 -2
-3 4 9
-4 2 7
-1 4 -4
-3 2 -3
+s t 6
+s y 7
+t y 8
+z s 2
+t x 5
+x t -2
+y z 9
+z x 7
+t z -4
+y x -3
 
-
-Source
-======
-CLRS⁴ Ex 22.1-1 source node
-is changed to z (id 4)

@@ -106,7 +106,7 @@ void printMST(graph *G, vertex **mst) {
   for (size_t i = 0; i < nVertices(G) - 1; i++) {
     vertex *u = mst[i];
     vertex *v = u->parent;
-    printf("%s -- %s\n", u->label, v->label);
+    printf("%s -- %s\n", v->label, u->label);
     totalWeight += u->dist;
   }
   printf("----------------------------\n"
@@ -121,8 +121,8 @@ int main (int argc, char *argv[]) {
   readGraph(G);              
   showGraph(G);
 
-  vertex **mst = mstPrim(G);      // compute MST
-  printMST(G, mst);           // print MST edges and total weight
+  vertex **mst = mstPrim(G);      
+  printMST(G, mst);           
 
   freeGraph(G);
   free(mst);

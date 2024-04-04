@@ -1,1 +1,16 @@
+
+--------------------
+ Graph
+ Directed
+ Weighted
+ Vertices: 5
+ Edges: 10
+--------------------
+  s[2]: y (7), t (6)
+  t[3]: z (-4), x (5), y (8)
+  x[1]: t (-2)
+  y[2]: x (-3), z (9)
+  z[2]: x (4), s (2)
+--------------------
+
 Negative-weight cycle found.

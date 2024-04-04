@@ -83,7 +83,7 @@ int main () {
   if (! src || ! dest) {
     fprintf(stderr, "Error: source or destination node not found.\n");
     freeGraph(G);
-    return 1;
+    exit(EXIT_FAILURE);
   }
 
   bfs(G, src);

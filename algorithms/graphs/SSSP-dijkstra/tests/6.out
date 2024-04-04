@@ -34,23 +34,24 @@ Source: Bucharest
 ---------------------------------
 Vertex: Parent, Distance from src
 ---------------------------------
-Pitesti: Bucharest, 101.00
-Oradea: Sibiu, 429.00
-Vaslui: Urziceni, 227.00
-Giurgiu: Bucharest, 90.00
-Sibiu: Rimnicu_Vilcea, 278.00
-Craiova: Pitesti, 239.00
-Drobeta: Craiova, 359.00
-Timisoara: Arad, 536.00
-Mehadia: Drobeta, 434.00
-Lugoj: Mehadia, 504.00
-Iasi: Vaslui, 319.00
-Arad: Sibiu, 418.00
-Neamt: Iasi, 406.00
-Hirsova: Urziceni, 183.00
-Rimnicu_Vilcea: Pitesti, 198.00
-Fagaras: Bucharest, 211.00
-Zerind: Arad, 493.00
-Bucharest: NIL, 0.00
-Eforie: Hirsova, 269.00
-Urziceni: Bucharest, 85.00
+  Pitesti: Bucharest, 101.00
+  Oradea: Sibiu, 429.00
+  Vaslui: Urziceni, 227.00
+  Giurgiu: Bucharest, 90.00
+  Sibiu: Rimnicu_Vilcea, 278.00
+  Craiova: Pitesti, 239.00
+  Drobeta: Craiova, 359.00
+  Timisoara: Arad, 536.00
+  Mehadia: Drobeta, 434.00
+  Lugoj: Mehadia, 504.00
+  Iasi: Vaslui, 319.00
+  Arad: Sibiu, 418.00
+  Neamt: Iasi, 406.00
+  Hirsova: Urziceni, 183.00
+  Rimnicu_Vilcea: Pitesti, 198.00
+  Fagaras: Bucharest, 211.00
+  Zerind: Arad, 493.00
+  Bucharest: NIL, 0.00
+  Eforie: Hirsova, 269.00
+  Urziceni: Bucharest, 85.00
+---------------------------------

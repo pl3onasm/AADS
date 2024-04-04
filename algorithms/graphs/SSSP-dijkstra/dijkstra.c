@@ -1,5 +1,5 @@
 /* 
-  file: dijkstra-1.c
+  file: dijkstra.c
   author: David De Potter
   email: pl3onasm@gmail.com
   license: MIT, see LICENSE file in repository root folder
@@ -8,7 +8,7 @@
     O(E + V log V) using a Fibonacci heap
   note: make sure to use VERTEX_TYPE2 in the vertex.h file
     by defining it from the command line using
-    $ gcc -D VERTEX_TYPE2 ...
+      $ gcc -D VERTEX_TYPE2 ...
 */
 
 #include "../../../datastructures/pqueues/bpqueue.h"
@@ -83,7 +83,7 @@ void dijkstra(graph *G, vertex *src) {
     vertex *u = bpqPop(pq);
     dll* edges = getNeighbors(G, u);
       
-      // relax all the neighbors of u that are in the pq
+      // try to relax all the neighbors of u that are in the pq
     for (edge *e = dllFirst(edges); e; e = dllNext(edges)) 
       if (bpqContains(pq, e->to) && relax(u, e->to, e->weight)) 
           // update neighbor's priority in the pq if edge was relaxed
@@ -94,6 +94,10 @@ void dijkstra(graph *G, vertex *src) {
 
 //===================================================================
 // Shows the results of the shortest paths computation from src
+// displaying the parent and the distance from the source vertex for
+// each vertex in the graph; by following the parent pointers, the
+// shortest path from the source vertex to any other vertex can be
+// reconstructed
 void showDistances(graph *G, vertex *src) {
   printf("\nShortest paths\n"
          "Source: %s\n"
@@ -102,15 +106,19 @@ void showDistances(graph *G, vertex *src) {
   printf("Vertex: Parent, Distance from src\n"
          "---------------------------------\n");
   for (vertex *v = firstV(G); v; v = nextV(G)) {
-    printf("%s: %s, %.2lf\n", v->label, 
-           v->parent ? v->parent->label : "NIL", v->dist);
+    printf("  %s: %s, ", v->label, 
+           v->parent ? v->parent->label : "NIL");
+    if (v->dist == DBL_MAX)
+      printf("%s\n", "INF");
+    else
+      printf("%.2lf\n", v->dist);
   }
-  printf("\n");
+  printf("---------------------------------\n\n");
 }
 
 //===================================================================
 
-int main (int argc, char *argv[]) {
+int main () {
     
     // read the source node 
   char s[50];
@@ -125,7 +133,7 @@ int main (int argc, char *argv[]) {
   if (! src) {
     fprintf(stderr, "Source node %s not found.\n", s);
     freeGraph(G);
-    return 1;
+    exit(EXIT_FAILURE);
   }
 
   dijkstra(G, src);              

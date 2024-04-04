@@ -34,10 +34,10 @@ void printResults(graph *G) {
          "-------------------\n"
          "Source -> Destination: edge type\n\n");
 
-  vertex *src;
-  for (edge *e = firstE(G, &src); e; e = nextE(G, &src)) {
+  vertex *from;
+  for (edge *e = firstE(G, &from); e; e = nextE(G, &from)) {
       printf("   %s -> %s:  %c\n", 
-              src->label, e->to->label, e->type);
+             from->label, e->to->label, e->type);
   }
   printf("\n");
 }
@@ -90,16 +90,16 @@ void dfs(graph *G, size_t *time) {
 //===================================================================
 
 int main (int argc, char *argv[]) {
-  size_t time = 0;
-
+  
   graph *G = newGraph(50, UNWEIGHTED);
 
   readGraph(G);    
   showGraph(G);
 
-  dfs(G, &time);  
-  printResults(G);
+  size_t time = 0;
+  dfs(G, &time); 
 
+  printResults(G);
   freeGraph(G);
   return 0;
 }

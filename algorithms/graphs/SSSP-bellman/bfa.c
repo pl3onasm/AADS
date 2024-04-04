@@ -4,178 +4,106 @@
    license: MIT, see LICENSE file in repository root folder
    description: Bellman-Ford algorithm for single-source shortest paths
    time complexity: O(VE)
-   assumption: nodes are numbered 0..n-1
+   note: make sure to use VERTEX_TYPE2 in the vertex.h file
+    by defining it from the command line using
+      $ gcc -D VERTEX_TYPE2 ...
 */
 
-#include <stdio.h>
-#include <stdlib.h>
+#define VERTEX_TYPE2
+#include "../../../datastructures/graphs/vgraph/graph.h"
+#include "../../../lib/clib/clib.h"
 #include <float.h>
-#define INF DBL_MAX
 
-//:::::::::::::::::::::::: data structures ::::::::::::::::::::::::://
+//===================================================================
+// Prints the distances and parents of the nodes
+// By following the parent pointers, the shortest path from the
+// source node to any other node can be reconstructed
+void showResults (graph *G, vertex *src) {
+  printf("\nShortest paths\n"
+         "Source: %s\n"
+         "---------------------------------\n",
+          src->label);
+  printf("Vertex: Parent, Distance from src\n"
+         "---------------------------------\n");
 
-typedef struct node {
-  int id, parent;        // node id and predecessor
-  double dist;           // distance to the source 
-} node;
-
-typedef struct edge {
-  node *to, *from;       // edge endpoints
-  double w;              // edge weight
-} edge;
-
-typedef enum {
-  false = 0,
-  true = 1
-} bool;
-
-typedef struct graph {
-  int nNodes, nEdges;    // number of nodes and edges
-  edge **edges;          // array of pointers to edges
-  node **nodes;          // array of pointers to nodes
-  int edgeCap;           // capacity of the edges array
-} graph;
-
-//::::::::::::::::::::::: memory management :::::::::::::::::::::::://
-
-void *safeCalloc (int n, int size) {
-  /* allocates n elements of size size, initializing them to 0, and
-     checks whether the allocation was successful */
-  void *ptr = calloc(n, size);
-  if (ptr == NULL) {
-    printf("Error: calloc(%d, %d) failed. Out of memory?\n", n, size);
-    exit(EXIT_FAILURE);
+  for (vertex *v = firstV(G); v; v = nextV(G)) {
+    printf("  %s: %s, ", v->label, 
+           v->parent ? v->parent->label : "NIL");
+    if (v->dist == DBL_MAX)
+      printf("%s\n", "INF");
+    else
+      printf("%.2lf\n", v->dist);
   }
-  return ptr;
+  printf("---------------------------------\n\n");
 }
 
-void *safeRealloc (void *ptr, int newSize) {
-  /* reallocates memory and checks whether the allocation was successful */
-  ptr = realloc(ptr, newSize);
-  if (ptr == NULL) {
-    printf("Error: realloc(%d) failed. Out of memory?\n", newSize);
-    exit(EXIT_FAILURE);
-  }
-  return ptr;
-}
-
-//::::::::::::::::::::::::: edge functions ::::::::::::::::::::::::://
-
-void checkEdgeCap(graph *G) {
-  /* checks whether the edge array is full 
-     and reallocates memory if necessary */
-  if (G->nEdges == G->edgeCap) {
-    G->edgeCap = G->edgeCap == 0 ? 10 : 2 * G->edgeCap;
-    G->edges = safeRealloc(G->edges, G->edgeCap * sizeof(edge*));
-  }
-}
-
-edge *newEdge(graph *G, int u, int v, double w) {
-  /* creates a new edge */
-  edge *e = safeCalloc(1, sizeof(edge));
-  e->from = G->nodes[u];
-  e->to = G->nodes[v];
-  e->w = w;
-  return e;
-}
-
-//:::::::::::::::::::::::: graph functions ::::::::::::::::::::::::://
-
-node *newNode(int id) {
-  /* creates a node with given id */
-  node *n = safeCalloc(1, sizeof(node));
-  n->id = id;
-  n->parent = -1;   // -1 means no parent
-  n->dist = INF;    // initially, all nodes are unreachable
-  return n;
-}
-
-graph *newGraph(int n) {
-  /* creates a graph with n vertices */
-  graph *G = safeCalloc(1, sizeof(graph));
-  G->nNodes = n;
-  G->nodes = safeCalloc(n, sizeof(node*));
-  for (int i = 0; i < n; i++)
-    G->nodes[i] = newNode(i);
-  return G;
-}
-
-void buildGraph (graph *G){
-  /* adds an edge to the graph */
-  int u, v; double w;
-  while (scanf("%d %d %lf", &u, &v, &w) == 3) {
-    checkEdgeCap(G);
-    G->edges[G->nEdges++] = newEdge(G, u, v, w);
-  }
-}
-
-void freeGraph(graph *G) {
-  /* frees the memory allocated for the graph */
-  for (int i = 0; i < G->nNodes; i++)
-    free(G->nodes[i]);
-  free(G->nodes);
-  for (int i = 0; i < G->nEdges; i++)
-    free(G->edges[i]);
-  free(G->edges);
-  free(G);
-}
-
-//:::::::::::::::::::::::::: bellman-ford :::::::::::::::::::::::::://
-
-void print (graph *G, int s) {
-  /* prints the distances and parents of the nodes */
-  printf("Node   Distance   Parent\n"); 
-  for (int i = 0; i < G->nNodes; i++) {
-    node *n = G->nodes[i];
-    if (n->id == s) printf("%4s", "src");
-    else printf("%4d", n->id);
-    if (n->dist == INF)
-      printf("%11s", "inf");
-    else printf("%11.2lf", n->dist);
-    if (n->parent == -1)
-      printf("%9c\n", '-');
-    else if (n->parent == s)
-      printf("%9s\n", "src");
-    else printf("%9d\n", n->parent);
-  }
-}
-
-bool relax(graph *G, edge *e) {
-  /* relaxes the edge e */
-  if (e->to->dist > e->from->dist + e->w) {   // found a shorter path
-    e->to->dist = e->from->dist + e->w;       // update estimate
-    e->to->parent = e->from->id;
+//===================================================================
+// Tries to 'relax' the edge (u, v) with weight w
+// Returns true if the relaxation was successful
+bool relax(vertex *u, vertex *v, double w) {
+  if (v->dist > u->dist + w) {
+    v->dist = u->dist + w;
+    v->parent = u;
     return true;
   }
   return false;
 }
 
-void bFord(graph *G, int s) {
-  /* runs the Bellman-Ford algorithm on graph G starting from node s
-      and checks whether there is a negative-weight cycle */
-  G->nodes[s]->dist = 0;
-  for (int i = 0; i < G->nNodes - 1; i++)   // relax all edges n-1 times
-    for (int j = 0; j < G->nEdges; j++) 
-      relax(G, G->edges[j]);
+//===================================================================
+// Initializes the graph G with the source node s: sets the distance
+// of all nodes to the source to infinity and the distance of the
+// source node to 0
+void initSingleSource(graph *G, vertex *s) {
+  for (vertex *v = firstV(G); v; v = nextV(G)) 
+    v->dist = DBL_MAX;
+  s->dist = 0;
+}
 
-  for (int i = 0; i < G->nEdges; i++)       // check for negative cycles
-    if (relax(G, G->edges[i])) {
+//===================================================================
+// Runs the Bellman-Ford algorithm on graph G starting from node s
+// and checks for negative-weight cycles
+void bellmanFord(graph *G, vertex *s) {
+
+  initSingleSource(G, s);          
+
+    // relax all edges n-1 times 
+  vertex *from;
+  for (size_t i = 0; i < nVertices(G) - 1; i++) {
+    for (edge *e = firstE(G, &from); e; e = nextE(G, &from))
+      relax(from, e->to, e->weight);              
+  }      
+
+    // check for negative-weight cycles by checking if 
+    // any edge can still be relaxed 
+  for (edge *e = firstE(G, &from); e; e = nextE(G, &from))      
+    if (e->to->dist > from->dist + e->weight) {
       printf("Negative-weight cycle found.\n");
-      exit(EXIT_FAILURE);
+      freeGraph(G);
+      exit(EXIT_SUCCESS);
     } 
 }
 
-//::::::::::::::::::::::::::::: main ::::::::::::::::::::::::::::::://
+//===================================================================
 
 int main (int argc, char *argv[]) {
-  int n, s;                   // n = number of nodes 
-  scanf("%d %d", &n, &s);     // s = source node
+    // read the source node
+  char s[50];
+  assert(scanf("%s", s) == 1);    
 
-  graph *G = newGraph(n); 
-  buildGraph(G);              // read edges from stdin
+  graph *G = newGraph(50, WEIGHTED);  
+  readGraph(G); 
+  showGraph(G);
 
-  bFord(G, s);                // run Bellman-Ford algorithm
-  print(G, s);                // print results
+  vertex *src = getVertex(G, s);
+
+  if (! src) {
+    fprintf(stderr, "Source node %s not found.\n", s);
+    freeGraph(G);
+    exit(EXIT_FAILURE);
+  }  
+
+  bellmanFord(G, src);                
+  showResults(G, src);        
 
   freeGraph(G);
   return 0;
