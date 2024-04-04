@@ -1,214 +1,125 @@
-/* file: dsp.c
-   author: David De Potter
-   email: pl3onasm@gmail.com
-   license: MIT, see LICENSE file in repository root folder
-   description: DAG shortest paths algorithm
-   time complexity: O(V+E)
-   assumption: nodes are numbered 0..n-1
+/* 
+  file: dsp.c
+  author: David De Potter
+  email: pl3onasm@gmail.com
+  license: MIT, see LICENSE file in repository root folder
+  description: DAG shortest paths algorithm
+  time complexity: O(V+E)
+  note: make sure to use VERTEX_TYPE4 in the vertex.h file
+  by defining it from the command line using
+    $ gcc -D VERTEX_TYPE4 ...
 */
 
-#include <stdio.h>
-#include <stdlib.h>
+#define VERTEX_TYPE4
+#include "../../../datastructures/graphs/vgraph/graph.h"
 #include <float.h>
-#define INF DBL_MAX
+#include <assert.h>
 
-//:::::::::::::::::::::::: data structures ::::::::::::::::::::::::://
+//===================================================================
+// Visits the node u and its descendants in depth-first order
+void dfsVisit(graph *G, vertex *u, dll *sorted) {
 
-typedef struct list list;    // forward declaration
-
-typedef struct node {
-  int id, parent;            // node id and parent id
-  double dist;               // distance from source
-  int dTime, fTime;          // discovery and finish times
-  list *adj;                 // adjacency list
-} node;
-
-struct list {                
-  node *n;                   // pointer to a node in the graph
-  list *next;                // pointer to next node in the list
-  double w;                  // weight of incoming edge to n
-};                           // (w is only used in adjacency lists)
-
-typedef struct graph {
-  int nNodes, nEdges;        // number of nodes and edges 
-  node **nodes;              // array of pointers to nodes
-} graph;
-
-//::::::::::::::::::::::: memory management :::::::::::::::::::::::://
-
-void *safeCalloc (int n, int size) {
-    /* allocates n elements of size size, initializing them to 0, and
-       checks whether the allocation was successful */
-    void *ptr = calloc(n, size);
-    if (ptr == NULL) {
-        printf("Error: calloc(%d, %d) failed. Out of memory?\n", n, size);
-        exit(EXIT_FAILURE);
+  dll *edges = getNeighbors(G, u);
+  for (edge *e = dllFirst(edges); e; e = dllNext(edges)) 
+    if (! e->to->parent) {     
+      e->to->parent = u;          // first discovery of e->to
+      dfsVisit(G, e->to, sorted);
     }
-    return ptr;
+
+  dllPush(sorted, u);             // adds u to the list
 }
 
-void *safeRealloc (void *ptr, int newSize) {
-    /* reallocates memory and checks whether the allocation was successful */
-    ptr = realloc(ptr, newSize);
-    if (ptr == NULL) {
-        printf("Error: realloc(%d) failed. Out of memory?\n", newSize);
-        exit(EXIT_FAILURE);
-    }
-    return ptr;
+//===================================================================
+// Sorts the vertices in the graph G in topological order
+dll *topSort(graph *G) {
+  dll *sorted = dllNew();  
+  
+    // visit all undiscovered vertices in G
+  for (vertex *v = firstV(G); v; v = nextV(G)) 
+    if (! v->parent)
+      dfsVisit(G, v, sorted);
+
+  return sorted;
 }
 
-//::::::::::::::::::::::::: list functions ::::::::::::::::::::::::://
-
-list *newList() {
-  /* creates an empty list */
-  return NULL;
-}
-
-void freeList(list *L) {
-  /* frees all memory allocated for the list */
-  if (!L) return;
-  freeList(L->next);
-  free(L);
-}
-
-list *listInsert (list *L, node *n, double w) {
-  /* inserts the node n at the beginning of the list L */
-  list *new = safeCalloc(1, sizeof(list));
-  new->n = n;
-  new->next = L;
-  new->w = w;
-  return new;
-}
-
-//::::::::::::::::::::::::: graph functions :::::::::::::::::::::::://
-
-node *newNode(int id) {
-  /* creates a new node with id id */
-  node *n = safeCalloc(1, sizeof(node));
-  n->id = id;
-  n->parent = -1;
-  n->dTime = n->fTime = -1;
-  n->dist = INF;
-  n->adj = newList();
-  return n;
-}
-
-graph *newGraph(int nNodes) {
-  /* creates a new graph with nNodes nodes */
-  graph *G = safeCalloc(1, sizeof(graph));
-  G->nNodes = nNodes;
-  G->nodes = safeCalloc(nNodes, sizeof(node*));
-  for (int i = 0; i < nNodes; i++) 
-    G->nodes[i] = newNode(i);
-  return G;
-}
-
-void buildGraph (graph *G) {
-  int u, v; double w;
-  while (scanf("%d %d %lf", &u, &v, &w) == 3) {
-    node *n = G->nodes[u];
-    n->adj = listInsert(n->adj, G->nodes[v], w);
-    G->nEdges++;
-  }
-}
-
-void freeGraph(graph *G) {
-  /* frees the memory allocated to the graph G */
-  for (int i = 0; i < G->nNodes; i++) {
-    freeList(G->nodes[i]->adj);
-    free(G->nodes[i]);
-  }
-  free(G->nodes);
-  free(G);
-}
-
-//:::::::::::::::::::::::: topological sort :::::::::::::::::::::::://
-
-void dfsVisit(graph *G, node *u, list **L, int *time) {
-  /* visits the node u and its descendants in the graph G */
-  u->dTime = ++*time;
-  for (list *l = u->adj; l; l = l->next) {
-    node *v = l->n;
-    if (v->dTime < 0) {   // v is undiscovered
-      v->parent = u->id;
-      dfsVisit(G, v, L, time);
-    } 
-  }
-  u->fTime = ++*time;
-  *L = listInsert(*L, u, 0);
-}
-
-void dfs(graph *G, list **L, int *time) {
-  /* performs a depth-first search on the graph G */
-  for (int i = 0; i < G->nNodes; i++) {
-    node *n = G->nodes[i];
-    if (n->dTime < 0)  // n is undiscovered
-      dfsVisit(G, n, L, time);
-  }
-}
-
-list *topSort(graph *G) {
-  /* performs a topological sort on the graph G */
-  list *L = newList();
-  int time = 0;
-  dfs(G, &L, &time);
-  return L;
-}
-
-//::::::::::::::::::::::::: shortest paths ::::::::::::::::::::::::://
-
-void relax(node *u, node *v, double w) {
+//===================================================================
+// Tries to relax the edge (u, v) with weight w
+void relax(vertex *u, vertex *v, double w) {
   /* relaxes the edge (u, v) */
   if (v->dist > u->dist + w) {
     v->dist = u->dist + w;
-    v->parent = u->id;
+    v->parent = u;
   }
 }
 
-void shortestPaths(graph *G, int s) {
-  /* computes the shortest paths from node s to all other nodes in G */
-  list *L = topSort(G);     // topological sort of G
-  G->nodes[s]->dist = 0;    // initialize source node
-
-  for (list *l = L; l; l = l->next) {
-    node *u = l->n;
-    for (list *a = u->adj; a; a = a->next) {
-      node *v = a->n;       // v is a successor of u
-      relax(u, v, a->w);    // relax the edge (u, v)
-    }
-  }
-  freeList(L);
+//===================================================================
+// Initializes the vertices of the graph G
+void initSingleSource(graph *G, vertex *src) {
+  for (vertex *v = firstV(G); v; v = nextV(G)) 
+    v->dist = DBL_MAX;
+  src->dist = 0;
 }
 
-void print (graph *G, int s) {
-  /* prints the distances and parents of the nodes */
-  printf("Node   Distance   Parent\n"); 
-  for (int i = 0; i < G->nNodes; i++) {
-    node *n = G->nodes[i];
-    if (n->id == s) printf("%4s", "src");
-    else printf("%4d", n->id);
-    if (n->dist == INF)
-      printf("%11s", "inf");
-    else printf("%11.2lf", n->dist);
-    if (n->parent == -1)
-      printf("%9c\n", '-');
-    else if (n->parent == s)
-      printf("%9s\n", "src");
-    else printf("%9d\n", n->parent);
+//===================================================================
+// Computes shortest paths from source vertex to all other vertices
+// by relaxing the edges in topological order
+void shortestPaths(graph *G, vertex *src) {
+  
+  initSingleSource(G, src);
+  dll *sorted = topSort(G);     
+     
+  for (vertex *v = dllFirst(sorted); v; v = dllNext(sorted)) {
+    dll *edges = getNeighbors(G, v);
+    for (edge *e = dllFirst(edges); e; e = dllNext(edges)) 
+      relax(v, e->to, e->weight);
   }
+  dllFree(sorted);
 }
 
-//::::::::::::::::::::::::::::: main ::::::::::::::::::::::::::::::://
+//===================================================================
+// Shows the distances and parents of all vertices in the graph
+// By following the parent pointers, the shortest path from the
+// source node to any other node can be reconstructed
+void showDistances(graph *G, vertex *src) {
+  printf("\nShortest paths\n"
+         "Source: %s\n"
+         "---------------------------------\n"
+         "Vertex: Parent, Distance from src\n"
+         "---------------------------------\n",
+         src->label);
+         
+  for (vertex *v = firstV(G); v; v = nextV(G)) {
+    printf("  %s: %s, ", v->label, 
+           v->parent ? v->parent->label : "NIL");
+    if (v->dist == DBL_MAX)
+      printf("%s\n", "INF");
+    else
+      printf("%.2lf\n", v->dist);
+  }
+  printf("---------------------------------\n\n");
+}
 
-int main (int argc, char *argv[]) {
-  int n, s;                   // n = number of nodes 
-  scanf("%d %d", &n, &s);     // s = source node
+//===================================================================
 
-  graph *G = newGraph(n); 
-  buildGraph(G);              // read edges from stdin
+int main () {
+  
+    // read source vertex
+  char s[50];
+  assert(scanf("%s", s) == 1);
 
-  shortestPaths(G, s);        // compute shortest paths from s
-  print(G,s);                 // print results
+  graph *G = newGraph(50, WEIGHTED);
+  readGraph(G);
+  showGraph(G);
+
+  vertex *src = getVertex(G, s);
+  if (!src) {
+    fprintf(stderr, "Vertex %s not found\n", s);
+    freeGraph(G);
+    exit (EXIT_FAILURE);
+  }              
+
+  shortestPaths(G, src);        
+  showDistances(G,src);                
 
   freeGraph(G);
   return 0;

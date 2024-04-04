@@ -1,5 +1,5 @@
 /* 
-  file: prim-1.c
+  file: prim.c
   author: David De Potter
   email: pl3onasm@gmail.com
   license: MIT, see LICENSE file in repository root folder
@@ -21,9 +21,9 @@
 //===================================================================
 // Copies the key (priority) of a node in the priority queue
 void *copyKey (void *key) {
-  double *k = safeCalloc(1, sizeof(double));
-  *k = *(double *)key;
-  return k;
+  double *copy = safeCalloc(1, sizeof(double));
+  *copy = *(double *)key;
+  return copy;
 }
 
 //===================================================================
@@ -65,6 +65,7 @@ bpqueue *initPQ(graph *G) {
 vertex **mstPrim(graph *G) {
  
   vertex **mst = safeCalloc(nVertices(G), sizeof(vertex *));
+  size_t idx = 0;
   bpqueue *pq = initPQ(G);    
   
     // start with an arbitrary vertex and set 
@@ -72,7 +73,6 @@ vertex **mstPrim(graph *G) {
   vertex *s = firstV(G);   
   s->dist = 0;
   bpqUpdateKey(pq, s, &s->dist);  
-  size_t idx = 0;
 
   while (!bpqIsEmpty(pq)) {
     vertex *u = bpqPop(pq);    
@@ -82,8 +82,8 @@ vertex **mstPrim(graph *G) {
     if (u->parent) mst[idx++] = u;  
     dll *edges = getNeighbors(G, u);
 
+      // try to relax the edges to the neighbors of u
     for (edge *e = dllFirst(edges); e; e = dllNext(edges)) {
-        
       if (bpqContains(pq, e->to) && e->weight < e->to->dist) {
         e->to->parent = u;
         e->to->dist = e->weight;
@@ -105,8 +105,7 @@ void printMST(graph *G, vertex **mst) {
   double totalWeight = 0;
   for (size_t i = 0; i < nVertices(G) - 1; i++) {
     vertex *u = mst[i];
-    vertex *v = u->parent;
-    printf("%s -- %s\n", v->label, u->label);
+    printf("%s -- %s\n", u->parent->label, u->label);
     totalWeight += u->dist;
   }
   printf("----------------------------\n"

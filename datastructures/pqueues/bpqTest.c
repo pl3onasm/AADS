@@ -1,5 +1,5 @@
 /* 
-  Generic priority queue interface, using binary heaps
+  Generic priority queue, using a binary heap
   Some tests with a priority queue of tasks having 
     a name, and a duration
   Author: David De Potter

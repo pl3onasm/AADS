@@ -1,24 +1,13 @@
-6 1
+s
 
-2 5 2 
-0 2 3
-3 5 1
-0 1 5
-2 3 7
-1 3 6
-4 5 -2
-2 4 4
-1 2 2
-3 4 -1
+t z 2 
+r t 3
+x z 1
+r s 5
+t x 7
+s x 6
+y z -2
+t y 4
+s t 2
+x y -1
 
-
-Source
-======
-CLRS⁴ Example Fig 22.5
-r = 0
-s = 1
-t = 2
-x = 3
-y = 4
-z = 5
-source node s = 1

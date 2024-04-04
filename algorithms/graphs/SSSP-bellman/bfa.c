@@ -10,21 +10,21 @@
 */
 
 #include "../../../datastructures/graphs/vgraph/graph.h"
-#include "../../../lib/clib/clib.h"
+#include <assert.h>
 #include <float.h>
 
 //===================================================================
-// Prints the distances and parents of the nodes
+// Prints the distances and parents of all vertices in the graph
 // By following the parent pointers, the shortest path from the
 // source node to any other node can be reconstructed
-void showResults (graph *G, vertex *src) {
+void showDistances(graph *G, vertex *src) {
   printf("\nShortest paths\n"
          "Source: %s\n"
+         "---------------------------------\n"
+         "Vertex: Parent, Distance from src\n"
          "---------------------------------\n",
-          src->label);
-  printf("Vertex: Parent, Distance from src\n"
-         "---------------------------------\n");
-
+         src->label);
+         
   for (vertex *v = firstV(G); v; v = nextV(G)) {
     printf("  %s: %s, ", v->label, 
            v->parent ? v->parent->label : "NIL");
@@ -67,10 +67,9 @@ void bellmanFord(graph *G, vertex *s) {
 
     // relax all edges n-1 times 
   vertex *from;
-  for (size_t i = 0; i < nVertices(G) - 1; i++) {
+  for (size_t i = 0; i < nVertices(G) - 1; i++) 
     for (edge *e = firstE(G, &from); e; e = nextE(G, &from))
       relax(from, e->to, e->weight);              
-  }      
 
     // check for negative-weight cycles by checking if 
     // any edge can still be relaxed 
@@ -102,7 +101,7 @@ int main (int argc, char *argv[]) {
   }  
 
   bellmanFord(G, src);                
-  showResults(G, src);        
+  showDistances(G, src);        
 
   freeGraph(G);
   return 0;

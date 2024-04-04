@@ -13,6 +13,7 @@
 
 #include "../../../datastructures/graphs/vgraph/graph.h"
 #include "../../../datastructures/queues/queue.h"
+#include <assert.h>
 
 //===================================================================
 // prints the path from the source to the destination
@@ -70,7 +71,7 @@ void bfs(graph *G, vertex *src) {
 int main () {
     // source and destination nodes
   char s[50], d[50];              
-  (void)! scanf("%s %s", s, d);
+  assert(scanf("%s %s", s, d) == 2);
   
   graph *G = newGraph(50, UNWEIGHTED);
   

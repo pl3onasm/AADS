@@ -19,9 +19,9 @@
 //===================================================================
 // Copies the key (priority) of a node in the priority queue
 void *copyKey (void *key) {
-  double *k = safeCalloc(1, sizeof(double));
-  *k = *(double *)key;
-  return k;
+  double *copy = safeCalloc(1, sizeof(double));
+  *copy = *(double *)key;
+  return copy;
 }
 
 //===================================================================
@@ -83,7 +83,7 @@ void dijkstra(graph *G, vertex *src) {
     vertex *u = bpqPop(pq);
     dll* edges = getNeighbors(G, u);
       
-      // try to relax all the neighbors of u that are in the pq
+      // try to relax all the edges from u to its neighbors
     for (edge *e = dllFirst(edges); e; e = dllNext(edges)) 
       if (bpqContains(pq, e->to) && relax(u, e->to, e->weight)) 
           // update neighbor's priority in the pq if edge was relaxed
@@ -101,10 +101,11 @@ void dijkstra(graph *G, vertex *src) {
 void showDistances(graph *G, vertex *src) {
   printf("\nShortest paths\n"
          "Source: %s\n"
+         "---------------------------------\n"
+         "Vertex: Parent, Distance from src\n"
          "---------------------------------\n",
-          src->label);
-  printf("Vertex: Parent, Distance from src\n"
-         "---------------------------------\n");
+         src->label);
+         
   for (vertex *v = firstV(G); v; v = nextV(G)) {
     printf("  %s: %s, ", v->label, 
            v->parent ? v->parent->label : "NIL");

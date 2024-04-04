@@ -59,6 +59,18 @@
   } vertex;
 
 //===================================================================
+// VERTEX TYPE 4  (application example: DAG shortest paths)
+#elif defined (VERTEX_TYPE4)
+
+  typedef struct vertex {
+    char *label;              // the label of the vertex
+    double dist;              // distance from the source vertex
+    struct vertex *parent;    // pointer to the parent vertex
+    size_t dTime;             // discovery time
+    size_t fTime;             // finish time
+  } vertex;
+
+//===================================================================
 // DEFAULT VERTEX TYPE
 #else     
 

@@ -88,7 +88,7 @@ void showEdge(void *val) {
   if (e->wType == UNWEIGHTED)
     printf("%s",  e->to->label);
   else
-    printf("%s (%.3g)", e->to->label, e->weight);
+    printf("%s(%.3g)", e->to->label, e->weight);
 }
 
 //=================================================================
@@ -113,6 +113,24 @@ static int cmpVertex(void const *v1, void const *v2) {
 }
 
 //=================================================================
+// Sorts the vertices in the graph by label
+// Returns a sorted array of pointers to the vertices
+vertex **sortGraph(graph *G) {
+  if (! G) 
+    return NULL;
+  
+  size_t n = nVertices(G);
+  vertex **vertices = safeCalloc(n, sizeof(vertex *));
+  size_t i = 0;
+
+  for (vertex *v = firstV(G); v; v = nextV(G))
+    vertices[i++] = v;
+
+  qsort(vertices, n, sizeof(vertex *), cmpVertex);
+  return vertices;
+}
+
+//=================================================================
 // Shows the graph
 void showGraph(graph *G) {
   printf("\n--------------------\n"
@@ -128,18 +146,11 @@ void showGraph(graph *G) {
           nVertices(G), 
           G->nEdges);
 
-  // first we sort the vertices
-  size_t n = nVertices(G);
-  vertex **vertices = safeCalloc(n, sizeof(vertex *));
-
-  size_t i = 0;
-  for (vertex *v = firstV(G); v; v = nextV(G))
-    vertices[i++] = v;
-
-  qsort(vertices, n, sizeof(vertex *), cmpVertex);
+  // sort the vertices
+  vertex **vertices = sortGraph(G);
 
   // show the vertices and their adjacency lists
-  for (i = 0; i < n; i++) {
+  for (size_t i = 0; i < nVertices(G); i++) {
     printf("  ");
     showVertex(G, vertices[i]);
   }
@@ -299,15 +310,6 @@ bool hasVertex(graph *G, char *label) {
     return false;
   G->v->label = label;
   return htHasKey(G->V, G->v);
-}
-
-//=================================================================
-// Returns true if the vertex exists in the graph, given a label
-bool inGraphL(graph *G, char *label) {
-  if (! G || ! label) 
-    return false;
-  G->v->label = label;
-  return inGraph(G, G->v);
 }
 
 //=================================================================
@@ -510,10 +512,10 @@ graph *copyGraph(graph *G) {
   if (! G) return NULL;
   graph *copy = newGraph(nVertices(G), G->weight);
   copy->type = G->type;
-  vertex *src;
-  double weight = 1;
-  for (edge *e = firstE(G, &src); e; e = nextE(G, &src)) 
-    addVandEW(copy, src->label, e->to->label, e->weight);
+  vertex *from; double weight = 1;
+
+  for (edge *e = firstE(G, &from); e; e = nextE(G, &from)) 
+    addVandEW(copy, from->label, e->to->label, e->weight);
   return copy;
 }
 
@@ -524,9 +526,10 @@ graph *transposeGraph(graph *G) {
   if (! G) return NULL;
   graph *T = newGraph(nVertices(G), G->weight);
   T->type = G->type;
-  vertex *src;
-  for (edge *e = firstE(G, &src); e; e = nextE(G, &src)) 
-    addVandEW(T, e->to->label, src->label, e->weight);
+  vertex *from;
+
+  for (edge *e = firstE(G, &from); e; e = nextE(G, &from)) 
+    addVandEW(T, e->to->label, from->label, e->weight);
   return T;
 }
 

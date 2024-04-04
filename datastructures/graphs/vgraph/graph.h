@@ -146,15 +146,9 @@ graph *copyGraph(graph *G);
   // This is a copy of G with all edges reversed
 graph *transposeGraph(graph *G);
 
-  // Checks if a vertex is in the graph
-  // A vertex is in the graph if it has at least
-  // one edge in its adjacency list
-inline bool inGraph(graph *G, vertex *v) {
-  return dllSize(getNeighbors(G, v));
-}
-
-  // Same as above, but by label
-bool inGraphL(graph *G, char *label);
+  // Returns an array of the vertices in the graph
+  // The array is sorted by the vertex labels
+vertex **sortGraph(graph *G);
 
   // Returns the number of vertices in the graph
 inline size_t nVertices(graph *G) {
