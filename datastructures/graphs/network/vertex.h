@@ -44,6 +44,17 @@ typedef struct edge edge;
   } vertex;
 
 //===================================================================
+// VERTEX TYPE 3  (application example: Ford-Fulkerson, Dinitz)
+
+#elif defined (VERTEX_TYPE3)
+
+  typedef struct vertex {
+    char *label;              // the label of the vertex
+    size_t inDegree;          // in-degree of the vertex
+    size_t level;             // level in the level graph
+  } vertex;
+
+//===================================================================
 // DEFAULT VERTEX TYPE
 #else     
 

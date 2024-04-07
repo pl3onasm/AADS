@@ -12,11 +12,9 @@
 */
 
 #include "../../../datastructures/graphs/network/network.h"
-#include "../../../datastructures/queues/queue.h"
 #include <assert.h>
 
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
 
 //===================================================================
 // Returns the largest power of 2 ≤ the network's max capacity
@@ -60,17 +58,15 @@ double dfs(network *N, vertex *v, vertex *sink,
 void maxFlow(network *N, vertex *src, vertex *sink) {
   
   size_t flow;
-  size_t delta = getThreshold(N);      
-
-  for (; delta > 0; delta >>= 1) {     
+       
+  for (size_t delta = getThreshold(N); delta > 0; delta >>= 1)   
     while ((flow = dfs(N, src, sink, SIZE_MAX, delta))) 
       N->maxFlow += flow;          
-  }
 }
 
 //===================================================================
 
-int main (int argc, char *argv[]) {
+int main () {
     // read source and sink 
   char srcL[50], sinkL[50];                    
   assert(scanf("%s %s", srcL, sinkL) == 2);
