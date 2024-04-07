@@ -20,7 +20,7 @@
 
 //===================================================================
 // Returns the largest power of 2 ≤ the network's max capacity
-size_t threshold(network *N) {
+size_t getThreshold(network *N) {
   size_t p = 1;
   while (p < N->maxCap) p <<= 1;
   return p >> 1;
@@ -60,14 +60,11 @@ double dfs(network *N, vertex *v, vertex *sink,
 void maxFlow(network *N, vertex *src, vertex *sink) {
   
   size_t flow;
-  size_t delta = threshold(N);      
-  printf("Threshold: %zu\n", delta);
+  size_t delta = getThreshold(N);      
 
   for (; delta > 0; delta >>= 1) {     
-    while ((flow = dfs(N, src, sink, SIZE_MAX, delta))) {  
+    while ((flow = dfs(N, src, sink, SIZE_MAX, delta))) 
       N->maxFlow += flow;          
-      printf("Flow: %zu\n", flow);
-    }
   }
 }
 
@@ -81,7 +78,6 @@ int main (int argc, char *argv[]) {
   network *N = newNetwork(50);    
   readNetwork(N);                  
   showNetwork(N);
-  printf ("Max capacity: %zu\n", N->maxCap);
   
   vertex *src = getVertex(N, srcL);     
   vertex *sink = getVertex(N, sinkL);     
