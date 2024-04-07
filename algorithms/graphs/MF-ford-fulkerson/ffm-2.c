@@ -6,9 +6,11 @@
   description: implements Ford-Fulkerson with DFS and a
     heuristic called capacity scaling to find the maximum flow
   time complexity: O(E²log(maxCap))
+  note: make sure to use VERTEX_TYPE2 in the vertex.h file
+    by defining it from the command line using
+      $ gcc -D VERTEX_TYPE2 ...
 */
 
-#define VERTEX_TYPE2
 #include "../../../datastructures/graphs/network/network.h"
 #include "../../../datastructures/queues/queue.h"
 #include <assert.h>

@@ -1,5 +1,5 @@
 /* 
-  Generic network implementation using a hash table
+  Generic flow network implementation using a hash table
   Author: David De Potter
   LICENSE: MIT, see LICENSE file in repository root folder
 */
@@ -302,6 +302,8 @@ static void correctAntiparallel(network *N, vertex *from,
   from->inDegree++;
   addEdge(N, v, to, cap);
   to->inDegree++;
+  if (cap != SIZE_MAX && cap > N->maxCap)
+      N->maxCap = cap;
   printf("Corrected antiparallel edge %s -> %s\n"
          "by adding %s -> %s and %s -> %s\n", 
           from->label, to->label, from->label, 
@@ -339,6 +341,8 @@ void addEdge(network *N, vertex *from, vertex *to, size_t cap) {
   e->rev = r;
   r->rev = e;
   
+  if (cap != SIZE_MAX && cap > N->maxCap)
+    N->maxCap = cap;
   N->nEdges++;
 }
 

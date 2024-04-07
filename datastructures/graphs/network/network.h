@@ -30,6 +30,7 @@ typedef struct {
   vertex *u;          // dummy vertex for lookup
   vertex *v;          // dummy vertex for lookup  
   vertex *z;          // dummy vertex for iteration
+  size_t maxCap;      // maximum edge capacity
   size_t maxFlow;     // maximum flow in the network
 } network;
 

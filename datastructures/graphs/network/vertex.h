@@ -23,12 +23,23 @@
 typedef struct edge edge;
 
 //===================================================================
-// VERTEX TYPE 1  (application example: Edmonds-Karp)
+// VERTEX TYPE 1  (application example: Ford-Fulkerson, Edmonds-Karp)
 #if defined (VERTEX_TYPE1)
 
   typedef struct vertex {
     char *label;              // the label of the vertex
     edge *pathEdge;           // edge leading to the vertex
+    size_t inDegree;          // in-degree of the vertex
+  } vertex;
+
+//===================================================================
+// VERTEX TYPE 2  (application example: Ford-Fulkerson, DFS)
+
+#elif defined (VERTEX_TYPE2)
+
+  typedef struct vertex {
+    char *label;              // the label of the vertex
+    bool visited;             // true if the vertex has been visited
     size_t inDegree;          // in-degree of the vertex
   } vertex;
 
