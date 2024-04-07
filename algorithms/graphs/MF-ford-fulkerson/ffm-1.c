@@ -61,7 +61,7 @@ void edmondsKarp(network *N, vertex *src, vertex *sink) {
       e->rev->flow -= flow;
       if (e->from == src) break;
     }
-      // reset the parent pointers for the next path
+      // reset the path edges for the next BFS
     for (vertex *v = firstV(N); v; v = nextV(N)) 
       v->pathEdge = NULL;
   }
@@ -80,6 +80,12 @@ int main (int argc, char *argv[]) {
   
   vertex *src = getVertex(N, srcL);     
   vertex *sink = getVertex(N, sinkL);     
+
+  if (!src || !sink) {
+    fprintf(stderr, "Source or sink not found\n");
+    freeNetwork(N);
+    exit(EXIT_FAILURE);
+  }
 
   edmondsKarp(N, src, sink); 
   showFlow(N, src, sink);     
