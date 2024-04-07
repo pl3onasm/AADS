@@ -10,7 +10,7 @@
     $ gcc -D VERTEX_TYPE4 ...
 */
 
-#include "../../../datastructures/graphs/vgraph/graph.h"
+#include "../../../datastructures/graphs/graph/graph.h"
 #include <float.h>
 #include <assert.h>
 

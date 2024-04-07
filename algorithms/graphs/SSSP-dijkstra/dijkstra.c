@@ -12,7 +12,7 @@
 */
 
 #include "../../../datastructures/pqueues/bpqueue.h"
-#include "../../../datastructures/graphs/vgraph/graph.h"
+#include "../../../datastructures/graphs/graph/graph.h"
 #include "../../../lib/clib/clib.h"
 #include <float.h>
 
@@ -57,7 +57,8 @@ bool relax(vertex *u, vertex *v, double w) {
 // Generates and initializes the min priority queue
 // All vertices are added to the priority queue with infinite
 // distance from the source node and likewise infinite priority
-bpqueue *initPQ(graph *G) {
+// The distance and priority of the source node is set to 0
+bpqueue *initPQ(graph *G, vertex *src) {
 
   bpqueue *pq = bpqNew(nVertices(G), MIN, compareKeys, copyKey, 
                        free, vertexToString);
@@ -66,6 +67,8 @@ bpqueue *initPQ(graph *G) {
     v->dist = DBL_MAX;
     bpqPush(pq, v, &v->dist);
   }
+  src->dist = 0;
+  bpqUpdateKey(pq, src, &src->dist);
   return pq;
 }
 
@@ -74,11 +77,8 @@ bpqueue *initPQ(graph *G) {
 void dijkstra(graph *G, vertex *src) {
     
     // genereate a new priority queue and initialize it
-  bpqueue *pq = initPQ(G);
-    // set the distance and priority of the source node to 0
-  src->dist = 0;
-  bpqUpdateKey(pq, src, &src->dist);
-
+  bpqueue *pq = initPQ(G, src);
+  
   while (! bpqIsEmpty(pq)) {
     vertex *u = bpqPop(pq);
     dll* edges = getNeighbors(G, u);

@@ -73,7 +73,7 @@ binheap *buildBinHeap(void *arr, size_t nElems,
 void showBinHeap(binheap *H);
 
   // true if the heap is empty
-inline size_t isEmptyBinHeap(binheap *H) {
+static inline size_t isEmptyBinHeap(binheap *H) {
   return H->size == 0;
 } 
 

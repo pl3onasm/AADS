@@ -44,6 +44,7 @@ typedef struct {
   size_t nFilled;         // number of filled buckets
   char *label;            // label for the hash table
   char *valDelim;         // delimiter for the values
+                          // default is ", "
 } htable;
 
 typedef struct {          // key-value pair
@@ -144,12 +145,12 @@ void htShowEntry(htable *H, void *key);
 void htStats(htable *H);
 
   // returns the number of keys in the hash table
-inline size_t htSize(htable *H) {
+static inline size_t htSize(htable *H) {
   return H->nKeys;
 }
 
   // returns true if the hash table is empty
-inline bool htIsEmpty(htable *H) {
+static inline bool htIsEmpty(htable *H) {
   return H->nKeys == 0;
 }
 

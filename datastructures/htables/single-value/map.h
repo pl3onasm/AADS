@@ -117,12 +117,12 @@ void mapShowEntry(map *M, void *key);
 void mapStats(map *M);
 
   // returns the number of keys in the map
-inline size_t mapSize(map *M) {
+static inline size_t mapSize(map *M) {
   return M->nKeys;
 }
 
   // returns true if the map is empty
-inline bool isEmptyMap(map *M) {
+static inline bool isEmptyMap(map *M) {
   return M->nKeys == 0;
 }
 

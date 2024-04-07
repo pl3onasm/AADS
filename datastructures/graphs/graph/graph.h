@@ -4,13 +4,14 @@
     A graph G = (V, E) is implemented as a hash table, 
     where the keys are the vertices and the values are
     the adjacency lists. The adjacency lists are doubly
-    linked lists of edges, which contain a pointer to the
-    destination vertex, and the weight of the edge.
+    linked lists of edges.
     The graph can be directed or undirected, and the
     edges can be weighted or unweighted.
     Nodes and edges can have different flavors and are
     defined in vertex.h and edge.h. You can add your own
     vertex and edge types by modifying these headers.
+    You could, for example, add a vertex with a void 
+    pointer to satellite data.
   Author: David De Potter
   LICENSE: MIT, see LICENSE file in repository root folder
 */
@@ -151,43 +152,74 @@ graph *transposeGraph(graph *G);
 vertex **sortGraph(graph *G);
 
   // Returns the number of vertices in the graph
-inline size_t nVertices(graph *G) {
+static inline size_t nVertices(graph *G) {
   return htSize(G->V);
 }
 
   // Returns the number of edges in the graph
-inline size_t nEdges(graph *G) {
+static inline size_t nEdges(graph *G) {
   return G->nEdges;
 }
 
   // Returns the out-degree of a vertex
-inline size_t outDegree(graph *G, vertex *v) {
+static inline size_t outDegree(graph *G, vertex *v) {
   return dllSize(getNeighbors(G, v));
 }
 
   // Same as above, but by label
-inline size_t outDegreeL(graph *G, char *label) {
+static inline size_t outDegreeL(graph *G, char *label) {
   return dllSize(getNeighborsL(G, label));
 }
 
+  // Returns the in-degree of a vertex
+static inline size_t inDegree(graph *G, vertex *v) {
+  return v ? v->inDegree : 0;
+}
+
+  // Same as above, but by label
+static inline size_t inDegreeL(graph *G, char *label) {
+  vertex *v = getVertex(G, label);
+  return v ? v->inDegree : 0;
+}
+
+  // Returns the degree of a vertex given its label
+static inline size_t degreeL(graph *G, char *label) {
+  return outDegreeL(G, label) + inDegreeL(G, label);
+}
+
+  // Returns the degree of a vertex
+static inline size_t degree(graph *G, vertex *v) {
+  return outDegree(G, v) + inDegree(G, v);
+}
+
+  // Determines if the vertex is isolated
+static inline bool isIsolated(graph *G, vertex *v) {
+  return degree(G, v) == 0;
+}
+
+  // Same as above, but by label
+static inline bool isIsolatedL(graph *G, char *label) {
+  return degreeL(G, label) == 0;
+}
+
   // Sets the label of the graph
-inline void setGLabel(graph *G, char *label) {
+static inline void setGLabel(graph *G, char *label) {
   htSetLabel(G->V, label);
 }
 
   // Sets the string delimiter for showing 
   // the adjacency lists (default is ", ")
-inline void setAdjDelim(graph *G, char *adjDelim) {
+static inline void setAdjDelim(graph *G, char *adjDelim) {
   htSetValDelim(G->V, adjDelim);
 }
 
   // Returns the weight of an edge
-inline double getWeight(edge *e) {
+static inline double getWeight(edge *e) {
   return e->weight;
 }
 
   // Returns true if the graph is empty
-inline bool graphIsEmpty(graph *G) {
+static inline bool graphIsEmpty(graph *G) {
   return htIsEmpty(G->V);
 }
 

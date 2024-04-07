@@ -20,6 +20,7 @@ htable *htNew(htHash hash, htCmpKey cmpKey,
   H->cmpKey = cmpKey;
   H->cmpVal = cmpVal;
   H->label = "Hash table";
+  H->valDelim = ", ";
   srand(time(NULL));
   H->seed = rand();
   H->seed ^= (uint64_t)time(NULL) << 16;
@@ -396,19 +397,31 @@ htEntry *htNext(htable *H) {
 }
 
 //=================================================================
-// Computes the maximum bucket size
-size_t htMaxBucketSize(htable *H) {
-  size_t max = 0;
-  for (size_t i = 0; i < H->capacity; i++) 
-    if (H->buckets[i] && dllSize(H->buckets[i]) > max)
-      max = dllSize(H->buckets[i]);
-  return max;
+// Computes the maximum and average bucket size
+// of the hash table
+void htBucketStats(htable *H, size_t *maxSize, 
+                   double *avgSize) {
+  
+  size_t totalSize = 0;
+  for (size_t i = 0; i < H->capacity; i++) {
+    if (H->buckets[i]) {
+      size_t size = dllSize(H->buckets[i]);
+      if (size > *maxSize)
+        *maxSize = size;
+      totalSize += size;
+    }
+  }
+  *avgSize = (double)totalSize / H->nFilled;
 }
 
 //=================================================================
 // Gives an overview of the distribution of keys 
 // over the buckets
 void htStats(htable *H) {
+  size_t maxBucketSize = 0;
+  double avgBucketSize = 0;
+  htBucketStats(H, &maxBucketSize, &avgBucketSize);
+
   printf("\n+---------------------------+\n"
          "|   Hash table statistics   |\n"
          "+---------------------------+\n\n"
@@ -417,10 +430,11 @@ void htStats(htable *H) {
          "   Number of keys.....: %zu\n"
          "   Load factor........: %.2f\n"
          "   Max. bucket size...: %zu\n"
+         "   Avg. bucket size...: %.2f\n"
          "   Collisions.........: %zu\n\n\n",
          H->capacity, H->nFilled, H->nKeys,
          (double)H->nKeys / H->capacity, 
-         htMaxBucketSize(H),
+         maxBucketSize, avgBucketSize,
          H->nKeys - H->nFilled);
 }
 

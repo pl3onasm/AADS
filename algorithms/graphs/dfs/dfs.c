@@ -15,7 +15,7 @@
         $ gcc -D VERTEX_TYPE1 -D EDGE_TYPE1 ...
 */
 
-#include "../../../datastructures/graphs/vgraph/graph.h"
+#include "../../../datastructures/graphs/graph/graph.h"
 #include "../../../datastructures/queues/queue.h"
 
 //===================================================================
@@ -79,12 +79,13 @@ void dfsVisit(graph *G, vertex *u, size_t *time) {
 // Since the graph is implemented as a hash table, the
 // graph traversal and thus the corresponding edge 
 // classification may differ from one run to another
-void dfs(graph *G, size_t *time) {
+void dfs(graph *G) {
+  size_t time = 0;
   
     // Discover all white nodes in the graph
   for (vertex *v = firstV(G); v; v = nextV(G)) 
     if (v->color == WHITE)      
-      dfsVisit(G, v, time);
+      dfsVisit(G, v, &time);
 }
 
 //===================================================================
@@ -96,8 +97,7 @@ int main (int argc, char *argv[]) {
   readGraph(G);    
   showGraph(G);
 
-  size_t time = 0;
-  dfs(G, &time); 
+  dfs(G); 
 
   printResults(G);
   freeGraph(G);

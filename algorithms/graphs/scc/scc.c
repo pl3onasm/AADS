@@ -11,7 +11,7 @@
         $ gcc -D VERTEX_TYPE3 ...
 */
 
-#include "../../../datastructures/graphs/vgraph/graph.h"
+#include "../../../datastructures/graphs/graph/graph.h"
 
 //===================================================================
 // Visits the node u and its descendants in depth-first order

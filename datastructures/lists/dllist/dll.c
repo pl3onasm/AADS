@@ -217,6 +217,34 @@ void dllPushBack (dll *L, void *data) {
 }
 
 //=================================================================
+// Pops the first node from the DLL
+// Returns the data of the node; NULL if the DLL is empty
+void *dllPop (dll *L) {
+  if (! L) 
+    return NULL;
+  if (dllIsEmpty(L)) 
+    return NULL;
+  dllNode *n = L->NIL->next;
+  void *data = n->dllData;
+  dllDelete(L, n);
+  return data;
+}
+
+//=================================================================
+// Pops the last node from the DLL
+// Returns the data of the node; NULL if the DLL is empty
+void *dllPopBack (dll *L) {
+  if (! L) 
+    return NULL;
+  if (dllIsEmpty(L)) 
+    return NULL;
+  dllNode *n = L->NIL->prev;
+  void *data = n->dllData;
+  dllDelete(L, n);
+  return data;
+}
+
+//=================================================================
 // Deletes a node from the DLL
 void dllDelete (dll *L, dllNode *node) {
   if (! L) 
@@ -272,7 +300,7 @@ void *dllFind (dll *L, void *key) {
 }
 
 //=================================================================
-// Shows the DLL, prints delimiter (default: ", ")
+// Shows the DLL
 void dllShow (dll *L) {
   if (!L || dllIsEmpty(L)) 
     return;
@@ -296,8 +324,52 @@ void dllShow (dll *L) {
 }
 
 //=================================================================
-// Sets the list iterator to the data of the first node
-// and returns the data
+// Peeks at the data of the first node
+// NULL is returned if the DLL is empty
+void *dllPeek (dll *L) {
+  if (! L) 
+    return NULL;
+  if (dllIsEmpty(L)) 
+    return NULL;
+  return L->NIL->next->dllData;
+}
+
+//=================================================================
+// Peeks at the data of the last node
+// NULL is returned if the DLL is empty
+void *dllPeekBack (dll *L) {
+  if (! L) 
+    return NULL;
+  if (dllIsEmpty(L)) 
+    return NULL;
+  return L->NIL->prev->dllData;
+}
+
+//=================================================================
+// Peeks at the data of the next node
+// NULL if the end of the DLL is reached
+void *dllPeekNext (dll *L) {
+  if (! L) 
+    return NULL;
+  if (L->iter == L->NIL)
+    return NULL;
+  return L->iter->next->dllData;
+}
+
+//=================================================================
+// Peeks at the data of the previous node
+// NULL is the start of the DLL is reached
+void *dllPeekPrev (dll *L) {
+  if (! L) 
+    return NULL;
+  if (L->iter == L->NIL)
+    return NULL;
+  return L->iter->prev->dllData;
+}
+
+//=================================================================
+// Returns the data of the first node and sets the iterator
+// to the next node
 void *dllFirst(dll *L) {
   if (! L) 
     return NULL;
@@ -308,8 +380,8 @@ void *dllFirst(dll *L) {
 }
 
 //=================================================================
-// Sets the list iterator to the data of the last node  
-// and returns the data
+// Returns the data of the last node and sets the iterator
+// to the previous node
 void *dllLast(dll *L) {
   if (! L) 
     return NULL;

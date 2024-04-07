@@ -69,8 +69,7 @@ void freeVertex(void *v) {
 //=================================================================
 // Creates a new edge, from -> to
 // An edge is the value of a key (vertex) in the hash table
-edge *newEdge(vertex *from, vertex *to, double weight, 
-              weightType w) {
+edge *newEdge(vertex *to, double weight, weightType w) {
   edge *e = safeCalloc(1, sizeof(edge));
   e->to = to;
   e->weight = weight;
@@ -241,17 +240,19 @@ void addEdgeW(graph *G, vertex *from, vertex *to, double weight) {
   if (! G || ! from || ! to)
     return;
 
-    // we only want to allocate memory for a new edge
-    // so first we check if the edge is already in the graph
+    // first check if the edge is already in the graph
   G->e->to = to;
   if (htHasKeyVal(G->V, from, G->e)) 
     return;
 
-  edge *e = newEdge(from, to, weight, G->weight);
+  edge *e = newEdge(to, weight, G->weight);
   htAddKeyVal(G->V, from, e);
+  to->inDegree++;
+
   if (G->type == UNDIRECTED) {
-    e = newEdge(to, from, weight, G->weight);
+    e = newEdge(from, weight, G->weight);
     htAddKeyVal(G->V, to, e);
+    from->inDegree++;
   }
   G->nEdges++;
 }
@@ -365,12 +366,17 @@ bool hasEdgeL(graph *G, char *from, char *to) {
 void delEdge(graph *G, vertex *from, vertex *to) {
   if (! G || ! from || ! to) 
     return;
+  
   G->e->to = to;
-  if (htDelVal(G->V, from, G->e))
+  if (htDelVal(G->V, from, G->e)) {
     G->nEdges--;
+    to->inDegree--;
+  }
+
   if (G->type == UNDIRECTED) {
     G->e->to = from;
-    htDelVal(G->V, to, G->e);
+    if (htDelVal(G->V, to, G->e)) 
+      from->inDegree--;
   }
 }
 
@@ -460,9 +466,7 @@ void addVandE(graph *G, char *from, char *to) {
 // Reads a graph from stdin
 void readGraph(graph *G) {
   char from[MAX_VERTEX_LABEL], to[MAX_VERTEX_LABEL];
-  vertex *u, *v;
   double weight = 1;
-  size_t n;
 
     // check if the graph is set to undirected
   if (scanf ("%s", from) == 1 && 
@@ -512,7 +516,7 @@ graph *copyGraph(graph *G) {
   if (! G) return NULL;
   graph *copy = newGraph(nVertices(G), G->weight);
   copy->type = G->type;
-  vertex *from; double weight = 1;
+  vertex *from; 
 
   for (edge *e = firstE(G, &from); e; e = nextE(G, &from)) 
     addVandEW(copy, from->label, e->to->label, e->weight);

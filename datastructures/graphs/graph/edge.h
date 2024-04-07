@@ -38,6 +38,7 @@ typedef enum { WEIGHTED, UNWEIGHTED } weightType;
     vertex *to;                 // pointer to the destination vertex
     double weight;              // weight of the edge
     eType type;                 // type of the edge
+    weightType wType;           // weighted or unweighted
   } edge;
 
 

@@ -11,7 +11,7 @@
     $ gcc -D VERTEX_TYPE2 ...
 */
 
-#include "../../../datastructures/graphs/vgraph/graph.h"
+#include "../../../datastructures/graphs/graph/graph.h"
 #include "../../../datastructures/queues/queue.h"
 #include <assert.h>
 

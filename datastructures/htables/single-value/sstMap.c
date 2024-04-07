@@ -84,14 +84,6 @@ static void showSize(void *size) {
 }
 
 //===================================================================
-// Copy function for value
-static void *copySizet(void *size) {
-  size_t *newSizet = safeCalloc(1, sizeof(size_t));
-  *newSizet = *(size_t *)size;
-  return newSizet;
-}
-
-//===================================================================
 // creates a new map
 sstMap *sstMapNew(sstMapCase mapCase, size_t capacity) {
   mapHash hash = mapCase == CASE_SENSITIVE ? 

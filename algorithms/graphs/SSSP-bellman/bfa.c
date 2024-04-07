@@ -9,7 +9,7 @@
       $ gcc -D VERTEX_TYPE2 ...
 */
 
-#include "../../../datastructures/graphs/vgraph/graph.h"
+#include "../../../datastructures/graphs/graph/graph.h"
 #include <assert.h>
 #include <float.h>
 
@@ -38,14 +38,11 @@ void showDistances(graph *G, vertex *src) {
 
 //===================================================================
 // Tries to 'relax' the edge (u, v) with weight w
-// Returns true if the relaxation was successful
-bool relax(vertex *u, vertex *v, double w) {
+void relax(vertex *u, vertex *v, double w) {
   if (v->dist > u->dist + w) {
     v->dist = u->dist + w;
     v->parent = u;
-    return true;
   }
-  return false;
 }
 
 //===================================================================

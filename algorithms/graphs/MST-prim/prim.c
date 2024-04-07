@@ -14,7 +14,7 @@
 */
 
 #include "../../../datastructures/pqueues/bpqueue.h"
-#include "../../../datastructures/graphs/vgraph/graph.h"
+#include "../../../datastructures/graphs/graph/graph.h"
 #include "../../../lib/clib/clib.h"
 #include <float.h>
 
@@ -57,6 +57,11 @@ bpqueue *initPQ(graph *G) {
     v->dist = DBL_MAX;
     bpqPush(pq, v, &v->dist);
   }
+    // we start with an arbitrary vertex and set 
+    // its distance and priority to 0
+  vertex *s = firstV(G);   
+  s->dist = 0;
+  bpqUpdateKey(pq, s, &s->dist);  
   return pq;
 }
 
@@ -67,12 +72,6 @@ vertex **mstPrim(graph *G) {
   vertex **mst = safeCalloc(nVertices(G), sizeof(vertex *));
   size_t idx = 0;
   bpqueue *pq = initPQ(G);    
-  
-    // start with an arbitrary vertex and set 
-    // its distance and priority to 0
-  vertex *s = firstV(G);   
-  s->dist = 0;
-  bpqUpdateKey(pq, s, &s->dist);  
 
   while (!bpqIsEmpty(pq)) {
     vertex *u = bpqPop(pq);    

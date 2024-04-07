@@ -10,57 +10,37 @@ int main() {
   graph *G = newGraph(20, UNWEIGHTED);
   //setUndirected(G);   // uncomment to make the graph undirected
   setGLabel(G, "ANIMAL GRAPH");
-  addVertex(G, "cat");
-  addVertex(G, "dog");
-  addVertex(G, "bird");
-  addVertex(G, "fish");
-  addVertex(G, "mouse");
-  addVertex(G, "elephant");
-  addVertex(G, "lion");
-  addVertex(G, "tiger");
-  addVertex(G, "bear");
-  addVertex(G, "wolf");
-  addVertex(G, "fox");
-  addVertex(G, "rabbit");
-  addVertex(G, "deer");
-  addVertex(G, "horse");
-  addVertex(G, "cow");
-  addVertex(G, "pig");
-  addVertex(G, "sheep");
-  addVertex(G, "goat");
-  addVertex(G, "chicken");
-  addVertex(G, "duck");
 
-  addEdgeL(G, "cat", "dog");
-  addEdgeL(G, "cat", "bird");
-  addEdgeL(G, "cat", "fish");
-  addEdgeL(G, "dog", "mouse");
-  addEdgeL(G, "dog", "elephant");
-  addEdgeL(G, "dog", "lion");
-  addEdgeL(G, "fox", "tiger");
-  addEdgeL(G, "dog", "bear");
-  addEdgeL(G, "goat", "wolf");
-  addEdgeL(G, "pig", "cow");
-  addEdgeL(G, "pig", "sheep");
-  addEdgeL(G, "mouse", "goat");
-  addEdgeL(G, "mouse", "chicken");
-  addEdgeL(G, "mouse", "duck");
-  addEdgeL(G, "duck", "rabbit");
-  addEdgeL(G, "rabbit", "fox");
-  addEdgeL(G, "fox", "wolf");
-  addEdgeL(G, "wolf", "deer");
-  addEdgeL(G, "deer", "horse");
-  addEdgeL(G, "horse", "horse");
-  addEdgeL(G, "horse", "elephant");
-  addEdgeL(G, "elephant", "lion");
-  addEdgeL(G, "lion", "tiger");
-  addEdgeL(G, "tiger", "bear");
-  addEdgeL(G, "bear", "elephant");
-  addEdgeL(G, "elephant", "wolf");
-  addEdgeL(G, "wolf", "lion");
-  addEdgeL(G, "tiger", "bear");
-  addEdgeL(G, "fish", "wolf");
-  addEdgeL(G, "cat", "horse");
+  addVandE(G, "cat", "dog");
+  addVandE(G, "cat", "bird");
+  addVandE(G, "cat", "fish");
+  addVandE(G, "dog", "mouse");
+  addVandE(G, "dog", "elephant");
+  addVandE(G, "dog", "lion");
+  addVandE(G, "fox", "tiger");
+  addVandE(G, "dog", "bear");
+  addVandE(G, "goat", "wolf");
+  addVandE(G, "pig", "cow");
+  addVandE(G, "pig", "sheep");
+  addVandE(G, "mouse", "goat");
+  addVandE(G, "mouse", "chicken");
+  addVandE(G, "mouse", "duck");
+  addVandE(G, "duck", "rabbit");
+  addVandE(G, "rabbit", "fox");
+  addVandE(G, "fox", "wolf");
+  addVandE(G, "wolf", "deer");
+  addVandE(G, "deer", "horse");
+  addVandE(G, "horse", "horse");
+  addVandE(G, "horse", "elephant");
+  addVandE(G, "elephant", "lion");
+  addVandE(G, "lion", "tiger");
+  addVandE(G, "tiger", "bear");
+  addVandE(G, "bear", "elephant");
+  addVandE(G, "elephant", "wolf");
+  addVandE(G, "wolf", "lion");
+  addVandE(G, "tiger", "bear");
+  addVandE(G, "fish", "wolf");
+  addVandE(G, "cat", "horse");
 
   showGraph(G);
 
@@ -80,6 +60,7 @@ int main() {
     // remove some edges
   delEdgeL(G, "tiger", "bear");
   delEdgeL(G, "fish", "wolf");
+  delEdgeL(G, "cat", "bird");
 
     // removes a non-existing edge
   delEdgeL(G, "rabbit", "bear");
@@ -99,13 +80,14 @@ int main() {
   printf("Edge %s-%s is in the graph: %s\n", "elephant", "horse",
           hasEdgeL(G, "elephant", "horse") ? "true" : "false");
 
-    // check if the vertices are in the graph
-  printf("\nVertex %s is in the graph: %s\n", "fox", 
-         inGraphL(G, "fox") ? "true" : "false");
-  printf("Vertex %s is in the graph: %s\n", "bird",  
-         inGraphL(G, "bird") ? "true" : "false");
-  printf("Vertex %s is in the graph: %s\n\n", "mouse", 
-         inGraphL(G, "mouse") ? "true" : "false");
+    // check some properties of vertices
+  printf("\nVertex %s has outdegree: %zu\n", "cat", outDegreeL(G, "cat"));
+  printf("Vertex %s has indegree: %zu\n", "elephant", inDegreeL(G, "elephant"));
+  printf("Vertex %s has degree: %zu\n", "mouse", degreeL(G, "mouse"));
+  printf("Vertex %s is isolated: %s\n", "fish", 
+         isIsolatedL(G, "fish") ? "true" : "false");
+  printf("Vertex %s is isolated: %s\n", "bird", 
+         isIsolatedL(G, "bird") ? "true" : "false");
 
     // tests the edge iterator over the graph
   printf("\nAll edges in the graph:\n");

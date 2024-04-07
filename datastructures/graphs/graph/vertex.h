@@ -76,6 +76,7 @@
 
   typedef struct vertex {   
     char *label;              // the label of the vertex
+    size_t inDegree;          // in-degree of the vertex
   } vertex;
 
 

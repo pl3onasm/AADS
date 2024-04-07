@@ -123,12 +123,12 @@ void *bpqGetKey(bpqueue *pq, void *data);
 void bpqShow(bpqueue *pq);
 
   // true if the queue is empty
-inline bool bpqIsEmpty(bpqueue *pq) {
+static inline bool bpqIsEmpty(bpqueue *pq) {
   return pq->size == 0;
 } 
 
   // returns the number of items in the queue
-inline size_t bpqSize(bpqueue *pq) {
+static inline size_t bpqSize(bpqueue *pq) {
   return pq->size;
 }
 

@@ -90,6 +90,14 @@ void dllInsert(dll *L, void *data);
   // Pushes data to the back of the DLL
 void dllPushBack(dll *L, void *data);
 
+  // Pops data from the front of the DLL
+  // NULL is returned if the DLL is empty
+void *dllPop(dll *L);
+
+  // Pops data from the back of the DLL
+  // NULL is returned if the DLL is empty
+void *dllPopBack(dll *L);
+
   // Deletes a node from the DLL
 void dllDelete(dll *L, dllNode *node);
 
@@ -106,12 +114,28 @@ void *dllFind(dll *L, void *key);
   // and the delimiter string (default is ", ")
 void dllShow(dll *L);
 
-  // Sets the list iterator to the first node
-  // and returns the data of the first node
+  // Peeks at the data of the first node
+  // NULL is returned if the DLL is empty
+void *dllPeek(dll *L);
+
+  // Peeks at the data of the last node
+  // NULL is returned if the DLL is empty
+void *dllPeekBack(dll *L);
+
+  // Peeks at the data of the next node
+  // NULL if the end of the DLL is reached
+void *dllPeekNext(dll *L);
+
+  // Peeks at the data of the previous node
+  // NULL is the start of the DLL is reached
+void *dllPeekPrev(dll *L);
+
+  // Returns the data of the first node and
+  // sets the list iterator to the next node
 void *dllFirst(dll *L);
 
-  // Sets the list iterator to the last node
-  // and returns the data of the last node
+  // Returns the data of the last node and
+  // sets the list iterator to the previous node
 void *dllLast(dll *L);
 
   // Returns true if the next node is the end of the DLL
@@ -128,21 +152,21 @@ void *dllNext(dll *L);
 
   // Updates the list iterator to the previous node
   // and returns the data of that node
-  // value is NULL if the beginning of the DLL is reached
+  // NULL if the beginning of the DLL is reached
 void *dllPrev(dll *L);
 
   // Checks if the DLL is empty
-inline bool dllIsEmpty (dll *L) {
-  return L ? L->size == 0 : true;
+static inline bool dllIsEmpty (dll *L) {
+  return L ? L->NIL->next == L->NIL : true;
 }
 
   // Gets the size of the DLL
-inline size_t dllSize (dll *L) {
+static inline size_t dllSize (dll *L) {
   return L ? L->size : 0;
 }
 
   // Gets the dllData of a node
-inline void *dllData (dllNode *node) {
+static inline void *dllData (dllNode *node) {
   return node ? node->dllData : NULL;
 }
 
