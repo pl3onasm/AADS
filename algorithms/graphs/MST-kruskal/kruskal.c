@@ -68,7 +68,7 @@ dll *mstKruskal(graph *G) {
   binheap *H = initBinHeap(G);
   unionFind *sets = initUnionFind(G);
   
-    // add n-1 edges to the MST without forming a cycle
+    // add |V|-1 edges to the MST without forming a cycle
   while (dllSize(mst) < nVertices(G) - 1) { 
       // get the lightest edge      
     edge *e = bhpPop(H);
