@@ -19,6 +19,7 @@
 * [Heaps](datastructures/heaps)
 * [Priority queues](datastructures/pqueues)
 * [Graphs](datastructures/graphs)
+* [Disjoint sets](datastructures/union-find)
 
 ## ${\color{darkseagreen}\text{Notes}}$
 
