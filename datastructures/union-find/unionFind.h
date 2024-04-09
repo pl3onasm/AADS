@@ -28,7 +28,6 @@ typedef struct unionFind {
   sstMap *indexMap;
   size_t size;
   size_t capacity;
-  size_t numSets;
   ufFreeData freeData;
   ufCpyData copyData;
   ufToString toString;
@@ -70,7 +69,7 @@ bool ufSameSet(unionFind *uf, void *data1, void *data2);
 
   // returns the number of sets in the union-find structure
 static inline size_t ufNumSets(unionFind *uf) {
-  return uf->numSets;
+  return uf->size;
 }
 
 #endif  // UNIONFIND_H_INCLUDED

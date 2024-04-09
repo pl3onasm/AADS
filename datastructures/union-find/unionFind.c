@@ -113,7 +113,7 @@ void ufUnify(unionFind *uf, void *data1, void *data2) {
       !sstMapHasKeyVal(uf->indexMap, uf->toString(data2), &idx2))
     return;
   link(uf, ufFindIdx(uf, idx1), ufFindIdx(uf, idx2));
-  uf->numSets--;
+  uf->size--;
 }
 
 //===================================================================
