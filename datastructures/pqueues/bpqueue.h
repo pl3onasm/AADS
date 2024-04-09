@@ -4,6 +4,9 @@
     mapping data to indices in the queue (str(data) -> idx)
     String representation of data should be unique for each 
     data item
+    The comparison function should compare the keys of the
+    nodes in the queue (not the data) and return -1, 0, 1
+    for less than, equal to, greater than, respectively
   Author: David De Potter
   LICENSE: MIT, see LICENSE file in repository root folder
 */
@@ -64,10 +67,6 @@ typedef struct {
 bpqueue *bpqNew(size_t capacity, bpqType type, 
                 bpqCompKey cmp, bpqCopyKey copyKey,
                 bpqFreeKey freeKey, bpqToString toString);
-
-  // initializes the priority queue by setting all keys
-  // (priorities) to a given value
-void bpqInit(bpqueue *pq, void *initKey);
 
   // sets the show function for the priority queue
 void bpqSetShow(bpqueue *pq, bpqShowKey show, 

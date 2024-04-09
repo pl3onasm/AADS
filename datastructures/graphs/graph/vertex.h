@@ -47,6 +47,7 @@
     struct vertex *parent;    // pointer to the parent vertex
     double dist;              // distance from the source vertex
     char *label;              // the label of the vertex
+    size_t inDegree;          // in-degree of the vertex
   } vertex;
 
 //===================================================================
@@ -56,6 +57,7 @@
   typedef struct vertex {
     char *label;              // the label of the vertex
     bool visited;             // marks the vertex as visited
+    size_t inDegree;          // in-degree of the vertex
   } vertex;
 
 //===================================================================
@@ -68,6 +70,7 @@
     struct vertex *parent;    // pointer to the parent vertex
     size_t dTime;             // discovery time
     size_t fTime;             // finish time
+    size_t inDegree;          // in-degree of the vertex
   } vertex;
 
 //===================================================================

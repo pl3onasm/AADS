@@ -13,12 +13,12 @@
 
 //===================================================================
 // Creates a new binary heap
-binheap *newBinHeap(size_t capacity, hpType hpType,
-                    hpCompData cmp) {
+binheap *bhpNew(size_t capacity, bhpType hpType,
+                bhpCompData cmp) {
   binheap *h = safeCalloc(1, sizeof(binheap));
   h->capacity = capacity;
   h->cmp = cmp;
-  h->arr = safeCalloc(capacity, sizeof(void *));
+  h->arr = safeCalloc(capacity, sizeof(*(h->arr)));
   h->hpType = hpType;
   h->label = "BINARY HEAP";
   h->delim = ", ";
@@ -27,7 +27,7 @@ binheap *newBinHeap(size_t capacity, hpType hpType,
 
 //===================================================================
 // Deallocates the binary heap
-void freeBinHeap(binheap *H) {
+void bhpFree(binheap *H) {
   if (!H) return;
   free(H->arr);
   free(H);
@@ -35,77 +35,81 @@ void freeBinHeap(binheap *H) {
 
 //===================================================================
 // Sets the show function for the heap
-void setBinHeapShow(binheap *H, hpShowData show) {
+void bhpSetShow(binheap *H, bhpShowData show) {
   H->show = show;
 }
 
 //===================================================================
 // Sets the label for the heap
-void setBinHeapLabel(binheap *H, char *label) {
+void bhpSetLabel(binheap *H, char *label) {
   H->label = label;
 }
 
 //===================================================================
 // Sets the delimiter for the show function
-void setBinHeapDelim(binheap *H, char *delim) {
+void bhpSetDelim(binheap *H, char *delim) {
   H->delim = delim;
 }
 
 //===================================================================
 // Returns the top element of the heap without removing it
-void *peekAtBinHeap(binheap *H) {
+void *bhpPeek(binheap *H) {
   if (H->size == 0) return NULL;
   return H->arr[0];
 }
 
 //===================================================================
 // Removes the top element from the heap
-void *popFromBinHeap(binheap *H) {
+void *bhpPop(binheap *H) {
   if (H->size == 0) return NULL;
   void *top = H->arr[0];
   H->arr[0] = H->arr[H->size - 1];
   H->size--;
-  heapifyBinHeap(H, 0);
+  bhpHeapify(H, 0);
   return top;
 }
 
 //===================================================================
 // Adds a new node to the heap
-void pushToBinHeap(binheap *H, void *node) {
+void bhpPush(binheap *H, void *node) {
   if (H->size == H->capacity) {
     H->capacity *= 2;
     H->arr = safeRealloc(H->arr, H->capacity * sizeof(void *));
   }
-  H->arr[H->size] = node;
-  size_t i = H->size;
-  H->size++;
+  size_t idx = H->size;
+  H->arr[idx] = node;
+    // bubble up the new node until
+    // the heap property is restored
   if (H->hpType == MIN) {     // min heap
-    while (i > 0 && H->cmp(H->arr[i], H->arr[PARENT(i)]) < 0) {
-      SWAP(H->arr[i], H->arr[PARENT(i)]);
-      i = PARENT(i);
+    while (idx > 0 && H->cmp(H->arr[idx], H->arr[PARENT(idx)]) < 0) {
+      SWAP(H->arr[idx], H->arr[PARENT(idx)]);
+      idx = PARENT(idx);
     }
   } else {                    // max heap
-    while (i > 0 && H->cmp(H->arr[i], H->arr[PARENT(i)]) > 0) {
-      SWAP(H->arr[i], H->arr[PARENT(i)]);
-      i = PARENT(i);
+    while (idx > 0 && H->cmp(H->arr[idx], H->arr[PARENT(idx)]) > 0) {
+      SWAP(H->arr[idx], H->arr[PARENT(idx)]);
+      idx = PARENT(idx);
     }
   }
+  H->size++;
 }
 
 //===================================================================
 // Heapifies the binary heap starting from the given index
-void heapifyBinHeap(binheap *H, size_t idx) {
+void bhpHeapify(binheap *H, size_t idx) {
   size_t l = LEFT(idx);
   size_t r = RIGHT(idx);
+    // bubble down until the 
+    // heap property is restored
   if (H->hpType == MIN) {     // min heap 
     size_t smallest = idx;
     if (l < H->size && H->cmp(H->arr[l], H->arr[smallest]) < 0)
       smallest = l;
-    if (r < H->size && H->cmp(H->arr[r], H->arr[smallest]) < 0)
+    if (r < H->size && H->cmp(H->arr[r], H->arr[smallest]) < 0) 
       smallest = r;
     if (smallest != idx) {
       SWAP(H->arr[idx], H->arr[smallest]);
-      heapifyBinHeap(H, smallest);
+      bhpHeapify(H, smallest);
     }
   } else {                    // max heap
     size_t largest = idx;
@@ -115,15 +119,15 @@ void heapifyBinHeap(binheap *H, size_t idx) {
       largest = r;
     if (largest != idx) {
       SWAP(H->arr[idx], H->arr[largest]);
-      heapifyBinHeap(H, largest);
+      bhpHeapify(H, largest);
     }
   }
 }
 
 //===================================================================
 // Builds a binary heap from an array
-binheap *buildBinHeap(void *arr, size_t len, size_t elemSize,
-                      hpType hpType, hpCompData cmp) {
+binheap *bhpBuild(void *arr, size_t len, size_t elemSize,
+                  bhpType hpType, bhpCompData cmp) {
 
   if (len == 0) {
     fprintf(stderr, "Error: cannot build a heap "
@@ -131,7 +135,7 @@ binheap *buildBinHeap(void *arr, size_t len, size_t elemSize,
     exit(EXIT_FAILURE);
   }
 
-  binheap *H = newBinHeap(len, hpType, cmp);
+  binheap *H = bhpNew(len, hpType, cmp);
 
     // copy the array into the heap 
   for (size_t i = 0; i < len; i++) 
@@ -141,14 +145,18 @@ binheap *buildBinHeap(void *arr, size_t len, size_t elemSize,
     // starting from the last non-leaf node
   H->size = len;
   for (size_t i = len / 2; i--; ) 
-    heapifyBinHeap(H, i);
+    bhpHeapify(H, i);
   
   return H;
 }
 
 //===================================================================
 // Shows the binary heap
-void showBinHeap(binheap *H) {
+void bhpShow(binheap *H) {
+  if (!H->show) {
+    fprintf(stderr, "Error: no show function set for the heap\n");
+    return;
+  }
   printf("--------------------\n"
          "%s\n"
          "Type: %s\n"

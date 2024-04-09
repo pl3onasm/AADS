@@ -64,11 +64,9 @@ bpqueue *initPQ(graph *G, vertex *src) {
                        free, vertexToString);
   
   for (vertex *v = firstV(G); v; v = nextV(G)) {
-    v->dist = DBL_MAX;
+    v->dist = v == src ? 0 : DBL_MAX;
     bpqPush(pq, v, &v->dist);
   }
-  src->dist = 0;
-  bpqUpdateKey(pq, src, &src->dist);
   return pq;
 }
 

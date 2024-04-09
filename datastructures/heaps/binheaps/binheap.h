@@ -12,20 +12,20 @@
 #include <stdio.h>
 
 // function pointer types
-typedef int (*hpCompData)(void const *a, void const *b);
-typedef void (*hpShowData)(void const *data);
+typedef int (*bhpCompData)(void const *a, void const *b);
+typedef void (*bhpShowData)(void const *data);
 
 // binary heap type
-typedef enum { MIN, MAX } hpType;
+typedef enum { MIN, MAX } bhpType;
 
 // binary heap structure
 typedef struct {     
   void **arr;              // array of void pointers
   size_t size;             // number of nodes in the heap
   size_t capacity;         // capacity of the heap
-  hpCompData cmp;          // comparison function
-  hpShowData show;         // show function
-  hpType hpType;           // type of heap (min or max)
+  bhpCompData cmp;         // comparison function
+  bhpShowData show;        // show function
+  bhpType hpType;          // type of heap (min or max)
   char *label;             // label for the heap
                            // default is "BINARY HEAP"
   char *delim;             // string delimter for show
@@ -36,44 +36,44 @@ typedef struct {
 
   // creates a new binary heap, with given capacity, 
   // type (MIN / MAX), and comparison function
-binheap *newBinHeap(size_t capacity, hpType type, 
-                    hpCompData cmp);
+binheap *bhpNew(size_t capacity, bhpType type, 
+                bhpCompData cmp);
 
   // sets the show function for the heap
-void setBinHeapShow(binheap *H, hpShowData show);
+void bhpSetShow(binheap *H, bhpShowData show);
 
   // sets the label for the heap
-void setBinHeapLabel(binheap *H, char *label);
+void bhpSetLabel(binheap *H, char *label);
 
   // sets the delimiter for the show function
-void setBinHeapDelim(binheap *H, char *delim);
+void bhpSetDelim(binheap *H, char *delim);
 
   // deallocates the binary heap
-void freeBinHeap(binheap *H);
+void bhpFree(binheap *H);
 
   // returns the top element of the heap 
   // without removing it
-void *peekAtBinHeap(binheap *H);
+void *bhpPeek(binheap *H);
 
   // removes the top element from the heap
-void *popFromBinHeap(binheap *H);
+void *bhpPop(binheap *H);
 
   // restores the binary heap property 
   // starting from the given index
-void heapifyBinHeap(binheap *H, size_t idx);
+void bhpHeapify(binheap *H, size_t idx);
 
   // adds a new node to the heap
-void pushToBinHeap(binheap *H, void *node);
+void bhpPush(binheap *H, void *node);
 
   // builds a binary heap from an array
-binheap *buildBinHeap(void *arr, size_t nElems, 
-    size_t elSize, hpType hpType, hpCompData cmp);
+binheap *bhpBuild(void *arr, size_t nElems, 
+    size_t elSize, bhpType hpType, bhpCompData cmp);
 
   // shows the binary heap
-void showBinHeap(binheap *H);
+void bhpShow(binheap *H);
 
   // true if the heap is empty
-static inline size_t isEmptyBinHeap(binheap *H) {
+static inline size_t bhpIsEmpty(binheap *H) {
   return H->size == 0;
 } 
 

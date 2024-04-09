@@ -59,7 +59,7 @@ void freeTask(void *data) {
     // show a task
 void showTask(void const *data) {
   task *t = (task *)data;
-  printf("%s - %.2fs", t->name, t->duration);
+  printf("%s - %.2fmin", t->name, t->duration);
 }
 
   // convert a task to a string
@@ -119,8 +119,10 @@ int main () {
     // pop all tasks
   printf("Popping all tasks..\n\n");
   while (! bpqIsEmpty(pq)) {
+    task *top = bpqPeek(pq);
+    size_t *prio = bpqGetKey(pq, top);
+    printf("Popped %s with priority %zu\n", top->name, *prio);
     task *t = bpqPop(pq);
-    printf("Popped: %s\n", t->name);
     freeTask(t);
   }
   

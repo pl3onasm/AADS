@@ -1,6 +1,10 @@
 /* 
   Generic hash table implementation, using separate chaining
   Keys can have multiple values
+  The comparison functions for keys and values only need to 
+    support equality, not ordering; but you can of course 
+    use any comparison function you like, as long as it 
+    returns 0 for equality
   Author: David De Potter
   LICENSE: MIT, see LICENSE file in repository root folder
 */

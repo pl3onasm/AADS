@@ -30,7 +30,7 @@ void heapsort(binheap *H){
     // by decreasing its size
     H->size--;
     // restore the bin heap property
-    heapifyBinHeap(H, 0);
+    bhpHeapify(H, 0);
   }
     // restore the original size of the heap
   H->size = size;
@@ -43,24 +43,24 @@ int main (){
   READ(int, arr, "%d", size);
 
     // builds a max heap, sorts in ascending order
-  binheap *H = buildBinHeap(arr, size, sizeof(int),
-                            MAX, cmpInts);
+  binheap *H = bhpBuild(arr, size, sizeof(int),
+                        MAX, cmpInts);
   heapsort(H);
   
-  setBinHeapShow(H, showInt);
-  showBinHeap (H);
+  bhpSetShow(H, showInt);
+  bhpShow(H);
   printf("\n");
-  freeBinHeap(H);
+  bhpFree(H);
 
     // builds a min heap, sorts in descending order
-  H = buildBinHeap(arr, size, sizeof(int),
-                   MIN, cmpInts);
+  H = bhpBuild(arr, size, sizeof(int),
+               MIN, cmpInts);
 
   heapsort(H);
 
-  setBinHeapShow(H, showInt);
-  showBinHeap (H);
-  freeBinHeap(H);
+  bhpSetShow(H, showInt);
+  bhpShow(H);
+  bhpFree(H);
   free(arr);
   return 0;
 }

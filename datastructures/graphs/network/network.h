@@ -17,7 +17,7 @@
 #ifndef NETWORK_H_INCLUDED
 #define NETWORK_H_INCLUDED
 
-#include "../../htables/mult-value/htable.h"
+#include "../../htables/multi-value/htable.h"
 #include "edge.h"
 #include "vertex.h"
 

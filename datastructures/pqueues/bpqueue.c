@@ -47,14 +47,6 @@ bpqNode *bpqNodeNew(void *data, void *key) {
 }
 
 //===================================================================
-// Initializes the priority queue by setting all keys (priorities)
-// to a given value 
-void bpqInit(bpqueue *pq, void *initKey) {
-  for (size_t i = 0; i < pq->size; i++) 
-    pq->arr[i]->key = pq->copyKey(initKey);
-}
-
-//===================================================================
 // Deallocates the priority queue
 void bpqFree(bpqueue *pq) {
   if (!pq) return;
@@ -195,12 +187,10 @@ void bpqPush(bpqueue *pq, void *data, void *key) {
     pq->capacity *= 2;
     pq->arr = safeRealloc(pq->arr, pq->capacity * sizeof(bpqNode *));
   }
-    // create a new node
-  pq->arr[pq->size] = bpqNodeNew(data, pq->copyKey(key));
-    // index of the new node
+    // get the index of the new node
   size_t idx = pq->size;
-    // queue is one node larger
-  pq->size++;
+    // create a new node
+  pq->arr[idx] = bpqNodeNew(data, pq->copyKey(key));
     // add a string(data) -> idx mapping 
   sstMapAddKey(pq->map, pq->toString(data), idx);
     // restore the heap property
@@ -217,6 +207,8 @@ void bpqPush(bpqueue *pq, void *data, void *key) {
       idx = PARENT(idx);
     }
   }
+    // increase the size of the queue
+  pq->size++;
 }
 
 //===================================================================

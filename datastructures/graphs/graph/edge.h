@@ -41,6 +41,16 @@ typedef enum { WEIGHTED, UNWEIGHTED } weightType;
     weightType wType;           // weighted or unweighted
   } edge;
 
+//===================================================================
+// EDGE TYPE 2  (application example: Kruskal)
+#elif defined (EDGE_TYPE2)      
+
+  typedef struct edge {        
+    vertex *from;               // pointer to the source vertex 
+    vertex *to;                 // pointer to the destination vertex
+    double weight;              // weight of the edge
+    weightType wType;           // weighted or unweighted
+  } edge;
 
 //===================================================================
 // DEFAULT EDGE TYPE

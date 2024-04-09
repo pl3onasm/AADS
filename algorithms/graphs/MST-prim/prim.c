@@ -47,7 +47,8 @@ char *vertexToString(void const *key) {
 // Generates and initializes the min priority queue
 // All vertices are added to the priority queue with infinite
 // distance from the growing minimum spanning tree and likewise
-// infinite priority
+// infinite priority. An arbitrary vertex is selected as the
+// source vertex and its distance and priority are set to 0
 bpqueue *initPQ(graph *G) {
 
   bpqueue *pq = bpqNew(nVertices(G), MIN, compareKeys, copyKey, 
@@ -57,8 +58,8 @@ bpqueue *initPQ(graph *G) {
     v->dist = DBL_MAX;
     bpqPush(pq, v, &v->dist);
   }
-    // we start with an arbitrary vertex and set 
-    // its distance and priority to 0
+    // since the graph is implemented as a hash table,
+    // the first vertex is arbitrary
   vertex *s = firstV(G);   
   s->dist = 0;
   bpqUpdateKey(pq, s, &s->dist);  
@@ -67,21 +68,19 @@ bpqueue *initPQ(graph *G) {
 
 //===================================================================
 // Computes a minimum spanning tree of G using Prim's algorithm
-vertex **mstPrim(graph *G) {
+dll *mstPrim(graph *G) {
  
-  vertex **mst = safeCalloc(nVertices(G), sizeof(vertex *));
-  size_t idx = 0;
+  dll *mst = dllNew();
   bpqueue *pq = initPQ(G);    
 
   while (!bpqIsEmpty(pq)) {
     vertex *u = bpqPop(pq);    
     
-      // add the vertex to the MST if parent is set
-      // (i.e., if the vertex is not the source vertex)
-    if (u->parent) mst[idx++] = u;  
+      // add the vertex to the MST if it's not the source vertex
+    if (u->parent) dllPushBack(mst, u);
     dll *edges = getNeighbors(G, u);
 
-      // try to relax the edges to the neighbors of u
+      // try to relax the edges to the non-tree neighbors of u
     for (edge *e = dllFirst(edges); e; e = dllNext(edges)) {
       if (bpqContains(pq, e->to) && e->weight < e->to->dist) {
         e->to->parent = u;
@@ -96,14 +95,14 @@ vertex **mstPrim(graph *G) {
 
 //===================================================================
 // Prints the edges forming the minimum spanning tree and its weight
-void printMST(graph *G, vertex **mst) {
+void printMST(graph *G, dll *mst) {
  
   printf("----------------------------\n"
          "MST edges in insertion order \n"
          "----------------------------\n");
   double totalWeight = 0;
-  for (size_t i = 0; i < nVertices(G) - 1; i++) {
-    vertex *u = mst[i];
+  vertex *u;
+  while ((u = dllPop(mst))) {
     printf("%s -- %s\n", u->parent->label, u->label);
     totalWeight += u->dist;
   }
@@ -113,16 +112,16 @@ void printMST(graph *G, vertex **mst) {
 
 //===================================================================
 
-int main (int argc, char *argv[]) {
+int main () {
   
   graph *G = newGraph(50, WEIGHTED); 
   readGraph(G);              
   showGraph(G);
 
-  vertex **mst = mstPrim(G);      
+  dll *mst = mstPrim(G);      
   printMST(G, mst);           
 
   freeGraph(G);
-  free(mst);
+  dllFree(mst);
   return 0;
 }

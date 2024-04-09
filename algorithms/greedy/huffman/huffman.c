@@ -65,13 +65,13 @@ binheap *readInput (void) {
     if (ch >= 32 && ch < LENGTH)  // only printable characters
       freqs[ch-0]++;
   // make nodes for all characters with non-zero frequency
-  binheap *H = newBinHeap(LENGTH, MIN, cmpNodesByFreq);
+  binheap *H = bhpNew(LENGTH, MIN, cmpNodesByFreq);
   for (size_t i = 0; i < LENGTH; ++i)
     if (freqs[i]) {
       node *n = newNode();
       n->ch = i;
       n->freq = freqs[i];
-      pushToBinHeap(H, n);
+      bhpPush(H, n);
     }
   return H;
 }
@@ -126,12 +126,12 @@ node *huffman (binheap *H) {
   /* creates the Huffman tree */
   while (H->size > 1) {
     node *z = newNode();
-    z->left = popFromBinHeap(H);
-    z->right = popFromBinHeap(H);
+    z->left = bhpPop(H);
+    z->right = bhpPop(H);
     z->freq = z->left->freq + z->right->freq;
-    pushToBinHeap(H, z);
+    bhpPush(H, z);
   }
-  return popFromBinHeap(H);
+  return bhpPop(H);
 }
 
 //::::::::::::::::::::::::::::: main ::::::::::::::::::::::::::::::://
@@ -152,7 +152,7 @@ int main() {
   printResult(tree, code);
  
   freeTree(tree);
-  freeBinHeap(H);
+  bhpFree(H);
   free(code);
   return 0; 
 }
