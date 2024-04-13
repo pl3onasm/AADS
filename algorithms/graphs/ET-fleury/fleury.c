@@ -59,10 +59,8 @@ bool isBridge(graph *G, vertex *v, edge *e, size_t remV) {
     // mark all vertices as unvisited before calling dfs
   for (vertex *u = firstV(G); u; u = nextV(G))
     u->visited = false;
-
-  size_t nVisited = countReachable(G, v, e);
   
-  return nVisited < remV;
+  return countReachable(G, v, e) < remV;
 }
 
 //===================================================================
