@@ -118,6 +118,7 @@ void fleury(graph *G, size_t remV, vertex *v, dll *path) {
 
   e->from = v;
   vertex *u = e->to;
+
   dllPushBack(path, e);
   delEdge(G, v, u);
   
@@ -132,15 +133,36 @@ vertex *startVertex(graph *G) {
 
   if (!isConnected(G)) return NULL;
 
-    // An Eulerian tour exists if the graph 
-    // has less than 3 vertices with odd degree
   size_t nOdd = 0;
   vertex *start = NULL;
-  for (vertex *v = firstV(G); v; v = nextV(G)) {
-    if (degree(G, v) & 1) {
-      nOdd++;
-      if (nOdd > 2) return NULL;
-      start = v;
+
+  // for a directed graph, the difference between the in-degree
+  // and out-degree of a vertex should be 0 except for two vertices:
+  // one vertex may have out-degree - in-degree = 1, and then 
+  // another vertex should have in-degree - out-degree = 1
+  if (G->type == DIRECTED) {
+    for (vertex *v = firstV(G); v; v = nextV(G)) {
+      if (outDegree (G, v) - v->inDegree == 1) {
+        nOdd++;
+        if (nOdd > 2) return NULL;
+        start = v;
+      }
+      if (v->inDegree - outDegree (G, v) == 1) {
+        nOdd++;
+        if (nOdd > 2) return NULL;
+      }
+      if (abs(v->inDegree - outDegree (G, v)) > 1) 
+        return NULL;
+    }
+  } else {
+    // for an undirected graph, the degree of each vertex should be
+    // even except for at most two vertices who may have odd degree
+    for (vertex *v = firstV(G); v; v = nextV(G)) {
+      if (degree(G, v) & 1) {
+        nOdd++;
+        if (nOdd > 2) return NULL;
+        start = v;
+      }
     }
   }
   return start ? start : firstV(G);
