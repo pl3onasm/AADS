@@ -21,7 +21,7 @@
 
 //===================================================================
 // Makes a copy of an edge; used to make the dll store copies of the
-// edges in the Eulerian path
+// edges in the Eulerian tour
 void *copyEdge(void *data) {
   edge *e = (edge *)data;
   if (!e) return NULL;
@@ -54,13 +54,13 @@ size_t countReachable(graph *G, vertex *v, edge *taken) {
 // dfs call over the remaining vertices in the graph: if the count
 // of reachable vertices from v is less than the total number of
 // remaining vertices in the graph, then the edge is a bridge
-bool isBridge(graph *G, vertex *v, edge *e, size_t remV) {
+bool isBridge(graph *G, vertex *v, edge *taken, size_t remV) {
 
     // mark all vertices as unvisited before calling dfs
   for (vertex *u = firstV(G); u; u = nextV(G))
     u->visited = false;
   
-  return countReachable(G, v, e) < remV;
+  return countReachable(G, v, taken) < remV;
 }
 
 //===================================================================
@@ -113,13 +113,13 @@ void fleury(graph *G, size_t remV, vertex *v, dll *path) {
     e = findEdge(G, v, remV);
   
     // if v has only one edge, or if all edges are bridges
-    // then take the first edge in the list
+    // then take the first edge in the adjacency list
   if (!e) e = dllFirst(edges);
 
   e->from = v;
   vertex *u = e->to;
   dllPushBack(path, e);
-  delEdge(G, e->from, e->to);
+  delEdge(G, v, u);
   
   fleury(G, remV, u, path);
 }

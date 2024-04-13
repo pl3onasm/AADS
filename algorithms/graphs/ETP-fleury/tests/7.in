@@ -1,0 +1,32 @@
+UNDIRECTED 
+
+a b 
+b c 
+c d 
+d e 
+a f 
+b g 
+c h 
+d j
+e k 
+f g 
+g h 
+h i 
+i j 
+j k 
+f l 
+g m 
+h n 
+i o 
+l m 
+m n 
+n o 
+l p 
+m q 
+n r 
+o s 
+p q 
+q r 
+r s 
+s t 
+k t
