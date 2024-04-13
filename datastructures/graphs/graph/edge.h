@@ -42,7 +42,7 @@ typedef enum { WEIGHTED, UNWEIGHTED } weightType;
   } edge;
 
 //===================================================================
-// EDGE TYPE 2  (application example: Kruskal)
+// EDGE TYPE 2  (application example: Kruskal, Fleury)
 #elif defined (EDGE_TYPE2)      
 
   typedef struct edge {        

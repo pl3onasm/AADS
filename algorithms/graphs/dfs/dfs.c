@@ -16,7 +16,6 @@
 */
 
 #include "../../../datastructures/graphs/graph/graph.h"
-#include "../../../datastructures/queues/queue.h"
 
 //===================================================================
 // Prints the discovery and finish times of the nodes in the graph G

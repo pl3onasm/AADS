@@ -79,7 +79,8 @@ vertex *addVertexR(graph *G, char *label);
   // Returns true if the vertex exists in the graph
 bool hasVertex(graph *G, char *label);
 
-  // Gets the edge between two vertices
+  // Gets the edge between two vertices;
+  // returns NULL if the edge does not exist
 edge *getEdge(graph *G, vertex *from, vertex *to);
 
   // Adds an unweighted edge to the destination 
@@ -182,14 +183,17 @@ static inline size_t inDegreeL(graph *G, char *label) {
   return v ? v->inDegree : 0;
 }
 
-  // Returns the degree of a vertex given its label
-static inline size_t degreeL(graph *G, char *label) {
-  return outDegreeL(G, label) + inDegreeL(G, label);
-}
-
   // Returns the degree of a vertex
 static inline size_t degree(graph *G, vertex *v) {
+  if (G->type == UNDIRECTED)
+    return outDegree(G, v);
   return outDegree(G, v) + inDegree(G, v);
+}
+
+  // Returns the degree of a vertex given its label
+static inline size_t degreeL(graph *G, char *label) {
+  vertex *v = getVertex(G, label);
+  return v ? degree(G, v) : 0;
 }
 
   // Determines if the vertex is isolated

@@ -59,7 +59,7 @@ void maxFlow(network *N, vertex *src, vertex *sink) {
   
   size_t flow;
        
-  for (size_t delta = getThreshold(N); delta > 0; delta >>= 1)   
+  for (size_t delta = getThreshold(N); delta; delta >>= 1)   
     while ((flow = dfs(N, src, sink, SIZE_MAX, delta))) 
       N->maxFlow += flow;          
 }

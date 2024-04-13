@@ -226,7 +226,11 @@ void *dllPop (dll *L) {
     return NULL;
   dllNode *n = L->NIL->next;
   void *data = n->dllData;
-  dllDelete(L, n);
+    // free the node, NOT the data
+  n->prev->next = n->next;
+  n->next->prev = n->prev;
+  free(n);
+  L->size--;
   return data;
 }
 
@@ -240,7 +244,11 @@ void *dllPopBack (dll *L) {
     return NULL;
   dllNode *n = L->NIL->prev;
   void *data = n->dllData;
-  dllDelete(L, n);
+    // free the node, NOT the data
+  n->prev->next = n->next;
+  n->next->prev = n->prev;
+  free(n);
+  L->size--;
   return data;
 }
 

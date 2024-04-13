@@ -36,6 +36,7 @@
     clr color;                // color of the vertex
     size_t dTime;             // discovery time
     size_t fTime;             // finish time
+    size_t inDegree;          // in-degree of the vertex
   } vertex;
 
 //===================================================================

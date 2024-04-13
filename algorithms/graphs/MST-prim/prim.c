@@ -103,11 +103,12 @@ void printMST(graph *G, dll *mst) {
   double totalWeight = 0;
   vertex *u;
   while ((u = dllPop(mst))) {
-    printf("%s -- %s\n", u->parent->label, u->label);
+    printf("  %s -- %s    %.2lf\n", 
+           u->parent->label, u->label, u->dist);
     totalWeight += u->dist;
   }
   printf("----------------------------\n"
-         "MST weight: %.2lf\n\n", totalWeight);
+         "  MST weight: %.2lf\n\n", totalWeight);
 }
 
 //===================================================================

@@ -1,0 +1,18 @@
+UNDIRECTED
+
+a b
+a c 
+b d 
+c d
+e d 
+d h 
+e f 
+f h 
+e g 
+g h 
+e i 
+i h 
+i j
+j l 
+i k
+k l

@@ -50,7 +50,7 @@ binheap *initBinHeap(graph *G) {
 }
 
 //===================================================================
-// Creates a new union-find data structure with n sets:
+// Creates a new union-find data structure with |V| sets:
 // one for each vertex in the graph
 unionFind *initUnionFind(graph *G) {
   unionFind *sets = ufNew(nVertices(G), vertexToString);
@@ -95,11 +95,12 @@ void printMST(graph *G, dll *mst) {
   double totalWeight = 0;
   edge *e;
   while ((e = dllPop(mst))) {
-    printf("%s -- %s\n", e->from->label, e->to->label); 
+    printf("  %s -- %s    %.2lf\n", 
+           e->from->label, e->to->label, e->weight); 
     totalWeight += e->weight;
   }
   printf("----------------------------\n"
-         "MST weight: %.2lf\n\n", totalWeight);
+         "  MST weight: %.2lf\n\n", totalWeight);
 }
 
 //===================================================================
