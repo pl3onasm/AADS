@@ -16,9 +16,6 @@
     the graph is implemented as a hash table of vertices
 */
 
-#define EDGE_TYPE2
-#define VERTEX_TYPE3
-
 #include "../../../datastructures/graphs/graph/graph.h"
 #include "../../../lib/clib/clib.h"
 
@@ -112,8 +109,7 @@ void fleury(graph *G, size_t remV, vertex *v, dll *path) {
   if ((G->type == DIRECTED && v->inDegree == 0) ||
       (G->type == UNDIRECTED && v->inDegree <= 1))
       // update the number of remaining vertices since
-      // the vertex v will become unreachable after taking
-      // its last edge              
+      // v will become unreachable after taking its last edge              
     remV--;                 
   else 
     e = findEdge(G, v, remV);
