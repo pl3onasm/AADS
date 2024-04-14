@@ -43,7 +43,7 @@ size_t countReachable(graph *G, vertex *v, edge *taken) {
 
   dll *edges = getNeighbors(G, v);
   for (edge *e = dllFirst(edges); e; e = dllNext(edges)) 
-    if (!e->to->visited && (!taken || e != taken)) 
+    if (!e->to->visited && e != taken) 
       nVisited += countReachable(G, e->to, taken);
 
   return nVisited;
@@ -137,9 +137,9 @@ vertex *startVertex(graph *G) {
   vertex *start = NULL;
 
   // for a directed graph, the difference between the in-degree
-  // and out-degree of a vertex should be 0 except for two vertices:
-  // one vertex may have out-degree - in-degree = 1, and then 
-  // another vertex should have in-degree - out-degree = 1
+  // and out-degree of each vertex should be 0. The only exception 
+  // is: one vertex may have out-degree - in-degree = 1, but then
+  // there should be another vertex with in-degree - out-degree = 1
   if (G->type == DIRECTED) {
     for (vertex *v = firstV(G); v; v = nextV(G)) {
       if (outDegree (G, v) - v->inDegree == 1) {
@@ -165,6 +165,7 @@ vertex *startVertex(graph *G) {
       }
     }
   }
+  if (nOdd && nOdd != 2) return NULL;
   return start ? start : firstV(G);
 }
 

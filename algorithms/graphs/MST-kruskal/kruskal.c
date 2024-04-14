@@ -43,6 +43,7 @@ binheap *initBinHeap(graph *G) {
   
   vertex *from;
   for (edge *e = firstE(G, &from); e; e = nextE(G, &from)) {
+    if (e->rev) continue;
     e->from = from;
     bhpPush(H, e);
   }

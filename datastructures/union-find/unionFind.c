@@ -27,7 +27,7 @@ static ufSet *ufSetNew(size_t parent, size_t rank) {
 // Deallocates the union-find data structure
 void ufFree(unionFind *uf) {
   if (!uf) return;
-  for (size_t i = 0; i < uf->size; i++) {
+  for (size_t i = 0; i < uf->capacity; i++) {
     if (uf->freeData)
       uf->freeData(uf->sets[i]->data);
     free(uf->sets[i]);
@@ -75,11 +75,11 @@ void ufAddSet(unionFind *uf, void *data) {
 
 //===================================================================
 // Finds the root of the set containing the given index
-static size_t ufFindIdx(unionFind *uf, size_t idx) {
+static size_t ufFindRootIdx(unionFind *uf, size_t idx) {
   size_t parent = uf->sets[idx]->parent;
-  if (parent == idx) 
-    return parent;
-  return ufFindIdx(uf, parent);
+  if (parent != idx)
+    uf->sets[idx]->parent = ufFindRootIdx(uf, parent);
+  return uf->sets[idx]->parent;
 }
 
 //===================================================================
@@ -89,13 +89,12 @@ void *ufFindSet(unionFind *uf, void *data) {
   size_t idx;
   if (!sstMapHasKeyVal(uf->indexMap, uf->toString(data), &idx))
     return NULL;
-  return uf->sets[ufFindIdx(uf, idx)]->data;
+  return uf->sets[ufFindRootIdx(uf, idx)]->data;
 }
 
 //===================================================================
 // Unites the sets given the roots of the sets
 static void link(unionFind *uf, size_t x, size_t y) {
-  if (x >= uf->size || y >= uf->size) return;
   if (uf->sets[x]->rank > uf->sets[y]->rank) {
     uf->sets[y]->parent = x;
   } else {
@@ -112,7 +111,7 @@ void ufUnify(unionFind *uf, void *data1, void *data2) {
   if (!sstMapHasKeyVal(uf->indexMap, uf->toString(data1), &idx1) ||
       !sstMapHasKeyVal(uf->indexMap, uf->toString(data2), &idx2))
     return;
-  link(uf, ufFindIdx(uf, idx1), ufFindIdx(uf, idx2));
+  link(uf, ufFindRootIdx(uf, idx1), ufFindRootIdx(uf, idx2));
   uf->size--;
 }
 
@@ -138,7 +137,5 @@ bool ufSameSet(unionFind *uf, void *data1, void *data2) {
   if (!sstMapHasKeyVal(uf->indexMap, uf->toString(data1), &idx1) ||
       !sstMapHasKeyVal(uf->indexMap, uf->toString(data2), &idx2))
     return false;
-  return ufFindIdx(uf, idx1) == ufFindIdx(uf, idx2);
+  return ufFindRootIdx(uf, idx1) == ufFindRootIdx(uf, idx2);
 }
-
-

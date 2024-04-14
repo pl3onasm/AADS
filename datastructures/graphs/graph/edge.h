@@ -39,6 +39,7 @@ typedef enum { WEIGHTED, UNWEIGHTED } weightType;
     double weight;              // weight of the edge
     eType type;                 // type of the edge
     weightType wType;           // weighted or unweighted
+    bool rev;                   // if true: edge was added in reverse
   } edge;
 
 //===================================================================
@@ -50,6 +51,7 @@ typedef enum { WEIGHTED, UNWEIGHTED } weightType;
     vertex *to;                 // pointer to the destination vertex
     double weight;              // weight of the edge
     weightType wType;           // weighted or unweighted
+    bool rev;                   // if true: edge was added in reverse
   } edge;
 
 //===================================================================
@@ -60,6 +62,7 @@ typedef enum { WEIGHTED, UNWEIGHTED } weightType;
     vertex *to;                 // pointer to the destination vertex
     weightType wType;           // weighted or unweighted 
     double weight;              // weight of the edge
+    bool rev;                   // if true: edge was added in reverse 
   } edge;
 
 
