@@ -69,26 +69,32 @@ void freeVertex(void *v) {
 //=================================================================
 // Creates a new edge, from -> to
 // An edge is the value of a key (vertex) in the hash table
-edge *newEdge(vertex *to, double weight, weightType w, bool rev) {
+edge *newEdge(vertex *to, double weight, bool rev) {
   edge *e = safeCalloc(1, sizeof(edge));
   e->to = to;
   e->weight = weight;
-  e->wType = w;
   e->rev = rev;
   return e;
 }
 
 //=================================================================
 // Show value function for the hash table
-// In this case, the value is an edge
+// In this case, the value is a weighted edge
+void showEdgeW(void *val) {
+  edge *e = val;   
+  if (!e) 
+    return;
+  printf("%s(%.3g)", e->to->label, e->weight);
+}
+
+//=================================================================
+// Show value function for the hash table
+// In this case, the value is an unweighted edge
 void showEdge(void *val) {
   edge *e = val;   
   if (!e) 
     return;
-  if (e->wType == UNWEIGHTED)
-    printf("%s",  e->to->label);
-  else
-    printf("%s(%.3g)", e->to->label, e->weight);
+  printf("%s", e->to->label);
 }
 
 //=================================================================
@@ -169,7 +175,10 @@ graph *newGraph (size_t capacity, weightType weight) {
   G->e = safeCalloc(1, sizeof(edge));
   G->V = htNew(hash, cmpKey, cmpVal, capacity);
   // set show functions
-  htSetShow(G->V, showStr, showEdge);
+  if (weight == UNWEIGHTED)
+    htSetShow(G->V, showStr, showEdge);
+  else
+    htSetShow(G->V, showStr, showEdgeW);
   // set ownership functions
   htOwnKeys(G->V, freeVertex);
   htOwnVals(G->V, free);
@@ -246,12 +255,12 @@ void addEdgeW(graph *G, vertex *from, vertex *to, double weight) {
   if (htHasKeyVal(G->V, from, G->e)) 
     return;
 
-  edge *e = newEdge(to, weight, G->weight, false);
+  edge *e = newEdge(to, weight, false);
   htAddKeyVal(G->V, from, e);
   to->inDegree++;
 
   if (G->type == UNDIRECTED) {
-    e = newEdge(from, weight, G->weight, true);
+    e = newEdge(from, weight, true);
     htAddKeyVal(G->V, to, e);
     from->inDegree++;
   }

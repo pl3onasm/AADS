@@ -104,10 +104,11 @@ void fleury(graph *G, size_t remV, vertex *v, dll *path) {
   dll *edges = getNeighbors(G, v);
   edge *e = NULL;
   
-  if ((G->type == DIRECTED && v->inDegree == 0) ||
-      (G->type == UNDIRECTED && v->inDegree <= 1))
-      // update the number of remaining vertices since
-      // v will become unreachable after taking its last edge              
+  if ((G->type == DIRECTED && v->inDegree == 0) ||  // (1)
+      (G->type == UNDIRECTED && v->inDegree == 1))  // (2)
+      // update the number of remaining vertices since either:
+      // (1) v has become unreachable in the previous step
+      // or (2) will become unreachable in the current step              
     remV--;                 
   else 
     e = findEdge(G, v, remV);

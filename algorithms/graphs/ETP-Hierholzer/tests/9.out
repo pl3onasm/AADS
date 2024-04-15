@@ -1,0 +1,68 @@
+
+--------------------
+ Graph
+ Undirected
+ Unweighted
+ Vertices: 20
+ Edges: 34
+--------------------
+  a[2]: e, b
+  b[2]: f, a
+  c[2]: g, d
+  d[2]: h, c
+  e[4]: m, i, f, a
+  f[4]: i, g, e, b
+  g[4]: j, h, f, c
+  h[4]: p, j, g, d
+  i[4]: k, f, j, e
+  j[4]: l, g, h, i
+  k[4]: l, n, m, i
+  l[4]: k, o, p, j
+  m[4]: e, q, n, k
+  n[4]: s, r, m, k
+  o[4]: r, s, p, l
+  p[4]: h, t, o, l
+  q[2]: r, m
+  r[4]: s, q, o, n
+  s[4]: t, r, n, o
+  t[2]: s, p
+--------------------
+
+
+---------------
+ Eulerian tour
+---------------
+   i -- k
+   k -- l
+   l -- o
+   o -- r
+   r -- s
+   s -- t
+   t -- p
+   p -- h
+   h -- j
+   j -- l
+   l -- p
+   p -- o
+   o -- s
+   s -- n
+   n -- r
+   r -- q
+   q -- m
+   m -- n
+   n -- k
+   k -- m
+   m -- e
+   e -- i
+   i -- f
+   f -- e
+   e -- a
+   a -- b
+   b -- f
+   f -- g
+   g -- h
+   h -- d
+   d -- c
+   c -- g
+   g -- j
+   j -- i
