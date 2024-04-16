@@ -8,7 +8,7 @@
     undirected graphs.
   time complexity: O(|E|) where |E| is the number of edges in 
     the graph. 
-  note 1: make sure to use VERTEX_TYPE2 in the vertex.h file and 
+  note 1: make sure to use VERTEX_TYPE3 in the vertex.h file and 
     EDGE_TYPE3 in the edge.h file by defining them from the  
     command line using
       $ gcc -D VERTEX_TYPE3 -D EDGE_TYPE3 ...
