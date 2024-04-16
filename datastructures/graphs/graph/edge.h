@@ -21,8 +21,6 @@
 #include <stdbool.h>
 #include "vertex.h"
 
-typedef enum { WEIGHTED, UNWEIGHTED } weightType; 
-
 //===================================================================
 // EDGE TYPE 1  (application example: DFS)
 #if defined (EDGE_TYPE1)        
@@ -38,30 +36,30 @@ typedef enum { WEIGHTED, UNWEIGHTED } weightType;
     vertex *to;                 // pointer to the destination vertex
     double weight;              // weight of the edge
     eType type;                 // type of the edge
-    bool rev;                   // if true: edge was added in reverse
   } edge;
 
 //===================================================================
-// EDGE TYPE 2  (application example: Kruskal, Fleury)
+// EDGE TYPE 2  (application example: Kruskal)
 #elif defined (EDGE_TYPE2)      
 
   typedef struct edge {        
     vertex *from;               // pointer to the source vertex 
     vertex *to;                 // pointer to the destination vertex
     double weight;              // weight of the edge
-    bool rev;                   // if true: edge was added in reverse
+    bool reversed;              // if true: edge was added in reverse
+                                // for undirected graphs
   } edge;
 
 //===================================================================
-// EDGE TYPE 3  (application example: Hierholzer)
+// EDGE TYPE 3  (application example: Hierholzer, Fleury)
 #elif defined (EDGE_TYPE3)      
 
   typedef struct edge {         
     vertex *from;               // pointer to the source vertex
     vertex *to;                 // pointer to the destination vertex
+    struct edge *rev;           // pointer to the reverse edge
     double weight;              // weight of the edge
-    bool visited;               // if true: edge was visited
-    bool rev;                   // if true: edge was added in reverse
+    bool taken;                 // if true: edge is part of the tour
   } edge;
 
 //===================================================================
@@ -71,7 +69,6 @@ typedef enum { WEIGHTED, UNWEIGHTED } weightType;
   typedef struct edge {         
     vertex *to;                 // pointer to the destination vertex
     double weight;              // weight of the edge
-    bool rev;                   // if true: edge was added in reverse 
   } edge;
 
 

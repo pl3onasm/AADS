@@ -23,8 +23,9 @@
 #include "edge.h"
 #include "vertex.h"
 
-  // graph type
+  // graph types
 typedef enum { DIRECTED, UNDIRECTED } graphType;
+typedef enum { WEIGHTED, UNWEIGHTED } weightType; 
 
   // graph data structure
 typedef struct {

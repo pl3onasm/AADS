@@ -8,10 +8,10 @@
     undirected graphs. 
   time complexity: O(E^2) where E is the number of edges in the
     graph. The algorithm is not efficient for dense graphs.
-  note 1: make sure to use VERTEX_TYPE2 in the vertex.h file and 
+  note 1: make sure to use VERTEX_TYPE3 in the vertex.h file and 
     EDGE_TYPE3 in the edge.h file by defining them from the  
     command line using
-      $ gcc -D VERTEX_TYPE2 -D EDGE_TYPE3 ...
+      $ gcc -D VERTEX_TYPE3 -D EDGE_TYPE3 ...
   note 2: tours may differ from one run to another since
     the graph is implemented as a hash table of vertices
 */
@@ -21,7 +21,7 @@
 
 //===================================================================
 // Makes a copy of an edge; used to make the dll store copies of the
-// edges in the Eulerian tour
+// edges in the Eulerian tour and needed since edges are deleted
 void *copyEdge(void *data) {
   edge *e = (edge *)data;
   if (!e) return NULL;
@@ -36,15 +36,15 @@ void *copyEdge(void *data) {
 //===================================================================
 // Performs a depth-first search starting from vertex v and returns
 // the number of reachable vertices
-size_t countReachable(graph *G, vertex *v, edge *taken) {
+size_t countReachable(graph *G, vertex *v) {
  
   size_t nVisited = 1;
   v->visited = true;
 
   dll *edges = getNeighbors(G, v);
   for (edge *e = dllFirst(edges); e; e = dllNext(edges)) 
-    if (!e->to->visited && e != taken) 
-      nVisited += countReachable(G, e->to, taken);
+    if (!e->to->visited && !e->taken)
+      nVisited += countReachable(G, e->to);
 
   return nVisited;
 }
@@ -54,13 +54,13 @@ size_t countReachable(graph *G, vertex *v, edge *taken) {
 // dfs call over the remaining vertices in the graph: if the count
 // of reachable vertices from v is less than the total number of
 // remaining vertices in the graph, then the edge is a bridge
-bool isBridge(graph *G, vertex *v, edge *taken, size_t remV) {
+bool isBridge(graph *G, vertex *v, size_t remV) {
 
     // mark all vertices as unvisited before calling dfs
   for (vertex *u = firstV(G); u; u = nextV(G))
     u->visited = false;
   
-  return countReachable(G, v, taken) < remV;
+  return countReachable(G, v) < remV;
 }
 
 //===================================================================
@@ -70,7 +70,7 @@ bool isConnected(graph *G) {
     
     // number of reachable vertices from a random vertex
     // should be equal to the total number of vertices
-  return countReachable(G, firstV(G), NULL) == nVertices(G);
+  return countReachable(G, firstV(G)) == nVertices(G);
 }
 
 //===================================================================
@@ -85,11 +85,16 @@ edge *findEdge(graph *G, vertex *v, size_t remV) {
       // block the reverse edge if the graph is undirected so as
       // to obtain the correct number of reachable vertices when
       // calling countReachable
-    edge *rev = G->type == UNDIRECTED ? getEdge(G, e->to, v) : NULL;
+    if (G->type == UNDIRECTED)
+      e->rev->taken = true;
+
+    bool bridge = isBridge(G, e->to, remV);
+
+    if (G->type == UNDIRECTED)
+      e->rev->taken = false;
 
       // take the first non-bridge edge found
-    if (!isBridge(G, e->to, rev, remV)) 
-      break;
+    if (!bridge) break;
   }
   return e;
 }
@@ -98,32 +103,31 @@ edge *findEdge(graph *G, vertex *v, size_t remV) {
 // Finds an Eulerian path or cycle in a graph
 void fleury(graph *G, size_t remV, vertex *v, dll *path) {
 
-    // base case: no more edges to take
-  if (remV == 1) return;
+    // while more than one vertex is still reachable
+  while (remV > 1) {
+    dll *edges = getNeighbors(G, v);
+    edge *e = NULL;
+    
+    if ((G->type == DIRECTED && v->inDegree == 0) ||  // (1)
+        (G->type == UNDIRECTED && v->inDegree == 1))  // (2)
+        // update the number of remaining vertices since either:
+        // (1) v has become unreachable in the previous step, or
+        // (2) will become unreachable in the current step              
+      remV--;                 
+    else 
+      e = findEdge(G, v, remV);
+    
+      // if v has only one edge, or if all edges are bridges
+      // then take the first edge in the adjacency list
+    if (!e) e = dllFirst(edges);
 
-  dll *edges = getNeighbors(G, v);
-  edge *e = NULL;
-  
-  if ((G->type == DIRECTED && v->inDegree == 0) ||  // (1)
-      (G->type == UNDIRECTED && v->inDegree == 1))  // (2)
-      // update the number of remaining vertices since either:
-      // (1) v has become unreachable in the previous step
-      // or (2) will become unreachable in the current step              
-    remV--;                 
-  else 
-    e = findEdge(G, v, remV);
-  
-    // if v has only one edge, or if all edges are bridges
-    // then take the first edge in the adjacency list
-  if (!e) e = dllFirst(edges);
+    e->from = v;
+    vertex *u = e->to;
 
-  e->from = v;
-  vertex *u = e->to;
-
-  dllPushBack(path, e);
-  delEdge(G, v, u);
-  
-  fleury(G, remV, u, path);
+    dllPushBack(path, e);
+    delEdge(G, v, u);
+    v = u;
+  }
 }
 
 //===================================================================
@@ -179,11 +183,8 @@ void showPath(dll *path) {
          " Eulerian tour\n"
          "---------------\n");
 
-  edge *e;
-  while ((e = dllPop(path))) {
+  for (edge *e = dllFirst(path); e; e = dllNext(path))
     printf("   %s -- %s\n", e->from->label, e->to->label);
-    free(e);
-  }
   printf("\n");
 }
 

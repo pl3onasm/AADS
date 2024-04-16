@@ -25,14 +25,12 @@ void hierholzer(graph *G, vertex *v, dll *path) {
 
   dll *edges = getNeighbors(G, v);
   for (edge *e = dllFirst(edges); e; e = dllNext(edges)) {
-    if (!e->visited) {
+    if (!e->taken) {
       e->from = v;
-      e->visited = true;
-      if (G->type == UNDIRECTED) {    
-        // avoid visiting the same edge twice
-        edge *rev = getEdge(G, e->to, e->from);
-        rev->visited = true;
-      }
+      e->taken = true;
+      if (G->type == UNDIRECTED) 
+        // avoid taking an undirected edge twice
+        e->rev->taken = true;
       hierholzer(G, e->to, path);
       dllPush(path, e);
     }

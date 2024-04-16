@@ -69,11 +69,10 @@ void freeVertex(void *v) {
 //=================================================================
 // Creates a new edge, from -> to
 // An edge is the value of a key (vertex) in the hash table
-edge *newEdge(vertex *to, double weight, bool rev) {
+edge *newEdge(vertex *to, double weight) {
   edge *e = safeCalloc(1, sizeof(edge));
   e->to = to;
   e->weight = weight;
-  e->rev = rev;
   return e;
 }
 
@@ -255,14 +254,22 @@ void addEdgeW(graph *G, vertex *from, vertex *to, double weight) {
   if (htHasKeyVal(G->V, from, G->e)) 
     return;
 
-  edge *e = newEdge(to, weight, false);
+  edge *e = newEdge(to, weight);
   htAddKeyVal(G->V, from, e);
   to->inDegree++;
 
   if (G->type == UNDIRECTED) {
-    e = newEdge(from, weight, true);
-    htAddKeyVal(G->V, to, e);
+    edge *rev = newEdge(from, weight);
+    htAddKeyVal(G->V, to, rev);
     from->inDegree++;
+    #ifdef EDGE_TYPE3
+    e->rev = rev;
+    rev->rev = e;
+    #endif
+    #ifdef EDGE_TYPE2
+    e->reversed = false;
+    rev->reversed = true;
+    #endif
   }
   G->nEdges++;
 }
