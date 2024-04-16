@@ -52,7 +52,8 @@
   } vertex;
 
 //===================================================================
-// VERTEX TYPE 3  (application example: topological sort, SCC)
+// VERTEX TYPE 3  (application example: topological sort, SCC, 
+//                 Hierholzer, Fleury)
 #elif defined (VERTEX_TYPE3)
 
   typedef struct vertex {

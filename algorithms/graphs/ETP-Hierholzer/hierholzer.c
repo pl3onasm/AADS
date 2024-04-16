@@ -82,15 +82,13 @@ vertex *startVertex(graph *G) {
     for (vertex *v = firstV(G); v; v = nextV(G)) {
       if (outDegree(G, v) - v->inDegree == 1) {
         nOdd++;
-        if (nOdd > 2) return NULL;
         start = v;
       }
-      if (v->inDegree - outDegree(G, v) == 1) {
+      if (v->inDegree - outDegree(G, v) == 1) 
         nOdd++;
-        if (nOdd > 2) return NULL;
-      }
       if (abs(v->inDegree - outDegree(G, v)) > 1) 
         return NULL;
+      if (nOdd > 2) return NULL;
     }
   } else {
     // for an undirected graph, the degree of each vertex should be

@@ -103,7 +103,7 @@ edge *findEdge(graph *G, vertex *v, size_t remV) {
 // Finds an Eulerian path or cycle in a graph
 void fleury(graph *G, size_t remV, vertex *v, dll *path) {
 
-    // while more than one vertex is still reachable
+    // while there are still reachable vertices
   while (remV > 1) {
     dll *edges = getNeighbors(G, v);
     edge *e = NULL;
@@ -149,15 +149,13 @@ vertex *startVertex(graph *G) {
     for (vertex *v = firstV(G); v; v = nextV(G)) {
       if (outDegree (G, v) - v->inDegree == 1) {
         nOdd++;
-        if (nOdd > 2) return NULL;
         start = v;
       }
-      if (v->inDegree - outDegree (G, v) == 1) {
+      if (v->inDegree - outDegree (G, v) == 1) 
         nOdd++;
-        if (nOdd > 2) return NULL;
-      }
       if (abs(v->inDegree - outDegree (G, v)) > 1) 
         return NULL;
+      if (nOdd > 2) return NULL;
     }
   } else {
     // for an undirected graph, the degree of each vertex should be

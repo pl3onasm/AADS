@@ -263,12 +263,12 @@ void addEdgeW(graph *G, vertex *from, vertex *to, double weight) {
     htAddKeyVal(G->V, to, rev);
     from->inDegree++;
     #ifdef EDGE_TYPE3
-    e->rev = rev;
-    rev->rev = e;
+      e->rev = rev;
+      rev->rev = e;
     #endif
     #ifdef EDGE_TYPE2
-    e->reversed = false;
-    rev->reversed = true;
+      e->reversed = false;
+      rev->reversed = true;
     #endif
   }
   G->nEdges++;
