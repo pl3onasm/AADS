@@ -245,7 +245,7 @@ bool mapDelKey(map *M, void *key) {
         // free the entry itself
       free(e);
         // remove the entry from the bucket
-      dllDelete(bucket, bucket->iter);
+      dllDeleteCurr(bucket);
         // one key less
       M->nKeys--;
         // update statistics
