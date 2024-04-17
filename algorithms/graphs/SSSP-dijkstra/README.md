@@ -19,3 +19,7 @@ Thanks to this greedy strategy, the algorithm is faster than the Bellman-Ford al
 Note the strong similarity between Dijkstra's algorithm and [Prim's algorithm](https://github.com/pl3onasm/CLRS-in-C/blob/main/algorithms/graphs/mst) for finding a minimum spanning tree of a graph. Both algorithms maintain a min-priority queue of unprocessed vertices, and at each step, they take the vertex $u$ having the smallest key value, add it to the set $S$ of optimal vertices, and update the key values of the vertices adjacent to $u$ by relaxing the edges connecting them to $u$ (if necessary). Both algorithms terminate when the set $S$ contains all vertices in the graph $G$ and both have the same time complexity. The only difference is that Dijkstra's algorithm takes a source vertex $s$ as input and keeps grabbing the vertex with the smallest distance estimate to this particular $s$, whereas Prim's algorithm starts with an arbitrary vertex and keeps grabbing the vertex that is closest to the growing tree, i.e. the vertex with the lightest edge connecting it to the tree grown so far.
 
 Implementation: [dijkstra](https://github.com/pl3onasm/AADS/blob/main/algorithms/graphs/SSSP-dijkstra/dijkstra.c)
+
+Video:
+
+[![Problem](https://img.youtube.com/vi/pSqmAO-m7Lk/0.jpg)](https://www.youtube.com/watch?v=pSqmAO-m7Lk)

@@ -23,3 +23,7 @@ Implementing the disjoint-set data structure this way results in a better runnin
 The running time of this algorithm using a *union-find* data structure is $O(E \log E)$, since we need to sort the edges in increasing order of their weights, and we need to perform $|E|$ operations on a disjoint-set data structure, each of which takes $O(\alpha(V))$ time, where $\alpha(V)$ is the inverse Ackermann function. This is a very slow function, but it is still bounded by a constant, so we can ignore it. Thus, the running time of Kruskal's algorithm is $O(E \log E)$, which is the same as $O(E \log V)$, since $E \leq V^2$.
 
 Implementation: [MST - Kruskal](https://github.com/pl3onasm/AADS/blob/main/algorithms/graphs/MST-kruskal/kruskal.c)
+
+Video:
+
+[![Problem](https://img.youtube.com/vi/JZBQLXgSGfs/0.jpg)](https://www.youtube.com/watch?v=JZBQLXgSGfs)

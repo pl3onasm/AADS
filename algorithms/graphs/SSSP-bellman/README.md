@@ -15,3 +15,7 @@ Detecting negative-weight cycles is done by iterating once more over all the edg
 The running time of this algorithm is $O(V^2 + VE)$, which becomes $O(VE)$ if the graph is dense. This is because the first part dominates the running time, as the algorithm performs $|V|-1$ iterations, and each iteration takes $O(V + E)$ time.
 
 Implementation: [Bellman-Ford](https://github.com/pl3onasm/AADS/tree/main/algorithms/graphs/SSSP-bellman/bfa.c)
+
+Video:
+
+[![Problem](https://img.youtube.com/vi/lyw4FaxrwHg/0.jpg)](https://www.youtube.com/watch?v=lyw4FaxrwHg)

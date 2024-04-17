@@ -26,4 +26,8 @@ Compilation:
 cc -O2 -std=c99 -pedantic -o a.out closestpair.c ../../../lib/clib/*.c -lm
 ```
 
+Video:
+
+[![Problem](https://img.youtube.com/vi/6u_hWxbOc7E/0.jpg)](https://www.youtube.com/watch?v=6u_hWxbOc7E)
+
 [^1]: The window size of 2δxδ is chosen because we already found a minimum distance of δ from the recursive calls on P<sub>L</sub> and P<sub>R</sub>, and we are now checking the strip to look for points that are closer than δ. In such a window, there can be at most eight points, given that the points in both window halves (of size δxδ), which entirely lie in P<sub>L</sub> or P<sub>R</sub>, are spaced at least δ apart and that points on the dividing line between P<sub>L</sub> and P<sub>R</sub> can be in both window halves. Hence, we only need to check the distance between each point and its next seven neighbors, as the points in the strip are already sorted by y-coordinate.

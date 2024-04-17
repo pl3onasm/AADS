@@ -30,3 +30,7 @@ The topological sort of the above graph is a linear ordering of its vertices suc
 </p><br clear="left">
 
 Note that this topological sort is not unique. For example, the permutation $6,0,1,5,2,4,3$ is another valid topological sort of the same graph.
+
+Video:
+
+[![Problem](https://img.youtube.com/vi/eL-KzMXSXXI/0.jpg)](https://www.youtube.com/watch?v=eL-KzMXSXXI)

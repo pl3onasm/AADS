@@ -12,3 +12,7 @@ The below program implements BFS on a directed graph $G$, represented by an arra
 The input consists of the number of vertices $|V|$, followed by the source and the destination vertex, and finally the edges of the graph. The output is the shortest path from the source to the destination vertex, if one exists.
 
 Implementation: [BFS](https://github.com/pl3onasm/AADS/blob/main/algorithms/graphs/bfs/bfs.c)
+
+Video:
+
+[![Problem](https://img.youtube.com/vi/oDqjPvD54Ss/0.jpg)](https://www.youtube.com/watch?v=oDqjPvD54Ss)

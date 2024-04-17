@@ -21,3 +21,7 @@ The program below implements the algorithm to find the strongly connected compon
 Implementation: [SCC](https://github.com/pl3onasm/AADS/blob/main/algorithms/graphs/scc/scc.c)
 
 [^1]: Given the fact that connecting edges between any two components can only go in one particular direction (see corrolary 20.15 in CLRS⁴), the reverse of these edges will only go in the opposite direction.
+
+Video:
+
+[![Problem](https://img.youtube.com/vi/wUgWX0nc4NY/0.jpg)](https://www.youtube.com/watch?v=wUgWX0nc4NY)

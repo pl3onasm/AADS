@@ -23,3 +23,7 @@ This classification of edges can be used to get information about the structure 
 The total running time of DFS is $\Theta(V + E)$. The program below implements a DFS to classify edges in a given graph. It outputs the discovery and finish times of each node, as well as the classification of each edge. Note that these results are not unique, as the order in which nodes are explored doesn't have to be unique and may create a different depth-first forest, meaning that another implementation or a different input order could produce different results.
 
 Implementation: [DFS](https://github.com/pl3onasm/AADS/blob/main/algorithms/graphs/dfs/dfs.c)
+
+Video:
+
+[![Problem](https://img.youtube.com/vi/7fujbpJ0LB4/0.jpg)](https://www.youtube.com/watch?v=7fujbpJ0LB4)

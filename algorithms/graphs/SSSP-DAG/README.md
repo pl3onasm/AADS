@@ -15,3 +15,4 @@ This means that the shortest path from $s$ to $v$ can indeed be found by relaxin
 Once the shortest path to $v$ is found, the algorithm can then move on to the next vertex in the topological sort. In this way, the algorithm only needs to perform $|V|$ relaxations, where each relaxation takes $O(1)$ time, so that the total running time is $O(V+E)$. Note that a topological sort is not necessarily unique, but any topological sort is guaranteed to work for this algorithm.
 
 Implementation: [DAG Shortest Paths](https://github.com/pl3onasm/AADS/tree/main/algorithms/graphs/SSSP-DAG/dsp.c)
+
