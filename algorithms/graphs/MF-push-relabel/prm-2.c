@@ -83,7 +83,7 @@ void discharge(network *N, vertex *v) {
 }
 
 //===================================================================
-// Creates a list of all vertices in G except for src and sink
+// Creates a list of all vertices in N except for src and sink
 dll *createWorklist(network *N, vertex *src, vertex *sink) {
   
   dll *worklist = dllNew();
