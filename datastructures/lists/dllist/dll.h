@@ -77,10 +77,6 @@ dll *dllCopy(dll *L, dllCpyData copyData,
   // Creates a new DLL node
 dllNode *dllNewNode();
 
-  // Frees a DLL node, including its data 
-  // if the DLL owns it
-void dllFreeNode(dll *L, dllNode *node);
-
   // Pushes data to the front of the DLL
 void dllPush(dll *L, void *data);
 
@@ -98,8 +94,9 @@ void *dllPop(dll *L);
   // NULL is returned if the DLL is empty
 void *dllPopBack(dll *L);
 
-  // Deletes a node from the DLL
-void dllDelete(dll *L, dllNode *node);
+  // Deletes the node at current iterator position
+  // and moves the iterator to the next node
+void dllDeleteCurr(dll *L);
 
   // Deletes a node from the DLL given its data
   // Returns true if the node was found and deleted
@@ -130,12 +127,25 @@ void *dllPeekNext(dll *L);
   // NULL is the start of the DLL is reached
 void *dllPeekPrev(dll *L);
 
-  // Returns the data of the first node and
-  // sets the list iterator to the next node
+  // Peeks at the data of the current node
+  // NULL is returned if the DLL is empty
+void *dllPeekCurr(dll *L);
+
+  // Resets the list iterator
+void dllResetIter(dll *L);
+
+  // Sets the list iterator to the first node
+void dllSetIterFirst(dll *L);
+
+  // Sets the list iterator to the last node
+void dllSetIterLast(dll *L);
+
+  // Sets the list iterator to the first node
+  // and returns the data of that node
 void *dllFirst(dll *L);
 
-  // Returns the data of the last node and
-  // sets the list iterator to the previous node
+  // Sets the list iterator to the last node
+  // and returns the data of that node
 void *dllLast(dll *L);
 
   // Returns true if the next node is the end of the DLL

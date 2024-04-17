@@ -3,8 +3,7 @@
   author: David De Potter
   email: pl3onasm@gmail.com
   license: MIT, see LICENSE file in repository root folder
-  description: implements the generic push-relabel 
-              maximum flow algorithm
+  description: implements the generic push-relabel algorithm
   time complexity: O(V²E)
   note: make sure to use VERTEX_TYPE4 in the vertex.h file
     by defining it from the command line using
@@ -64,9 +63,9 @@ bool push(network *N, vertex *v, queue *Q) {
 //===================================================================
 // Relabels a vertex v by setting its height to one more than
 // the minimum height of its neighbors in the residual network
-void relabel(network *N, vertex *v, queue *Q) {
+void relabel(network *N, vertex *v) {
   
-  size_t min = nVertices(N) * 2;      // set min to a large value
+  size_t min = SIZE_MAX;
 
   dll *edges = getNeighbors(N, v);
   for (edge *e = dllFirst(edges); e; e = dllNext(edges)) {
@@ -89,9 +88,9 @@ void computeMaxflow (network *N, vertex *src, vertex *sink) {
     if (v == src || v == sink)        // skip source and sink
       continue;
   
-                                      // we know u has excess flow 
+                                      // we know v has excess flow 
     if (!push(N, v, Q))               // so we try to push from v, 
-      relabel(N, v, Q);               // if that fails, we relabel v
+      relabel(N, v);                  // if that fails, we relabel v
       
     if (v->excess > 0)                // if v still has excess
       enqueue(Q, v);                  // we re-enqueue v
@@ -104,7 +103,7 @@ void computeMaxflow (network *N, vertex *src, vertex *sink) {
 //===================================================================
 
 int main () {
-    // read source and sink 
+    // read source and sink labels
   char srcL[50], sinkL[50];                    
   assert(scanf("%s %s", srcL, sinkL) == 2);
 

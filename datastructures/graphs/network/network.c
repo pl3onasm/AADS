@@ -87,7 +87,7 @@ void showEdge(void *val) {
   if (!e) 
     return;
   if (! e->residual)
-    printf("%s(%zu)", e->to->label, e->flow);
+    printf("%s(%d)", e->to->label, e->flow);
 }
 
 //=================================================================
@@ -181,7 +181,7 @@ void showVertexFlow(network *N, vertex *v) {
   size_t nItems = 0;
   for (edge *e = dllFirst(edges); e; e = dllNext(edges)) {
     if (! e->residual) {
-      printf("%s(%zu/", e->to->label, e->flow);
+      printf("%s(%d/", e->to->label, e->flow);
       if (e->cap == SIZE_MAX)
         printf("inf)");
       else

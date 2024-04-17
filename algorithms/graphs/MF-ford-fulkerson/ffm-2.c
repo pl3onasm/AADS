@@ -67,7 +67,7 @@ void maxFlow(network *N, vertex *src, vertex *sink) {
 //===================================================================
 
 int main () {
-    // read source and sink 
+    // read source and sink labels
   char srcL[50], sinkL[50];                    
   assert(scanf("%s %s", srcL, sinkL) == 2);
 

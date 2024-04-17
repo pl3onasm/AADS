@@ -9,7 +9,7 @@
     $ gcc -O2 -D VERTEX_TYPE1 ...
     
     If no flag is set, the default vertex structure is used,
-    which only contains a label.
+    which only contains the label and in-degree.
 */
 
 

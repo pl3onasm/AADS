@@ -23,7 +23,7 @@ struct edge {                 // default
   vertex *from;               // pointer to the source vertex
   vertex *to;                 // pointer to the destination vertex
   size_t cap;                 // capacity of the edge
-  size_t flow;                // flow through the edge
+  int flow;                   // flow through the edge
   bool residual;              // true if the edge is a residual edge
   struct edge *rev;           // pointer to the reverse edge
 };

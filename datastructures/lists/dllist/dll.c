@@ -95,7 +95,7 @@ dllNode *dllNewNode () {
 
 //=================================================================
 // Deallocates a DLL node
-void dllFreeNode (dll *L, dllNode *node) {
+static void dllFreeNode (dll *L, dllNode *node) {
   if (! node || ! L)
     return;
   if (L->freeData) 
@@ -254,7 +254,7 @@ void *dllPopBack (dll *L) {
 
 //=================================================================
 // Deletes a node from the DLL
-void dllDelete (dll *L, dllNode *node) {
+static void dllDeleteNode (dll *L, dllNode *node) {
   if (! L) 
     return;
   if (node == L->NIL) 
@@ -263,6 +263,19 @@ void dllDelete (dll *L, dllNode *node) {
   node->next->prev = node->prev;
   dllFreeNode(L, node);
   L->size--;
+}
+
+//=================================================================
+// Deletes node at current iterator position and
+// moves the iterator to the next node
+void dllDeleteCurr (dll *L) {
+  if (! L) 
+    return;
+  if (L->iter == L->NIL) 
+    return;
+  dllNode *node = L->iter;
+  L->iter = L->iter->next;
+  dllDeleteNode(L, node);
 }
 
 //=================================================================
@@ -284,7 +297,7 @@ bool dllDeleteData (dll *L, void *data) {
     n = n->next;
   if (n == L->NIL)
     return false;
-  dllDelete(L, n);
+  dllDeleteNode(L, n);
   return true;
 }
 
@@ -376,8 +389,43 @@ void *dllPeekPrev (dll *L) {
 }
 
 //=================================================================
-// Returns the data of the first node and sets the iterator
-// to the next node
+// Peeks at the data of the current node
+// NULL if the iterator is at the end of the DLL
+void *dllPeekCurr (dll *L) {
+  if (! L) 
+    return NULL;
+  if (L->iter == L->NIL)
+    return NULL;
+  return L->iter->dllData;
+}
+
+//=================================================================
+// Resets the list iterator
+void dllResetIter (dll *L) {
+  if (! L) 
+    return;
+  L->iter = L->NIL;
+}
+
+//=================================================================
+// Sets the iterator to the first node
+void dllSetIterFirst (dll *L) {
+  if (! L) 
+    return;
+  L->iter = L->NIL->next;
+}
+
+//=================================================================
+// Sets the iterator to the last node
+void dllSetIterLast (dll *L) {
+  if (! L) 
+    return;
+  L->iter = L->NIL->prev;
+}
+
+//=================================================================
+// Sets the iterator the first node of the DLL and returns the 
+// data of that node
 void *dllFirst(dll *L) {
   if (! L) 
     return NULL;
@@ -388,8 +436,8 @@ void *dllFirst(dll *L) {
 }
 
 //=================================================================
-// Returns the data of the last node and sets the iterator
-// to the previous node
+// Sets the iterator to the last node of the DLL and returns the
+// data of that node
 void *dllLast(dll *L) {
   if (! L) 
     return NULL;

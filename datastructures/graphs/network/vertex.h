@@ -9,7 +9,7 @@
     $ gcc -O2 -D VERTEX_TYPE1 ...
     
     If no flag is set, the default vertex structure is used,
-    which only contains a label.
+    which only contains a label and in-degree.
 */
 
 
@@ -63,7 +63,7 @@ typedef struct edge edge;
     char *label;              // the label of the vertex
     size_t inDegree;          // in-degree of the vertex
     size_t height;            // height of the vertex in the graph
-    size_t excess;            // excess flow at the vertex
+    int excess;               // excess flow at the vertex
   } vertex;
 
 //===================================================================

@@ -323,7 +323,7 @@ bool htDelKey(htable *H, void *key) {
         // free the entry itself
       free(e);
         // remove the entry from the bucket
-      dllDelete(bucket, bucket->iter);
+      dllDeleteCurr(bucket);
         // one key less
       H->nKeys--;
         // update statistics
