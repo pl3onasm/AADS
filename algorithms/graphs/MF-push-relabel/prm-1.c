@@ -29,7 +29,7 @@ void initPreflow(network *N, vertex *src, queue *Q) {
     e->flow = e->cap;                 // set flow on the edge
     e->rev->flow = -e->cap;       
     e->to->excess += e->cap;          // set excess at neighbor
-    enqueue(Q, e->to);                // equeue neighbor
+    enqueue(Q, e->to);                // enqueue neighbor
   }
 }
 

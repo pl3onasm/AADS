@@ -44,12 +44,12 @@ $$
 \begin{align*}
 {\color{olive}\log(n!)} &=  \sum_{i=1}^n \log(i)\\
 &= \sum_{i=1}^{\lfloor n/2 \rfloor} \log(i) + \sum_{i= \lfloor n/2 \rfloor +1}^n \log(i)\\
-& \geq \sum_{i=1}^{\lfloor n/2 \rfloor} 1 + \sum_{i=\lfloor n/2 \rfloor +1}^n \log(n/2)\\
-& \geq \lfloor n/2 \rfloor + \lfloor n/2 \rfloor \log(n/2)\\
+& {\color{olive}\geq} \sum_{i=1}^{\lfloor n/2 \rfloor} 1 + \sum_{i=\lfloor n/2 \rfloor +1}^n \log(n/2)\\
+& = \lfloor n/2 \rfloor + \lfloor n/2 \rfloor \log(n/2)\\
 &= \lfloor n/2 \rfloor + \lfloor n/2 \rfloor \log(n) - \lfloor n/2 \rfloor \log(2)\\
 &= \lfloor n/2 \rfloor \log(n) + \lfloor n/2 \rfloor - \lfloor n/2 \rfloor\\
 &= \lfloor n/2 \rfloor \log(n)\\
-&{\color{olive}= \Theta(n\log n)}
+&= {\color{olive}\Theta(n\log n)}
 \end{align*}
 $$
 

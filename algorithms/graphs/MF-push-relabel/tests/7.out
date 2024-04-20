@@ -1,0 +1,36 @@
+Corrected antiparallel edge a -> s
+by adding a -> a2 and a2 -> s
+Corrected antiparallel edge b -> s
+by adding b -> b2 and b2 -> s
+
+--------------------
+ Network
+ Vertices: 8
+ Edges: 12
+--------------------
+  a[2]: c(14), a2(12)
+  a2[1]: s(12)
+  b[2]: c(6), b2(7)
+  b2[1]: s(7)
+  c[1]: t(3)
+  d[2]: t(2), c(6)
+  s[3]: d(3), b(8), a(10)
+  t[0]
+--------------------
+
+
+--------------------
+ Network flow
+ Source: s
+ Sink: t
+ Max flow: 5
+--------------------
+  a[2]: c(3/14), a2(7/12)
+  a2[1]: s(7/12)
+  b[2]: c(0/6), b2(7/7)
+  b2[1]: s(7/7)
+  c[1]: t(3/3)
+  d[2]: t(2/2), c(0/6)
+  s[3]: d(2/3), b(7/8), a(10/10)
+  t[0]
+--------------------

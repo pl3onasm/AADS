@@ -16,3 +16,6 @@ Once the shortest path to $v$ is found, the algorithm can then move on to the ne
 
 Implementation: [DAG Shortest Paths](https://github.com/pl3onasm/AADS/tree/main/algorithms/graphs/SSSP-DAG/dsp.c)
 
+Video:
+
+[![DAG Shortest Paths](https://img.youtube.com/vi/TXkDpqjDMHA/0.jpg)](https://www.youtube.com/watch?v=TXkDpqjDMHA)

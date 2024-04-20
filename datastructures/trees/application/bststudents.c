@@ -14,11 +14,6 @@
     of the tree. If the tree is balanced, this is O(log n), where n
     is the number of nodes in the tree. If the tree is unbalanced,
     this is O(n) in the worst case.
-  note: this program is implementation agnostic, and can be used with
-    any tree implementation that supports the necessary operations.
-    The only thing that is changed in this file is the include 
-    statement at the top, so that we use a binary search tree instead
-    of a red-black tree.
 */
 
 #include "../bstrees/bst.h"
@@ -26,7 +21,7 @@
 #include "student/student.h"
 
 int main (int argc, char *argv[]) {
-  FILE *fp; node *n;
+  FILE *fp; bsnode *n;
   char buffer[500];
   short option, count = 0;
 
@@ -35,8 +30,10 @@ int main (int argc, char *argv[]) {
     exit(EXIT_FAILURE);
   }
   
-  tree *T = buildTreeFromFile(argv[1], sizeof(student),
-                              cmpStudents, studentFromStr);
+  bstree *T = bstFromFile(argv[1], sizeof(student),
+                          cmpStudents, studentFromStr);
+  bstOwnData(T, free);
+  bstSetShow(T, showStudent);
 
   while (true) {
     
@@ -65,15 +62,14 @@ int main (int argc, char *argv[]) {
           clearStdin(buffer);
           continue;
         }
-        n = searchTreeForKey(T, s, cmpStudents);
-        if (n == NIL) {
-          // insert into tree
-          n = newTreeNode(T, s);
-          insertTreeNode(T, n, cmpStudents);
-          printf("Inserted student with id %d\n", s->id);
-        } else {
+        n = bstSearch(T, s);
+        if (n) {
           printf("Error: student with id %d already exists\n", s->id);
           free(s);
+        } else {
+          // insert into tree
+          bstInsert(T, s);
+          printf("Inserted student with id %d\n", s->id);
         }
         clearStdin(buffer);
         break;
@@ -86,13 +82,26 @@ int main (int argc, char *argv[]) {
           clearStdin(buffer);
           continue;
         }
-        n = searchTreeForKey(T, &id, cmpStudentById);
-        if (n != NIL) {
+        student *lookup = newStudent();
+        lookup->id = id;
+        n = bstSearch(T, lookup);
+        if (n) {
+          printf("Delete following student record? (y/n)\n");
+          showStudent(n->data);
+          char ch;
+          if ((fgets(buffer, 10, stdin) && 
+               sscanf(buffer, "%c", &ch) != 1) || ch != 'y') {
+            free(lookup);
+            clearStdin(buffer);
+            continue;
+          }
           // delete from tree
-          deleteTreeNode(T, n);
+          bstDelete(T, n);
           printf("Deleted student with id %d\n", id);
         } else
           printf("Error: student with id %d not found\n", id);
+        clearStdin(buffer);
+        free(lookup);
         break;
       case 3:
         printf("Enter student id: ");
@@ -102,37 +111,40 @@ int main (int argc, char *argv[]) {
           clearStdin(buffer);
           continue;
         }
-        n = searchTreeForKey(T, &id, cmpStudentById);
-        if (n != NIL)
-          printStudent(n->data);
+        lookup = newStudent();
+        lookup->id = id;
+        n = bstSearch(T, lookup);
+        if (n)
+          showStudent(n->data);
         else
           printf("Error: student with id %d not found\n", id);
         clearStdin(buffer);
+        free(lookup);
         break;
       case 4:
-        // print all student records in tree in order, using printStudent
-        printTree(T, ROOT, &count, printStudent);
+        // print all student records in tree in order
+        bstShow(T, T->ROOT);
         count = 0;
         break;
       case 5:
         printf("Are you sure you want to exit without saving? (y/n): ");
         char ch;
         if ((fgets(buffer, 10, stdin) && 
-            sscanf(buffer, "%c", &ch) != 1) || ch != 'y')
+             sscanf(buffer, "%c", &ch) != 1) || ch != 'y')
           continue;
-        freeTree(T);
+        bstFree(T);
         exit(EXIT_SUCCESS);
       case 6:
         // overwrite student records file with updated tree
         fp = fopen(argv[1], "w+");
         if (fp == NULL) {
           printf("Error: could not open file %s\n", argv[1]);
-          freeTree(T);
+          bstFree(T);
           exit(EXIT_FAILURE);
         }
-        writeTreeToFile(T, ROOT, fp, writeStudentToFile);
+        bstWrite(T, T->ROOT, fp, writeStudent);
         fclose(fp);
-        freeTree(T);
+        bstFree(T);
         exit(EXIT_SUCCESS);
       default:
         printf("Error: invalid command\n");

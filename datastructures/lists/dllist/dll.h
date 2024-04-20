@@ -14,8 +14,8 @@
 
 // function pointers for the DLL
 typedef int (*dllCmpData)(void const *a, void const *b);
-typedef void (*dllShowData)(void *data);
-typedef void *(*dllCpyData)(void *data);
+typedef void (*dllShowData)(void const *data);
+typedef void *(*dllCpyData)(void const *data);
 typedef void (*dllFreeData)(void *data);
 
 // DLL data structures

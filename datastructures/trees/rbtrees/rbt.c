@@ -7,82 +7,153 @@
 #include "rbt.h"
 #include "../../../lib/clib/clib.h"
 
-//::::::::::::::::::::::: Memory management :::::::::::::::::::::::://
-
-node *newTreeNode (tree *T, void *data) {
-  // allocates memory for a new node
-  node *n = safeCalloc(1, sizeof(node));
-  n->data = data;
+//===================================================================
+// Creates a new node with given data
+static rbnode *rbtNewNode (rbtree *T, void *data) {
+  rbnode *n = safeCalloc(1, sizeof(rbnode));
+  if (T->copy)
+    n->data = T->copy(data);
+  else
+    n->data = data;
   n->color = RED;
-  n->parent = n->left = n->right = NIL;
+  n->parent = n->left = n->right = T->NIL;
   return n;
 }
 
-tree *newTree (void) {
-  // allocates memory for a new tree
-  tree *T = safeCalloc(1, sizeof(tree));
-  NIL = newTreeNode(T, NULL);
-  NIL->color = BLACK;
-  ROOT = NIL;
+//===================================================================
+// Creates a new red-black tree
+rbtree *rbtNew (rbtCmpData cmp) {
+  
+  rbtree *T = safeCalloc(1, sizeof(rbtree));
+  T->cmp = cmp;
+  T->NIL = rbtNewNode(T, NULL);
+  T->NIL->color = BLACK;
+  T->ROOT = T->NIL;
   return T;
 }
 
-void freeTreeNode (node *n) {
-  // frees a node 
-  if (n != NULL){
-    free(n->data);
+//===================================================================
+// Makes the tree make copies of the data
+void rbtCopyData (rbtree *T, rbtCpyData copy, rbtFreeData free) {
+  T->copy = copy;
+  T->free = free;
+}
+
+//===================================================================
+// Sets the tree to own the data
+void rbtOwnData (rbtree *T, rbtFreeData free) {
+  T->free = free;
+}
+
+//===================================================================
+// Sets the show function for the tree
+void rbtSetShow (rbtree *T, rbtShowData show) {
+  T->show = show;
+}
+
+//===================================================================
+// Deallocates memory for a node
+static void rbtFreeNode (rbtree *T, rbnode *n) {
+  if (n) {
+    if (T->free)
+      T->free(n->data);
     free(n);
   }
 }
 
-void freeTreeNodes (node *x, tree *T) {
-  // frees all nodes in the subtree rooted at x 
-  if (x != NIL) {
-    freeTreeNodes(x->left, T);
-    freeTreeNodes(x->right, T);
-    freeTreeNode(x);
+//===================================================================
+// Deallocates memory for all nodes in a subtree rooted at x
+static void rbtFreeNodes (rbtree *T, rbnode *x) {
+  if (x != T->NIL) {
+    rbtFreeNodes(T, x->left);
+    rbtFreeNodes(T, x->right);
+    rbtFreeNode(T, x);
   }
 }
 
-void freeTree (tree *T) {
-  // entirely frees a tree
-  freeTreeNodes(ROOT, T);
-  free(NIL);
-  free(T);
+//===================================================================
+// Deallocates the red-black tree
+void rbtFree (rbtree *T) {
+  if (T) {
+    rbtFreeNodes(T, T->ROOT);
+    rbtFreeNode(T, T->NIL);
+    free(T);
+  }
 }
 
-//:::::::::::::::::::::::: Tree operations ::::::::::::::::::::::::://
+//===================================================================
+// Checks if the tree is empty
+bool rbtIsEmpty (rbtree *T) {
+  return T->ROOT == T->NIL;
+}
 
-node *treeMinimum (tree *T, node *x) {
-  // returns the node with the smallest key in 
-  // the subtree rooted at x 
-  while (x->left != NIL)
+//===================================================================
+// Returns the node with the smallest key in the subtree rooted at x
+rbnode *rbtMinimum (rbtree *T, rbnode *x) {
+  while (x->left != T->NIL)
     x = x->left;
   return x;
 }
 
-node *searchTreeForKey (tree *T, void *key, 
-    int (*cmp)(void *, void *)) {
-  // searches for a key in the tree 
-  node *x = ROOT;
-  while (x != NIL && cmp(x->data, key) != 0){
-    if (cmp(key, x->data) < 0)
+//===================================================================
+// Returns the node with the largest key in the subtree rooted at x
+rbnode *rbtMaximum (rbtree *T, rbnode *x) {
+  while (x->right != T->NIL)
+    x = x->right;
+  return x;
+}
+
+//===================================================================
+// Returns the successor of a node
+rbnode *rbtSuccessor (rbtree *T, rbnode *x) {
+  if (x->right != T->NIL)
+    return rbtMinimum(T, x->right);
+  rbnode *y = x->parent;
+  while (y != T->NIL && x == y->right) {
+    x = y;
+    y = y->parent;
+  }
+  return y;
+}
+
+//===================================================================
+// Returns the predecessor of a node
+rbnode *rbtPredecessor (rbtree *T, rbnode *x) {
+  if (x->left != T->NIL)
+    return rbtMaximum(T, x->left);
+  rbnode *y = x->parent;
+  while (y != T->NIL && x == y->left) {
+    x = y;
+    y = y->parent;
+  }
+  return y;
+}
+
+//===================================================================
+// Searches for a key in the red-black tree
+rbnode *rbtSearch (rbtree *T, void *key) {
+  rbnode *x = T->ROOT;
+  while (x != T->NIL && T->cmp(x->data, key) != 0){
+    if (T->cmp(key, x->data) < 0)
       x = x->left;
     else
       x = x->right;
   }
+  if (x == T->NIL)
+    return NULL;
   return x;
 }
 
-void leftRotate (tree *T, node *x) {
-  // performs a left rotation on the subtree rooted at x 
-  node *y = x->right;
+//===================================================================
+// Performs a left rotation on the subtree rooted at x
+static void leftRotate (rbtree *T, rbnode *x) { 
+  rbnode *y = x->right;
   x->right = y->left;
-  if (y->left != NIL)
+  if (y->left != T->NIL)
     y->left->parent = x;
   y->parent = x->parent;
-  if (x->parent == NIL)
-    ROOT = y;
+  if (x->parent == T->NIL)
+    T->ROOT = y;
   else if (x == x->parent->left)
     x->parent->left = y;
   else 
@@ -91,15 +162,16 @@ void leftRotate (tree *T, node *x) {
   x->parent = y;
 }
 
-void rightRotate (tree *T, node *x) {
-  // performs a right rotation on the subtree rooted at x 
-  node *y = x->left;
+//===================================================================
+// Performs a right rotation on the subtree rooted at x
+static void rightRotate (rbtree *T, rbnode *x) {
+  rbnode *y = x->left;
   x->left = y->right;
-  if (y->right != NIL)
+  if (y->right != T->NIL)
     y->right->parent = x;
   y->parent = x->parent;
-  if (x->parent == NIL)
-    ROOT = y;
+  if (x->parent == T->NIL)
+    T->ROOT = y;
   else if (x == x->parent->right)
     x->parent->right = y;
   else 
@@ -108,11 +180,12 @@ void rightRotate (tree *T, node *x) {
   x->parent = y;
 }
 
-void insertFixup (tree *T, node *z) {
-  // restores the red-black properties after insertion of z 
+//===================================================================
+// Restores the red-black properties after insertion of z
+void insertFixup (rbtree *T, rbnode *z) {
   while (z->parent->color == RED) {
     if (z->parent == z->parent->parent->left) {
-      node *y = z->parent->parent->right;
+      rbnode *y = z->parent->parent->right;
       if (y->color == RED) {
         z->parent->color = BLACK;
         y->color = BLACK;
@@ -128,7 +201,7 @@ void insertFixup (tree *T, node *z) {
         rightRotate(T, z->parent->parent);
       }
     } else {
-      node *y = z->parent->parent->left;
+      rbnode *y = z->parent->parent->left;
       if (y->color == RED) {
         z->parent->color = BLACK;
         y->color = BLACK;
@@ -145,36 +218,38 @@ void insertFixup (tree *T, node *z) {
       }
     }
   }
-  ROOT->color = BLACK;
+  T->ROOT->color = BLACK;
 }
 
-void insertTreeNode (tree *T, node *z, int (*cmp)(void *, void *)) {
-  // inserts a node into the tree, 
-  // using the given comparison function
-  node *y = NIL;
-  node *x = ROOT;
+//===================================================================
+// Inserts a node into the red-black tree
+void rbtInsert (rbtree *T, void *data) {
+  rbnode *z = rbtNewNode(T, data);
+  rbnode *y = T->NIL;
+  rbnode *x = T->ROOT;
 
-  while (x != NIL) {
+  while (x != T->NIL) {
     y = x;
-    if (cmp(z->data, x->data) < 0)
+    if (T->cmp(z->data, x->data) < 0)
       x = x->left;
     else
       x = x->right;
   }
   z->parent = y;
-  if (y == NIL)
-    ROOT = z;
-  else if (cmp(z->data, y->data) < 0)
+  if (y == T->NIL)
+    T->ROOT = z;
+  else if (T->cmp(z->data, y->data) < 0)
     y->left = z;
   else
     y->right = z;
   insertFixup(T, z);
 }
 
-void transplant (tree *T, node *u, node *v) {
-  // replaces the subtree rooted at u with the subtree rooted at v 
-  if (u->parent == NIL)
-    ROOT = v;
+//===================================================================
+// Replaces the subtree rooted at u with the subtree rooted at v
+static void rbtTransplant (rbtree *T, rbnode *u, rbnode *v) {
+  if (u->parent == T->NIL)
+    T->ROOT = v;
   else if (u == u->parent->left)
     u->parent->left = v;
   else 
@@ -182,11 +257,12 @@ void transplant (tree *T, node *u, node *v) {
   v->parent = u->parent;
 }
 
-void deleteFixup (tree *T, node *x) {
-  // restores the red-black properties after deletion 
-  while (x != ROOT && x->color == BLACK) {
+//===================================================================
+// Restores the red-black properties after deletion
+static void deleteFixup (rbtree *T, rbnode *x) {
+  while (x != T->ROOT && x->color == BLACK) {
     if (x == x->parent->left) {
-      node *w = x->parent->right;
+      rbnode *w = x->parent->right;
       if (w->color == RED) {
         w->color = BLACK;
         x->parent->color = RED;
@@ -207,10 +283,10 @@ void deleteFixup (tree *T, node *x) {
         x->parent->color = BLACK;
         w->right->color = BLACK;
         leftRotate(T, x->parent);
-        x = ROOT;
+        x = T->ROOT;
       }
     } else {
-      node *w = x->parent->left;
+      rbnode *w = x->parent->left;
       if (w->color == RED) {
         w->color = BLACK;
         x->parent->color = RED;
@@ -231,55 +307,58 @@ void deleteFixup (tree *T, node *x) {
         x->parent->color = BLACK;
         w->left->color = BLACK;
         rightRotate(T, x->parent);
-        x = ROOT;
+        x = T->ROOT;
       }
     }
   }
   x->color = BLACK;
 }
 
-void deleteTreeNode (tree *T, node *z) {
-  // deletes a node from the tree 
-  node *y = z;
-  node *x;
+//===================================================================
+// Deletes a node from the red-black tree
+void rbtDelete (rbtree *T, rbnode *z) {
+  rbnode *y = z;
+  rbnode *x;
   char y_originalColor = y->color;
-  if (z->left == NIL) {
+  if (z->left == T->NIL) {
     x = z->right;
-    transplant(T, z, z->right);
-  } else if (z->right == NIL) {
+    rbtTransplant(T, z, z->right);
+  } else if (z->right == T->NIL) {
     x = z->left;
-    transplant(T, z, z->left);
+    rbtTransplant(T, z, z->left);
   } else {
-    y = treeMinimum(T, z->right);
+    y = rbtMinimum(T, z->right);
     y_originalColor = y->color;
     x = y->right;
     if (y->parent == z)
       x->parent = y;
     else {
-      transplant(T, y, y->right);
+      rbtTransplant(T, y, y->right);
       y->right = z->right;
       y->right->parent = y;
     }
-    transplant(T, z, y);
+    rbtTransplant(T, z, y);
     y->left = z->left;
     y->left->parent = y;
     y->color = z->color;
   }
   if (y_originalColor == BLACK)
     deleteFixup(T, x);
-  freeTreeNode(z);
+  rbtFreeNode(T, z);
 }
 
-//::::::::::::::::::::::::::: Printing ::::::::::::::::::::::::::::://
-
-void printTree (tree *T, node *x, short *count, 
-    void (*printData)(void *)) {
-  // prints the data in the tree in order, 20 items at a time 
+//===================================================================
+// Shows the data in the tree in order, 20 items at a time
+static void rbtShowAll (rbtree *T, rbnode *x, short *count) {
+  if (! T->show) {
+    fprintf(stderr, "Error: show function not set\n");
+    return;
+  }
   char buffer[100], ch;
-  if (x != NIL) {
-    printTree(T, x->left, count, printData);
+  if (x != T->NIL) {
+    rbtShowAll(T, x->left, count);
     if (*count < 20){
-      printData(x->data);
+      T->show(x->data);
       *count += 1;
     } else if (*count == 20){
       printf("Print 20 more? (y/n): ");
@@ -290,30 +369,81 @@ void printTree (tree *T, node *x, short *count,
         *count = 0;
       clearStdin(buffer);
     }
-    printTree(T, x->right, count, printData);
+    rbtShowAll(T, x->right, count);
   }
 }
 
-void printTreeNode (node *n, void (*printData)(void *)) {
-  // prints the data in a node 
-  if (n) printData(n->data);
+//===================================================================
+// Shows the data in the tree in order
+void rbtShow (rbtree *T, rbnode *x) {
+  short count = 0;
+  rbtShowAll(T, x, &count);
+  printf("\n");
 }
 
-//:::::::::::::::::::::::: File operations ::::::::::::::::::::::::://
+//===================================================================
+// Shows the data in the data in a node
+void rbtShowNode (rbtree *T, rbnode *n) {
+  if (! T->show) {
+    fprintf(stderr, "Error: show function not set\n");
+    return;
+  }
+  if (n) T->show(n->data);
+}
 
-void writeTreeToFile (tree *T, node *x, FILE *fp, 
-    void (*printData)(void *, FILE *)) {
-  // writes the data in the tree in order to given file 
-  if (x != NIL) {
-    writeTreeToFile(T, x->left, fp, printData);
-    printData(x->data, fp);
-    writeTreeToFile(T, x->right, fp, printData);
+//===================================================================
+// Shows all levels of the tree
+static void rbtShowLevels (rbtree *T, rbnode *x, size_t level) {
+  if (x == T->NIL) return;
+  if (! level) {
+    printf("ROOT\n");
+    rbtShowNode(T, x);
+    printf("\n");
+  } else {
+    for (size_t i = 0; i < level; i++)
+      printf("-");
+    if (x->parent->left == x)
+      printf("|L(%zu): ", level);
+    else
+      printf("|R(%zu): ", level);
+    rbtShowNode(T, x);
+    printf("\n");
+
+  }
+  rbtShowLevels(T, x->left, level + 1);
+  rbtShowLevels(T, x->right, level + 1);
+}
+
+//===================================================================
+// Shows the tree structure
+void rbtShowTree (rbtree *T, rbnode *x) {
+  if (! T->show) {
+    fprintf(stderr, "Error: show function not set\n");
+    return;
+  }
+  size_t level = 0;
+
+  printf("--------------\n"
+         "Tree structure\n"
+         "--------------\n");
+  rbtShowLevels(T, x, level);
+}
+
+//===================================================================
+// Writes the data in the tree in order to a file
+void rbtWrite (rbtree *T, rbnode *x, FILE *fp, rbtWriteData write) {
+  if (x != T->NIL) {
+    rbtWrite(T, x->left, fp, write);
+    write(x->data, fp);
+    rbtWrite(T, x->right, fp, write);
   }
 }
 
-tree *buildTreeFromFile (char *filename, size_t dataSize,
-    int (*cmp)(void *, void *), bool (*dataFromStr)(void *, char *)) {
-  // reads data from input file and inserts it into the tree
+//===================================================================
+// Reads data from a file and inserts it into the tree
+rbtree *rbtFromFile (char *filename, size_t dataSize,
+    rbtCmpData cmp, rbtStrToData fromStr) {
+  
   FILE *fp; char buffer[100];
   size_t lineNr = 0;
 
@@ -323,22 +453,89 @@ tree *buildTreeFromFile (char *filename, size_t dataSize,
     exit(EXIT_FAILURE);
   }
 
-  tree *T = newTree();
+  rbtree *T = rbtNew(cmp);
   while (fgets(buffer, 100, fp) != NULL) {
     lineNr++;
     void *data = safeCalloc(1, dataSize);
-    if (! dataFromStr(data, buffer)) {
+    if (! fromStr(data, buffer)) {
       printf("Error: invalid input data on line %lu.\n"
-             "Check file %s for errors and try again.\n", lineNr, filename);
-      free(data);
-      freeTree(T);
+             "Check file %s for errors and try again.\n", 
+              lineNr, filename);
+      if (T->free)
+        T->free(data);
+      rbtFree(T);
       fclose(fp);
       exit(EXIT_FAILURE);
     }
-    node *n = newTreeNode(T, data);
-    insertTreeNode(T, n, cmp);
+    rbtInsert(T, data);
   }
   printf("Data successfully read from file %s\n", filename);
   fclose(fp);
   return T;
+}
+
+//===================================================================
+// Traverses the tree in order and adds the data to a list
+static void rbtInOrderList (rbtree *T, rbnode *x, dll *list) {
+  if (x != T->NIL) {
+    rbtInOrderList(T, x->left, list);
+    dllPushBack(list, x->data);
+    rbtInOrderList(T, x->right, list);
+  }
+}
+
+//===================================================================
+// Returns an in-order traversal list of the tree
+dll *rbtInOrder (rbtree *T) {
+  dll *list = dllNew();
+  rbtInOrderList(T, T->ROOT, list);
+  return list;
+}
+
+//===================================================================
+// Traverses the tree in pre-order and adds the data to a list  
+static void rbtPreOrderList (rbtree *T, rbnode *x, dll *list) {
+  if (x != T->NIL) {
+    dllPushBack(list, x->data);
+    rbtPreOrderList(T, x->left, list);
+    rbtPreOrderList(T, x->right, list);
+  }
+}
+
+//===================================================================
+// Returns a pre-order traversal list of the tree
+dll *rbtPreOrder (rbtree *T) {
+  dll *list = dllNew();
+  rbtPreOrderList(T, T->ROOT, list);
+  return list;
+}
+
+//===================================================================
+// Traverses the tree in post-order and adds the data to a list
+static void rbtPostOrderList (rbtree *T, rbnode *x, dll *list) {
+  if (x != T->NIL) {
+    rbtPostOrderList(T, x->left, list);
+    rbtPostOrderList(T, x->right, list);
+    dllPushBack(list, x->data);
+  }
+}
+
+//===================================================================
+// Returns a post-order traversal list of the tree
+dll *rbtPostOrder (rbtree *T) {
+  dll *list = dllNew();
+  rbtPostOrderList(T, T->ROOT, list);
+  return list;
+}
+
+//===================================================================
+// Returns the height of the tree
+size_t rbtHeight (rbtree *T) {
+  size_t height = 0;
+  rbnode *x = T->ROOT;
+  while (x != T->NIL) {
+    height++;
+    x = x->left;
+  }
+  return height;
 }

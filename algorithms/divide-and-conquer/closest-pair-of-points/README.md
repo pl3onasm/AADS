@@ -20,12 +20,6 @@ By case 2 of the master theorem, we then get a total running time of $\mathcal{O
 
 Implementation: [closest pair of points](https://github.com/pl3onasm/AADS/blob/main/algorithms/divide-and-conquer/closest-pair-of-points/closestpair.c)
 
-Compilation:
-
-```bash
-cc -O2 -std=c99 -pedantic -o a.out closestpair.c ../../../lib/clib/*.c -lm
-```
-
 Video:
 
 [![Problem](https://img.youtube.com/vi/6u_hWxbOc7E/0.jpg)](https://www.youtube.com/watch?v=6u_hWxbOc7E)

@@ -16,18 +16,14 @@ typedef struct {
 
 student *newStudent(void);
 
-bool validStudent(student *s); 
+bool validStudent(student const *s); 
 
-void printStudent(void *a);
+void showStudent(void const *a);
 
-void writeStudentToFile(void *a, FILE *f);
+void writeStudent(void const *a, FILE *f);
 
-int cmpStudents(void *a, void *b);
+int cmpStudents(void const *a, void const *b);
 
-int cmpStudentById(void *a, void *b);
-
-void freeStudent(student *s);
-
-bool studentFromStr(void *a, char *str);
+bool studentFromStr(void *a, char const *str);
 
 #endif // STUDENT_H_INCLUDED
