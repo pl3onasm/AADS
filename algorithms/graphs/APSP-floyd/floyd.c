@@ -75,12 +75,9 @@ void printAllPaths (graph *G, double **D, size_t **P) {
 
 //===================================================================
 // Computes the shortest path between all pairs of vertices 
-// given the distance matrix D and the predecessor matrix P
-// Just like the Bellman-Ford algorithm, the Floyd-Warshall
-// algorithm can detect negative cycles if they exist by running
-// the algorithm a second time with the neg parameter set to true.
-// If any path can still be relaxed after the second run, a negative 
-// cycle exists and the paths affected by it are marked with -INF.
+// If any path can still be relaxed after a second run with 
+// parameter neg set to true, the a negative cycle exists and 
+// the paths affected by it are marked with -INF.
 void computeAPSP (double **D, size_t **P, size_t n, bool neg) {
     // for each intermediate vertex k
   for (size_t k = 0; k < n; k++)    

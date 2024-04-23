@@ -72,8 +72,7 @@ void printAllPaths (graph *G, double **D, size_t **P) {
 }
 
 //===================================================================
-// Tries to extend all paths by 1 edge; if a shorter path is found,
-// the distance matrix D and the predecessor matrix P are updated
+// Tries to extend all paths by r edges
 // Negative cycles can be detected by running the function a second
 // time with the neg parameter set to true. Paths affected by a 
 // negative cycle are marked with -INF
@@ -105,7 +104,7 @@ void computeAPSP (double **D, size_t **P, size_t n, bool neg) {
   while (r < n) {
       // try to extend paths by r edges
     extendPaths(D, P, n, neg);   
-      // double r to extend paths by 2r edges next iteration
+      // double r 
     r <<= 1;                       
   }
 }
