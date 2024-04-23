@@ -43,7 +43,7 @@ int cmpVal(void const *val1, void const *val2) {
 
 //=================================================================
 // Show function for the hash table
-void showStr(void *key) {
+void showStr(void const *key) {
   vertex *v = (vertex *)key;
   printf("%s", v->label);
 }
@@ -79,8 +79,8 @@ edge *newEdge(vertex *to, double weight) {
 //=================================================================
 // Show value function for the hash table
 // In this case, the value is a weighted edge
-void showEdgeW(void *val) {
-  edge *e = val;   
+void showEdgeW(void const *val) {
+  edge *e = (edge *)val; 
   if (!e) 
     return;
   printf("%s(%.3g)", e->to->label, e->weight);
@@ -89,8 +89,8 @@ void showEdgeW(void *val) {
 //=================================================================
 // Show value function for the hash table
 // In this case, the value is an unweighted edge
-void showEdge(void *val) {
-  edge *e = val;   
+void showEdge(void const *val) {
+  edge *e = (edge *)val;  
   if (!e) 
     return;
   printf("%s", e->to->label);
@@ -533,8 +533,12 @@ graph *copyGraph(graph *G) {
   copy->type = G->type;
   vertex *from; 
 
-  for (edge *e = firstE(G, &from); e; e = nextE(G, &from)) 
-    addVandEW(copy, from->label, e->to->label, e->weight);
+  for (vertex *v = firstV(G); v; v = nextV(G)) 
+    addVertex(copy, v->label);
+  
+  for (edge *e = firstE(G, &from); e; e = nextE(G, &from))
+    addEdgeWL(copy, from->label, e->to->label, e->weight);
+
   return copy;
 }
 
@@ -547,8 +551,12 @@ graph *transposeGraph(graph *G) {
   T->type = G->type;
   vertex *from;
 
-  for (edge *e = firstE(G, &from); e; e = nextE(G, &from)) 
-    addVandEW(T, e->to->label, from->label, e->weight);
+  for (vertex *v = firstV(G); v; v = nextV(G)) 
+    addVertex(T, v->label);
+
+  for (edge *e = firstE(G, &from); e; e = nextE(G, &from))
+    addEdgeWL(T, e->to->label, from->label, e->weight);
+
   return T;
 }
 

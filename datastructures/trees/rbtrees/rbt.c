@@ -182,7 +182,7 @@ static void rightRotate (rbtree *T, rbnode *x) {
 
 //===================================================================
 // Restores the red-black properties after insertion of z
-void insertFixup (rbtree *T, rbnode *z) {
+static void insertFixup (rbtree *T, rbnode *z) {
   while (z->parent->color == RED) {
     if (z->parent == z->parent->parent->left) {
       rbnode *y = z->parent->parent->right;
@@ -243,6 +243,7 @@ void rbtInsert (rbtree *T, void *data) {
   else
     y->right = z;
   insertFixup(T, z);
+  T->size++;
 }
 
 //===================================================================
@@ -345,6 +346,7 @@ void rbtDelete (rbtree *T, rbnode *z) {
   if (y_originalColor == BLACK)
     deleteFixup(T, x);
   rbtFreeNode(T, z);
+  T->size--;
 }
 
 //===================================================================
@@ -382,7 +384,7 @@ void rbtShow (rbtree *T, rbnode *x) {
 }
 
 //===================================================================
-// Shows the data in the data in a node
+// Shows the data in a node
 void rbtShowNode (rbtree *T, rbnode *n) {
   if (! T->show) {
     fprintf(stderr, "Error: show function not set\n");

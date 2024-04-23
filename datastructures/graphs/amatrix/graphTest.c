@@ -91,9 +91,10 @@ int main() {
     // tests the edge iterator over the graph
   printf("\nAll edges in the graph:\n");
   size_t n = 0;
-  vertex *src;
-  for (edge *e = firstE(G, &src); e; e = nextE(G, &src))
-    printf("%zu: Edge %s-%s\n", ++n, src->label, e->to->label);
+  vertex *from, *to;
+  for (double *w = firstE(G, &from, &to); w; w = nextE(G, &from, &to)) 
+    printf("%zu: %s-%s\n", ++n, from->label, to->label);
+    
 
     // tests the transpose of the graph
   graph *GT = transposeGraph(G);

@@ -27,3 +27,7 @@ Implementation: [APSP - Floyd-Warshall](https://github.com/pl3onasm/AADS/blob/ma
 Notice that the code is very similar to the [algorithms drawing on matrix multiplication](https://github.com/pl3onasm/AADS/tree/main/algorithms/graphs/APSP-matrixmp), except that here we iterate over the intermediate vertices $k$ first, and then over the pairs of vertices $i$ and $j$. We also omit the outermost loop of $n-1$ or $\lceil \log_2 (n-1) \rceil$ iterations. Thus, the time complexity of the Floyd-Warshall algorithm is able to drop to $\Theta(n^3)$.
 
 **Note**: try switching the order of the loops in the Floyd-Warshall algorithm, for example by iterating over the pairs of vertices $i$ and $j$ first, and then over the intermediate vertices $k$. You will see that this produces wrong results. It shows that, although the code is very similar to the previous solution, the order of the loops is important, and that the Floyd-Warshall algorithm is not a generalization of the matrix multiplication algorithm, but a different interpretation of the APSP problem that leads to a different algorithm with a different time complexity.
+
+Video:
+
+[![Problem](https://img.youtube.com/vi/4NQ3HnhyNfQ/0.jpg)](https://www.youtube.com/watch?v=4NQ3HnhyNfQ)

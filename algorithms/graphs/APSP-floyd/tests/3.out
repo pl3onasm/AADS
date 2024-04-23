@@ -1,0 +1,41 @@
+
+--------------------
+ GRAPH
+ Directed
+ Weighted
+ Vertices: 4
+ Edges: 12
+--------------------
+  A[3]: B(4), C(1), D(9)
+  B[3]: A(3), C(6), D(11)
+  C[3]: A(4), B(1), D(2)
+  D[3]: A(6), B(5), C(2)
+--------------------
+
+--------------------
+ Shortest paths
+--------------------
+A → B: 2.00
+  path: A → C → B
+A → C: 1.00
+  path: A → C
+A → D: 3.00
+  path: A → C → D
+B → A: 3.00
+  path: B → A
+B → C: 4.00
+  path: B → A → C
+B → D: 6.00
+  path: B → A → C → D
+C → A: 4.00
+  path: C → A
+C → B: 1.00
+  path: C → B
+C → D: 2.00
+  path: C → D
+D → A: 6.00
+  path: D → A
+D → B: 3.00
+  path: D → C → B
+D → C: 2.00
+  path: D → C

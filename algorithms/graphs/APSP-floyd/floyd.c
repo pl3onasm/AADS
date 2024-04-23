@@ -1,162 +1,128 @@
-/* file: floyd.c
-   author: David De Potter
-   email: pl3onasm@gmail.com
-   license: MIT, see LICENSE file in repository root folder
-   description: Floyd-Warshall algorithm for the all-pairs 
-      shortest path problem. The program reads a weighted 
-      directed graph from stdin and prints the distance and 
-      predecessor matrices. It then reads queries from stdin 
-      and prints the requested shortest paths.
-   time complexity: Θ(n³)
+/* 
+  file: floyd.c
+  author: David De Potter
+  email: pl3onasm@gmail.com
+  license: MIT, see LICENSE file in repository root folder
+  description: Floyd-Warshall algorithm for the all-pairs 
+    shortest path problem. The program reads a weighted 
+    directed graph from stdin and computes the shortest path
+    between all pairs of vertices. The algorithm uses a
+    distance matrix D and a predecessor matrix P to store
+    the shortest path information.
+  time complexity: Θ(|V|³)
+  space complexity: Θ(|V|²)
 */
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "../../../datastructures/graphs/amatrix/graph.h"
+#include "../../../lib/clib/clib.h"
 #include <float.h>
-#define INF DBL_MAX
 
-//::::::::::::::::::::::: memory management :::::::::::::::::::::::://
-
-void *safeCalloc (int n, int size) {
-  /* allocates n elements of size size, initializing them to 0, and
-     checks whether the allocation was successful */
-  void *ptr = calloc(n, size);
-  if (ptr == NULL) {
-      printf("Error: calloc(%d, %d) failed. Out of memory?\n", n, size);
-      exit(EXIT_FAILURE);
-  }
-  return ptr;
-}
-
-void freeM (void **M, int n) {
-  /* frees a generic matrix */
-  for (int i = 0; i < n; i++) 
-    free(M[i]);
-  free(M);
-}
-
-//:::::::::::::::::::::::: matrix functions :::::::::::::::::::::::://
-
-double **initD (int n) {
-  /* initializes a double matrix with 0's on the diagonal 
-     and inf elsewhere */
-  double **D = safeCalloc(n, sizeof(double*));
-  for (int i = 0; i < n; i++){
-    D[i] = safeCalloc(n, sizeof(double)); 
-    for (int j = 0; j < n; j++) 
-      D[i][j] = (i == j) ? 0 : INF;
-  }
+//===================================================================
+// Initializes the distance matrix D
+double **initD (size_t n, double **W) {
+  CREATE_MATRIX(double, D, n, n);
+  for (size_t i = 0; i < n; i++)
+    for (size_t j = 0; j < n; j++) 
+      D[i][j] = (i == j) ? 0 : (W[i][j] == 0) ? DBL_MAX : W[i][j];
   return D;
 }
 
-int **initP (int n, double **D) {
-  /* initializes a predecessor matrix with -1's if there 
-     is no path from i to j, and i otherwise */
-  int **P = safeCalloc(n, sizeof(int*));
-  for (int i = 0; i < n; i++) {
-    P[i] = safeCalloc(n, sizeof(int));
-    for (int j = 0; j < n; j++) 
-      P[i][j] = (i == j || D[i][j] == INF) ? -1 : i;
-  }
+//===================================================================
+// Initializes the predecessor matrix P
+size_t **initP (size_t n, double **D) {
+  CREATE_MATRIX(size_t, P, n, n);
+  for (size_t i = 0; i < n; i++) 
+    for (size_t j = 0; j < n; j++) 
+      P[i][j] = (i == j || D[i][j] == DBL_MAX) ? SIZE_MAX : i;
   return P;
 }
 
-double **readGraph (int n){
-  /* reads a weighted directed graph from stdin 
-     and returns its adjacency matrix */
-  double **W = initD(n);
-  int i, j; double w;
-  while (scanf("%d %d %lf", &i, &j, &w) == 3) 
-    W[i][j] = w;
-  return W;
-}
-
-//:::::::::::::::::::::::: print functions ::::::::::::::::::::::::://
-
-void printD (double **M, int n) {
-  /* prints a n x n distance matrix */
-  printf("Distance matrix D:\n");
-  for (int i = 0; i < n; i++) {
-    for (int j = 0; j < n; j++) {
-      if (M[i][j] == INF) printf("%5s ", "inf");
-      else printf("%5.1lf ", M[i][j]);
-    }
-    printf("\n");
-  }
-}
-
-void printP(int **P, int n) {
-  /* prints a n x n predecessor matrix */
-  printf("\nPredecessor matrix P:\n");
-  for (int i = 0; i < n; i++) {
-    for (int j = 0; j < n; j++) {
-      if (P[i][j] == -1) printf("%3c ", '-');
-      else printf("%3d ", P[i][j]);
-    }
-    printf("\n");
-  }
-}
-
-void printPath (int **P, int i, int j) {
-  /* prints the shortest path from i to j */
-  if (j == i) printf("%d", i);
+//===================================================================
+// Prints the shortest path from vertex with index i to vertex with
+// index j
+void printPath (graph *G, size_t **P, size_t i, size_t j) {
+  if (j == i) printf("%s", G->V[i]->label);
   else {
-    printPath(P, i, P[i][j]);
-    printf(" → %d", j);
+    printPath(G, P, i, P[i][j]);
+    printf(" → %s", G->V[j]->label);
   }
 }
 
-//::::::::::::::::::::::::: apsp functions ::::::::::::::::::::::::://
+//===================================================================
+// Prints the shortest path from each vertex to every other vertex
+// along with the distance between them
+void printAllPaths (graph *G, double **D, size_t **P) {
+  printf("--------------------\n"
+         " Shortest paths\n"
+         "--------------------\n");
+  for (size_t i = 0; i < nVertices(G); i++) 
+    for (size_t j = 0; j < nVertices(G); j++) {
 
-void floydWarshall (double **D, int **P, int n) {
-  /* computes all-pairs shortest paths using Floyd-Warshall */
-  for (int k = 0; k < n; k++)       // for each intermediate node k
-    for (int i = 0; i < n; i++)     // for each pair of nodes (i, j)
-      for (int j = 0; j < n; j++) 
-        if (D[i][k] != INF && D[k][j] != INF) {
-          // if paths i⇝k and k⇝j exist
+      if (i == j) continue;
+
+      printf("%s → %s: ", G->V[i]->label, G->V[j]->label);
+      printf(D[i][j] == DBL_MAX ? "INF\n" : 
+            (D[i][j] == -DBL_MAX) ? "-INF\n" : "%.2f\n", D[i][j]);
+
+      if (P[i][j] == SIZE_MAX || D[i][j] == -DBL_MAX) 
+        printf("  no path");
+      else {
+        printf("  path: ");
+        printPath(G, P, i, j);
+      }
+      printf("\n");
+    }
+}
+
+//===================================================================
+// Computes the shortest path between all pairs of vertices 
+// given the distance matrix D and the predecessor matrix P
+// Just like the Bellman-Ford algorithm, the Floyd-Warshall
+// algorithm can detect negative cycles if they exist
+void computeASP (double **D, size_t **P, size_t n, bool NEG) {
+    // for each intermediate vertex k
+  for (size_t k = 0; k < n; k++)    
+      // for each pair of vertices (i, j)
+    for (size_t i = 0; i < n; i++)  
+      for (size_t j = 0; j < n; j++) 
+          // check if paths i⇝k and k⇝j exist
+        if (D[i][k] != DBL_MAX && D[k][j] != DBL_MAX) { 
+
           double newDist = D[i][k] + D[k][j];
-          if (newDist < D[i][j]) {  // if i⇝k⇝j is shorter than i⇝j
-            D[i][j] = newDist;      // "relax" the path i⇝j
-            P[i][j] = P[k][j];      // update the predecessor matrix
+
+            // is i⇝k⇝j shorter than i⇝j?
+          if (newDist < D[i][j]) {    
+            D[i][j] = NEG ? -DBL_MAX : newDist; 
+            P[i][j] = NEG ? SIZE_MAX : P[k][j];      
           }
         }
 }
 
-void answerQueries (double **D, int **P) {
-  /* prints the queries and their answers */
-  scanf("%*s");   // skip "queries" in input     
-  int s = 0, g = 0, q = 0;
-  printf("\nQuery results:\n");
-  while (scanf("%d %d", &s, &g) == 2) {
-    printf("%3d: ", ++q); 
-    if (D[s][g] == INF) 
-      printf("There is no path from %d to %d.", s, g);
-    else {
-      printf("Shortest path from %d to %d has length = %4.2lf\n" 
-             "     Path: ", s, g, D[s][g]);
-      printPath(P, s, g);
-    }
-    printf("\n");
-  }
-}
+//===================================================================
 
-//::::::::::::::::::::::::::::: main ::::::::::::::::::::::::::::::://
-
-int main (int argc, char *argv[]) {
-  int n;                       // n = number of nodes
-  scanf("%*s %d", &n);         // skip "graph" and read n
+int main () {
  
-  double **D = readGraph(n);   // read graph and initialize D to W
-  int **P = initP(n, D);       // initialize predecessor matrix
+  graph *G = newGraph(50, WEIGHTED);  
+  readGraph(G);          
+  showGraph(G);    
 
-  floydWarshall(D, P, n);      // compute all-pairs shortest paths
+  size_t n = nVertices(G);
 
-  printD(D, n);                // print distance matrix
-  printP(P, n);                // print predecessor matrix
-  answerQueries(D, P);         // solve queries
+  double **D = initD(n, G->W);         
+  size_t **P = initP(n, D);       
 
-  freeM((void**) D, n);
-  freeM((void**) P, n);
+    // compute the all-pairs shortest paths
+  computeASP(D, P, n, false);      
+
+    // mark negative cycles by checking if any
+    // paths can be further shortened after the
+    // n-th iteration
+  computeASP(D, P, n, true);
+
+  printAllPaths(G, D, P);        
+
+  FREE_MATRIX(D, n);           
+  FREE_MATRIX(P, n);         
+  freeGraph(G);
   return 0;
 }
