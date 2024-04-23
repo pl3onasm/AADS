@@ -23,7 +23,7 @@ double **initD (size_t n, double **W) {
   CREATE_MATRIX(double, D, n, n);
   for (size_t i = 0; i < n; i++)
     for (size_t j = 0; j < n; j++) 
-      D[i][j] = (i == j) ? 0 : (W[i][j] == 0) ? DBL_MAX : W[i][j];
+      D[i][j] = (i == j) ? 0 : W[i][j];
   return D;
 }
 
@@ -61,25 +61,27 @@ void printAllPaths (graph *G, double **D, size_t **P) {
       if (i == j) continue;
 
       printf("%s → %s: ", G->V[i]->label, G->V[j]->label);
-      printf(D[i][j] == DBL_MAX ? "INF\n" : 
-            (D[i][j] == -DBL_MAX) ? "-INF\n" : "%.2f\n", D[i][j]);
+      printf(D[i][j] == DBL_MAX ? "INF" : 
+            (D[i][j] == -DBL_MAX) ? "-INF" : "%.2f", D[i][j]);
 
-      if (P[i][j] == SIZE_MAX || D[i][j] == -DBL_MAX) 
-        printf("  no path");
-      else {
-        printf("  path: ");
+      if (P[i][j] != SIZE_MAX && abs(D[i][j]) != DBL_MAX) {
+        printf("\n  path: ");
         printPath(G, P, i, j);
       }
       printf("\n");
     }
+  printf("--------------------\n");
 }
 
 //===================================================================
 // Computes the shortest path between all pairs of vertices 
 // given the distance matrix D and the predecessor matrix P
 // Just like the Bellman-Ford algorithm, the Floyd-Warshall
-// algorithm can detect negative cycles if they exist
-void computeASP (double **D, size_t **P, size_t n, bool NEG) {
+// algorithm can detect negative cycles if they exist by running
+// the algorithm a second time with the neg parameter set to true.
+// If any path can still be relaxed after the second run, a negative 
+// cycle exists and the paths affected by it are marked with -INF.
+void computeAPSP (double **D, size_t **P, size_t n, bool neg) {
     // for each intermediate vertex k
   for (size_t k = 0; k < n; k++)    
       // for each pair of vertices (i, j)
@@ -92,8 +94,8 @@ void computeASP (double **D, size_t **P, size_t n, bool NEG) {
 
             // is i⇝k⇝j shorter than i⇝j?
           if (newDist < D[i][j]) {    
-            D[i][j] = NEG ? -DBL_MAX : newDist; 
-            P[i][j] = NEG ? SIZE_MAX : P[k][j];      
+            D[i][j] = neg ? -DBL_MAX : newDist; 
+            P[i][j] = neg ? SIZE_MAX : P[k][j];      
           }
         }
 }
@@ -112,12 +114,11 @@ int main () {
   size_t **P = initP(n, D);       
 
     // compute the all-pairs shortest paths
-  computeASP(D, P, n, false);      
+  computeAPSP(D, P, n, false);      
 
     // mark negative cycles by checking if any
-    // paths can be further shortened after the
-    // n-th iteration
-  computeASP(D, P, n, true);
+    // paths can still be relaxed
+  computeAPSP(D, P, n, true);
 
   printAllPaths(G, D, P);        
 

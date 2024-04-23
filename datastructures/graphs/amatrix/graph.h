@@ -4,7 +4,7 @@
     Some algorithms require a graph to be represented as
     an adjacency matrix. This implementation provides
     a generic graph data structure that does just that.
-    It is only recommended for small graphs or nearly
+    It is only recommended for small graphs or (nearly)
     complete graphs, as the adjacency matrix has a space
     complexity of O(|V|²).
 

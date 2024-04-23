@@ -72,7 +72,7 @@ int main() {
 
     // checks if the edges are in the graph
   printf("\nChecking if some edges are in the graph:\n");
-  printf("\n\nEdge %s-%s is in the graph: %s\n", "cat", "bird", 
+  printf("\nEdge %s-%s is in the graph: %s\n", "cat", "bird", 
          hasEdgeL(G, "cat", "bird") ? "true" : "false");
   printf("Edge %s-%s is in the graph: %s\n", "mouse", "chicken",
           hasEdgeL(G, "mouse", "chicken") ? "true" : "false");
@@ -80,6 +80,7 @@ int main() {
           hasEdgeL(G, "elephant", "horse") ? "true" : "false");
 
     // check some properties of vertices
+  printf("\nChecking some properties of vertices:\n");
   printf("\nVertex %s has outdegree: %zu\n", "cat", outDegreeL(G, "cat"));
   printf("Vertex %s has indegree: %zu\n", "elephant", inDegreeL(G, "elephant"));
   printf("Vertex %s has degree: %zu\n", "mouse", degreeL(G, "mouse"));

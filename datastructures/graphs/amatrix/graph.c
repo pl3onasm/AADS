@@ -7,6 +7,7 @@
 #include "graph.h"
 #include "../../../lib/clib/clib.h"
 #include <ctype.h>
+#include <float.h>
 
 #define MAX_VERTEX_LABEL 50
 
@@ -17,8 +18,11 @@ graph *newGraph (size_t capacity, weightType weight) {
   graph *G = safeCalloc(1, sizeof(graph));
   G->capacity = capacity;
   G->W = safeCalloc(capacity, sizeof(double *));
-  for (size_t i = 0; i < capacity; i++) 
+  for (size_t i = 0; i < capacity; i++) {
     G->W[i] = safeCalloc(capacity, sizeof(double));
+    for (size_t j = 0; j < capacity; j++)
+      G->W[i][j] = DBL_MAX;
+  }
   G->V = safeCalloc(capacity, sizeof(vertex *));
   G->indexMap = sstMapNew(CASE_SENSITIVE, capacity);
   sstMapCopyKeys(G->indexMap);
@@ -73,7 +77,7 @@ void showVertex(graph *G, vertex *v) {
   size_t count = 0;
   if (G->weight == WEIGHTED) {
     for (size_t i = 0; i < G->nVertices; i++) {
-      if (G->W[v->idx][i] != 0) {
+      if (G->W[v->idx][i] != DBL_MAX) {
         printf("%s(%g)", G->V[i]->label, G->W[v->idx][i]);
         if (++count < v->outDegree)
           printf(", ");
@@ -81,7 +85,7 @@ void showVertex(graph *G, vertex *v) {
     }
   } else {
     for (size_t i = 0; i < G->nVertices; i++) {
-      if (G->W[v->idx][i] != 0) {
+      if (G->W[v->idx][i] != DBL_MAX) {
         printf("%s", G->V[i]->label);
         if (++count < v->outDegree)
           printf(", ");
@@ -178,11 +182,14 @@ static void storeVertex(graph *G, vertex *v) {
     for (size_t i = 0; i < G->nVertices; i++) {
       G->W[i] = safeRealloc(G->W[i], G->capacity * sizeof(double));
       for (size_t j = G->nVertices; j < G->capacity; j++)
-        G->W[i][j] = 0;
+        G->W[i][j] = DBL_MAX;
     }
     G->W = safeRealloc(G->W, G->capacity * sizeof(double *));
-    for (size_t i = G->nVertices; i < G->capacity; i++) 
+    for (size_t i = G->nVertices; i < G->capacity; i++) {
       G->W[i] = safeCalloc(G->capacity, sizeof(double));
+      for (size_t j = 0; j < G->capacity; j++)
+        G->W[i][j] = DBL_MAX;
+    }
 
     G->V = safeRealloc(G->V, G->capacity * sizeof(vertex *));
       // initialize the new vertices to NULL
@@ -250,7 +257,7 @@ void addEdgeW(graph *G, vertex *from, vertex *to, double weight) {
 
   if (from->idx >= G->capacity || to->idx >= G->capacity) 
     return;
-  if (G->W[from->idx][to->idx] != 0)
+  if (G->W[from->idx][to->idx] != DBL_MAX)
     return;
 
   G->W[from->idx][to->idx] = weight;
@@ -308,7 +315,7 @@ bool hasVertex(graph *G, char *label) {
 bool hasEdge(graph *G, vertex *from, vertex *to) {
   if (! G || ! from || ! to) 
     return false;
-  return G->W[from->idx][to->idx] != 0;
+  return G->W[from->idx][to->idx] != DBL_MAX;
 }
 
 //=================================================================
@@ -322,7 +329,7 @@ bool hasEdgeL(graph *G, char *from, char *to) {
       ! sstMapHasKeyVal(G->indexMap, to, &j)) 
     return false;
 
-  return G->W[i][j] != 0;
+  return G->W[i][j] != DBL_MAX;
 }
 
 //=================================================================
@@ -332,15 +339,15 @@ void delEdge(graph *G, vertex *from, vertex *to) {
   if (! G || ! from || ! to) 
     return;
   
-  if (G->W[from->idx][to->idx] == 0)
+  if (G->W[from->idx][to->idx] == DBL_MAX)
     return;
-  G->W[from->idx][to->idx] = 0;
+  G->W[from->idx][to->idx] = DBL_MAX;
   G->nEdges--;  
   to->inDegree--;
   from->outDegree--;
 
   if (G->type == UNDIRECTED) {
-    G->W[to->idx][from->idx] = 0;
+    G->W[to->idx][from->idx] = DBL_MAX;
     from->inDegree--;
     to->outDegree--;
   }
@@ -369,7 +376,7 @@ double *firstN (graph *G, vertex *from, vertex **to) {
   if (! G || ! from) 
     return NULL;
   for (size_t i = 0; i < G->nVertices; i++) {
-    if (G->W[from->idx][i] != 0) {
+    if (G->W[from->idx][i] != DBL_MAX) {
       *to = G->V[i];
       G->currentN = i;
       return &G->W[from->idx][i];
@@ -388,7 +395,7 @@ double *nextN (graph *G, vertex *from, vertex **to) {
   if (! G || ! from) 
     return NULL;
   for (size_t i = G->currentN + 1; i < G->nVertices; i++) {
-    if (G->W[from->idx][i] != 0) {
+    if (G->W[from->idx][i] != DBL_MAX) {
       *to = G->V[i];
       G->currentN = i;
       return &G->W[from->idx][i];
@@ -407,7 +414,7 @@ double *firstE(graph *G, vertex **from, vertex **to) {
     return NULL;
   for (size_t i = 0; i < G->nVertices; i++) {
     for (size_t j = 0; j < G->nVertices; j++) {
-      if (G->W[i][j] != 0) {
+      if (G->W[i][j] != DBL_MAX) {
         *from = G->V[i];
         *to = G->V[j];
         G->currentFrom = i;
@@ -433,7 +440,7 @@ double *nextE(graph *G, vertex **from, vertex **to) {
   for (size_t i = G->currentFrom; i < G->nVertices; i++) {
     for (size_t j = G->currentFrom == i ? G->currentTo + 1 : 0; 
           j < G->nVertices; j++) {
-      if (G->W[i][j] && G->W[i][j] != 0) {
+      if (G->W[i][j] && G->W[i][j] != DBL_MAX) {
         *from = G->V[i];
         *to = G->V[j];
         G->currentFrom = i;
