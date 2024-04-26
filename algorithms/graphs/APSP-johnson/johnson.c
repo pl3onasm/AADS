@@ -8,7 +8,7 @@
   time complexity: O(|V|² log |V| + |V| |E|)
   note: make sure to use VERTEX_TYPE5 in the vertex.h file
     by defining it from the command line using
-      $ gcc -D VERTEX_TYPE5 -D EDGE_TYPE4 ...
+      $ gcc -D VERTEX_TYPE5 ...
 */
 
 #include "../../../datastructures/graphs/graph/graph.h"
