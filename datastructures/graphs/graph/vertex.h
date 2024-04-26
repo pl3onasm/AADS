@@ -76,6 +76,20 @@
   } vertex;
 
 //===================================================================
+// VERTEX TYPE 5  (application example: Johnson)
+
+#elif defined (VERTEX_TYPE5)
+
+  typedef struct vertex {
+    char *label;              // the label of the vertex
+    size_t index;             // index of the vertex
+    double bDist;             // Bellman-Ford distance
+    double dDist;             // Dijkstra distance
+    size_t parent;            // index of the parent vertex
+    size_t inDegree;          // in-degree of the vertex
+  } vertex;
+
+//===================================================================
 // DEFAULT VERTEX TYPE
 #else     
 

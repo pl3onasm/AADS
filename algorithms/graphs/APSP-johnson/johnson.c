@@ -1,370 +1,241 @@
-/* file: johnson.c
-   author: David De Potter
-   email: pl3onasm@gmail.com
-   license: MIT, see LICENSE file in repository root folder
-   description: Johnson's algorithm for all-pairs shortest 
-     paths using a binary min-heap
-   assumption: nodes are numbered 0..n-1
+/* 
+  file: johnson.c
+  author: David De Potter
+  email: pl3onasm@gmail.com
+  license: MIT, see LICENSE file in repository root folder
+  description: Johnson's algorithm for the all-pairs shortest 
+    paths problem
+  time complexity: O(|V|² log |V| + |V| |E|)
+  note: make sure to use VERTEX_TYPE5 in the vertex.h file
+    by defining it from the command line using
+      $ gcc -D VERTEX_TYPE5 -D EDGE_TYPE4 ...
 */
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "../../../datastructures/graphs/graph/graph.h"
+#include "../../../datastructures/pqueues/bpqueue.h"
+#include "../../../lib/clib/clib.h"
 #include <float.h>
 
-#define LEFT(i)   (2*i + 1)
-#define RIGHT(i)  (2*i + 2)
-#define PARENT(i) ((i-1)/2)
-#define INF DBL_MAX
-
-//:::::::::::::::::::::::: data structures ::::::::::::::::::::::::://
-
-typedef struct list list;    // forward declaration
-
-typedef enum {               // definition for boolean type
-  false = 0,
-  true = 1
-} bool;
-
-typedef struct node {
-  // graph-related fields
-  int id, parent;            // node id and parent id
-  double dDist;              // distance to source in Dijkstra
-  double bDist;              // distance to source in Bellman-Ford
-  list *adj;                 // adjacency list
-
-  // heap-related fields
-  int heapIndex;             // index in the heap
-  bool inHeap;               // true if node is in the heap
-  double key;                // key used to sort the heap
-} node;
-
-struct list {                
-  node *n;                   // pointer to a node in the graph
-  list *next;                // pointer to next node in the list
-  double w;                  // weight of incoming edge at node n
-  double rw;                 // reweighted weight of incoming edge in G'
-};                           
-
-typedef struct heap {
-  int nNodes;                // number of elements in the heap
-  node **nodes;              // array of pointers to nodes
-} heap;
-
-typedef struct graph {
-  int nNodes, nEdges;        // number of nodes and edges 
-  node **nodes;              // array of pointers to nodes
-  double **D;                // distance matrix for G
-  int **P;                   // predecessor matrix for G
-} graph;
-
-//::::::::::::::::::::::: memory management :::::::::::::::::::::::://
-
-void *safeCalloc (int n, int size) {
-    /* allocates n elements of size size, initializing them to 0, and
-       checks whether the allocation was successful */
-    void *ptr = calloc(n, size);
-    if (ptr == NULL) {
-        printf("Error: calloc(%d, %d) failed. Out of memory?\n", n, size);
-        exit(EXIT_FAILURE);
-    }
-    return ptr;
+//===================================================================
+// Extends the graph G with a new source node connected to all
+// other nodes in G with zero-weight edges; returns this new source
+vertex *extendGraph(graph *G) {
+  vertex *src = addVertexR(G, "srcExt");
+  for (vertex *v = firstV(G); v; v = nextV(G)) 
+    if (v != src) 
+      addEdgeW(G, src, v, 0);
+  return src;
 }
 
-void **newMatrix (int m, int n, size_t eSize) {
-  /* allocates a m x n matrix */
-  void **M = (void**) safeCalloc(m, sizeof(void *));
-  for (int i = 0; i < m; i++) 
-    M[i] = safeCalloc(n, eSize);
-  return M;
-}
-
-//::::::::::::::::::::::::: list functions ::::::::::::::::::::::::://
-
-void freeList(list *L) {
-  /* frees all memory allocated for the list */
-  if (!L) return;
-  freeList(L->next);
-  free(L);
-}
-
-list *listInsert (list *L, node *n, double w) {
-  /* inserts the node n at the beginning of the list L */
-  list *new = safeCalloc(1, sizeof(list));
-  new->n = n;
-  new->next = L;
-  new->w = new->rw = w;
-  return new;
-}
-
-//::::::::::::::::::::::::: graph functions :::::::::::::::::::::::://
-
-graph *newGraph(int n) {
-  /* creates a new graph with nNodes nodes */
-  graph *G = safeCalloc(1, sizeof(graph));
-  G->nNodes = n;
-  G->nodes = (node **) newMatrix(n, n, sizeof(node));
-  // create distance matrix, excluding source of G'
-  G->D = (double **) newMatrix(n-1, n-1, sizeof(double));
-  // create predecessor matrix, excluding source of G'
-  G->P = (int **) newMatrix(n-1, n-1, sizeof(int));
-  // initialize nodes
-  for (int i = 0; i < n; i++) {
-    G->nodes[i]->id = i;
-    G->nodes[i]->parent = -1;
-    G->nodes[i]->dDist = INF;
-    G->nodes[i]->bDist = INF;
-  }
-  return G;
-}
-
-void buildGraph (graph *G) {
-  /* builds the graphs G and G' from the input; G' is an extension of G
-     with an extra node s connected to all other nodes with edges of 
-     weight 0 */
-  int u, v; double w;
-  while (scanf("%d %d %lf", &u, &v, &w) == 3) {
-    node *n = G->nodes[u];
-    n->adj = listInsert(n->adj, G->nodes[v], w);
-    G->nEdges++;
-  }
-  // we add edges with weight 0 from s to all other nodes
-  int s = G->nNodes-1;  // we use the last node as source
-  for (int i = 0; i < G->nNodes-1; i++) 
-    G->nodes[s]->adj = listInsert(G->nodes[s]->adj, G->nodes[i], 0);
-}
-
-void freeGraph(graph *G) {
-  /* frees the memory allocated to the graph G */
-  for (int i = 0; i < G->nNodes; i++) {
-    freeList(G->nodes[i]->adj);
-    free(G->nodes[i]);
-  }
-  free(G->nodes);
-  for (int i = 0; i < G->nNodes-1; i++) {
-    free(G->D[i]);
-    free(G->P[i]);
-  }
-  free(G->D);
-  free(G->P);
-  free(G);
-}
-
-void printD (graph *G) {
-  /* prints a n x n distance matrix */
-  printf("Distance matrix D:\n");
-  for (int i = 0; i < G->nNodes-1; i++) {
-    for (int j = 0; j < G->nNodes-1; j++) {
-      if (G->D[i][j] == INF) printf("%5s ", "inf");
-      else printf("%5.1lf ", G->D[i][j]);
-    }
-    printf("\n");
-  }
-}
-
-void printP(graph *G) {
-  /* prints a n x n predecessor matrix */
-  printf("\nPredecessor matrix P:\n");
-  for (int i = 0; i < G->nNodes-1; i++) {
-    for (int j = 0; j < G->nNodes-1; j++) {
-      if (G->P[i][j] == -1) printf("%3c ", '-');
-      else printf("%3d ", G->P[i][j]);
-    }
-    printf("\n");
-  }
-}
-
-void printPath (int **P, int i, int j) {
-  /* prints the shortest path from i to j */
-  if (j == i) printf("%d", i);
+//===================================================================
+// Prints the shortest path from vertex with index i to vertex with
+// index j using the predecessor matrix P
+void printPath (vertex **V, size_t **P, size_t i, size_t j) {
+  if (j == i) printf("%s", V[i]->label);
   else {
-    printPath(P, i, P[i][j]);
-    printf(" → %d", j);
+    printPath(V, P, i, P[i][j]);
+    printf(" → %s", V[j]->label);
   }
 }
 
-//::::::::::::::::::::::::: heap functions ::::::::::::::::::::::::://
+//===================================================================
+// Shows the shortest path from each vertex to every other vertex
+// along with the distance between them
+void showAllPaths (vertex **V, size_t nV, double **D, size_t **P) {
+  printf("--------------------\n"
+         " Shortest paths\n"
+         "--------------------\n");
+  for (size_t i = 0; i < nV; i++) 
+    for (size_t j = 0; j < nV; j++) {
 
-void swap (heap *H, int i, int j) {
-  /* swaps the nodes at indices i and j in the heap */
-  node *tmp = H->nodes[i];
-  H->nodes[i] = H->nodes[j];
-  H->nodes[j] = tmp;
-  // update the heapIndex fields
-  H->nodes[i]->heapIndex = i;
-  H->nodes[j]->heapIndex = j;
-}
+      if (i == j) continue;
 
-heap *newHeap(graph *G, int s) {
-  /* creates a heap with n nodes */
-  int n = G->nNodes-1;  // exclude the source node of G'
-  heap *H = safeCalloc(1, sizeof(heap));
-  H->nNodes = n;
-  H->nodes = safeCalloc(n, sizeof(node*));
-  // make pointer copies of the graph nodes 
-  // and initialize the heap-related fields
-  for (int i = 0; i < n; i++){
-    node *u = G->nodes[i];
-    H->nodes[i] = u;
-    u->heapIndex = i;
-    u->inHeap = true;
-    u->key = u->dDist;
-  }
-  // swap the source node with the first node
-  // all other nodes have key = INF at this point
-  swap(H, 0, s);
-  return H;
-}
+      printf("%s → %s: ", V[i]->label, V[j]->label);
+      printf(D[i][j] == DBL_MAX ? "INF" : 
+            (D[i][j] == -DBL_MAX) ? "-INF" : "%.2f", D[i][j]);
 
-void freeHeap (heap *H) {
-  /* frees the heap */
-  free(H->nodes);
-  free(H);
-}
-
-void minHeapify(heap *H, int i){
-  /* restores the min heap property in a top-down manner */
-  int min = i, l = LEFT(i), r = RIGHT(i);
-  if (l < H->nNodes && H->nodes[l]->key < H->nodes[i]->key)
-    min = l;
-  if (r < H->nNodes && H->nodes[r]->key < H->nodes[min]->key)
-    min = r;
-  if (min != i) {
-    swap(H, i, min); 
-    minHeapify(H, min);
-  }
-}
-
-void decreaseKey(heap *H, int i, double newKey){
-  /* decreases the key of the node at index i to newKey */
-  if (newKey > H->nodes[i]->key) {
-    printf("Error: new key is greater than current key\n");
-    exit(EXIT_FAILURE);
-  }
-  H->nodes[i]->key = newKey;
-  while (i > 0 && H->nodes[PARENT(i)]->key > H->nodes[i]->key) {
-    swap(H, i, PARENT(i));
-    i = PARENT(i);
-  }
-}
-
-node *extractMin(heap *H) {
-  /* extracts the node with minimum key from the heap */
-  node *min = H->nodes[0];
-  H->nodes[0] = H->nodes[--H->nNodes];
-  minHeapify(H, 0);
-  min->inHeap = false;
-  return min;
-}
-
-//:::::::::::::::::::::: johnson functions ::::::::::::::::::::::::://
-
-void bFord(graph *G) {
-  /* computes the shortest paths from node s to all other nodes */
-  node *s = G->nodes[G->nNodes-1];
-  s->bDist = 0;    // set the source distance to 0
-  for (int i = 0; i < G->nNodes-1; i++) 
-    // relax all the edges n-1 times
-    for (int j = 0; j < G->nNodes; j++) {
-      node *u = G->nodes[j];
-      for (list *a = u->adj; a; a = a->next)
-        if (u->bDist + a->w < a->n->bDist) 
-          a->n->bDist = u->bDist + a->w;
-    }
-  // check for negative cycles
-  for (int j = 0; j < G->nNodes; j++)
-    for (list *a = G->nodes[j]->adj; a; a = a->next) 
-      if (G->nodes[j]->bDist + a->w < a->n->bDist) {
-        printf("Negative cycle detected\n");
-        exit(EXIT_FAILURE);
+      if (ABS(D[i][j]) != DBL_MAX) {
+        printf("\n  path: ");
+        printPath(V, P, i, j);
       }
+      printf("\n");
+    }
+  printf("--------------------\n");
 }
 
-bool relax(node *u, node *v, double w) {
-  /* relaxes the edge (u,v) with weight w */
+//===================================================================
+// Initializes the graph G with the source node src:
+// sets the Bellman-Ford distance of all nodes to the source to 
+// infinity and the distance of the source node to 0
+void initSingleSource(graph *G, vertex *src) {
+  for (vertex *v = firstV(G); v; v = nextV(G)) 
+    v->bDist = DBL_MAX;
+  src->bDist = 0;
+}
+
+//===================================================================
+// Computes the shortest paths from added source node src to all
+// other nodes in G' and checks for negative cycles; returns false
+// if no negative cycles were found
+bool runBellmanFord(graph *G, vertex *src) {
+
+  initSingleSource(G, src);  
+
+    // relax all edges n-1 times
+  vertex *from;
+  for (size_t i = 0; i < nVertices(G) - 1; i++)
+    for (edge *e = firstE(G, &from); e; e = nextE(G, &from))
+      if (from->bDist + e->weight < e->to->bDist)
+        e->to->bDist = from->bDist + e->weight;
+
+    // check for negative-weight cycles by checking if
+    // the distances can still be improved
+  for (edge *e = firstE(G, &from); e; e = nextE(G, &from))
+    if (from->bDist + e->weight < e->to->bDist) 
+      return true;
+
+  return false;
+}
+
+//===================================================================
+// Reweights the edges of the graph G using the Bellman-Ford
+// distances of the vertices
+void reweightEdges(graph *G) {
+  vertex *from;
+  for (edge *e = firstE(G, &from); e; e = nextE(G, &from)) 
+    e->weight += from->bDist - e->to->bDist;
+}
+
+//===================================================================
+// Copies the key (priority) of a node in the priority queue
+void *copyKey (void *key) {
+  double *copy = safeCalloc(1, sizeof(double));
+  *copy = *(double *)key;
+  return copy;
+}
+
+//===================================================================
+// Comparison function for the priority queue
+int compareKeys(void const *k1, void const *k2) {
+  double d1 = *(double *)k1;
+  double d2 = *(double *)k2;
+  if (d1 < d2) return -1;
+  if (d1 > d2) return 1;
+  return 0;
+}
+
+//===================================================================
+// String representation of the data in the priority queue
+char *vertexToString(void const *key) {
+  vertex *v = (vertex *)key;
+  return v->label;
+}
+
+//===================================================================
+// Generates and initializes the min priority queue
+// All vertices are added to the priority queue with infinite
+// distance from the source node and likewise infinite priority
+// The distance and priority of the source node is set to 0
+bpqueue *initPQ(graph *G, vertex *src) {
+
+  bpqueue *pq = bpqNew(nVertices(G), MIN, compareKeys, copyKey, 
+                       free, vertexToString);
+  
+  for (vertex *v = firstV(G); v; v = nextV(G)) {
+    v->dDist = v == src ? 0 : DBL_MAX;
+    bpqPush(pq, v, &v->dDist);
+  }
+  return pq;
+}
+
+//===================================================================
+// Tries to 'relax' the edge (u,v) with weight w; 
+// Returns true if relaxation was successful
+bool relax(vertex *u, vertex *v, double w) {
+  
   if (v->dDist > u->dDist + w) {
     v->dDist = u->dDist + w;
-    v->parent = u->id;
+    v->parent = u->index;
     return true;
   }
   return false;
 }
 
-void dijkstra(graph *G, int s) {
-  /* computes the shortest paths from node s to all other nodes */
-  G->nodes[s]->dDist = 0;    // set the source distance to 0
-  heap *H = newHeap(G, s);   // create a new min-heap with source at root
+//===================================================================
+// Computes the shortest paths from vertex src to all other nodes
+void dijkstra(graph *G, vertex *src) {
+      
+    // genereate a new priority queue and initialize it
+  bpqueue *pq = initPQ(G, src);
 
-  while (H->nNodes > 0) {
-    node *u = extractMin(H);
-
-    // relax all the neighbors of u that are in the heap (V-S)
-    for (list *a = u->adj; a; a = a->next){
-      node *v = a->n;
-      if (v->inHeap && relax(u, v, a->rw))
-        decreaseKey(H, v->heapIndex, v->dDist);
-          // update v's key and position in the heap
-    }
-  }
-  freeHeap(H);
+  while (! bpqIsEmpty(pq)) {
+    vertex *u = bpqPop(pq);
+    dll* edges = getNeighbors(G, u);
+      
+      // try to relax all the edges from u to its neighbors
+    for (edge *e = dllFirst(edges); e; e = dllNext(edges)) 
+      if (bpqContains(pq, e->to) && relax(u, e->to, e->weight)) 
+          // update neighbor's priority in the pq if edge was relaxed
+        bpqUpdateKey(pq, e->to, &e->to->dDist);
+  } 
+  bpqFree(pq);
 }
 
-void johnson(graph *G) {
-  /* computes the distance matrix and the predecessor matrix of G */
-  // compute the bellman-ford distances for all nodes 
-  bFord(G);
-  // reweight G.E to get G.E'
-  for (int i = 0; i < G->nNodes; i++) 
-    for (list *a = G->nodes[i]->adj; a; a = a->next) 
-      a->rw += G->nodes[i]->bDist - a->n->bDist;
-  // compute shortest paths from each node in G using G.E'
-  // and update the distance and predecessor matrices
-  for (int i = 0; i < G->nNodes-1; i++) {
-    dijkstra(G, i);  // compute shortest paths from node i
-    for (int j = 0; j < G->nNodes-1; j++) {
-      // update G.D for edges i -> j
-      G->D[i][j] = G->nodes[j]->dDist + 
-        G->nodes[j]->bDist - G->nodes[i]->bDist;  
-      // update G.P for edges i -> j
-      G->P[i][j] = G->nodes[j]->parent;
-      G->nodes[j]->dDist = INF;  // reset the distances
-      G->nodes[j]->parent = -1;  // and parents
+//===================================================================
+// Computes the shortest paths from each node in G to all other nodes
+// by running Dijkstra on the graph G with reweighted edges
+void runDijkstra(graph *G, vertex **V, size_t nV, 
+                 double **D, size_t **P) {
+
+    // compute shortest paths from each node in G using G.E'
+  for (size_t from = 0; from < nV; from++) {
+    dijkstra(G, V[from]);
+
+    for (size_t to = 0; to < nV; to++) {
+        // update distance matrix for edge from -> to
+      D[from][to] = V[to]->dDist + V[to]->bDist - V[from]->bDist;
+        // update predecessor matrix for edge from -> to
+      P[from][to] = V[to]->parent;
+      V[to]->dDist = DBL_MAX;
     }
   }
 }
 
-void answerQueries (graph *G) {
-  /* prints the queries and their answers */
-  scanf("%*s");   // skip "queries" in input     
-  int s = 0, g = 0, q = 0;
-  printf("\nQuery results:\n");
-  while (scanf("%d %d", &s, &g) == 2) {
-    printf("%3d: ", ++q); 
-    if (G->D[s][g] == INF) 
-      printf("There is no path from %d to %d.", s, g);
-    else {
-      printf("Shortest path from %d to %d has length = %4.2lf\n" 
-             "     Path: ", s, g, G->D[s][g]);
-      printPath(G->P, s, g);
-    }
-    printf("\n");
-  }
-}
+//===================================================================
 
-//::::::::::::::::::::::::::::: main ::::::::::::::::::::::::::::::://
-
-int main (int argc, char *argv[]) {
-  int n;                       // n = number of nodes
-  scanf("%*s %d", &n);         // skip "graph" and read n
+int main () {
  
-  graph *G = newGraph(n+1);    // graph G with n nodes + source for G'
-  buildGraph(G);               // build G and G' from input
+  graph *G = newGraph(50, WEIGHTED);  
+  readGraph(G);          
+  showGraph(G);    
 
-  johnson(G);                  // compute distance and predecessor matrices
+  size_t nV = nVertices(G);
+  vertex **V = getVertices(G); 
+    
+    // extend the graph with a new source vertex
+  vertex *src = extendGraph(G);
   
-  printD(G);                   // print distance matrix
-  printP(G);                   // print predecessor matrix
-  answerQueries(G);            // solve queries
+  bool negCycle = runBellmanFord(G, src);
+  if (negCycle) {
+    printf("Negative cycle detected\n");
+    freeGraph(G);
+    free(V); 
+    return 0;
+  }
 
+    // create distance and predecessor matrices
+  CREATE_MATRIX(double, D, nV, nV);
+  CREATE_MATRIX(size_t, P, nV, nV);
+
+  reweightEdges(G);
+
+  runDijkstra(G, V, nV, D, P);
+
+  showAllPaths(V, nV, D, P);
+  
   freeGraph(G);
+  free(V); 
+  FREE_MATRIX(D, nV);
+  FREE_MATRIX(P, nV);
   return 0;
 }

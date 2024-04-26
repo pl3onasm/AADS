@@ -82,7 +82,8 @@ int main () {
   vertex *dest = getVertex(G, d);
 
   if (! src || ! dest) {
-    fprintf(stderr, "Error: source or destination node not found.\n");
+    fprintf(stderr, "Error: source or destination " 
+                    "vertex not found.\n");
     freeGraph(G);
     exit(EXIT_FAILURE);
   }

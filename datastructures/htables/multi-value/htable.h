@@ -21,12 +21,12 @@
 typedef uint64_t (*htHash)(void *hashKey, uint64_t seed);
 typedef int (*htCmpKey)(void const *key1, void const *key2);
 typedef int (*htCmpValue)(void const *value1, void const *value2);
-typedef void (*htShowKey)(void *key);
-typedef void (*htShowValue)(void *value);
+typedef void (*htShowKey)(void const *key);
+typedef void (*htShowValue)(void const *value);
 typedef void (*htFreeKey)(void *key);
 typedef void (*htFreeValue)(void *val);
-typedef void *(*htCopyKey)(void *key);
-typedef void *(*htCopyValue)(void *val);
+typedef void *(*htCopyKey)(void const *key);
+typedef void *(*htCopyValue)(void const *val);
 
   // hash table structure
 typedef struct {

@@ -120,7 +120,7 @@ static int cmpVertex(void const *v1, void const *v2) {
 //=================================================================
 // Sorts the vertices in the graph by label
 // Returns a sorted array of pointers to the vertices
-vertex **sortGraph(graph *G) {
+static vertex **sortGraph(graph *G) {
   if (! G) 
     return NULL;
   
@@ -558,6 +558,24 @@ graph *transposeGraph(graph *G) {
     addEdgeWL(T, e->to->label, from->label, e->weight);
 
   return T;
+}
+
+//=================================================================
+// Returns an array of the vertices in the graph
+vertex **getVertices(graph *G) {
+  if (! G) return NULL;
+  size_t n = nVertices(G);
+  vertex **vertices = safeCalloc(n, sizeof(vertex *));
+  size_t i = 0;
+
+  for (vertex *v = firstV(G); v; v = nextV(G)) {
+    vertices[i++] = v;
+    #ifdef VERTEX_TYPE5
+      v->index = i - 1;
+    #endif
+  }
+
+  return vertices;
 }
 
 //=================================================================

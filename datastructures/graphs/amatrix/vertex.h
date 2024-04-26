@@ -21,7 +21,7 @@
 
 
 //===================================================================
-// VERTEX TYPE 1  (application example: Johnson's algorithm)
+// VERTEX TYPE 1  
 #if defined (VERTEX_TYPE1)      
 
   typedef struct vertex {
@@ -30,8 +30,7 @@
     size_t idx;               // index of the vertex in the graph
     size_t inDegree;          // in-degree of the vertex
     size_t outDegree;         // out-degree of the vertex
-    size_t bdist;             // distance from source in Bellman-Ford
-    size_t ddist;             // distance from source in Dijkstra
+    size_t dist;             // distance from source in Dijkstra
   } vertex;
 
 //===================================================================

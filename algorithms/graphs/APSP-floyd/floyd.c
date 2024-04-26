@@ -16,6 +16,7 @@
 #include "../../../datastructures/graphs/amatrix/graph.h"
 #include "../../../lib/clib/clib.h"
 #include <float.h>
+#define ABS(x) ((x) < 0 ? -(x) : (x))
 
 //===================================================================
 // Initializes the distance matrix D
@@ -64,7 +65,7 @@ void printAllPaths (graph *G, double **D, size_t **P) {
       printf(D[i][j] == DBL_MAX ? "INF" : 
             (D[i][j] == -DBL_MAX) ? "-INF" : "%.2f", D[i][j]);
 
-      if (P[i][j] != SIZE_MAX && abs(D[i][j]) != DBL_MAX) {
+      if (ABS(D[i][j]) != DBL_MAX) {
         printf("\n  path: ");
         printPath(G, P, i, j);
       }
@@ -76,7 +77,7 @@ void printAllPaths (graph *G, double **D, size_t **P) {
 //===================================================================
 // Computes the shortest path between all pairs of vertices 
 // If any path can still be relaxed after a second run with 
-// parameter neg set to true, the a negative cycle exists and 
+// parameter neg set to true, then a negative cycle exists and 
 // the paths affected by it are marked with -INF.
 void computeAPSP (double **D, size_t **P, size_t n, bool neg) {
     // for each intermediate vertex k

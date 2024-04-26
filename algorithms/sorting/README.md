@@ -38,13 +38,13 @@ This is illustrated in the below decision tree. Each internal node (in blue) is 
 
 The number of comparisons performed by a comparison sort algorithm for a given input corresponds to the path length from the root to the leaf in the decision tree. Thus, the longest path from the root to a leaf corresponds to the worst-case number of comparisons for a given input of size $n$. In other words, the height of the decision tree represents the worst-case running time of a comparison sort algorithm.
 
-Let $l$ be the number of leaves in the decision tree. Since a decision tree is a full binary tree (each decision node has exactly two children), it has at most $2^h$ leaves, where $h$ is the height of the tree, so that $l \leq 2^h$. Each permutation of the input elements appears as a label on one or more leaves of the decision tree[^2], so that $l \geq n!$. Thus, $n! \leq l \leq 2^h$, which implies $h \geq \log(n!)$. Rewriting the latter term as a sum, we get:
+Let $l$ be the number of leaves in the decision tree. Since a decision tree is a full binary tree (each decision node has exactly two children), it has at most $2^h$ leaves, where $h$ is the height of the tree, so that $l \leq 2^h$. Each permutation of the input elements appears as a label on one or more leaves of the decision tree[^2], so that $l \geq n!$. Thus, $n! \leq l \leq 2^h$, which implies $h \geq \log(n!)$. Rewriting the latter term as a sum, we get, for $n > 1$:
 
 $$
 \begin{align*}
 {\color{olive}\log(n!)} &=  \sum_{i=1}^n \log(i)\\
 &= \sum_{i=1}^{\lfloor n/2 \rfloor} \log(i) + \sum_{i= \lfloor n/2 \rfloor +1}^n \log(i)\\
-& {\color{olive}\geq} \sum_{i=1}^{\lfloor n/2 \rfloor} 1 + \sum_{i=\lfloor n/2 \rfloor +1}^n \log(n/2)\\
+& {\color{olive} \boldsymbol{>}} \sum_{i=1}^{\lfloor n/2 \rfloor} 1 + \sum_{i=\lfloor n/2 \rfloor +1}^n \log(n/2)\\
 & = \lfloor n/2 \rfloor + \lfloor n/2 \rfloor \log(n/2)\\
 &= \lfloor n/2 \rfloor + \lfloor n/2 \rfloor \log(n) - \lfloor n/2 \rfloor \log(2)\\
 &= \lfloor n/2 \rfloor \log(n) + \lfloor n/2 \rfloor - \lfloor n/2 \rfloor\\

@@ -87,6 +87,9 @@ void extendPaths (double **D, size_t **P, size_t n, bool neg) {
         if (D[i][k] != DBL_MAX && D[k][j] != DBL_MAX) {
 
             // note we use D[k][j] instead of W[k][j] in apsp-1.c
+            // this is where the squaring optimization comes in:
+            // we no longer extend paths by one edge at a time
+            // but by at most r edges at a time
           double newDist = D[i][k] + D[k][j]; 
           
             // is path i⇝k→j shorter than i⇝j?
@@ -102,7 +105,7 @@ void extendPaths (double **D, size_t **P, size_t n, bool neg) {
 void computeAPSP (double **D, size_t **P, size_t n, bool neg) {
   size_t r = 1;
   while (r < n) {
-      // try to extend paths by r edges
+      // try to extend paths by at most r edges
     extendPaths(D, P, n, neg);   
       // double r 
     r <<= 1;                       
@@ -113,7 +116,7 @@ void computeAPSP (double **D, size_t **P, size_t n, bool neg) {
 
 int main () {
   
- graph *G = newGraph(50, WEIGHTED);  
+  graph *G = newGraph(50, WEIGHTED);  
   readGraph(G);          
   showGraph(G);    
 

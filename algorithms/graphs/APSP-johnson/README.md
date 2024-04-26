@@ -4,7 +4,7 @@ _________________________________________
 
 # Problem
 
-Given a weighted graph $G=(V,E)$ with $n = |V|$ vertices and a weight function $w: E \rightarrow \mathbb{R}$, find the shortest paths (i.e. the minimum-weight paths) between all pairs of vertices in $G$. The weight of a path is the sum of the weights of its constituent edges: $w(p) = \sum_{e \in p} w(e)$.
+Given a weighted graph $G=(V,E)$ with $n = |V|$ vertices and a weight function $w: E \rightarrow \mathbb{R}$, find the shortest paths (i.e. the minimum-weight paths) between all pairs of vertices in $G$. The weight of a path $p$ is the sum of the weights of its constituent edges: $w(p) = \sum_{e \in p} w(e)$.
 
 ## Johnson's Algorithm
 
