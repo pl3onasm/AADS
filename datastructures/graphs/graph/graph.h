@@ -152,6 +152,10 @@ graph *transposeGraph(graph *G);
   // Returns an array of the vertices in the graph
 vertex **getVertices(graph *G);
 
+  // Returns an array of the vertices in the graph
+  // sorted by their labels
+vertex **sortVertices(graph *G);
+
   // Returns the number of vertices in the graph
 static inline size_t nVertices(graph *G) {
   return htSize(G->V);

@@ -120,7 +120,7 @@ static int cmpVertex(void const *v1, void const *v2) {
 //=================================================================
 // Sorts the vertices in the graph by label
 // Returns a sorted array of pointers to the vertices
-static vertex **sortGraph(graph *G) {
+vertex **sortVertices(graph *G) {
   if (! G) 
     return NULL;
   
@@ -128,7 +128,7 @@ static vertex **sortGraph(graph *G) {
   vertex **vertices = safeCalloc(n, sizeof(vertex *));
   size_t i = 0;
 
-  for (vertex *v = firstV(G); v; v = nextV(G))
+  for (vertex *v = firstV(G); v; v = nextV(G)) 
     vertices[i++] = v;
 
   qsort(vertices, n, sizeof(vertex *), cmpVertex);
@@ -152,7 +152,7 @@ void showGraph(graph *G) {
           G->nEdges);
 
   // sort the vertices
-  vertex **vertices = sortGraph(G);
+  vertex **vertices = sortVertices(G);
 
   // show the vertices and their adjacency lists
   for (size_t i = 0; i < nVertices(G); i++) {
@@ -173,12 +173,14 @@ graph *newGraph (size_t capacity, weightType weight) {
   G->v = safeCalloc(1, sizeof(vertex));
   G->e = safeCalloc(1, sizeof(edge));
   G->V = htNew(hash, cmpKey, cmpVal, capacity);
-  // set show functions
+
+    // set show functions
   if (weight == UNWEIGHTED)
     htSetShow(G->V, showStr, showEdge);
   else
     htSetShow(G->V, showStr, showEdgeW);
-  // set ownership functions
+
+    // set ownership functions
   htOwnKeys(G->V, freeVertex);
   htOwnVals(G->V, free);
   G->V->label = "Graph";

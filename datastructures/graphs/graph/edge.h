@@ -13,7 +13,6 @@
     weight of the edge.
 */
 
-
 #ifndef EDGE_H_INCLUDED
 #define EDGE_H_INCLUDED
 

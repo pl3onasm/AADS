@@ -141,6 +141,10 @@ graph *copyGraph(graph *G);
   // This is a copy of G with all edges reversed
 graph *transposeGraph(graph *G);
 
+  // Returns a sorted array of the vertices
+  // Sorted by label
+vertex **sortVertices(graph *G);
+
   // Returns the number of vertices in the graph
 static inline size_t nVertices(graph *G) {
   return G->nVertices;

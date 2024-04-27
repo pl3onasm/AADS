@@ -51,15 +51,22 @@ void printPath (graph *G, size_t **P, size_t i, size_t j) {
 
 //===================================================================
 // Prints the shortest path from each vertex to every other vertex
-// along with the distance between them
+// along with the distance between them. The paths are printed in
+// the order of the vertices as they appear in the graph when
+// printed with the showGraph function
 void printAllPaths (graph *G, double **D, size_t **P) {
   printf("--------------------\n"
          " Shortest paths\n"
          "--------------------\n");
-  for (size_t i = 0; i < nVertices(G); i++) 
-    for (size_t j = 0; j < nVertices(G); j++) {
 
-      if (i == j) continue;
+  vertex **vertices = sortVertices(G);
+  for (size_t from = 0; from < nVertices(G); from++) 
+    for (size_t to = 0; to < nVertices(G); to++) {
+
+      if (from == to) continue;
+      
+      size_t i = vertices[from]->idx;
+      size_t j = vertices[to]->idx; 
 
       printf("%s → %s: ", G->V[i]->label, G->V[j]->label);
       printf(D[i][j] == DBL_MAX ? "INF" : 
@@ -72,6 +79,7 @@ void printAllPaths (graph *G, double **D, size_t **P) {
       printf("\n");
     }
   printf("--------------------\n");
+  free(vertices);
 }
 
 //===================================================================

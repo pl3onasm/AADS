@@ -104,7 +104,7 @@ static int cmpVertex(void const *v1, void const *v2) {
 //=================================================================
 // Sorts the vertices in the graph by label
 // Returns a sorted array of pointers to the vertices
-vertex **sortGraph(graph *G) {
+vertex **sortVertices(graph *G) {
   if (! G) 
     return NULL;
   
@@ -136,7 +136,7 @@ void showGraph(graph *G) {
           G->nEdges);
 
   // sort the vertices
-  vertex **vertices = sortGraph(G);
+  vertex **vertices = sortVertices(G);
 
   // show the vertices and their adjacency lists
   for (size_t i = 0; i < nVertices(G); i++) {
@@ -147,8 +147,6 @@ void showGraph(graph *G) {
   printf("--------------------\n\n");
   free(vertices);
 }
-
-
 
 //=================================================================
 // Sets the graph type to undirected
