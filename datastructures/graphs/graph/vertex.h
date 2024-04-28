@@ -18,7 +18,7 @@
 
 #include <stdlib.h>
 #include <stdbool.h>
-
+#define MAX_LABEL 50
 
 //===================================================================
 // VERTEX TYPE 1  (application example: DFS)
@@ -32,7 +32,7 @@
 
   typedef struct vertex {
     struct vertex *parent;    // ptr to the parent vertex
-    char *label;              // the label of the vertex
+    char label[MAX_LABEL];    // the label of the vertex 
     clr color;                // color of the vertex
     size_t dTime;             // discovery time
     size_t fTime;             // finish time
@@ -47,7 +47,7 @@
   typedef struct vertex {
     struct vertex *parent;    // pointer to the parent vertex
     double dist;              // distance from the source vertex
-    char *label;              // the label of the vertex
+    char label[MAX_LABEL];    // the label of the vertex
     size_t inDegree;          // in-degree of the vertex
   } vertex;
 
@@ -57,7 +57,7 @@
 #elif defined (VERTEX_TYPE3)
 
   typedef struct vertex {
-    char *label;              // the label of the vertex
+    char label[MAX_LABEL];    // the label of the vertex
     bool visited;             // marks the vertex as visited
     size_t inDegree;          // in-degree of the vertex
   } vertex;
@@ -67,7 +67,7 @@
 #elif defined (VERTEX_TYPE4)
 
   typedef struct vertex {
-    char *label;              // the label of the vertex
+    char label[MAX_LABEL];    // the label of the vertex
     double dist;              // distance from the source vertex
     struct vertex *parent;    // pointer to the parent vertex
     size_t dTime;             // discovery time
@@ -81,7 +81,7 @@
 #elif defined (VERTEX_TYPE5)
 
   typedef struct vertex {
-    char *label;              // the label of the vertex
+    char label[MAX_LABEL];    // the label of the vertex
     size_t index;             // index of the vertex
     double bfDist;            // Bellman-Ford distance
     double dDist;             // Dijkstra distance
@@ -94,11 +94,13 @@
 #else     
 
   typedef struct vertex {   
-    char *label;              // the label of the vertex
+    char label[MAX_LABEL];    // the label of the vertex
     size_t inDegree;          // in-degree of the vertex
   } vertex;
 
 
 #endif    // VERTEX TYPES
+
+#undef MAX_LABEL
 
 #endif    // VERTEX_H_INCLUDED

@@ -8,7 +8,7 @@
 #include "../../../lib/clib/clib.h"
 #include <ctype.h>
 
-#define MAX_VERTEX_LABEL 50
+#define MAX_LABEL 50
 
 //=================================================================
 // FNV-1a hash function
@@ -43,7 +43,7 @@ int cmpVal(void const *val1, void const *val2) {
 
 //=================================================================
 // Show function for the hash table
-void showStr(void *key) {
+void showStr(void const *key) {
   vertex *v = (vertex *)key;
   printf("%s", v->label);
 }
@@ -51,10 +51,9 @@ void showStr(void *key) {
 //=================================================================
 // Creates a new network node
 vertex *newVertex(char *label) {
-  vertex *node = safeCalloc(1, sizeof(vertex));
-  node->label = safeCalloc(strlen(label) + 1, sizeof(char));
-  strcpy(node->label, label);
-  return node;
+  vertex *v = safeCalloc(1, sizeof(vertex));
+  strcpy(v->label, label);
+  return v;
 }
 
 //=================================================================
@@ -62,7 +61,6 @@ vertex *newVertex(char *label) {
 void freeVertex(void *v) {
   if (! v) return;
   vertex *vert = v;
-  free(vert->label);
   free(vert);
 }
 
@@ -82,8 +80,8 @@ edge *newEdge(vertex *from, vertex *to, size_t cap,
 //=================================================================
 // Show value function for the hash table
 // In this case, the value is an edge
-void showEdge(void *val) {
-  edge *e = val;   
+void showEdge(void const *val) {
+  edge *e = (edge *)val;
   if (!e) 
     return;
   if (! e->residual)
@@ -117,7 +115,7 @@ void showVertex(network *N, vertex *v) {
 //=================================================================
 // Shows a vertex and its adjacency list by label
 void showVertexL(network *N, char *label) {
-  N->v->label = label;
+  strcpy(N->v->label, label);
   htShowEntry(N->V, htGetKey(N->V, N->v));
 }
 
@@ -262,14 +260,14 @@ vertex *getVertex(network *N, char *label) {
     // we use a dummy vertex to get the key;
     // this is needed because the hash function 
     // operates on vertices and not on plain strings
-  N->v->label = label;
+  strcpy(N->v->label, label);
   return htGetKey(N->V, N->v);
 }
 
 //=================================================================
 // Adds a vertex to the network
 void addVertex(network *N, char *label) {
-  N->v->label = label;
+  strcpy(N->v->label, label);
   if (htHasKey(N->V, N->v))
     return;
   vertex *vertex = newVertex(label);
@@ -280,7 +278,7 @@ void addVertex(network *N, char *label) {
 // Adds a vertex to the network by label 
 // and returns a pointer to it
 vertex *addVertexR(network *N, char *label) {
-  N->v->label = label;
+  strcpy(N->v->label, label);
   vertex *v = htGetKey(N->V, N->v);
   if (v) 
     return v;
@@ -294,7 +292,7 @@ vertex *addVertexR(network *N, char *label) {
 static void correctAntiparallel(network *N, vertex *from, 
                                 vertex *to, size_t cap) {
   
-  char label[MAX_VERTEX_LABEL] = "";
+  char label[MAX_LABEL] = "";
   strcpy(label, from->label);
   strcat(label, "2");
   vertex *v = addVertexR(N, label);
@@ -351,8 +349,8 @@ void addEdge(network *N, vertex *from, vertex *to, size_t cap) {
 void addEdgeL(network *N, char *from, char *to, size_t cap) {
   if (!N || ! from || ! to) 
     return;
-  N->u->label = from;
-  N->v->label = to;
+  strcpy(N->u->label, from);
+  strcpy(N->v->label, to);
   addEdge(N, htGetKey(N->V, N->u), htGetKey(N->V, N->v), cap);
 }
 
@@ -370,8 +368,8 @@ edge *getEdge(network *N, vertex *from, vertex *to) {
 edge *getEdgeL(network *N, char *from, char *to) {
   if (! N || ! from || ! to) 
     return NULL;
-  N->u->label = from;
-  N->v->label = to;
+  strcpy(N->u->label, from);
+  strcpy(N->v->label, to);
   return getEdge(N, htGetKey(N->V, N->u), htGetKey(N->V, N->v));
 }
 
@@ -380,7 +378,7 @@ edge *getEdgeL(network *N, char *from, char *to) {
 bool hasVertex(network *N, char *label) {
   if (! N || ! label) 
     return false;
-  N->v->label = label;
+  strcpy(N->v->label, label);
   return htHasKey(N->V, N->v);
 }
 
@@ -408,7 +406,7 @@ dll *getNeighbors(network *N, vertex *v) {
 dll *getNeighborsL(network *N, char *label) {
   if (! N || ! label) 
     return NULL;
-  N->v->label = label;
+  strcpy(N->v->label, label);
   return getNeighbors(N, htGetKey(N->V, N->v));
 }
 
@@ -429,8 +427,8 @@ bool hasEdge(network *N, vertex *from, vertex *to) {
 bool hasEdgeL(network *N, char *from, char *to) {
   if (! N || ! from || ! to) 
     return false;
-  N->u->label = from;
-  N->v->label = to;
+  strcpy(N->u->label, from);
+  strcpy(N->v->label, to);
   return hasEdge(N, htGetKey(N->V, N->u), htGetKey(N->V, N->v));
 }
 
@@ -457,8 +455,8 @@ void delEdge(network *N, vertex *from, vertex *to) {
 void delEdgeL(network *N, char *from, char *to) {
   if (! N || ! from || ! to) 
     return;
-  N->u->label = from;
-  N->v->label = to;
+  strcpy(N->u->label, from);
+  strcpy(N->v->label, to);
   delEdge(N, htGetKey(N->V, N->u), htGetKey(N->V, N->v));
 }
 
@@ -507,7 +505,7 @@ void addVandE(network *N, char *from, char *to,
 //=================================================================
 // Reads a network from stdin
 void readNetwork(network *N) {
-  char from[MAX_VERTEX_LABEL], to[MAX_VERTEX_LABEL];
+  char from[MAX_LABEL], to[MAX_LABEL];
   size_t capacity;
 
   while (scanf("%s %s", from, to) == 2) {
@@ -550,4 +548,4 @@ network *copynetwork(network *N) {
 }
 
 //=================================================================
-#undef MAX_VERTEX_LABEL
+#undef MAX_LABEL

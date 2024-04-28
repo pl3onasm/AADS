@@ -18,6 +18,7 @@
 
 #include <stdlib.h>
 #include <stdbool.h>
+#define MAX_LABEL 50
 
 
 //===================================================================
@@ -26,7 +27,7 @@
 
   typedef struct vertex {
     struct vertex *parent;    // ptr to the parent vertex
-    char *label;              // the label of the vertex
+    char label[MAX_LABEL];    // the label of the vertex
     size_t idx;               // index of the vertex in the graph
     size_t inDegree;          // in-degree of the vertex
     size_t outDegree;         // out-degree of the vertex
@@ -38,7 +39,7 @@
 #else     
 
   typedef struct vertex {   
-    char *label;              // the label of the vertex
+    char label[MAX_LABEL];    // the label of the vertex
     size_t idx;               // index of the vertex in the graph
     size_t inDegree;          // in-degree of the vertex
     size_t outDegree;         // out-degree of the vertex
@@ -46,5 +47,7 @@
 
 
 #endif    // VERTEX TYPES
+
+#undef MAX_LABEL
 
 #endif    // VERTEX_H_INCLUDED

@@ -8,7 +8,7 @@
 #include "../../../lib/clib/clib.h"
 #include <ctype.h>
 
-#define MAX_VERTEX_LABEL 50
+#define MAX_LABEL 50
 
 //=================================================================
 // FNV-1a hash function
@@ -51,19 +51,17 @@ void showStr(void const *key) {
 //=================================================================
 // Creates a new graph node
 vertex *newVertex(char *label) {
-  vertex *node = safeCalloc(1, sizeof(vertex));
-  node->label = safeCalloc(strlen(label) + 1, sizeof(char));
-  strcpy(node->label, label);
-  return node;
+  vertex *v = safeCalloc(1, sizeof(vertex));
+  strcpy(v->label, label);
+  return v;
 }
 
 //=================================================================
 // Deallocates a vertex
 void freeVertex(void *v) {
   if (! v) return;
-  vertex *vert = v;
-  free(vert->label);
-  free(vert);
+  vertex *vertex = v;
+  free(vertex);
 }
 
 //=================================================================
@@ -107,7 +105,7 @@ void showVertex(graph *G, vertex *v) {
 //=================================================================
 // Shows a vertex and its adjacency list by label
 void showVertexL(graph *G, char *label) {
-  G->v->label = label;
+  strcpy(G->v->label, label);
   htShowEntry(G->V, htGetKey(G->V, G->v));
 }
 
@@ -224,14 +222,14 @@ vertex *getVertex(graph *G, char *label) {
     // we use a dummy vertex to get the key;
     // this is needed because the hash function 
     // operates on vertices and not on plain strings
-  G->v->label = label;
+  strcpy(G->v->label, label);
   return htGetKey(G->V, G->v);
 }
 
 //=================================================================
 // Adds a vertex to the graph
 void addVertex(graph *G, char *label) {
-  G->v->label = label;
+  strcpy(G->v->label, label);
   if (htHasKey(G->V, G->v))
     return;
   vertex *vertex = newVertex(label);
@@ -241,7 +239,7 @@ void addVertex(graph *G, char *label) {
 //=================================================================
 // Adds a vertex to the graph by label and returns a pointer to it
 vertex *addVertexR(graph *G, char *label) {
-  G->v->label = label;
+  strcpy(G->v->label, label);
   vertex *v = htGetKey(G->V, G->v);
   if (v) 
     return v;
@@ -296,8 +294,8 @@ edge *getEdge(graph *G, vertex *from, vertex *to) {
 edge *getEdgeL(graph *G, char *from, char *to) {
   if (! G || ! from || ! to) 
     return NULL;
-  G->u->label = from;
-  G->v->label = to;
+  strcpy(G->u->label, from);
+  strcpy(G->v->label, to);
   return getEdge(G, htGetKey(G->V, G->u), htGetKey(G->V, G->v));
 }
 
@@ -306,8 +304,8 @@ edge *getEdgeL(graph *G, char *from, char *to) {
 void addEdgeWL(graph *G, char *from, char *to, double weight) {
   if (! G || ! from || ! to) 
     return;
-  G->u->label = from;
-  G->v->label = to;
+  strcpy(G->u->label, from);
+  strcpy(G->v->label, to);
   addEdgeW(G, htGetKey(G->V, G->u), htGetKey(G->V, G->v), weight);
 }
 
@@ -324,8 +322,8 @@ void addEdge(graph *G, vertex *from, vertex *to) {
 void addEdgeL(graph *G, char *from, char *to) {
   if (!G || ! from || ! to) 
     return;
-  G->u->label = from;
-  G->v->label = to;
+  strcpy(G->u->label, from);
+  strcpy(G->v->label, to);
   addEdge(G, htGetKey(G->V, G->u), htGetKey(G->V, G->v));
 }
 
@@ -334,7 +332,7 @@ void addEdgeL(graph *G, char *from, char *to) {
 bool hasVertex(graph *G, char *label) {
   if (! G || ! label) 
     return false;
-  G->v->label = label;
+  strcpy(G->v->label, label);
   return htHasKey(G->V, G->v);
 }
 
@@ -362,7 +360,7 @@ dll *getNeighbors(graph *G, vertex *v) {
 dll *getNeighborsL(graph *G, char *label) {
   if (! G || ! label) 
     return NULL;
-  G->v->label = label;
+  strcpy(G->v->label, label);
   return getNeighbors(G, htGetKey(G->V, G->v));
 }
 
@@ -380,8 +378,8 @@ bool hasEdge(graph *G, vertex *from, vertex *to) {
 bool hasEdgeL(graph *G, char *from, char *to) {
   if (! G || ! from || ! to) 
     return false;
-  G->u->label = from;
-  G->v->label = to;
+  strcpy(G->u->label, from);
+  strcpy(G->v->label, to);
   return hasEdge(G, htGetKey(G->V, G->u), htGetKey(G->V, G->v));
 }
 
@@ -410,8 +408,8 @@ void delEdge(graph *G, vertex *from, vertex *to) {
 void delEdgeL(graph *G, char *from, char *to) {
   if (! G || ! from || ! to) 
     return;
-  G->u->label = from;
-  G->v->label = to;
+  strcpy(G->u->label, from);
+  strcpy(G->v->label, to);
   delEdge(G, htGetKey(G->V, G->u), htGetKey(G->V, G->v));
   if (G->type == UNDIRECTED) 
     delEdge(G, htGetKey(G->V, G->v), htGetKey(G->V, G->u));
@@ -488,7 +486,7 @@ void addVandE(graph *G, char *from, char *to) {
 //=================================================================
 // Reads a graph from stdin
 void readGraph(graph *G) {
-  char from[MAX_VERTEX_LABEL], to[MAX_VERTEX_LABEL];
+  char from[MAX_LABEL], to[MAX_LABEL];
   double weight = 1;
 
     // check if the graph is set to undirected
@@ -583,4 +581,4 @@ vertex **getVertices(graph *G) {
 }
 
 //=================================================================
-#undef MAX_VERTEX_LABEL
+#undef MAX_LABEL

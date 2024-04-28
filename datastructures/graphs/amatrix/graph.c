@@ -37,7 +37,6 @@ graph *newGraph (size_t capacity, weightType weight) {
 void freeVertex(void *v) {
   if (! v) return;
   vertex *vert = (vertex *)v;
-  free(vert->label);
   free(vert);
 }
 
@@ -58,10 +57,9 @@ void freeGraph(graph *G) {
 //=================================================================
 // Creates a new graph node
 vertex *newVertex(char *label) {
-  vertex *node = safeCalloc(1, sizeof(vertex));
-  node->label = safeCalloc(strlen(label) + 1, sizeof(char));
-  strcpy(node->label, label);
-  return node;
+  vertex *v = safeCalloc(1, sizeof(vertex));
+  strcpy(v->label, label);
+  return v;
 }
 
 //=================================================================
