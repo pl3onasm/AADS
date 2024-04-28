@@ -132,6 +132,12 @@ vertex **sortVertices(graph *G) {
     vertices[i++] = v;
 
   qsort(vertices, n, sizeof(vertex *), cmpVertex);
+
+  #ifdef VERTEX_TYPE5
+    for (size_t i = 0; i < n; i++) 
+      vertices[i]->index = i;
+  #endif
+
   return vertices;
 }
 
@@ -570,12 +576,8 @@ vertex **getVertices(graph *G) {
   vertex **vertices = safeCalloc(n, sizeof(vertex *));
   size_t i = 0;
 
-  for (vertex *v = firstV(G); v; v = nextV(G)) {
+  for (vertex *v = firstV(G); v; v = nextV(G)) 
     vertices[i++] = v;
-    #ifdef VERTEX_TYPE5
-      v->index = i - 1;
-    #endif
-  }
 
   return vertices;
 }

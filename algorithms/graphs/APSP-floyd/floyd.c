@@ -59,16 +59,16 @@ void printAllPaths (graph *G, double **D, size_t **P) {
          " Shortest paths\n"
          "--------------------\n");
 
-  vertex **vertices = sortVertices(G);
+  vertex **V = sortVertices(G);
   for (size_t from = 0; from < nVertices(G); from++) 
     for (size_t to = 0; to < nVertices(G); to++) {
 
       if (from == to) continue;
       
-      size_t i = vertices[from]->idx;
-      size_t j = vertices[to]->idx; 
+      size_t i = V[from]->idx;
+      size_t j = V[to]->idx; 
 
-      printf("%s → %s: ", G->V[i]->label, G->V[j]->label);
+      printf("%s → %s: ", V[from]->label, V[to]->label);
       printf(D[i][j] == DBL_MAX ? "INF" : 
             (D[i][j] == -DBL_MAX) ? "-INF" : "%.2f", D[i][j]);
 
@@ -79,7 +79,7 @@ void printAllPaths (graph *G, double **D, size_t **P) {
       printf("\n");
     }
   printf("--------------------\n");
-  free(vertices);
+  free(V);
 }
 
 //===================================================================

@@ -28,35 +28,37 @@ vertex *extendGraph(graph *G) {
 }
 
 //===================================================================
-// Prints the shortest path from vertex with index i to vertex with
+// Shows the shortest path from vertex with index i to vertex with
 // index j using the predecessor matrix P
-void printPath (vertex **V, size_t **P, size_t i, size_t j) {
+void showPath (vertex **V, size_t **P, size_t i, size_t j) {
   if (j == i) printf("%s", V[i]->label);
   else {
-    printPath(V, P, i, P[i][j]);
+    showPath(V, P, i, P[i][j]);
     printf(" → %s", V[j]->label);
   }
 }
 
 //===================================================================
 // Shows the shortest path from each vertex to every other vertex
-// along with the distance between them
+// along with the distance between them. The paths are shown in
+// the order of the vertices as they appear in the graph when
+// displayed with the showGraph function
 void showAllPaths (vertex **V, size_t nV, double **D, size_t **P) {
   printf("--------------------\n"
          " Shortest paths\n"
          "--------------------\n");
-  for (size_t i = 0; i < nV; i++) 
-    for (size_t j = 0; j < nV; j++) {
 
-      if (i == j) continue;
+  for (size_t from = 0; from < nV; from++) 
+    for (size_t to = 0; to < nV; to++) {
 
-      printf("%s → %s: ", V[i]->label, V[j]->label);
-      printf(D[i][j] == DBL_MAX ? "INF" : 
-            (D[i][j] == -DBL_MAX) ? "-INF" : "%.2f", D[i][j]);
+      if (from == to) continue;
 
-      if (ABS(D[i][j]) != DBL_MAX) {
+      printf("%s → %s: ", V[from]->label, V[to]->label);
+      printf(D[from][to] == DBL_MAX ? "INF" : "%.2f", D[from][to]);
+
+      if (D[from][to] != DBL_MAX) {
         printf("\n  path: ");
-        printPath(V, P, i, j);
+        showPath(V, P, from, to);
       }
       printf("\n");
     }
@@ -69,8 +71,8 @@ void showAllPaths (vertex **V, size_t nV, double **D, size_t **P) {
 // infinity and the distance of the source node to 0
 void initSingleSource(graph *G, vertex *src) {
   for (vertex *v = firstV(G); v; v = nextV(G)) 
-    v->bDist = DBL_MAX;
-  src->bDist = 0;
+    v->bfDist = DBL_MAX;
+  src->bfDist = 0;
 }
 
 //===================================================================
@@ -85,13 +87,13 @@ bool runBellmanFord(graph *G, vertex *src) {
   vertex *from;
   for (size_t i = 0; i < nVertices(G) - 1; i++)
     for (edge *e = firstE(G, &from); e; e = nextE(G, &from))
-      if (from->bDist + e->weight < e->to->bDist)
-        e->to->bDist = from->bDist + e->weight;
+      if (from->bfDist + e->weight < e->to->bfDist)
+        e->to->bfDist = from->bfDist + e->weight;
 
     // check for negative-weight cycles by checking if
     // the distances can still be improved
   for (edge *e = firstE(G, &from); e; e = nextE(G, &from))
-    if (from->bDist + e->weight < e->to->bDist) 
+    if (from->bfDist + e->weight < e->to->bfDist) 
       return true;
 
   return false;
@@ -103,7 +105,7 @@ bool runBellmanFord(graph *G, vertex *src) {
 void reweightEdges(graph *G) {
   vertex *from;
   for (edge *e = firstE(G, &from); e; e = nextE(G, &from)) 
-    e->weight += from->bDist - e->to->bDist;
+    e->weight += from->bfDist - e->to->bfDist;
 }
 
 //===================================================================
@@ -162,7 +164,7 @@ bool relax(vertex *u, vertex *v, double w) {
 }
 
 //===================================================================
-// Computes the shortest paths from vertex src to all other nodes
+// Computes the shortest paths from src to all other vertices
 void dijkstra(graph *G, vertex *src) {
       
     // genereate a new priority queue and initialize it
@@ -193,7 +195,7 @@ void runDijkstra(graph *G, vertex **V, size_t nV,
 
     for (size_t to = 0; to < nV; to++) {
         // update distance matrix for edge from -> to
-      D[from][to] = V[to]->dDist + V[to]->bDist - V[from]->bDist;
+      D[from][to] = V[to]->dDist + V[to]->bfDist - V[from]->bfDist;
         // update predecessor matrix for edge from -> to
       P[from][to] = V[to]->parent;
       V[to]->dDist = DBL_MAX;
@@ -210,7 +212,7 @@ int main () {
   showGraph(G);    
 
   size_t nV = nVertices(G);
-  vertex **V = getVertices(G); 
+  vertex **V = sortVertices(G); 
     
     // extend the graph with a new source vertex
   vertex *src = extendGraph(G);

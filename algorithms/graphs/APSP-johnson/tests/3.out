@@ -15,28 +15,28 @@
 --------------------
  Shortest paths
 --------------------
-B → A: 3.00
-  path: B → A
-B → D: 6.00
-  path: B → A → C → D
-B → C: 4.00
-  path: B → A → C
 A → B: 2.00
   path: A → C → B
-A → D: 3.00
-  path: A → C → D
 A → C: 1.00
   path: A → C
-D → B: 3.00
-  path: D → C → B
-D → A: 6.00
-  path: D → A
-D → C: 2.00
-  path: D → C
-C → B: 1.00
-  path: C → B
+A → D: 3.00
+  path: A → C → D
+B → A: 3.00
+  path: B → A
+B → C: 4.00
+  path: B → A → C
+B → D: 6.00
+  path: B → A → C → D
 C → A: 4.00
   path: C → A
+C → B: 1.00
+  path: C → B
 C → D: 2.00
   path: C → D
+D → A: 6.00
+  path: D → A
+D → B: 3.00
+  path: D → C → B
+D → C: 2.00
+  path: D → C
 --------------------
