@@ -6,9 +6,9 @@
   description: Maximum Cardinality Bipartite Matching (MCBM) 
                using Dinic's algorithm for maximum flow
   time complexity: O(E√V)
-  note: make sure to use VERTEX_TYPE3 in the vertex.h file
+  note: make sure to use VERTEX_TYPE5 in the vertex.h file
     by defining it from the command line using
-      $ gcc -D VERTEX_TYPE3 ...
+      $ gcc -D VERTEX_TYPE5 ...
 */
 
 #include "../../../datastructures/graphs/network/network.h"
