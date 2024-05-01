@@ -22,7 +22,7 @@
 //===================================================================
 // Makes a copy of an edge; used to make the dll store copies of the
 // edges in the Eulerian tour and needed since edges are deleted
-void *copyEdge(void *data) {
+void *copyEdge(void const *data) {
   edge *e = (edge *)data;
   if (!e) return NULL;
 

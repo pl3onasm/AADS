@@ -2,19 +2,21 @@ _______________________________________________
 *Maximum cardinality bipartite matching (MCBM)*
 _______________________________________________
 
-(Under construction)
-
 ## Problem
 
 Given a bipartite graph $G = (R \cup L, E)$, find a maximum cardinality matching $M$. A bipartite graph is a graph whose vertices can be divided into two disjoint vertex sets $R$ and $L$ such that every edge connects a vertex in $R$ to one in $L$. A matching then is a subset of edges $M \subseteq E$ in which no two edges share a common vertex and a maximum cardinality matching is simply a matching that consists of a maximum subset $M$ of edges in $E$.
 
-## Unweighted MCBM (CP 8.5.3)
+## Solutions
 
-In this version of the problem, the edges are unweighted. The following algorithms can be used to solve this problem. They are in fact similar but were independently discovered.
+In this section we focus on the unweighted version of the problem, without preference lists. This is the most common version of the problem and is also the one that is most often used in practice. The problem can be solved using two different algorithms: the adapted maximum flow algorithm and the Hopcroft-Karp algorithm. The former is based on the idea of augmenting paths and network flows, while the latter is based on the idea of M-alternating paths. Both algorithms are quite similar but were discovered independently. They both run in $O(E \sqrt{V})$ time.
 
-### Adapted Maximum Flow Algorithm
+### Adapted Maximum Flow Algorithm (CLRS⁴ 24.3)
 
 We can solve the problem by adapting the maximum flow algorithm. For this, we simply add a super source $s$ and a super sink $t$ to the given graph and then add an edge from $s$ to every vertex in $L$ and an edge from every vertex in $R$ to $t$. The capacity of all edges is set to 1. Next we run Dinic's algorithm on this graph (since it's the fastest variant and easier to implement than the relabel-to-front approach). The resulting maximum flow is then the cardinality of the maximum matching, and the edges with flow are the edges that are part of this matching. The algorithm runs in $O(E \sqrt{V})$ time, thanks to the fact that the graph is unweighted (i.e. all edges have unit capacity) and bipartite, which speeds up the network flow computations.
+
+Video
+
+[![Problem](https://img.youtube.com/vi/GhjwOiJ4SqU/0.jpg)](https://www.youtube.com/watch?v=GhjwOiJ4SqU)
 
 Implementation: [MCBM - Maxflow](https://github.com/pl3onasm/AADS/blob/main/algorithms/graphs/MCBM-unweighted/mcbm-1.c)
 

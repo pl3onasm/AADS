@@ -7,33 +7,8 @@
 #ifndef CLIB_H_INCLUDED    
 #define CLIB_H_INCLUDED
 
-#include <stdio.h>    // for printf, scanf
-#include <stdlib.h>   // for malloc, calloc, realloc, free
-#include <stddef.h>   // for size_t
-#include <stdbool.h>  // for bool
-#include <string.h>   // for memcpy, strlen, etc.
-#include <limits.h>   // for INT_MAX, INT_MIN, etc.
-#include <ctype.h>    // for isspace, isdigit, etc.
-#include <stdint.h>   // for int32_t, int64_t, etc.
-
-//::::::::::::::::::::::::::: TYPEDEFS ::::::::::::::::::::::::::://
-
-typedef unsigned long long ull;
-typedef long long ll;
-typedef unsigned long ul;
-typedef unsigned int uint;
-typedef unsigned char uchar;
-
-//::::::::::::::::::::::::::::: MATH ::::::::::::::::::::::::::::://
-
-  // macros for min, max, abs, and sign
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
-
-#define MIN(a, b) ((a) < (b) ? (a) : (b))
-
-#define ABS(a) ((a) < 0 ? -(a) : (a))
-
-#define SIGN(a) ((a) > 0 ? 1 : ((a) < 0 ? -1 : 0))
+#include <stdio.h>
+#include <stdlib.h>
 
 //::::::::::::::::::::::::::: PRINTING ::::::::::::::::::::::::::://
 
@@ -90,8 +65,10 @@ typedef unsigned char uchar;
   size_t arr##Len = 0; type arr##var; \
   while (scanf(format, &arr##var) == 1) { \
     arr[arr##Len++] = arr##var; \
-    if (arr##Len % 100 == 0) \
+    if (arr##Len % 100 == 0) { \
       arr = safeRealloc(arr, (arr##Len + 100) * sizeof(type)); \
+      memset(arr + arr##Len, 0, 100); \
+    } \
   } \
   size = arr##Len;\
   arr[arr##Len] = '\0';
@@ -107,8 +84,10 @@ typedef unsigned char uchar;
   size_t arr##Len = 0; type arr##var; \
   while (scanf(format, &arr##var) == 1 && arr##var != delim) { \
     arr[arr##Len++] = arr##var; \
-    if (arr##Len % 100 == 0) \
+    if (arr##Len % 100 == 0) { \
       arr = safeRealloc(arr, (arr##Len + 100) * sizeof(type)); \
+      memset(arr + arr##Len, 0, 100); \
+    } \
   } \
   size = arr##Len;\
   arr[arr##Len] = '\0';
@@ -116,16 +95,16 @@ typedef unsigned char uchar;
 //::::::::::::::::::::::: MEMORY MANAGEMENT :::::::::::::::::::::://
 
   // macro for creating a 1D array of a given type and length
-  // Examples:  CREATE_ARRAY(myInts, int, 10);
-  //            CREATE_ARRAY(myDbls, double, 20);
-  //            CREATE_ARRAY(myString, 15);
+  // Examples:  CREATE_ARRAY(int, myInts, 10);
+  //            CREATE_ARRAY(double, myDbls, 20);
+  //            CREATE_ARRAY(char, myString, 15);
 #define CREATE_ARRAY(type, arr, len) \
   type *arr = safeCalloc(len, sizeof(type))
 
   // macro for creating a 2D matrix of given type and dimensions
-  // Examples:  CREATE_MATRIX(myInts, int, 10, 10);
-  //            CREATE_MATRIX(myDbls, double, 10, 15);
-  //            CREATE_MATRIX(myChrs, char, 15, 10);
+  // Examples:  CREATE_MATRIX(int, myInts, 10, 10);
+  //            CREATE_MATRIX(double, myDbls, 10, 15);
+  //            CREATE_MATRIX(char, myChrs, 15, 10);
 #define CREATE_MATRIX(type, matrix, rows, cols) \
   type **matrix = safeCalloc(rows, sizeof(type *)); \
   for (size_t matrix##i = 0; matrix##i < rows; ++matrix##i) \
@@ -134,9 +113,9 @@ typedef unsigned char uchar;
   // macro for creating a 3D matrix of given type and dimensions
   // A 3D matrix is a stack of 2D matrices, just like a 2D matrix
   // is a stack of 1D arrays.
-  // Examples:  CREATE_3DMATRIX(myInts, int, 10, 10, 10);
-  //            CREATE_3DMATRIX(myDbls, double, 10, 15, 20);
-  //            CREATE_3DMATRIX(myChrs, char, 15, 10, 5);
+  // Examples:  CREATE_3DMATRIX(int, myInts, 10, 10, 10);
+  //            CREATE_3DMATRIX(double, myDbls, 10, 15, 20);
+  //            CREATE_3DMATRIX(char, myChrs, 15, 10, 5);
 #define CREATE_3DMATRIX(type, matrix, rows, cols, depth) \
   type ***matrix = safeCalloc(rows, sizeof(type **)); \
   for (size_t matrix##i = 0; matrix##i < rows; ++matrix##i) { \
@@ -177,16 +156,34 @@ void *safeRealloc(void *ptr, size_t newSize);
 
 void clearStdin(char *buffer);
 
-//::::::::::::::::::::::::::: SEARCHING :::::::::::::::::::::::::://
+//:::::::::::::::::::::::::::: STRINGS ::::::::::::::::::::::::::://
 
-  // generic linear search 
-  // returns index of key in arr, SIZE_MAX if not found
-size_t linSearch(void *arr, size_t len, size_t size, void *key, 
-                int (*cmp)(const void *, const void *));
+typedef struct {
+  char *str;
+  size_t size, cap;
+} string;
 
-  // generic binary search
-  // returns index of key in arr, SIZE_MAX if not found
-size_t binSearch(void *arr, size_t len, size_t size, void *key, 
-                int (*cmp)(const void *, const void *));
-    
+  // macro for reading all text until the end of the file in a string
+  // Example:  READ_STRING(myString);
+#define READ_STRING(arr) \
+  string *arr = safeCalloc(1, sizeof(string)); \
+  arr->str = safeCalloc(1000, sizeof(char)); \
+  arr->cap = 1000; \
+  size_t str##size##Len = 0; char str##size##var; \
+  while (scanf("%c", &str##size##var) == 1) { \
+    arr->str[str##size##Len++] = str##size##var; \
+    if (str##size##Len % 1000 == 0) {\
+      arr->str = safeRealloc(arr->str, \
+        (str##size##Len + 1000) * sizeof(char)); \
+      memset(arr->str + str##size##Len, 0, 1000); \
+    } \
+  } \
+  arr->size = str##size##Len;\
+
+  // shows a string
+void showString(string *s);
+
+  // deallocates a string
+void freeString(string *s);
+
 #endif // CLIB_H_INCLUDED

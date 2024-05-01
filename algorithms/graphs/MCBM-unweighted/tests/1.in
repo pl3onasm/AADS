@@ -1,38 +1,23 @@
-7 8
+1 1
 
-0 8
-0 9
-1 7
-1 8
-2 7
-2 9
-2 10
-2 11
-2 12
-3 8
-3 9
-3 13
-4 10
-4 11
-4 12
-4 13
-5 9
-5 13
-6 11
-6 14
+0 8 1
+0 9 1
+1 7 1
+1 8 1
+2 7 1
+2 9 1
+2 10 1
+2 11 1
+2 12 1
+3 8 1
+3 9 1
+3 13 1
+4 10 1
+4 11 1
+4 12 1
+4 13 1
+5 9 1
+5 13 1
+6 11 1
+6 14 1
 
-L  R
-
-Source 
-======
-CLRS⁴ Figure 25.1
-
-The numbers in L could be numbers identifying 7 persons, 
-and the numbers in R could each identify books in a library 
-that are available for loan. 
-The edges in the graph could then represent the books that 
-each person has listed as being of interest to them.
-These edges are unweighted: each person wants to read each 
-book they've listed with equal preference.
-The maximum cardinality matching ensures that as many 
-people as possible get a book they want to read.

@@ -7,6 +7,8 @@
 #include "graph.h"
 #include "../../../lib/clib/clib.h"
 #include <ctype.h>
+#include <string.h>
+#include <assert.h>
 
 #define MAX_LABEL 50
 

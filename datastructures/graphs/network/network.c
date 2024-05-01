@@ -7,6 +7,8 @@
 #include "network.h"
 #include "../../../lib/clib/clib.h"
 #include <ctype.h>
+#include <string.h>
+#include <assert.h>
 
 #define MAX_LABEL 50
 
@@ -311,7 +313,7 @@ static void correctAntiparallel(network *N, vertex *from,
 //=================================================================
 // Adds an edge to the network along with its residual counterpart
 void addEdge(network *N, vertex *from, vertex *to, size_t cap) {
-  if (! N || ! from || ! to)
+  if (! N || ! from || ! to || from == to)
     return;
   
   N->e->to = to;

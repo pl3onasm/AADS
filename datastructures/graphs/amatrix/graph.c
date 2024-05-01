@@ -8,6 +8,8 @@
 #include "../../../lib/clib/clib.h"
 #include <ctype.h>
 #include <float.h>
+#include <string.h>
+#include <assert.h>
 
 #define MAX_VERTEX_LABEL 50
 

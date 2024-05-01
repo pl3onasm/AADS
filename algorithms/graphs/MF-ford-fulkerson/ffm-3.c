@@ -39,7 +39,7 @@ bool bfs(network *N, vertex *v, vertex *sink) {
     }
   }
   freeQueue(q);
-  return sink->level != 0;             // return if sink is reachable
+  return sink->level != 0;             // is sink reachable?
 }
 
 //===================================================================

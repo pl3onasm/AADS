@@ -12,7 +12,6 @@
     which only contains a label and in-degree.
 */
 
-
 #ifndef VERTEX_H_INCLUDED
 #define VERTEX_H_INCLUDED
 
@@ -65,6 +64,19 @@ typedef struct edge edge;
     size_t inDegree;          // in-degree of the vertex
     size_t height;            // height of the vertex in the graph
     int excess;               // excess flow at the vertex
+  } vertex;
+
+//===================================================================
+// VERTEX TYPE 5  (application example: MCBM-unweighted)
+
+#elif defined (VERTEX_TYPE5)
+
+  typedef struct vertex {
+    char label[MAX_LABEL];    // the label of the vertex
+    size_t inDegree;          // in-degree of the vertex
+    enum {left, right} type;  // type of the vertex
+    size_t level;             // level in the level graph
+    bool visited;             // true if the vertex has been visited
   } vertex;
 
 //===================================================================

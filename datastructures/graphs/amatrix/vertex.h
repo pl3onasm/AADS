@@ -20,18 +20,17 @@
 #include <stdbool.h>
 #define MAX_LABEL 50
 
-
 //===================================================================
 // VERTEX TYPE 1  
-#if defined (VERTEX_TYPE1)      
+#if defined VERTEX_TYPE1
 
-  typedef struct vertex {
-    struct vertex *parent;    // ptr to the parent vertex
+typedef struct vertex {   
     char label[MAX_LABEL];    // the label of the vertex
     size_t idx;               // index of the vertex in the graph
     size_t inDegree;          // in-degree of the vertex
     size_t outDegree;         // out-degree of the vertex
-    size_t dist;             // distance from source in Dijkstra
+    bool visited;             // true if the vertex has been visited
+    struct vertex *parent;    // parent of the vertex
   } vertex;
 
 //===================================================================
