@@ -4,7 +4,7 @@
 
 Given a directed graph $G = (V,E)$, find the transitive closure of the graph, i.e. a matrix $M$ that indicates whether there is a $\color{orchid}{\text{path}}$ (direct or indirect) from vertex $i$ to vertex $j$ in the graph. In other words, each entry $m_{ij}$ should show whether $j$ is reachable from $i$ or not. This is why the obtained matrix is also called the $\color{peru}{\text{reachability matrix}}$.
 
-## ${\color{darkseagreen}\text{Using Floyd-Warshall algorithm}}$
+## ${\color{darkseagreen}\text{Using Floyd-Warshall}}$
 
 We can obtain the transitive closure of a graph by running the [Floyd-Warshall algorithm](https://github.com/pl3onasm/AADS/tree/main/algorithms/graphs/APSP-floyd) on the given graph. If there is a path from $i$ to $j$, then the distance matrix $D$ will have a finite value at the position $d_{ij}$. Otherwise, the distance will be infinite. The result is a matrix $M$ where $m_{ij}$ is either infinite if there is no path from $i$ to $j$ or finite with $m_{ij}$ indicating the length of the shortest path from $i$ to $j$ in terms of the number of edges needed to go from $i$ to $j$.
 
