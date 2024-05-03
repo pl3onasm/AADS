@@ -16,12 +16,13 @@
   The_Great_Gatsby[0]
 --------------------
 
----------------
+--------------------
  Matching
----------------
-  Kate -- Picture_Of_Dorian_Gray
+ Cardinality: 5
+--------------------
   Esther -- The_Great_Gatsby
   Jonah -- Lord_Of_The_Flies
-  Elijah -- Of_Mice_And_Men
   Sam -- Catcher_In_The_Rye
----------------
+  Elijah -- Of_Mice_And_Men
+  Kate -- Picture_Of_Dorian_Gray
+--------------------

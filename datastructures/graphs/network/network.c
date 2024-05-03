@@ -225,9 +225,10 @@ void showFlow(network *N, vertex *src, vertex *sink) {
 
 //=================================================================
 // Creates a new network
-network *newNetwork (size_t capacity) {
+network *newNetwork (size_t capacity, weightType wType) {
 
   network *N = safeCalloc(1, sizeof(network));
+  N->weight = wType;
   N->u = safeCalloc(1, sizeof(vertex));
   N->v = safeCalloc(1, sizeof(vertex));
   N->e = safeCalloc(1, sizeof(edge));
@@ -298,9 +299,9 @@ static void correctAntiparallel(network *N, vertex *from,
   strcpy(label, from->label);
   strcat(label, "2");
   vertex *v = addVertexR(N, label);
-  addEdge(N, from, v, cap);
+  addEdgeC(N, from, v, cap);
   from->inDegree++;
-  addEdge(N, v, to, cap);
+  addEdgeC(N, v, to, cap);
   to->inDegree++;
   if (cap != SIZE_MAX && cap > N->maxCap)
       N->maxCap = cap;
@@ -312,7 +313,7 @@ static void correctAntiparallel(network *N, vertex *from,
   
 //=================================================================
 // Adds an edge to the network along with its residual counterpart
-void addEdge(network *N, vertex *from, vertex *to, size_t cap) {
+void addEdgeC(network *N, vertex *from, vertex *to, size_t cap) {
   if (! N || ! from || ! to || from == to)
     return;
   
@@ -347,13 +348,25 @@ void addEdge(network *N, vertex *from, vertex *to, size_t cap) {
 }
 
 //=================================================================
-// Adds an edge to the network by label
-void addEdgeL(network *N, char *from, char *to, size_t cap) {
+// Adds an edge to the network by label with a given capacity
+void addEdgeCL(network *N, char *from, char *to, size_t cap) {
   if (!N || ! from || ! to) 
     return;
   strcpy(N->u->label, from);
   strcpy(N->v->label, to);
-  addEdge(N, htGetKey(N->V, N->u), htGetKey(N->V, N->v), cap);
+  addEdgeC(N, htGetKey(N->V, N->u), htGetKey(N->V, N->v), cap);
+}
+
+//=================================================================
+// Adds an edge to the network with unit capacity
+void addEdge(network *N, vertex *from, vertex *to) {
+  addEdgeC(N, from, to, 1);
+}
+
+//=================================================================
+// Adds an edge to the network by label with unit capacity
+void addEdgeL(network *N, char *from, char *to) {
+  addEdgeCL(N, from, to, 1);
 }
 
 //=================================================================
@@ -497,27 +510,41 @@ edge *nextE(network *N) {
 //=================================================================
 // Adds source and destination vertices if they do not exist
 // and adds an edge between them with the given capacity
-void addVandE(network *N, char *from, char *to, 
+void addVandEC(network *N, char *from, char *to, 
               size_t capacity) {
   vertex *u = addVertexR(N, from);
   vertex *v = addVertexR(N, to);
-  addEdge(N, u, v, capacity);
+  addEdgeC(N, u, v, capacity);
+}
+
+//=================================================================
+// Adds source and destination vertices if they do not exist
+// and adds an edge between them with unit capacity
+void addVandE(network *N, char *from, char *to) {
+  addVandEC(N, from, to, 1);
 }
 
 //=================================================================
 // Reads a network from stdin
 void readNetwork(network *N) {
   char from[MAX_LABEL], to[MAX_LABEL];
-  size_t capacity;
 
-  while (scanf("%s %s", from, to) == 2) {
-    if (! scanf("%zu", &capacity)) {  // infinite capacity
-      assert(scanf("%*s") == 0);
-      addVandE(N, from, to, SIZE_MAX);
-    } else
-      addVandE(N, from, to, capacity);
-  } 
-}
+  if (! N) 
+    return;
+
+  if (N->weight == WEIGHTED) {
+    size_t capacity;
+    while (scanf("%s %s", from, to) == 2) {
+      if (! scanf("%zu", &capacity)) {  // infinite capacity
+        assert(scanf("%*s") == 0);
+        addVandEC(N, from, to, SIZE_MAX);
+      } else
+        addVandEC(N, from, to, capacity);
+    }
+  } else 
+    while (scanf("%s %s", from, to) == 2) 
+      addVandE(N, from, to);
+  }
 
 //=================================================================
 // Returns the 'first' vertex in the network and sets the iterator
@@ -542,10 +569,10 @@ vertex *nextV(network *N) {
 // Returns a copy of the network
 network *copynetwork(network *N) {
   if (! N) return NULL;
-  network *copy = newNetwork(nVertices(N));
+  network *copy = newNetwork(nVertices(N), N->weight);
 
   for (edge *e = firstE(N); e; e = nextE(N)) 
-    addVandE(copy, e->from->label, e->to->label, e->cap);
+    addVandEC(copy, e->from->label, e->to->label, e->cap);
   return copy;
 }
 

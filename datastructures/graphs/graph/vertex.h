@@ -90,6 +90,22 @@
   } vertex;
 
 //===================================================================
+// VERTEX TYPE 6  (application example: MCBM-unweighted, 
+//                 hopcroft-karp algorithm)
+
+#elif defined (VERTEX_TYPE6)
+
+  typedef struct vertex {
+    char label[MAX_LABEL];    // the label of the vertex
+    struct vertex *match;     // the vertex matched with this one
+    enum { NIL, 
+           LEFT, 
+           RIGHT } type;      // vertex belongs to left or right set
+    size_t level;             // level in the level graph
+    size_t inDegree;          // in-degree of the vertex
+  } vertex;
+
+//===================================================================
 // DEFAULT VERTEX TYPE
 #else     
 

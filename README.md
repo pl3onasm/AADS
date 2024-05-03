@@ -1,6 +1,6 @@
 # ${\color{cadetblue}\text{CLRS: Data Structures}}$ ${\color{cadetblue}\text{and Algorithms}}$
 
-## ${\color{peru}\text{Algorithms in C}}$
+## ${\color{peru}\text{Algorithms}}$
 
 * [Divide and conquer](algorithms/divide-and-conquer)
 * [Dynamic programming](algorithms/dynamic-programming)
@@ -9,7 +9,7 @@
 * [String matching](algorithms/string-matching)
 * [Sorting](algorithms/sorting)
 
-## ${\color{peru}\text{Data structures in C}}$
+## ${\color{peru}\text{Data structures}}$
 
 * Stacks
 * [Queues](datastructures/queues)

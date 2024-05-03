@@ -9,7 +9,7 @@
     $ gcc -O2 -D VERTEX_TYPE1 ...
     
     If no flag is set, the default vertex structure is used,
-    which only contains a label and in-degree.
+    which only contains the label and the in-degree.
 */
 
 #ifndef VERTEX_H_INCLUDED
@@ -67,16 +67,17 @@ typedef struct edge edge;
   } vertex;
 
 //===================================================================
-// VERTEX TYPE 5  (application example: MCBM-unweighted)
+// VERTEX TYPE 5  (application example: MCBM-unweighted, max-flow)
 
 #elif defined (VERTEX_TYPE5)
 
   typedef struct vertex {
     char label[MAX_LABEL];    // the label of the vertex
     size_t inDegree;          // in-degree of the vertex
-    enum {left, right} type;  // type of the vertex
+    enum { NIL, 
+           LEFT, 
+           RIGHT } type;      // vertex belongs to left or right set
     size_t level;             // level in the level graph
-    bool visited;             // true if the vertex has been visited
   } vertex;
 
 //===================================================================

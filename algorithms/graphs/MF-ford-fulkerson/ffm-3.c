@@ -94,7 +94,7 @@ int main () {
   char srcL[50], sinkL[50];                    
   assert(scanf("%s %s", srcL, sinkL) == 2);
 
-  network *N = newNetwork(50);    
+  network *N = newNetwork(50, WEIGHTED);
   readNetwork(N);                  
   showNetwork(N);
   
