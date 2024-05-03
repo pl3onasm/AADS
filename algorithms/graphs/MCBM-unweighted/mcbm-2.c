@@ -4,14 +4,13 @@
   email: pl3onasm@gmail.com
   license: MIT, see LICENSE file in repository root folder
   description: Maximum Cardinality Bipartite Matching (MCBM) 
-              using Hopcroft-Karp's algorithm
+               using Hopcroft-Karp's algorithm
   time complexity: O(E√V)
   note: make sure to use VERTEX_TYPE6 in the vertex.h file
   by defining it from the command line using
     $ gcc -D VERTEX_TYPE6 ...
 */
 
-#define VERTEX_TYPE6
 #include "../../../datastructures/graphs/graph/graph.h"
 #include "../../../datastructures/queues/queue.h"
 #include "../../../lib/clib/clib.h"
