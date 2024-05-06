@@ -3,17 +3,17 @@
   author: David De Potter
   email: pl3onasm@gmail.com
   license: MIT, see LICENSE file in repository root folder
-  description: preferred Maximum Cardinality Bipartite Matching (MCBM) 
-              using Gale-Shapley's algorithm
+  description: preferred Maximum Cardinality Bipartite Matching 
+               using Gale-Shapley's algorithm
   time complexity: O(EV)
   note 1: make sure to use VERTEX_TYPE7 in the vertex.h file
     by defining it from the command line using
     $ gcc -D VERTEX_TYPE7 ...
   note 2: matchings may differ as they are not necessarily unique;
     also, the group of vertices that propose to the other group
-    is not fixed, it may be the left or the right group. 
-    In the output, the vertices on the left are the proposers and 
-    the vertices on the right are the acceptors.
+    is not fixed: another reason why matchings may differ
+    In the output, the vertices displayed on the left are the  
+    proposers and the ones on the right are the acceptors.
 */
 
 #include "../../../datastructures/graphs/graph/graph.h"
@@ -109,8 +109,8 @@ void galeShapley(graph *G, size_t **table) {
       v->match->match = NULL;  // acceptor rejects its current match
       enqueue(Q, v->match);    // so we add it back to the queue
       
-      u->match = v;            // assign new match as it has a higher
-      v->match = u;            // preference in acceptor's list
+      u->match = v;            // assign new match as the proposer
+      v->match = u;            // ranks higher in the acceptor's list
 
     } else {                   // proposer is rejected
       enqueue(Q, u);           // add it back to the queue
@@ -160,7 +160,7 @@ int main () {
   showGraph(G);
 
   if (! isBipartite(G)) {
-    printf("The graph is not bipartite and/or incomplete\n");
+    printf("The graph is not bipartite\n");
     freeGraph(G);
     return 0;
   }
