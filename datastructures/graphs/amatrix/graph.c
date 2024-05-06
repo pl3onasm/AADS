@@ -373,14 +373,14 @@ void delEdgeL(graph *G, char *from, char *to) {
 double *firstN (graph *G, vertex *from, vertex **to) {
   if (! G || ! from) 
     return NULL;
+  from->adjIdx = 0;
   for (size_t i = 0; i < G->nVertices; i++) {
     if (G->W[from->idx][i] != DBL_MAX) {
       *to = G->V[i];
-      G->currentN = i;
+      from->adjIdx = i + 1;
       return &G->W[from->idx][i];
     }
   }
-  G->currentN = 0;
   return NULL;
 }
 
@@ -392,14 +392,16 @@ double *firstN (graph *G, vertex *from, vertex **to) {
 double *nextN (graph *G, vertex *from, vertex **to) {
   if (! G || ! from) 
     return NULL;
-  for (size_t i = G->currentN + 1; i < G->nVertices; i++) {
+  if (from->adjIdx >= G->nVertices)
+    return NULL;
+    
+  for (size_t i = from->adjIdx; i < G->nVertices; i++) {
     if (G->W[from->idx][i] != DBL_MAX) {
       *to = G->V[i];
-      G->currentN = i;
+      from->adjIdx = i + 1;
       return &G->W[from->idx][i];
     }
   }
-  G->currentN = 0;
   return NULL;
 }
 

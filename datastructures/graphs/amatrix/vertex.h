@@ -27,6 +27,7 @@
 typedef struct vertex {   
     char label[MAX_LABEL];    // the label of the vertex
     size_t idx;               // index of the vertex in the graph
+    size_t adjIdx;            // index of current adjacent vertex
     size_t inDegree;          // in-degree of the vertex
     size_t outDegree;         // out-degree of the vertex
     bool visited;             // true if the vertex has been visited
@@ -40,6 +41,7 @@ typedef struct vertex {
   typedef struct vertex {   
     char label[MAX_LABEL];    // the label of the vertex
     size_t idx;               // index of the vertex in the graph
+    size_t adjIdx;            // index of current adjacent vertex
     size_t inDegree;          // in-degree of the vertex
     size_t outDegree;         // out-degree of the vertex
   } vertex;

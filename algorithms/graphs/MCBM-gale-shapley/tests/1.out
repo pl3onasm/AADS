@@ -1,7 +1,26 @@
-The below matching is stable.
 
-  Left   Right
-     0       7
-     1       4
-     2       6
-     3       5
+--------------------
+ Graph
+ Directed
+ Unweighted
+ Vertices: 8
+ Edges: 32
+--------------------
+  Brent[4]: Lacey, Karen, Wanda, Emma
+  Davis[4]: Wanda, Lacey, Karen, Emma
+  Emma[4]: Davis, Hank, Oscar, Brent
+  Hank[4]: Lacey, Wanda, Emma, Karen
+  Karen[4]: Brent, Hank, Davis, Oscar
+  Lacey[4]: Brent, Davis, Hank, Oscar
+  Oscar[4]: Wanda, Karen, Lacey, Emma
+  Wanda[4]: Brent, Hank, Oscar, Davis
+--------------------
+
+--------------------
+ Matching
+--------------------
+  Hank -- Wanda
+  Davis -- Karen
+  Oscar -- Emma
+  Brent -- Lacey
+--------------------

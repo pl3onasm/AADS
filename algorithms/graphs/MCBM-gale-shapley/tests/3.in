@@ -1,0 +1,10 @@
+Adam: Beth, Amy, Diane, Ellen, Cara.
+Bill: Diane, Beth, Amy, Cara, Ellen.
+Carl: Beth, Ellen, Cara, Diane, Amy.
+Dan: Amy, Diane, Cara, Beth, Ellen.
+Eric: Beth, Diane, Amy, Ellen, Cara.
+Amy: Eric, Adam, Bill, Dan, Carl.
+Beth: Carl, Bill, Dan, Adam, Eric.
+Cara: Bill, Carl, Dan, Eric, Adam.
+Diane: Adam, Eric, Dan, Carl, Bill.
+Ellen: Dan, Bill, Eric, Carl, Adam.

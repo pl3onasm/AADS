@@ -13,14 +13,14 @@
 
 #include "../../../datastructures/graphs/graph/graph.h"
 #include "../../../datastructures/queues/queue.h"
-#include "../../../lib/clib/clib.h"
 
 //===================================================================
-// Marks the vertices as belonging to the left or right set. 
-// Returns true if the graph is bipartite.
+// Returns true if the graph is bipartite, i.e. if it is possible
+// to partition the vertices into two sets such that no two
+// adjacent vertices belong to the same set. This is done using
+// a BFS traversal of the graph and assigning a type to each vertex
 bool isBipartite(graph *G) {
-  vertex *v;
-  firstE(G, &v);
+  vertex *v = firstV(G);
   v->type = LEFT;
   queue *q = newQueue(nVertices(G)); 
   enqueue(q, v); 
@@ -129,8 +129,8 @@ size_t hopcroftKarp(graph *G, vertex *nil) {
 }
 
 //===================================================================
-// Shows the matching by iterating over all edges and showing
-// the edges 
+// Shows the matching by iterating over all vertices and showing
+// the edges between the left and right sets
 void showMatching(graph *G, size_t nMatched, vertex *nil) {
   printf("--------------------\n"
          " Matching\n"
@@ -144,8 +144,8 @@ void showMatching(graph *G, size_t nMatched, vertex *nil) {
 }
 
 //===================================================================
-// Extends the graph by adding a seninel node 
-// Initializes the matched field of all vertices to nil
+// Extends the graph by adding a sentinel node NIL
+// Initializes the matched field of all vertices to this node
 vertex *extendGraph(graph *G) {
   vertex *nil = addVertexR(G, "NIL");
   for (vertex *u = firstV(G); u; u = nextV(G)) 
@@ -174,6 +174,6 @@ int main () {
 
   showMatching(G, nMatched, nil);
 
-  freeGraph(G);                
+  freeGraph(G);
   return 0;
 }

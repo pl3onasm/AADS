@@ -1,0 +1,29 @@
+
+--------------------
+ Graph
+ Directed
+ Unweighted
+ Vertices: 10
+ Edges: 50
+--------------------
+  Adam[5]: Beth, Amy, Diane, Ellen, Cara
+  Amy[5]: Eric, Adam, Bill, Dan, Carl
+  Beth[5]: Carl, Bill, Dan, Adam, Eric
+  Bill[5]: Diane, Beth, Amy, Cara, Ellen
+  Cara[5]: Bill, Carl, Dan, Eric, Adam
+  Carl[5]: Beth, Ellen, Cara, Diane, Amy
+  Dan[5]: Amy, Diane, Cara, Beth, Ellen
+  Diane[5]: Adam, Eric, Dan, Carl, Bill
+  Ellen[5]: Dan, Bill, Eric, Carl, Adam
+  Eric[5]: Beth, Diane, Amy, Ellen, Cara
+--------------------
+
+--------------------
+ Matching
+--------------------
+  Carl -- Beth
+  Adam -- Amy
+  Eric -- Diane
+  Bill -- Cara
+  Dan -- Ellen
+--------------------

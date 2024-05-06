@@ -102,17 +102,17 @@ void showDistances(graph *G, vertex *src) {
 
 int main () {
   
-    // read source vertex
-  char s[50];
-  assert(scanf("%s", s) == 1);
+    // read label of source vertex
+  char srcL[50];
+  assert(scanf("%s", srcL) == 1);
 
   graph *G = newGraph(50, WEIGHTED);
   readGraph(G);
   showGraph(G);
 
-  vertex *src = getVertex(G, s);
+  vertex *src = getVertex(G, srcL);
   if (!src) {
-    fprintf(stderr, "Vertex %s not found\n", s);
+    fprintf(stderr, "Vertex %s not found\n", srcL);
     freeGraph(G);
     exit (EXIT_FAILURE);
   }              

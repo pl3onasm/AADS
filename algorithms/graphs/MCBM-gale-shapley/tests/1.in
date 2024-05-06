@@ -1,24 +1,9 @@
-4 4
-
-6 7 4 5
-5 7 4 6
-6 5 7 4
-6 7 5 4
-
-0 3 2 1
-0 2 3 1
-2 3 0 1
-2 0 1 3
-
-
-source
-======
-CLRS⁴ 25.2, first example on p.717
-Wanda = 0
-Emma = 1
-Lacey = 2
-Karen = 3
-Oscar = 4
-Davis = 5
-Brent = 6
-Hank = 7
+Wanda: Brent, Hank, Oscar, Davis.
+Emma: Davis, Hank,  Oscar, Brent. 
+Lacey : Brent, Davis, Hank, Oscar.
+Karen: Brent, Hank, Davis, Oscar.  
+Oscar  : Wanda,  Karen, Lacey, Emma. 
+Davis : Wanda , Lacey, Karen, Emma .
+Brent: Lacey,  Karen, Wanda, Emma. 
+Hank: Lacey, Wanda,  Emma, Karen.
+ 

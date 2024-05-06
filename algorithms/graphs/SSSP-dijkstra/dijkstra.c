@@ -15,6 +15,7 @@
 #include "../../../datastructures/graphs/graph/graph.h"
 #include "../../../lib/clib/clib.h"
 #include <float.h>
+#include <assert.h>
 
 //===================================================================
 // Copies the key (priority) of a node in the priority queue
@@ -119,18 +120,18 @@ void showDistances(graph *G, vertex *src) {
 
 int main () {
     
-    // read the source node 
-  char s[50];
-  assert(scanf("%s", s) == 1);    
+    // read the label of the source vertex
+  char srcL[50];
+  assert(scanf("%s", srcL) == 1);    
 
   graph *G = newGraph(50, WEIGHTED); 
   readGraph(G);              
   showGraph(G);
 
-  vertex *src = getVertex(G, s);
+  vertex *src = getVertex(G, srcL);
 
   if (! src) {
-    fprintf(stderr, "Source node %s not found.\n", s);
+    fprintf(stderr, "Source node %s not found.\n", srcL);
     freeGraph(G);
     exit(EXIT_FAILURE);
   }

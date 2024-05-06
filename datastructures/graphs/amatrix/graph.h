@@ -43,8 +43,7 @@ typedef struct {
                       // set to directed by default
   weightType weight;  // weighted or unweighted
   char *label;        // label of the graph
-  size_t currentN;    // current neighbor index
-  size_t currentV;    // current vertex index
+  size_t currentV;    // current vertex index for iteration
   size_t currentFrom; // current source vertex index
   size_t currentTo;   // current destination vertex index
 } graph;

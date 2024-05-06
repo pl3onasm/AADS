@@ -77,7 +77,6 @@
 
 //===================================================================
 // VERTEX TYPE 5  (application example: Johnson)
-
 #elif defined (VERTEX_TYPE5)
 
   typedef struct vertex {
@@ -90,19 +89,31 @@
   } vertex;
 
 //===================================================================
-// VERTEX TYPE 6  (application example: MCBM-unweighted, 
-//                 hopcroft-karp algorithm)
-
+// VERTEX TYPE 6  (application example: MCBM, Hopcroft-Karp)
 #elif defined (VERTEX_TYPE6)
 
   typedef struct vertex {
     char label[MAX_LABEL];    // the label of the vertex
-    struct vertex *match;     // the vertex matched with this one
+    struct vertex *match;     // vertex matched to this vertex
+    size_t level;             // level in the level graph
+    size_t inDegree;          // in-degree of the vertex
     enum { NIL, 
            LEFT, 
            RIGHT } type;      // vertex belongs to left or right set
-    size_t level;             // level in the level graph
+  } vertex;
+
+//===================================================================
+// VERTEX TYPE 7  (application example: MCBM, Gale-Shapley)
+#elif defined (VERTEX_TYPE7)
+
+  typedef struct vertex {
+    char label[MAX_LABEL];    // the label of the vertex
+    struct vertex *match;     // vertex matched to this vertex
+    size_t index;             // level in the level graph
     size_t inDegree;          // in-degree of the vertex
+    enum { NIL, 
+           LEFT, 
+           RIGHT } type;      // vertex belongs to left or right set
   } vertex;
 
 //===================================================================

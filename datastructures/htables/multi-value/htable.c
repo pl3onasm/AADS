@@ -268,7 +268,8 @@ void htAddKeyVal(htable *H, void *key, void *value) {
   for (htEntry *e = dllFirst(bucket); e; e = dllNext(bucket)) {
     if (! H->cmpKey(key, e->key)) {
       if (! dllFind(e->values, value))
-        dllPush(e->values, value);
+          // using pushback to preserve the order of insertion
+        dllPushBack(e->values, value);
       return;
     }
   }

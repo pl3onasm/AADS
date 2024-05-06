@@ -1,0 +1,23 @@
+
+--------------------
+ Graph
+ Directed
+ Unweighted
+ Vertices: 6
+ Edges: 18
+--------------------
+  Chandler[3]: Phoebe, Rachel, Monica
+  Joey[3]: Rachel, Monica, Phoebe
+  Monica[3]: Chandler, Joey, Ross
+  Phoebe[3]: Joey, Ross, Chandler
+  Rachel[3]: Ross, Chandler, Joey
+  Ross[3]: Monica, Phoebe, Rachel
+--------------------
+
+--------------------
+ Matching
+--------------------
+  Ross -- Monica
+  Chandler -- Phoebe
+  Joey -- Rachel
+--------------------

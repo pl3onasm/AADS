@@ -29,7 +29,6 @@ void dllOwnData (dll *L, dllFreeData freeData) {
   L->freeData = freeData;
 }
 
-
 // Sets the DLL to make copies of the data
 // If set, the DLL will only free the copies
 void dllCopyData (dll *L, dllCpyData copyData, 
@@ -153,6 +152,9 @@ void dllPush (dll *L, void *data) {
     n->dllData = L->copyData(data);
   else
     n->dllData = data;
+    // update the iterator 
+  if (L->iter == L->NIL) 
+    L->iter = n;
 }
 
 //=================================================================
@@ -191,8 +193,10 @@ void dllInsert (dll *L, void *data) {
     new->dllData = L->copyData(data);
   else
     new->dllData = data;
-    // update the size
+    // update the size and iterator
   L->size++;
+  if (L->iter == L->NIL) 
+    L->iter = new;
 }
 
 //=================================================================
@@ -214,6 +218,8 @@ void dllPushBack (dll *L, void *data) {
     n->dllData = L->copyData(data);
   else
     n->dllData = data;
+  if (L->iter == L->NIL) 
+    L->iter = n;
 }
 
 //=================================================================
@@ -257,8 +263,12 @@ void *dllPopBack (dll *L) {
 static void dllDeleteNode (dll *L, dllNode *node) {
   if (! L) 
     return;
+  
   if (node == L->NIL) 
     return;
+
+  if (L->iter == node)
+    L->iter = node->next;
   node->prev->next = node->next;
   node->next->prev = node->prev;
   dllFreeNode(L, node);
@@ -297,13 +307,15 @@ bool dllDeleteData (dll *L, void *data) {
     n = n->next;
   if (n == L->NIL)
     return false;
+  if (L->iter == n) 
+    L->iter = n->next;
   dllDeleteNode(L, n);
   return true;
 }
 
 //=================================================================
 // Searches for the first node with a given key
-// returns the data of the node if found, NULL otherwise
+// Returns the data of the node if found, NULL otherwise
 void *dllFind (dll *L, void *key) {
   if (! L) 
     return NULL;
@@ -313,6 +325,26 @@ void *dllFind (dll *L, void *key) {
   }
   L->NIL->dllData = key;
   dllNode *n = L->NIL->next;
+  while (L->cmp(n->dllData, key))
+    n = n->next;
+  if (n == L->NIL) 
+    return NULL;
+  return n->dllData;
+}
+
+//=================================================================
+// Searches for the first node with a given key starting from
+// the current iterator position
+// Returns the data of the node if found, NULL otherwise
+void *dllFindNext (dll *L, void *key) {
+  if (! L) 
+    return NULL;
+  if (! L->cmp) {
+    fprintf(stderr, "dllFindNext: comparison function not set\n");
+    return NULL;
+  }
+  L->NIL->dllData = key;
+  dllNode *n = L->iter;
   while (L->cmp(n->dllData, key))
     n = n->next;
   if (n == L->NIL) 

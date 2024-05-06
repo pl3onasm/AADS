@@ -107,6 +107,11 @@ bool dllDeleteData(dll *L, void *data);
   // returns the data of the node if found, NULL otherwise
 void *dllFind(dll *L, void *key);
 
+  // Searches for the next node in the DLL with a given key
+  // starting from the current iterator position
+  // returns the data of the node if found, NULL otherwise
+void *dllFindNext(dll *L, void *key);
+
   // Shows the DLL using the showData function 
   // and the delimiter string (default is ", ")
 void dllShow(dll *L);
