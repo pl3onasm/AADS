@@ -109,7 +109,7 @@
   typedef struct vertex {
     char label[MAX_LABEL];    // the label of the vertex
     struct vertex *match;     // vertex matched to this vertex
-    size_t index;             // level in the level graph
+    size_t index;             // index in the lookup table
     size_t inDegree;          // in-degree of the vertex
     enum { NIL, 
            LEFT, 
