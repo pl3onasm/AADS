@@ -5,7 +5,7 @@
   license: MIT, see LICENSE file in repository root folder
   description: implements the relabel-to-front algorithm
   time complexity: O(V³), which is better than the generic
-    push-relabel algorithm for dense graphs
+    push-relabel algorithm when dealing with dense graphs
   note: make sure to use VERTEX_TYPE4 in the vertex.h file
     by defining it from the command line using
       $ gcc -D VERTEX_TYPE4 ...
@@ -92,6 +92,7 @@ dll *createWorklist(network *N, vertex *src, vertex *sink) {
       continue; 
     dllPush(worklist, v);
   }
+  dllSetIterFirst(worklist);
   return worklist;
 }
 
@@ -123,9 +124,9 @@ void computeMaxflow (network *N, vertex *src, vertex *sink) {
 int main () {
     // read source and sink labels
   char srcL[50], sinkL[50];                    
-  assert(scanf("%s %s", srcL, sinkL) == 2);
+  assert(scanf("%s %s ", srcL, sinkL) == 2);
 
-  network *N = newNetwork(50, WEIGHTED);
+  network *N = newNetwork(50, UNWEIGHTED);
   readNetwork(N);                  
   showNetwork(N);
   

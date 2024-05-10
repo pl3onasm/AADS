@@ -19,14 +19,34 @@
 #include <stdbool.h>
 #include "vertex.h"
 
-struct edge {                 // default
+//===================================================================
+// EDGE TYPE 1  (application example: MCBM weighted, MCMF)
+#if defined (EDGE_TYPE1)
+
+  struct edge {                 
+    vertex *from;             // pointer to the source vertex
+    vertex *to;               // pointer to the destination vertex
+    size_t cap;               // capacity of the edge
+    int flow;                 // flow through the edge
+    bool residual;            // true if the edge is a residual edge
+    struct edge *rev;         // pointer to the reverse edge
+    double weight;            // weight (cost) of the edge
+  };
+
+//===================================================================
+// DEFAULT EDGE TYPE
+#else
+
+struct edge {                
   vertex *from;               // pointer to the source vertex
   vertex *to;                 // pointer to the destination vertex
   size_t cap;                 // capacity of the edge
   int flow;                   // flow through the edge
   bool residual;              // true if the edge is a residual edge
   struct edge *rev;           // pointer to the reverse edge
+  double weight;              // weight (cost) of the edge
 };
 
+#endif    // EDGE_TYPES
 
 #endif    // EDGE_H_INCLUDED

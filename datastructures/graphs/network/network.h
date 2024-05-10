@@ -26,7 +26,7 @@ typedef enum { WEIGHTED, UNWEIGHTED } weightType;
   // network data structure
 typedef struct {
   htable *V;          // hash table of vertices
-  weightType weight;  // unweighted: edges have unit capacity
+  weightType weight;  // unweighted: edges have no cost
   size_t nEdges;      // number of edges in the network
   edge *e;            // dummy edge for lookup
   dll *adjList;       // dummy adjacency list
@@ -78,30 +78,34 @@ edge *getEdgeL(network *N, char *from, char *to);
 
   // Adds an edge with given capacity between 
   // two vertices
-void addEdgeC(network *N, vertex *from, vertex *to, 
+void addEdge(network *N, vertex *from, vertex *to, 
              size_t capacity);
 
   // Adds an edge with given capacity between 
   // the source and destination given their labels
-void addEdgeCL(network *N, char *from, char *to, 
+void addEdgeL(network *N, char *from, char *to, 
               size_t capacity);
 
-  // Adds an edge with unit capacity between
-  // two vertices
-void addEdge(network *N, vertex *from, vertex *to);
+  // Adds an edge with given capacity and weight
+  // between two vertices
+void addEdgeW(network *N, vertex *from, vertex *to, 
+              size_t capacity, double weight);
 
-  // Adds an edge with unit capacity given the labels of
-  // the source and destination vertices
-void addEdgeL(network *N, char *from, char *to);
+  // Adds an edge with given capacity and weight
+  // between the source and dest given their labels
+void addEdgeWL(network *N, char *from, char *to, 
+               size_t capacity, double weight);
 
   // Adds the vertices if they do not exist, and
   // adds an edge between them with given capacity
-void addVandEC(network *N, char *from, char *to, 
-               size_t capacity);
+  // and weight (cost of the edge)
+void addVandEW(network *N, char *from, char *to, 
+               size_t capacity, double weight);
 
   // Adds the vertices if they do not exist, and
-  // adds an edge between them with unit capacity
-void addVandE(network *N, char *from, char *to);
+  // adds an edge between them with given capacity
+void addVandE(network *N, char *from, char *to, 
+              size_t capacity);
 
   // Returns true if the edge exists in the network
 bool hasEdge(network *N, vertex *from, vertex *to);
@@ -137,7 +141,7 @@ network *copynetwork(network *N);
 
   // Returns an array of the vertices in the network
   // The array is sorted by the vertex labels
-vertex **sortNetwork(network *N);
+vertex **sortVertices(network *N);
 
   // Returns the number of vertices in the network
 static inline size_t nVertices(network *N) {

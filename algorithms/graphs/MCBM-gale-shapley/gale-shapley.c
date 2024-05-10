@@ -21,10 +21,10 @@
 #include "../../../lib/clib/clib.h"
 
 //===================================================================
-// Returns true if the graph is bipartite, i.e. if it is 
-// possible to partition the vertices into two sets such that no two
-// adjacent vertices belong to the same set. This is done using
-// a BFS traversal and assigning a type to each vertex (LEFT or RIGHT)
+// Returns true if the graph is bipartite, i.e. if it is possible
+// to partition the vertices into two sets such that no two adjacent
+// vertices belong to the same set. This is done using a BFS 
+// traversal and assigning a type to each vertex (LEFT or RIGHT)
 bool isBipartite(graph *G) {
   vertex *v = firstV(G);
   v->type = LEFT;
@@ -51,8 +51,8 @@ bool isBipartite(graph *G) {
 
 //===================================================================
 // Creates a lookup table for the preferences of vertices in the
-// right set, so that we can easily find the rank of a vertex in 
-// the left set when it proposes to a vertex in the right set
+// right set R, so that we can find, in constant time, the rank of
+// a vertex in the left set L when it proposes to a vertex in R
 size_t **createLookupTable(graph *G) {
   size_t left = 0, right = 0;
   for (vertex *v = firstV(G); v; v = nextV(G)) {
@@ -134,10 +134,10 @@ void showMatching(graph *G) {
 }
 
 //===================================================================
-// Reads the input from stdin and adds the vertices and edges 
-// to the graph; the input is in the form of a preference list
-// for each vertex, with the preferences separated by commas
-// and ending with a period
+// Reads the input from stdin and adds the vertices and edges to
+// the graph; the input is given in the form of a preference list
+// for each vertex, with the preferences separated by commas and
+// ending with a period
 void readInput(graph *G) {
   char from[50], to[50], ch;
     // read first vertex, delimiter is ':'

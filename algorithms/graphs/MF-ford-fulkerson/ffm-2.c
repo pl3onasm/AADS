@@ -26,7 +26,7 @@ size_t getThreshold(network *N) {
 
 //===================================================================
 // Tries to find an augmenting path from src to sink using DFS
-double dfs(network *N, vertex *v, vertex *sink, 
+size_t dfs(network *N, vertex *v, vertex *sink, 
            size_t flow, size_t delta) {
 
   if (v == sink) return flow;       // reached the sink
@@ -69,9 +69,9 @@ void maxFlow(network *N, vertex *src, vertex *sink) {
 int main () {
     // read source and sink labels
   char srcL[50], sinkL[50];                    
-  assert(scanf("%s %s", srcL, sinkL) == 2);
+  assert(scanf("%s %s ", srcL, sinkL) == 2);
 
-  network *N = newNetwork(50, WEIGHTED);
+  network *N = newNetwork(50, UNWEIGHTED);
   readNetwork(N);                  
   showNetwork(N);
   

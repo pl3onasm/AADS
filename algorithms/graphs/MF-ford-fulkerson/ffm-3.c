@@ -24,7 +24,7 @@
 bool bfs(network *N, vertex *v, vertex *sink) {
   queue *q = newQueue(nVertices(N));       
   enqueue(q, v);                       // enqueue source node
-  v->level = 0;     
+  v->level = 1;     
 
   while (!isEmptyQueue(q)) {
     vertex *u = dequeue(q);
@@ -32,7 +32,7 @@ bool bfs(network *N, vertex *v, vertex *sink) {
    
       // iterate over all outgoing edges of u
     for (edge *e = dllFirst(edges); e; e = dllNext(edges)) {
-      if (e->cap - e->flow > 0 && ! e->to->level) {
+      if (e->cap - e->flow > 0 && !e->to->level) {
         e->to->level = u->level + 1;   // set level of child node
         enqueue(q, e->to);                
       }
@@ -45,24 +45,25 @@ bool bfs(network *N, vertex *v, vertex *sink) {
 //===================================================================
 // Depth-first search to find blocking flows
 // Returns the bottleneck flow found in the path
-double dfs(network *N, vertex *v, vertex *sink, 
-           size_t flow, bool newLevels) {
+size_t dfs(network *N, vertex *v, vertex *sink, size_t flow) {
   
-  if (v == sink) return flow;          // reached sink
+  if (v == sink || flow == 0) 
+    return flow;                       // sink reached or no flow      
   
   dll *edges = getNeighbors(N, v);     // get neighbors of v
   edge *e;
   
-  if (newLevels) {
+  if (! v->cont) {
     e = dllFirst(edges);               // start at first edge
-    newLevels = false;
-  } else e = dllNext(edges);           // continue from last edge
+    v->cont = true;                    // set continue flag
+  } else 
+    e = dllNext(edges);                // continue from last edge
 
   for ( ; e; e = dllNext(edges)) {
-    if (e->cap - e->flow > 0 && e->to->level == v->level + 1) {
+    if (e->to->level == v->level + 1) {
       size_t bneck = dfs(N, e->to, sink, 
-                         MIN(flow, e->cap - e->flow), newLevels);
-      if (bneck > 0) {
+                         MIN(flow, e->cap - e->flow));
+      if (bneck) {
         e->flow += bneck;              // update flow
         e->rev->flow -= bneck;             
         return bneck;
@@ -75,14 +76,17 @@ double dfs(network *N, vertex *v, vertex *sink,
 //===================================================================
 // Computes the maximum flow from src to sink using Dinic's algorithm
 void dinic(network *N, vertex *src, vertex *sink) {
-  size_t flow;
+  size_t flow;  
+
+    // while there is a path from src to sink
   while (bfs(N, src, sink)) {
-    bool newLevels = true;
-    while ((flow = dfs(N, src, sink, SIZE_MAX, newLevels))) {
+    while ((flow = dfs(N, src, sink, SIZE_MAX))) 
       N->maxFlow += flow;                      
-      // reset all levels to 0 for next BFS 
-    for (vertex *v = firstV(N); v; v = nextV(N)) 
+      
+      // reset levels and continue flags for next BFS
+    for (vertex *v = firstV(N); v; v = nextV(N)) {
       v->level = 0;
+      v->cont = false;
     }
   }
 }
@@ -92,9 +96,9 @@ void dinic(network *N, vertex *src, vertex *sink) {
 int main () {
     // read source and sink labels
   char srcL[50], sinkL[50];                    
-  assert(scanf("%s %s", srcL, sinkL) == 2);
+  assert(scanf("%s %s ", srcL, sinkL) == 2);
 
-  network *N = newNetwork(50, WEIGHTED);
+  network *N = newNetwork(50, UNWEIGHTED);
   readNetwork(N);                  
   showNetwork(N);
   

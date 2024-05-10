@@ -22,4 +22,4 @@ Implementation: [Transitive Closure - Optimized](https://github.com/pl3onasm/AAD
 
 ## ${\color{darkseagreen}\text{Note}}$
 
-The book CLRS always includes the edge $(i,i)$ in the graph, which is why the diagonal of the matrix is always 1. This is a (common) practice, but it is not necessary for the algorithm to work correctly and can be easily changed if so desired.
+The book CLRS always includes the edge $(i,i)$ in the graph, which is why the diagonal of the matrix is always 1. Technically, this is taking the reflexive-transitive closure of the graph. If we are only interested in the transitive closure, this can be done by initializing the matrix accordingly.

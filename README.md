@@ -29,7 +29,7 @@ In addition, you will also find other algorithms and data structures that are no
 
 Please refer to the license if you wish to use any of the code in this repository. Any images were created using Photoshop. If you find any errors or have any suggestions, please let me know. Some of the solutions to the textbook's exercises can be found on [this site](https://walkccc.me/CLRS/).
 
-Note that this is very much a work in progress. It simply takes time to develop and test all the code and write the explanations. Some of the code took me days to think through and implement. Currently, I am revising all the code and explanations. Updates will be made regularly.
+Note that this is very much a work in progress. It simply takes time to develop and test all the code and write the explanations. Some of the code took me days to think through and implement. Currently, I am revising all the code and explanations. Updates will be made regularly. I will also add makefiles in the near future.
 
 ## ${\color{darkseagreen}\text{References}}$
 

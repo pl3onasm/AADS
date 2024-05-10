@@ -52,6 +52,7 @@ typedef struct edge edge;
     char label[MAX_LABEL];    // the label of the vertex
     size_t inDegree;          // in-degree of the vertex
     size_t level;             // level in the level graph
+    bool cont;                // continue flag for DFS
   } vertex;
 
 //===================================================================
@@ -78,6 +79,22 @@ typedef struct edge edge;
            LEFT, 
            RIGHT } type;      // vertex belongs to left or right set
     size_t level;             // level in the level graph
+    bool cont;                // continue flag for DFS
+  } vertex;
+
+//===================================================================
+// VERTEX TYPE 6  (application example: MCBM-weighted, mcmf)
+
+#elif defined (VERTEX_TYPE6)
+
+  typedef struct vertex {
+    char label[MAX_LABEL];    // the label of the vertex
+    size_t inDegree;          // in-degree of the vertex
+    enum { NIL, 
+           LEFT, 
+           RIGHT } type;      // vertex belongs to left or right set
+    double dist;              // distance from the source
+    bool cont;                // continue flag for DFS
   } vertex;
 
 //===================================================================

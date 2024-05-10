@@ -85,6 +85,7 @@ void computeMaxflow (network *N, vertex *src, vertex *sink) {
   
   while (!isEmptyQueue(Q)) {
     vertex *v = dequeue(Q);           // get the next active node
+    
     if (v == src || v == sink)        // skip source and sink
       continue;
   
@@ -105,9 +106,9 @@ void computeMaxflow (network *N, vertex *src, vertex *sink) {
 int main () {
     // read source and sink labels
   char srcL[50], sinkL[50];                    
-  assert(scanf("%s %s", srcL, sinkL) == 2);
+  assert(scanf("%s %s ", srcL, sinkL) == 2);
 
-  network *N = newNetwork(50, WEIGHTED);
+  network *N = newNetwork(50, UNWEIGHTED);
   readNetwork(N);                  
   showNetwork(N);
   

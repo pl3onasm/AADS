@@ -1,0 +1,39 @@
+
+--------------------
+ Graph
+ Undirected
+ Unweighted
+ Vertices: 18
+ Edges: 24
+--------------------
+  a[4]: b, r, e, g
+  b[2]: a, c
+  c[4]: b, d, h, i
+  d[2]: c, f
+  e[2]: a, f
+  f[4]: d, q, e, n
+  g[2]: a, j
+  h[2]: c, m
+  i[2]: c, j
+  j[4]: i, g, k, l
+  k[2]: m, j
+  l[2]: j, p
+  m[4]: h, n, k, o
+  n[2]: f, m
+  o[2]: m, p
+  p[4]: q, r, o, l
+  q[2]: f, p
+  r[2]: a, p
+--------------------
+
+--------------------
+ Matching
+ Cardinality: 6
+--------------------
+  o -- m
+  d -- c
+  k -- j
+  r -- a
+  e -- f
+  l -- p
+--------------------

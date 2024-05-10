@@ -1,28 +1,30 @@
 
 --------------------
- Network
+ Graph
+ Undirected
+ Unweighted
  Vertices: 10
  Edges: 13
 --------------------
-  Catcher_In_The_Rye[0]
-  Elijah[1]: Of_Mice_And_Men(1)
-  Esther[4]: Picture_Of_Dorian_Gray(1), Of_Mice_And_Men(1), Catcher_In_The_Rye(1), The_Great_Gatsby(1)
-  Jonah[3]: Lord_Of_The_Flies(1), Of_Mice_And_Men(1), Catcher_In_The_Rye(1)
-  Kate[3]: Lord_Of_The_Flies(1), Picture_Of_Dorian_Gray(1), Of_Mice_And_Men(1)
-  Lord_Of_The_Flies[0]
-  Of_Mice_And_Men[0]
-  Picture_Of_Dorian_Gray[0]
-  Sam[2]: Of_Mice_And_Men(1), Catcher_In_The_Rye(1)
-  The_Great_Gatsby[0]
+  Catcher_In_The_Rye[3]: Sam, Jonah, Esther
+  Elijah[1]: Of_Mice_And_Men
+  Esther[4]: The_Great_Gatsby, Catcher_In_The_Rye, Of_Mice_And_Men, Picture_Of_Dorian_Gray
+  Jonah[3]: Catcher_In_The_Rye, Of_Mice_And_Men, Lord_Of_The_Flies
+  Kate[3]: Of_Mice_And_Men, Picture_Of_Dorian_Gray, Lord_Of_The_Flies
+  Lord_Of_The_Flies[2]: Jonah, Kate
+  Of_Mice_And_Men[5]: Sam, Jonah, Esther, Elijah, Kate
+  Picture_Of_Dorian_Gray[2]: Esther, Kate
+  Sam[2]: Catcher_In_The_Rye, Of_Mice_And_Men
+  The_Great_Gatsby[1]: Esther
 --------------------
 
 --------------------
  Matching
  Cardinality: 5
 --------------------
-  Esther -- The_Great_Gatsby
-  Jonah -- Lord_Of_The_Flies
-  Sam -- Catcher_In_The_Rye
-  Elijah -- Of_Mice_And_Men
-  Kate -- Picture_Of_Dorian_Gray
+  The_Great_Gatsby -- Esther
+  Of_Mice_And_Men -- Elijah
+  Catcher_In_The_Rye -- Sam
+  Picture_Of_Dorian_Gray -- Kate
+  Lord_Of_The_Flies -- Jonah
 --------------------

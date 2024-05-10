@@ -152,9 +152,6 @@ void dllPush (dll *L, void *data) {
     n->dllData = L->copyData(data);
   else
     n->dllData = data;
-    // update the iterator 
-  if (L->iter == L->NIL) 
-    L->iter = n;
 }
 
 //=================================================================
@@ -218,8 +215,6 @@ void dllPushBack (dll *L, void *data) {
     n->dllData = L->copyData(data);
   else
     n->dllData = data;
-  if (L->iter == L->NIL) 
-    L->iter = n;
 }
 
 //=================================================================
@@ -231,6 +226,8 @@ void *dllPop (dll *L) {
   if (dllIsEmpty(L)) 
     return NULL;
   dllNode *n = L->NIL->next;
+  if (L->iter == n) 
+    L->iter = n->next;
   void *data = n->dllData;
     // free the node, NOT the data
   n->prev->next = n->next;
@@ -249,6 +246,8 @@ void *dllPopBack (dll *L) {
   if (dllIsEmpty(L)) 
     return NULL;
   dllNode *n = L->NIL->prev;
+  if (L->iter == n) 
+    L->iter = n->prev;
   void *data = n->dllData;
     // free the node, NOT the data
   n->prev->next = n->next;
