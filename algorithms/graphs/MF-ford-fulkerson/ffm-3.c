@@ -20,11 +20,11 @@
 
 //===================================================================
 // Breadth-first search to build the level graph
-// Returns true if there is a path from v to sink
-bool bfs(network *N, vertex *v, vertex *sink) {
+// Returns true if there is a path from source to sink
+bool bfs(network *N, vertex *src, vertex *sink) {
   queue *q = newQueue(nVertices(N));       
-  enqueue(q, v);                       // enqueue source node
-  v->level = 1;     
+  enqueue(q, src);                     // enqueue source node
+  src->level = 1;     
 
   while (!isEmptyQueue(q)) {
     vertex *u = dequeue(q);
@@ -43,7 +43,7 @@ bool bfs(network *N, vertex *v, vertex *sink) {
 }
 
 //===================================================================
-// Depth-first search to find blocking flows
+// Depth-first search to find an augmenting path in the level graph
 // Returns the bottleneck flow found in the path
 size_t dfs(network *N, vertex *v, vertex *sink, size_t flow) {
   
@@ -80,10 +80,12 @@ void dinic(network *N, vertex *src, vertex *sink) {
 
     // while there is a path from src to sink
   while (bfs(N, src, sink)) {
+      // continue searching for augmenting paths
+      // until a blocking flow is reached
     while ((flow = dfs(N, src, sink, SIZE_MAX))) 
       N->maxFlow += flow;                      
       
-      // reset levels and continue flags for next BFS
+      // reset levels and continue flags for next iteration
     for (vertex *v = firstV(N); v; v = nextV(N)) {
       v->level = 0;
       v->cont = false;

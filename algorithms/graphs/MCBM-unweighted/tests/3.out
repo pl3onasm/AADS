@@ -8,11 +8,11 @@
 --------------------
   Catcher_In_The_Rye[3]: Sam, Jonah, Esther
   Elijah[1]: Of_Mice_And_Men
-  Esther[4]: The_Great_Gatsby, Catcher_In_The_Rye, Of_Mice_And_Men, Picture_Of_Dorian_Gray
+  Esther[4]: The_Great_Gatsby, Of_Mice_And_Men, Picture_Of_Dorian_Gray, Catcher_In_The_Rye
   Jonah[3]: Catcher_In_The_Rye, Of_Mice_And_Men, Lord_Of_The_Flies
   Kate[3]: Of_Mice_And_Men, Picture_Of_Dorian_Gray, Lord_Of_The_Flies
   Lord_Of_The_Flies[2]: Jonah, Kate
-  Of_Mice_And_Men[5]: Sam, Jonah, Esther, Elijah, Kate
+  Of_Mice_And_Men[5]: Esther, Elijah, Kate, Jonah, Sam
   Picture_Of_Dorian_Gray[2]: Esther, Kate
   Sam[2]: Catcher_In_The_Rye, Of_Mice_And_Men
   The_Great_Gatsby[1]: Esther
@@ -22,9 +22,9 @@
  Matching
  Cardinality: 5
 --------------------
-  The_Great_Gatsby -- Esther
-  Of_Mice_And_Men -- Elijah
-  Catcher_In_The_Rye -- Sam
-  Picture_Of_Dorian_Gray -- Kate
-  Lord_Of_The_Flies -- Jonah
+  Elijah -- Of_Mice_And_Men
+  Sam -- Catcher_In_The_Rye
+  Kate -- Picture_Of_Dorian_Gray
+  Jonah -- Lord_Of_The_Flies
+  Esther -- The_Great_Gatsby
 --------------------

@@ -1,15 +1,15 @@
-a b
+b a
 b c 
 a r 
 a e 
-a g
+g a
 c d 
 d f 
 f q
 q p
 r p
 e f 
-c h
+h c
 c i
 h m
 i j
@@ -20,5 +20,5 @@ m k
 k j
 m o
 o p 
-j l
+l j
 l p

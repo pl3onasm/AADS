@@ -41,53 +41,61 @@ bool isBipartite(network *N) {
     }
   }
   freeQueue(q);
-  return true;                       
+  return true; 
 }
 
 //===================================================================
-// Extends the network with a source and sink vertex: adds edges
-// from source to all vertices in set L with unit capacity, and
-// from all vertices in set R to the sink with unit capacity
-void extendNetwork(network *N, vertex **src, vertex **sink) {
+// Builds a new network N' from the input network N with edges
+// directed from the left set L to the right set R. The new network 
+// is also extended with a source and sink vertex: edges are added
+// from the source to all vertices in L and from all vertices in R
+// to the sink, all with unit capacity
+network *buildNewNetwork(network *N, vertex **src, vertex **sink) {
+  network *newN = newNetwork(nVertices(N) + 2, UNWEIGHTED);
+  *src = addVertexR(newN, "SOURCE");
+  *sink = addVertexR(newN, "SINK");
 
-  *src = addVertexR(N, "src");
-  *sink = addVertexR(N, "sink");
   for (vertex *v = firstV(N); v; v = nextV(N)) {
-    if (v == *src || v == *sink) continue;
-    if (v->type == LEFT) addEdge(N, *src, v, 1);
-    else addEdge(N, v, *sink, 1);
+    vertex *u = addVertexR(newN, v->label);
+    if (v->type == LEFT) {
+      addEdge(newN, *src, u, 1);
+      dll *edges = getNeighbors(N, v);
+      for (edge *e = dllFirst(edges); e; e = dllNext(edges))
+        addVandE(newN, u->label, e->to->label, 1);
+    } else if (v->type == RIGHT) 
+      addEdge(newN, u, *sink, 1);
   }
+  return newN;
 }
 
 //===================================================================
 // Breadth-first search to build the level graph
-// Returns true if there is a path from v to sink
-bool bfs(network *N, vertex *v, vertex *sink) {
-  queue *q = newQueue(nVertices(N));       
-  enqueue(q, v);                       // enqueue source node
-  v->level = 1;     
+// Returns true if there is a path from source to sink
+bool bfs(network *N, vertex *src, vertex *sink) {
+  queue *Q = newQueue(nVertices(N));
+  src->level = 1;                      // set level of source
+  enqueue(Q, src);                     // add source to queue
 
-  while (!isEmptyQueue(q)) {
-    vertex *u = dequeue(q);
+  while (!isEmptyQueue(Q)) {
+    vertex *u = dequeue(Q);
     dll *edges = getNeighbors(N, u);    
    
       // iterate over all outgoing edges of u
     for (edge *e = dllFirst(edges); e; e = dllNext(edges)) {
-      if (e->cap - e->flow > 0 && ! e->to->level) {
+      if (e->cap - e->flow != 0 && e->to->level == 0) {
         e->to->level = u->level + 1;   // set level of child node
-        enqueue(q, e->to);                
+        enqueue(Q, e->to);                
       }
     }
   }
-  freeQueue(q);
+  freeQueue(Q);
   return sink->level != 0;             // is sink reachable?
 }
 
 //===================================================================
-// Depth-first search to find blocking flows
+// Depth-first search to find an augmenting path in the level graph
 // Returns the bottleneck flow found in the path
-size_t dfs(network *N, vertex *v, vertex *sink, 
-           size_t flow) {
+size_t dfs(network *N, vertex *v, vertex *sink, size_t flow) {
   
   if (v == sink || flow == 0) 
     return flow;                       // sink reached or no flow
@@ -98,16 +106,15 @@ size_t dfs(network *N, vertex *v, vertex *sink,
   if (! v->cont) {
     e = dllFirst(edges);               // start at first edge
     v->cont = true;                    // set continue flag
-  } else 
-    e = dllNext(edges);                // continue from last edge
-
+  } else e = dllNext(edges);           // continue from last edge
+    
   for ( ; e; e = dllNext(edges)) {
     if (e->to->level == v->level + 1) {
       size_t bneck = dfs(N, e->to, sink, 
                          MIN(flow, e->cap - e->flow));
       if (bneck) {
         e->flow += bneck;              // update flow
-        e->rev->flow -= bneck;             
+        e->rev->flow -= bneck;  
         return bneck;
       } 
     } 
@@ -119,12 +126,15 @@ size_t dfs(network *N, vertex *v, vertex *sink,
 // Computes the maximum flow from src to sink using Dinic's algorithm
 void dinic(network *N, vertex *src, vertex *sink) {
   size_t flow;
-  
+
+    // while there is a path from src to sink
   while (bfs(N, src, sink)) {
+      // keep searching for augmenting paths until a
+      // blocking flow is reached
     while ((flow = dfs(N, src, sink, SIZE_MAX))) 
       N->maxFlow += flow;               
 
-      // reset levels and continue flags for next BFS
+      // reset levels and continue flags for next iteration
     for (vertex *v = firstV(N); v; v = nextV(N)) {
       v->level = 0;
       v->cont = false;  
@@ -134,7 +144,7 @@ void dinic(network *N, vertex *src, vertex *sink) {
 
 //===================================================================
 // Shows the matching by iterating over all edges and showing
-// the edges with flow > 0
+// the edges with flow
 void showMatching(network *N, vertex *src, vertex *sink) {
   
   printf("--------------------\n"
@@ -155,6 +165,7 @@ int main () {
 
   network *N = newNetwork(50, UNWEIGHTED);
   readNetwork(N);
+  setNLabel(N, "Network N");
   showNetwork(N);
   
   if (!isBipartite(N)) {
@@ -163,12 +174,15 @@ int main () {
     return 0;
   }
 
-  vertex *src = NULL, *sink = NULL;
-  extendNetwork(N, &src, &sink);
+  vertex *src, *sink;
+  network *newN = buildNewNetwork(N, &src, &sink);
+  setNLabel(newN, "New Network N'");
+  showNetwork(newN);
 
-  dinic(N, src, sink); 
-  showMatching(N, src, sink);
+  dinic(newN, src, sink);
+  showMatching(newN, src, sink);
 
   freeNetwork(N); 
+  freeNetwork(newN);
   return 0;
 }

@@ -49,18 +49,28 @@ bool isBipartite(network *N) {
 }
 
 //===================================================================
-// Extends the network with a source and sink vertex: adds edges
-// from source to all vertices in set L with unit capacity, and
-// from all vertices in set R to the sink with unit capacity
-void extendNetwork(network *N, vertex **src, vertex **sink) {
+// Builds a new network N' from the input network N with edges
+// directed from the left set L to the right set R. The new network 
+// is also extended with a source and sink vertex: edges are added
+// from the source to all vertices in L and from all vertices in R
+// to the sink, all with unit capacity
+network *buildNewNetwork(network *N, vertex **src, vertex **sink) {
+  network *newN = newNetwork(nVertices(N) + 2, UNWEIGHTED);
+  *src = addVertexR(newN, "SOURCE");
+  *sink = addVertexR(newN, "SINK");
 
-  *src = addVertexR(N, "src");
-  *sink = addVertexR(N, "sink");
   for (vertex *v = firstV(N); v; v = nextV(N)) {
-    if (v == *src || v == *sink) continue;
-    if (v->type == LEFT) addEdge(N, *src, v, 1);
-    else addEdge(N, v, *sink, 1);
+    vertex *u = addVertexR(newN, v->label);
+    if (v->type == LEFT) {
+      addEdgeW(newN, *src, u, 1, 0);
+      dll *edges = getNeighbors(N, v);
+      for (edge *e = dllFirst(edges); e; e = dllNext(edges))
+        addVandEW(newN, u->label, e->to->label, 1, 
+                  e->residual ? -e->weight : e->weight);
+    } else if (v->type == RIGHT) 
+      addEdgeW(newN, u, *sink, 1, 0);
   }
+  return newN;
 }
 
 //===================================================================
@@ -113,8 +123,8 @@ size_t dfs(network *N, vertex *v, vertex *sink, size_t flow,
   for (; e; e = dllNext(edges)) {
     if (e->to->dist == v->dist + cType * e->weight) {
       
-      size_t bneck = dfs(N, e->to, sink, MIN(flow, e->cap - e->flow), 
-                      cType, totalCost);
+      size_t bneck = dfs(N, e->to, sink, MIN(flow, e->cap - e->flow),
+                         cType, totalCost);
 
       if (bneck) {
         *totalCost += e->weight;       // update total cost
@@ -186,6 +196,7 @@ int main () {
 
   network *N = newNetwork(50, WEIGHTED);
   readNetwork(N);
+  setNLabel(N, "Input Network N");
   showNetwork(N);
   
   if (!isBipartite(N)) {
@@ -194,14 +205,16 @@ int main () {
     return 0;
   }
 
-  vertex *src = NULL, *sink = NULL;
-  extendNetwork(N, &src, &sink);
+  vertex *src, *sink;
+  network *newN = buildNewNetwork(N, &src, &sink);
 
-  showNetwork(N);
+  setNLabel(newN, "New Network N'");
+  showNetwork(newN);
 
-  double totalCost = computeMCM(N, src, sink, cType);
-  showMatching(N, src, sink, cType, totalCost);
+  double totalCost = computeMCM(newN, src, sink, cType);
+  showMatching(newN, src, sink, cType, totalCost);
 
   freeNetwork(N); 
+  freeNetwork(newN);
   return 0;
 }
