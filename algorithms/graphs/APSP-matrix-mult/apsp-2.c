@@ -14,6 +14,7 @@
 #include "../../../datastructures/graphs/amatrix/graph.h"
 #include "../../../lib/clib/clib.h"
 #include <float.h>
+#define ABS(x) ((x) < 0 ? -(x) : (x))
 
 //===================================================================
 // Initializes the distance matrix D
@@ -48,27 +49,35 @@ void printPath (graph *G, size_t **P, size_t i, size_t j) {
 
 //===================================================================
 // Prints the shortest path from each vertex to every other vertex
-// along with the distance between them
+// along with the distance between them. The paths are printed in
+// the order of the vertices as they appear in the graph when
+// printed with the showGraph function
 void printAllPaths (graph *G, double **D, size_t **P) {
   printf("--------------------\n"
          " Shortest paths\n"
          "--------------------\n");
-  for (size_t i = 0; i < nVertices(G); i++) 
-    for (size_t j = 0; j < nVertices(G); j++) {
 
-      if (i == j) continue;   // skip self-paths
+  vertex **V = sortVertices(G);
+  for (size_t from = 0; from < nVertices(G); from++) 
+    for (size_t to = 0; to < nVertices(G); to++) {
+
+      if (from == to) continue;   // skip self-paths
+      
+      size_t i = V[from]->idx;
+      size_t j = V[to]->idx; 
 
       printf("%s → %s: ", G->V[i]->label, G->V[j]->label);
       printf(D[i][j] == DBL_MAX ? "INF" : 
             (D[i][j] == -DBL_MAX) ? "-INF" : "%.2f", D[i][j]);
 
-      if (P[i][j] != SIZE_MAX && abs(D[i][j]) != DBL_MAX) {
+      if (ABS(D[i][j]) != DBL_MAX) {
         printf("\n  path: ");
         printPath(G, P, i, j);
       }
       printf("\n");
     }
   printf("--------------------\n");
+  free(V);
 }
 
 //===================================================================

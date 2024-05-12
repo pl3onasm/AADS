@@ -63,7 +63,7 @@ void printAllPaths (graph *G, double **D, size_t **P) {
   for (size_t from = 0; from < nVertices(G); from++) 
     for (size_t to = 0; to < nVertices(G); to++) {
 
-      if (from == to) continue;
+      if (from == to) continue;   // skip self-paths
       
       size_t i = V[from]->idx;
       size_t j = V[to]->idx; 

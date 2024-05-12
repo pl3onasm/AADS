@@ -82,7 +82,7 @@ bool bfs(network *N, vertex *src, vertex *sink) {
    
       // iterate over all outgoing edges of u
     for (edge *e = dllFirst(edges); e; e = dllNext(edges)) {
-      if (e->cap - e->flow != 0 && e->to->level == 0) {
+      if (e->cap - e->flow > 0 && e->to->level == 0) {
         e->to->level = u->level + 1;   // set level of child node
         enqueue(Q, e->to);                
       }
