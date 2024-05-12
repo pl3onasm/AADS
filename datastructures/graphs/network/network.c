@@ -97,7 +97,7 @@ void showVertex(network *N, vertex *v) {
       else
         printf("%zu", e->cap);
       printf(N->weight == UNWEIGHTED ? ")" : 
-            ((int)e->weight == e->weight) ? 
+            ((long)e->weight == e->weight) ? 
             ",%.f)" : ",%.2lf)", e->weight);
       nItems++;
       printf(nItems < dllSize(edges) ? ", " : "\n");
@@ -141,10 +141,12 @@ vertex **sortVertices(network *N) {
 void showNetwork(network *N) {
   printf("\n--------------------\n"
           " %s\n"
+          " %s\n"
           " Vertices: %zu\n"
           " Edges: %zu\n"
           "--------------------\n", 
           N->V->label, 
+          N->weight == WEIGHTED ? "Weighted" : "Unweighted",
           nVertices(N), 
           N->nEdges);
 

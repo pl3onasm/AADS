@@ -153,7 +153,7 @@ void showGraph(graph *G) {
           "--------------------\n", 
           G->V->label, 
           G->type == DIRECTED ? "Directed" : "Undirected",
-          G->weight == UNWEIGHTED ? "Unweighted" : "Weighted",
+          G->weight == WEIGHTED ? "Weighted" : "Unweighted",
           nVertices(G), 
           G->nEdges);
 

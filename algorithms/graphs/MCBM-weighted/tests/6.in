@@ -1,15 +1,15 @@
-MAX
+MIN
 
 b a 5
-b c 1
+c b 1
 a r 13
-a e 17
+e a 17
 g a 24
 c d 2
 d f 6
 f q 14
 q p 10
-r p 9
+p r 9
 e f 21 
 h c 3
 c i 4
@@ -20,7 +20,7 @@ f n 18
 n m 22
 m k 19
 k j 23
-m o 15
-o p 11 
+o m 15
+p o 11 
 j l 16
 l p 12

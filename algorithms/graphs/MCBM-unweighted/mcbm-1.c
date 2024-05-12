@@ -100,21 +100,20 @@ size_t dfs(network *N, vertex *v, vertex *sink, size_t flow) {
   if (v == sink || flow == 0) 
     return flow;                       // sink reached or no flow
   
-  dll *edges = getNeighbors(N, v);     // get neighbors of v
-  edge *e;
-  
-  if (! v->cont) {
-    e = dllFirst(edges);               // start at first edge
+  dll *edges = getNeighbors(N, v);     
+
+  for (edge *e = v->cont ? dllNext(edges) : dllFirst(edges); e; 
+       e = dllNext(edges)) {
+
     v->cont = true;                    // set continue flag
-  } else e = dllNext(edges);           // continue from last edge
-    
-  for ( ; e; e = dllNext(edges)) {
-    if (e->to->level == v->level + 1) {
+
+    if (e->to->level == v->level + 1){ // child node in next level?
+
       size_t bneck = dfs(N, e->to, sink, 
                          MIN(flow, e->cap - e->flow));
       if (bneck) {
         e->flow += bneck;              // update flow
-        e->rev->flow -= bneck;  
+        e->rev->flow -= bneck;             
         return bneck;
       } 
     } 
@@ -165,7 +164,7 @@ int main () {
 
   network *N = newNetwork(50, UNWEIGHTED);
   readNetwork(N);
-  setNLabel(N, "Network N");
+  setNLabel(N, "Input Network N");
   showNetwork(N);
   
   if (!isBipartite(N)) {

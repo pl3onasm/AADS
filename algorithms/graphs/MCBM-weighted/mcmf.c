@@ -5,11 +5,9 @@
   license: MIT, see LICENSE file in repository root folder
   description: weighted MCBM using min/max-cost max-flow
   time complexity: O(V²E²)
-  note 1: make sure to use VERTEX_TYPE6 in the vertex.h file  
-    and EDGE_TYPE1 in the edge.h file by defining them from 
-    the command line using
-      $ gcc -D VERTEX_TYPE6 -D EDGE_TYPE1 ...
-  maximum flow.
+  note: make sure to use VERTEX_TYPE6 in the vertex.h file  
+    by defining it from the command line using
+      $ gcc -D VERTEX_TYPE6 ...
 */
 
 #include "../../../datastructures/graphs/network/network.h"
@@ -51,11 +49,11 @@ bool isBipartite(network *N) {
 //===================================================================
 // Builds a new network N' from the input network N with edges
 // directed from the left set L to the right set R. The new network 
-// is also extended with a source and sink vertex: edges are added
-// from the source to all vertices in L and from all vertices in R
-// to the sink, all with unit capacity
+// is also extended with a source and sink vertex: new edges are 
+// added from the source to all vertices in L and from all vertices 
+// in R to the sink, all with unit capacity and zero cost. 
 network *buildNewNetwork(network *N, vertex **src, vertex **sink) {
-  network *newN = newNetwork(nVertices(N) + 2, UNWEIGHTED);
+  network *newN = newNetwork(nVertices(N) + 2, WEIGHTED);
   *src = addVertexR(newN, "SOURCE");
   *sink = addVertexR(newN, "SINK");
 
@@ -74,9 +72,8 @@ network *buildNewNetwork(network *N, vertex **src, vertex **sink) {
 }
 
 //===================================================================
-// Initializes the graph G with the source node s: sets the distance
-// of all nodes to the source to infinity and the distance of the
-// source node to 0
+// Sets the distance of all nodes to the source to infinity 
+// and the distance of the source node to 0
 void initSingleSource(network *N, vertex *src) {
   for (vertex *v = firstV(N); v; v = nextV(N)) {
     v->dist = DBL_MAX;
@@ -92,7 +89,7 @@ bool bellmanFord(network *N, vertex *src, vertex *sink, int cType) {
 
   initSingleSource(N, src);          
 
-    // relax all edges n-1 times 
+    // relax all edges |V|-1 times 
   for (size_t i = 0; i < nVertices(N) - 1; i++) 
     for (edge *e = firstE(N); e; e = nextE(N))
       if (e->cap - e->flow > 0 && e->from->dist != DBL_MAX)
@@ -106,34 +103,33 @@ bool bellmanFord(network *N, vertex *src, vertex *sink, int cType) {
 // Depth-first search to find augmenting paths in the residual
 // graph; returns true if a path is found
 size_t dfs(network *N, vertex *v, vertex *sink, size_t flow,
-         int cType, double *totalCost) {
+           int cType, double *totalCost) {
   
   if (v == sink || flow == 0)
     return flow;                       // sink reached or no flow
-            
-  dll *edges = getNeighbors(N, v);     
-  edge *e;
-  
-  if (! v->cont) {
-    e = dllFirst(edges);               // start at first edge
-    v->cont = true;                    // set continue flag
-  } else 
-    e = dllNext(edges);                // continue from last edge
 
-  for (; e; e = dllNext(edges)) {
-    if (e->to->dist == v->dist + cType * e->weight) {
+  v->visited = true;                   // mark vertex as visited
+  dll *edges = getNeighbors(N, v);     
+
+  for (edge *e = v->cont ? dllNext(edges) : dllFirst(edges); e; 
+       e = dllNext(edges)) {
+
+    v->cont = true;                    // set continue flag
+    if (!e->to->visited &&
+      e->to->dist == v->dist + cType * e->weight) {
       
       size_t bneck = dfs(N, e->to, sink, MIN(flow, e->cap - e->flow),
                          cType, totalCost);
-
       if (bneck) {
         *totalCost += e->weight;       // update total cost
         e->flow += bneck;              // update flow
         e->rev->flow -= bneck;             
+        e->to->visited = false;        // reset visited flag
         return bneck;
       } 
     } 
   }
+  v->visited = false;                  // reset visited flag
   return 0;
 }
 
@@ -147,7 +143,7 @@ double computeMCM(network *N, vertex *src, vertex *sink, int cType) {
   while (bellmanFord(N, src, sink, cType)) {
       // find the augmenting paths and update the total cost
     while ((flow = dfs(N, src, sink, SIZE_MAX, cType, &totalCost)))
-        // update cardinality of the matching
+      // update cardinality of the matching
       N->maxFlow += flow;
   }
   return totalCost;
@@ -169,8 +165,11 @@ void showMatching(network *N, vertex *src, vertex *sink,
           totalCost);
 
   for (edge *e = firstE(N); e; e = nextE(N))
-    if (e->flow > 0 && e->from != src && e->to != sink)
-      printf("  %s -- %s\n", e->from->label, e->to->label);
+    if (e->flow > 0 && e->from != src && e->to != sink) {
+      printf("  %s -- %s:", e->from->label, e->to->label);
+      printf(e->weight == (long)e->weight ? 
+             "   %.f\n" : "   %.2f\n", e->weight);
+    }
   printf("--------------------\n");
 }
 

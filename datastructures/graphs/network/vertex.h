@@ -95,6 +95,7 @@ typedef struct edge edge;
            RIGHT } type;      // vertex belongs to left or right set
     double dist;              // distance from the source
     bool cont;                // continue flag for DFS
+    bool visited;             // true if the vertex has been visited
   } vertex;
 
 //===================================================================
