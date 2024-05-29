@@ -160,7 +160,7 @@ void updateMatching(vertex *u, vertex *v) {
 // of the vertices in the right set not in the forest; the slack is
 // the minimum distance separating an unexplored vertex in R from
 // being adjacent to an explored vertex in L
-void relabel(graph *G, queue **Q) {
+void relabel(graph *G) {
     // first, find the minimum slack of the vertices in R that are
     // not in the forest but are adjacent to a vertex in the forest
   double delta = DBL_MAX;
@@ -271,7 +271,7 @@ void hungarian(graph *G) {
 
     while (true) {
       if (isEmptyQueue(Q)) {
-        relabel(G, &Q);
+        relabel(G);
         if (checkSlack(G, Q)) break;
       }
       if (runBFS(G, Q)) break;
