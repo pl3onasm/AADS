@@ -11,7 +11,6 @@
 */
 
 #include "../../../datastructures/graphs/network/network.h"
-#include "../../../datastructures/queues/queue.h"
 #include <assert.h>
 #include <float.h>
 #include <string.h>
@@ -19,10 +18,10 @@
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 
 //===================================================================
-// Returns true if the graph is bipartite, i.e. if it is possible
-// to partition the vertices into two sets such that no two adjacent
-// vertices belong to the same set. This is done using a BFS 
-// traversal and assigning a type to each vertex (LEFT or RIGHT)
+// Returns true if the graph is bipartite (two-colorable), i.e. if it 
+// is possible to partition the vertices into two sets such that no 
+// two adjacent vertices belong to the same set. This is done using a 
+// BFS traversal and assigning a type to each vertex (LEFT or RIGHT)
 bool isBipartite(network *N) {
   vertex *v = firstE(N)->from;
   v->type = LEFT;
@@ -35,10 +34,10 @@ bool isBipartite(network *N) {
     for (edge *e = dllFirst(edges); e; e = dllNext(edges)) {
       if (e->to->type == NIL) {
         e->to->type = u->type == LEFT ? RIGHT : LEFT;
-        enqueue(q, e->to);            
+        enqueue(q, e->to);
       } else if (e->to->type == u->type) {
         freeQueue(q);
-        return false;                
+        return false;
       }
     }
   }
@@ -101,7 +100,7 @@ bool bellmanFord(network *N, vertex *src, vertex *sink, int cType) {
 
 //===================================================================
 // Depth-first search to find augmenting paths in the residual
-// graph; returns true if a path is found
+// graph; returns the bottleneck flow of the path
 size_t dfs(network *N, vertex *v, vertex *sink, size_t flow,
            int cType, double *totalCost) {
   
@@ -134,14 +133,14 @@ size_t dfs(network *N, vertex *v, vertex *sink, size_t flow,
 }
 
 //===================================================================
-// Computes the min/max-cost matching by running the min/max-cost
-// max-flow algorithm
+// Computes the min/max-cost maximum cardinality matching by running 
+// the min/max-cost max-flow algorithm
 double computeMCM(network *N, vertex *src, vertex *sink, int cType) {
   double totalCost = 0;
   size_t flow;
 
   while (bellmanFord(N, src, sink, cType)) {
-      // find the augmenting paths and update the total cost
+      // find the M-augmenting paths and update the total cost
     while ((flow = dfs(N, src, sink, SIZE_MAX, cType, &totalCost)))
       // update cardinality of the matching
       N->maxFlow += flow;

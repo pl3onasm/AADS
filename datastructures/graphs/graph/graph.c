@@ -83,7 +83,9 @@ void showEdgeW(void const *val) {
   edge *e = (edge *)val; 
   if (!e) 
     return;
-  printf("%s(%.3g)", e->to->label, e->weight);
+  printf("%s(", e->to->label);
+  printf((long)e->weight == e->weight ?
+         "%.lf)" : "%.2lf)", e->weight);
 }
 
 //=================================================================

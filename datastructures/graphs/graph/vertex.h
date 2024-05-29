@@ -117,6 +117,27 @@
   } vertex;
 
 //===================================================================
+// VERTEX TYPE 8  (application example: MCBM, Hungarian)
+
+#elif defined (VERTEX_TYPE8)
+
+  typedef struct vertex {
+    char label[MAX_LABEL];    // the label of the vertex
+    struct vertex *match;     // vertex matched to this vertex
+    struct vertex *parent;    // parent in the augmenting path
+    size_t inDegree;          // in-degree of the vertex
+    enum { NIL, 
+           LEFT, 
+           RIGHT } type;      // vertex belongs to left or right set
+    double height;            // height of the vertex 
+    double slack;             // minimum distance separating an 
+                              // unexplored vertex in R from being 
+                              // adjacent to an explored vertex in L
+    struct vertex *minParent; // pointer to the parent vertex 
+                              // that minimizes the slack
+  } vertex;
+
+//===================================================================
 // DEFAULT VERTEX TYPE
 #else     
 

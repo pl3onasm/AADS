@@ -15,10 +15,10 @@
 #include "../../../datastructures/queues/queue.h"
 
 //===================================================================
-// Returns true if the graph is bipartite, i.e. if it is possible
-// to partition the vertices into two sets such that no two adjacent
-// vertices belong to the same set. This is done using a BFS 
-// traversal and assigning a type to each vertex (LEFT or RIGHT)
+// Returns true if the graph is bipartite (two-colorable), i.e. if it 
+// is possible to partition the vertices into two sets such that no 
+// two adjacent vertices belong to the same set. This is done using a 
+// BFS traversal and assigning a type to each vertex (LEFT or RIGHT)
 bool isBipartite(graph *G) {
   vertex *v = firstV(G);
   v->type = LEFT;
@@ -54,7 +54,7 @@ queue *initQueue(graph *G, vertex *nil) {
     if (u->match == nil) {
       u->level = 0;
       enqueue(Q, u);
-    } else u->level = SIZE_MAX;   // u is in the matching
+    } else u->level = SIZE_MAX;     // u is in the matching
   }
   nil->level = SIZE_MAX;
   return Q;
@@ -62,7 +62,8 @@ queue *initQueue(graph *G, vertex *nil) {
 
 //===================================================================
 // Breadth-first search to find shortest alternating paths from the
-// left set L to the right set R; returns true if a path is found
+// left set L to the right set R; returns true if an augmenting path
+// is found, false otherwise
 bool bfs(graph *G, vertex *nil) {
   
   queue *Q = initQueue(G, nil);
@@ -70,7 +71,7 @@ bool bfs(graph *G, vertex *nil) {
   while (!isEmptyQueue(Q)) {
     vertex *u = dequeue(Q);
   
-    if (u == nil) break;
+    if (u == nil) break;             // unmatched vertex in R found
 
     dll *edges = getNeighbors(G, u);
     
@@ -84,7 +85,7 @@ bool bfs(graph *G, vertex *nil) {
     }
   }
   freeQueue(Q);
-  return nil->level != SIZE_MAX;
+  return nil->level != SIZE_MAX;     // augmenting path found?
 }
 
 //===================================================================

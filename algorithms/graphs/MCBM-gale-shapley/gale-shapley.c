@@ -21,10 +21,10 @@
 #include "../../../lib/clib/clib.h"
 
 //===================================================================
-// Returns true if the graph is bipartite, i.e. if it is possible
-// to partition the vertices into two sets such that no two adjacent
-// vertices belong to the same set. This is done using a BFS 
-// traversal and assigning a type to each vertex (LEFT or RIGHT)
+// Returns true if the graph is bipartite (two-colorable), i.e. if it 
+// is possible to partition the vertices into two sets such that no 
+// two adjacent vertices belong to the same set. This is done using a 
+// BFS traversal and assigning a type to each vertex (LEFT or RIGHT)
 bool isBipartite(graph *G) {
   vertex *v = firstV(G);
   v->type = LEFT;

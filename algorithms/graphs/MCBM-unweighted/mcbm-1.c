@@ -17,10 +17,10 @@
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 
 //===================================================================
-// Returns true if the graph is bipartite, i.e. if it is possible
-// to partition the vertices into two sets such that no two adjacent
-// vertices belong to the same set. This is done using a BFS 
-// traversal and assigning a type to each vertex (LEFT or RIGHT)
+// Returns true if the graph is bipartite (two-colorable), i.e. if it 
+// is possible to partition the vertices into two sets such that no 
+// two adjacent vertices belong to the same set. This is done using a 
+// BFS traversal and assigning a type to each vertex (LEFT or RIGHT)
 bool isBipartite(network *N) {
   vertex *v = firstE(N)->from;
   v->type = LEFT;
@@ -128,7 +128,7 @@ void dinic(network *N, vertex *src, vertex *sink) {
 
     // while there is a path from src to sink
   while (bfs(N, src, sink)) {
-      // keep searching for augmenting paths until a
+      // keep searching for M-augmenting paths until a
       // blocking flow is reached
     while ((flow = dfs(N, src, sink, SIZE_MAX))) 
       N->maxFlow += flow;               

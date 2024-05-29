@@ -21,6 +21,7 @@
 | Chap 26.4-5 | n/a | [Maximum flow - Push-relabel](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/MF-push-relabel) |
 | n/a | Chap 25.1 | [MCBM - unweighted](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/MCBM-unweighted) |
 | n/a | Chap 25.2 | [MCBM - Gale-Shapley](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/MCBM-gale-shapley) |
-| n/a | Chap 25.3 | [MCBM - weighted](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/MCBM-weighted) |
+| n/a | n/a | [MCBM - weighted - mcmf](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/MCBM-weighted-mcmf) |
+| n/a | n/a | [MCBM - weighted - hungarian](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/MCBM-weighted-hungarian) |
 | n/a | n/a | [ETP - Fleury](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/ETP-fleury) |
 | n/a | n/a | [ETP - Hierholzer](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/ETP-hierholzer) |

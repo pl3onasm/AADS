@@ -62,7 +62,7 @@ void bellmanFord(graph *G, vertex *s) {
 
   initSingleSource(G, s);          
 
-    // relax all edges n-1 times 
+    // relax all edges |V|-1 times 
   vertex *from;
   for (size_t i = 0; i < nVertices(G) - 1; i++) 
     for (edge *e = firstE(G, &from); e; e = nextE(G, &from))
@@ -81,18 +81,18 @@ void bellmanFord(graph *G, vertex *s) {
 //===================================================================
 
 int main (int argc, char *argv[]) {
-    // read the source node
-  char s[50];
-  assert(scanf("%s", s) == 1);    
+    // read the label of the source vertex
+  char srcL[50];
+  assert(scanf("%s", srcL) == 1);    
 
   graph *G = newGraph(50, WEIGHTED);  
   readGraph(G); 
   showGraph(G);
 
-  vertex *src = getVertex(G, s);
+  vertex *src = getVertex(G, srcL);
 
   if (! src) {
-    fprintf(stderr, "Source node %s not found.\n", s);
+    fprintf(stderr, "Source node %s not found.\n", srcL);
     freeGraph(G);
     exit(EXIT_FAILURE);
   }  
