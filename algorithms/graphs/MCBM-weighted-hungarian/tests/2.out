@@ -1,0 +1,28 @@
+
+--------------------
+ Graph
+ Undirected
+ Weighted
+ Vertices: 8
+ Edges: 16
+--------------------
+  A[4]: Anna(76), Bob(74), Casey(72), Dave(78)
+  Anna[4]: A(76), B(78), C(70), D(62)
+  B[4]: Anna(78), Bob(80), Casey(76), Dave(80)
+  Bob[4]: A(74), B(80), C(66), D(62)
+  C[4]: Anna(70), Bob(66), Casey(68), Dave(66)
+  Casey[4]: A(72), B(76), C(68), D(58)
+  D[4]: Anna(62), Bob(62), Casey(58), Dave(60)
+  Dave[4]: A(78), B(80), C(66), D(60)
+--------------------
+
+--------------------
+Matching
+--------------------
+  Casey -- C
+  Bob -- B
+  Dave -- A
+  Anna -- D
+--------------------
+Total max cost: 288.00
+

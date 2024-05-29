@@ -125,9 +125,9 @@ void showMatching(graph *G) {
 }
 
 //===================================================================
-// Initializes the heights of the vertices: a vertex in the left set 
-// has height equaling the maximum weight of the edges incident to 
-// it; a vertex in the right set has height 0 and sigma set to INF 
+// Initializes the heights of the vertices: a vertex in L has height 
+// equaling the maximum weight of the edges incident to it; a vertex 
+// in R has height 0 and slack set to INF 
 void initHeights(graph *G) {
   for (vertex *v = firstV(G); v; v = nextV(G)) {
     if (v->type == LEFT) {
