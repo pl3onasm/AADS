@@ -14,9 +14,7 @@
 
 #include "../../../datastructures/graphs/graph/graph.h" 
 #include "../../../datastructures/queues/queue.h"
-#include <assert.h>
 #include <float.h>
-#include <string.h>
 
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
@@ -50,13 +48,14 @@ bool isBipartite(graph *G) {
 }
 
 //===================================================================
-// Initializes the matching with a greedy algorithm in the equality
+// Initializes the matching M with a greedy algorithm in the equality
 // subgraph: for each vertex in L, we match it with the first 
-// unmatched vertex in R that is adjacent to it
+// unmatched adjacent vertex in R; returns the number of edges in M
 size_t initMatching(graph *G) {
   size_t nMatched = 0;
   for (vertex *u = firstV(G); u; u = nextV(G)) {
-    if (u->type == RIGHT) continue;
+    if (u->type == RIGHT) 
+      continue;
     dll *edges = getNeighbors(G, u);
     for (edge *e = dllFirst(edges); e; e = dllNext(edges)) {
       if (u->height + e->to->height - e->weight < 1e-6 
@@ -72,21 +71,21 @@ size_t initMatching(graph *G) {
 }
 
 //===================================================================
-// Creates and initializes a queue with all unmatched vertices 
-// in L; also initializes the slack attribute of the vertices in R 
+// Creates and initializes a queue with all unmatched vertices in L;
+// also initializes the slack attribute of the vertices in R 
 // to the minimum slack of the edges incident to them
 queue *initBFS(graph *G) {
   queue *Q = newQueue(nVertices(G));
   
   for (vertex *u = firstV(G); u; u = nextV(G)) {
-    
+    u->parent = NULL;
     if (u->type == RIGHT) {
       dll *edges = getNeighbors(G, u);
         // determine the minimum slack of the edges incident to u and
         // set the minParent to the vertex that minimizes the slack
       u->slack = DBL_MAX;
       for (edge *e = dllFirst(edges); e; e = dllNext(edges)) {
-        if (e->to->match == NULL) {
+        if (! e->to->match) {
           double slack = u->height + e->to->height - e->weight;
           if (slack < u->slack) {
             u->slack = slack;
@@ -94,24 +93,19 @@ queue *initBFS(graph *G) {
           }
         }
       } 
-      u->parent = NULL;
-    } else {
-      if (u->match == NULL) {
-        u->parent = u;    
-        enqueue(Q, u);
-      } else {
-        u->parent = NULL;
-      }
+    } else if (! u->match) {
+      u->parent = u;    
+      enqueue(Q, u);
     }
   }
   return Q;
 }
 
 //===================================================================
-// Prints the matching
+// Shows the matching by printing the edges in M and the total cost
 void showMatching(graph *G) {
   printf("--------------------\n"
-         "Matching\n"
+         " Matching\n"
           "--------------------\n");
   double cost = 0;
   for (vertex *v = firstV(G); v; v = nextV(G)) {
@@ -121,7 +115,7 @@ void showMatching(graph *G) {
     }
   }
   printf("--------------------\n"
-         "Total max cost: %.2lf\n\n", cost);
+         " Total max cost: %.2lf\n\n", cost);
 }
 
 //===================================================================
@@ -143,24 +137,11 @@ void initHeights(graph *G) {
 }
 
 //===================================================================
-// Updates the matching by following the parent pointers in the
-// M-augmenting path
-void updateMatching(vertex *u, vertex *v) {
-  while (true) {
-    u->match = v;
-    v->match = u;
-    if (u->parent == u) break;
-    v = u->parent;
-    u = v->parent;
-  } 
-}
-
-//===================================================================
-// Adjusts the heights of the vertices in the forest and the slack
-// of the vertices in the right set not in the forest; the slack is
-// the minimum distance separating an unexplored vertex in R from
-// being adjacent to an explored vertex in L
-void relabel(graph *G) {
+// Adjusts the heights of the vertices in the forest and the slack of
+// the vertices in the right set not in the forest; the slack is the
+// minimum distance separating an unexplored vertex in R from being
+// adjacent to an explored vertex in L of the equality subgraph
+void adjustHeights(graph *G) {
     // first, find the minimum slack of the vertices in R that are
     // not in the forest but are adjacent to a vertex in the forest
   double delta = DBL_MAX;
@@ -184,11 +165,25 @@ void relabel(graph *G) {
 }
 
 //===================================================================
+// Updates the matching by following the parent pointers in the
+// M-augmenting path
+void updateMatching(vertex *u, vertex *v) {
+  while (true) {
+    u->match = v;
+    v->match = u;
+    if (u->parent == u) break;
+    v = u->parent;
+    u = v->parent;
+  } 
+}
+
+//===================================================================
 // Updates the queue with the vertices in L that correspond to the
 // vertices in R with zero slack; if such a vertex in R is unmatched,
 // we found an M-augmenting path and update the matching and return
-// true; otherwise, we enqueue the corresponding vertex in L
-bool checkSlack(graph *G, queue *Q) {
+// true; otherwise, we return false to let the algorithm continue 
+// the BFS with the next vertex in the updated queue
+bool checkNewEdges(graph *G, queue *Q) {
   for (vertex *v = firstV(G); v; v = nextV(G)) {
     if (v->type == RIGHT && v->slack == 0 ) {
       v->slack = DBL_MAX;          // reset the slack
@@ -196,7 +191,6 @@ bool checkSlack(graph *G, queue *Q) {
       if (! v->match) {
           // we found an M-augmenting path
         updateMatching(u, v);
-        freeQueue(Q);
         return true;
       }
       enqueue(Q, u);
@@ -206,12 +200,12 @@ bool checkSlack(graph *G, queue *Q) {
 }
 
 //===================================================================
-// Adjusts the slack of the vertices in R not in the forest and
-// adjacent to the vertex v
+// Adjusts the slack of the vertices in R that are not in the forest 
+// and are adjacent to the vertex v
 void adjustSlack(graph *G, vertex *v) {
   dll *edges = getNeighbors(G, v);
   for (edge *e = dllFirst(edges); e; e = dllNext(edges)) 
-    if (e->to->parent == NULL) {
+    if (! e->to->parent) {
       double slack = e->to->height + v->height - e->weight;
       if (slack < e->to->slack) {
         e->to->slack = slack;
@@ -224,7 +218,7 @@ void adjustSlack(graph *G, vertex *v) {
 // Runs a BFS to find an M-augmenting path in the directed equality 
 // subgraph. Returns true and updates the matching if such a path is 
 // found; otherwise, returns false
-bool runBFS(graph *G, queue *Q) {
+bool findAugmentingPath(graph *G, queue *Q) {
   vertex *u = dequeue(Q);
   dll *edges = getNeighbors(G, u);
   
@@ -232,7 +226,7 @@ bool runBFS(graph *G, queue *Q) {
   for (edge *e = dllFirst(edges); e; e = dllNext(edges)) {
     vertex *v = e->to;
 
-    if (v->parent == NULL) {
+    if (! v->parent) {
       if (v->type == LEFT && u->match == v) {
         adjustSlack(G, v);
         v->parent = u;
@@ -241,7 +235,7 @@ bool runBFS(graph *G, queue *Q) {
       
       if (v->type == RIGHT && 
           u->height + v->height - e->weight < 1e-6) {
-        if (v->match == NULL) {	
+        if (! v->match) {	
             // we found an M-augmenting path
           updateMatching(u, v);
           return true;
@@ -271,12 +265,15 @@ void hungarian(graph *G) {
 
     while (true) {
       if (isEmptyQueue(Q)) {
-        relabel(G);
-        if (checkSlack(G, Q)) break;
+        adjustHeights(G);
+          // check the new edges that entered the equality 
+          // subgraph after having adjusted the vertex heights
+        if (checkNewEdges(G, Q)) break;
       }
-      if (runBFS(G, Q)) break;
+      if (findAugmentingPath(G, Q)) break;
     }
     nMatched++;
+    freeQueue(Q);
   }
 }
 
@@ -291,7 +288,7 @@ int main() {
   showGraph(G);
 
   if (!isBipartite(G)) {
-    printf("Graph is not bipartite\n");
+    printf("The graph is not bipartite\n");
     freeGraph(G);
     return 0;
   }

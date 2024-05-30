@@ -36,5 +36,5 @@ Note that this is very much a work in progress. It simply takes time to develop 
 CLRS³: Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. (2009). [Introduction to algorithms](https://mitpress.mit.edu/9780262533058/introduction-to-algorithms/). MIT press.  
 CLRS⁴: Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. (2022). [Introduction to algorithms](http://mitpress.mit.edu/9780262046305/introduction-to-algorithms/). MIT press.  
 CP: Halim, S., Halim, F., & Effendy, S. (2022) [Competitive programming 4](https://cpbook.net/details?cp=4). Lulu Publishing.  
-EA: Kao, M.Y., 2016. [Encyclopedia of Algorithms](https://link.springer.com/referencework/10.1007/978-1-4939-2864-4). Springer.
+EA: Kao, M.Y., 2016. [Encyclopedia of Algorithms](https://link.springer.com/referencework/10.1007/978-1-4939-2864-4). Springer.  
 JE: Erickson, J. (2019). [Algorithms](https://github.com/jeffgerickson/algorithms/blob/master/Algorithms-JeffE.pdf). Independent Publisher.  

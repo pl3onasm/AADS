@@ -2,7 +2,7 @@
 
 ## ${\color{Rosybrown}\text{Overview}}$
 
-| ${\color{peru}\text{Ref: CLRS3, CLRS4, ...}}$ | ${\color{peru}\text{Link}}$ |
+| ${\color{peru}\text{CLRS3, CLRS4, ...}}$ | ${\color{peru}\text{Topic}}$ |
 |:---|:---|
 | 22.2, 20.2 | [Breadth-first search](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/bfs) |
 | 22.3, 20.3 | [Depth-first search](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/dfs) |
