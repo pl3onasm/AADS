@@ -31,16 +31,16 @@
 --------------------
  Matching
 --------------------
-  b -- m
-  f -- n
-  j -- k
-  a -- o
-  e -- t
-  i -- p
-  d -- q
-  c -- s
-  h -- r
-  g -- l
+  q -- j
+  n -- i
+  p -- g
+  t -- d
+  m -- f
+  s -- e
+  l -- b
+  r -- c
+  k -- a
+  o -- h
 --------------------
- Total max cost: 4415.77
+ Total min cost: 2300.62
 

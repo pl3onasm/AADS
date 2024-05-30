@@ -10,7 +10,6 @@ In this version of the problem, the edges come with a cost and we are asked to f
 
 ### Hungarian Algorithm (Kuhn-Munkres Algorithm) (CLRS⁴ 25.3)
 
-This implementation follows the pseudo code as closely as possible, while also implementing the optimization presented in problem 25-2 of the book CLRS⁴. This optimization allows the algorithm to run in $O(V^3)$ time, and involves the introduction of a slack attribute for each vertex in the graph (CLRS calls it the $\sigma$ attribute, but following the general convention in the literature, we will call it the slack attribute instead).
-Also, since the label of a vertex already indicates its name, we will use the term height for what CLRS calls the label of a vertex.
+The implementation follows the pseudo code as closely as possible, but with some modifications to make it more readable and to allow for the algorithm to be used in a more general context. The latter is achieved by allowing the algorithm to work with negative weights and to find either the minimum or maximum cost matching. The code is also optimized to run in $O(V^3)$ time, by implementing the optimization presented in problem 25-2 of the book CLRS⁴. This optimization involves the introduction of a slack attribute for each vertex in the graph (CLRS calls it the $\sigma$ attribute, but following the general convention in the literature, we will call it the slack attribute instead). Also, since the label of a vertex already indicates its name, the term height is used for what CLRS calls the label of a vertex.
 
 Implementation: [MCBM - Kuhn-Munkres](hungarian.c)

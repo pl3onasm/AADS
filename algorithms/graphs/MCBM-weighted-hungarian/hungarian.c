@@ -15,6 +15,8 @@
 #include "../../../datastructures/graphs/graph/graph.h" 
 #include "../../../datastructures/queues/queue.h"
 #include <float.h>
+#include <assert.h>
+#include <string.h>
 
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
@@ -103,19 +105,22 @@ queue *initBFS(graph *G) {
 
 //===================================================================
 // Shows the matching by printing the edges in M and the total cost
-void showMatching(graph *G) {
+void showMatching(graph *G, int cType, double minWeight) {
   printf("--------------------\n"
          " Matching\n"
           "--------------------\n");
   double cost = 0;
   for (vertex *v = firstV(G); v; v = nextV(G)) {
-    cost += v->height;
+    cost += cType * v->height;
     if (v->type == LEFT) {
       printf("  %s -- %s\n", v->label, v->match->label);
     }
   }
   printf("--------------------\n"
-         " Total max cost: %.2lf\n\n", cost);
+         " Total %s cost: %.2lf\n\n", 
+         cType < 0 ? "min" : "max",
+         minWeight < 0 ? cost + cType * minWeight * 
+                         nVertices(G) / 2 : cost);
 }
 
 //===================================================================
@@ -227,6 +232,7 @@ bool findAugmentingPath(graph *G, queue *Q) {
     vertex *v = e->to;
 
     if (! v->parent) {
+      
       if (v->type == LEFT && u->match == v) {
         adjustSlack(G, v);
         v->parent = u;
@@ -235,6 +241,7 @@ bool findAugmentingPath(graph *G, queue *Q) {
       
       if (v->type == RIGHT && 
           u->height + v->height - e->weight < 1e-6) {
+
         if (! v->match) {	
             // we found an M-augmenting path
           updateMatching(u, v);
@@ -278,8 +285,52 @@ void hungarian(graph *G) {
 }
 
 //===================================================================
+// Adjusts the weights of the edges in the graph to allow for 
+// negative weights and to transform the cost type from MIN to MAX
+// Returns the minimum weight of the edges in the graph
+double adjustWeights(graph *G, int cType) {
+
+  // find the minimum weight of the edges in the graph and
+  // turn all weights negative if the cost type is MIN
+  double minWeight = DBL_MAX;
+  for (vertex *v = firstV(G); v; v = nextV(G)) {
+    dll *edges = getNeighbors(G, v);
+    for (edge *e = dllFirst(edges); e; e = dllNext(edges)) {
+      e->weight *= cType;
+      minWeight = MIN(minWeight, e->weight);
+    }
+  }
+  // if the minimum weight is negative, we shift all the weights
+  // by adding the absolute value of the minimum weight to each edge
+  // to make all the weights non-negative
+  if (minWeight < 0)
+    for (vertex *v = firstV(G); v; v = nextV(G)) {
+      dll *edges = getNeighbors(G, v);
+      for (edge *e = dllFirst(edges); e; e = dllNext(edges)) 
+        e->weight -= minWeight;
+    }
+  return minWeight;
+}
+
+//===================================================================
+// Reads the cost type from stdin: either MIN or MAX
+int readCostType() {
+  char type[20];
+  assert(scanf("%s ", type) == 1);
+  if (strcmp(type, "MIN") == 0) return -1;
+  else if (strcmp(type, "MAX") == 0) return 1;
+  else {
+    fprintf(stderr, "Invalid cost type: %s\n"
+                    "Valid types are: MIN, MAX\n", type);
+    exit(EXIT_FAILURE);
+  }
+}
+
+//===================================================================
 
 int main() {
+
+  int cType = readCostType(); 
 
   graph *G = newGraph(50, WEIGHTED);
   setUndirected(G);
@@ -299,8 +350,9 @@ int main() {
     return 0;
   }
 
+  double minWeight = adjustWeights(G, cType);
   hungarian(G);
-  showMatching(G);
+  showMatching(G, cType, minWeight);
 
   freeGraph(G);
   return 0;
