@@ -2,7 +2,7 @@ _______________________________________________
 *Maximum cardinality bipartite matching (MCBM)*
 _______________________________________________
 
-# ${\color{Cadetblue}\text{Unweighted preferred MCBM}}$
+# ${\color{Cadetblue}\text{Unweighted}}$ ${\color{Cadetblue}\text{preferred MCBM}}$
 
 ## ${\color{rosybrown}\text{Problem}}$
 
@@ -16,8 +16,10 @@ A matching is said to be $\color{orchid}{\text{stable}}$ if no better matching c
 
 The algorithm is based on the principle of $\color{orchid}{\text{proposals}}$ and $\color{orchid}{\text{rejections}}$. We start with an empty matching and then we let the vertices in $L$ propose to the vertices in $R$ according to the proposer's preference list. If the vertex in $R$ is unmatched, then it accepts the proposal and the matching is updated accordingly. If the vertex in $R$ is already matched, then it checks if the proposer is preferred over its current match according to its own preference list. If this is the case, then the vertex in $R$ accepts the proposal and the matching is updated accordingly, otherwise the proposal is rejected and the matching remains unchanged. The algorithm terminates when no more proposals can be made and the matching is stable.
 
+A note on the implementation: since the graph is implemented as a hash table of vertices and a random first vertex is chosen to start classifying the vertices as proposers (in $L$) and receivers (in $R$), this means that the output may vary from run to run. This should not be a problem, as the algorithm is guaranteed to find a stable matching regardless of the order in which the vertices are processed. What you probably will notice if you compare the output of different runs is that the matching has a $\color{orchid}{\text{bias}}$ towards the proposers, i.e. the vertices in $L$: the preference lists of the proposers weigh more heavily than those of the receivers. In other words, the proposers are more likely to get a match with a receiver that is higher up in their preference list than the other way around.
+
 Implementation: [MCBM - Gale-Shapley](https://github.com/pl3onasm/AADS/blob/main/algorithms/graphs/MCBM-gale-shapley/gale-shapley.c)
 
-Video
+## ${\color{darkseagreen}\text{Video}}$
 
 [![Problem](https://img.youtube.com/vi/RLOWSkL-V8M/0.jpg)](https://www.youtube.com/watch?v=RLOWSkL-V8M)

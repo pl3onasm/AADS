@@ -96,6 +96,8 @@ queue *initBFS(graph *G) {
         }
       } 
     } else if (! u->match) {
+        // add the unmatched vertices in L to the queue: 
+        // they are the roots of the BFS forest
       u->parent = u;    
       enqueue(Q, u);
     }
@@ -147,8 +149,8 @@ void initHeights(graph *G) {
 // minimum distance separating an unexplored vertex in R from being
 // adjacent to an explored vertex in L of the equality subgraph
 void adjustHeights(graph *G) {
-    // first, find the minimum slack of the vertices in R that are
-    // not in the forest but are adjacent to a vertex in the forest
+    // find the minimum slack of the vertices in R that are not
+    // in the forest but are adjacent to a vertex in the forest
   double delta = DBL_MAX;
   for (vertex *u = firstV(G); u; u = nextV(G)) 
     if (u->type == RIGHT && u->parent == NULL 
@@ -176,7 +178,8 @@ void updateMatching(vertex *u, vertex *v) {
   while (true) {
     u->match = v;
     v->match = u;
-    if (u->parent == u) break;
+    if (u->parent == u) 
+      return;
     v = u->parent;
     u = v->parent;
   } 
@@ -192,7 +195,7 @@ bool checkNewEdges(graph *G, queue *Q) {
   for (vertex *v = firstV(G); v; v = nextV(G)) {
     if (v->type == RIGHT && v->slack == 0 ) {
       v->slack = DBL_MAX;          // reset the slack
-      vertex *u = v->minParent;
+      vertex *u = v->minParent;    
       if (! v->match) {
           // we found an M-augmenting path
         updateMatching(u, v);
@@ -206,7 +209,7 @@ bool checkNewEdges(graph *G, queue *Q) {
 
 //===================================================================
 // Adjusts the slack of the vertices in R that are not in the forest 
-// and are adjacent to the vertex v
+// and are adjacent to vertex v, which was just added to the forest
 void adjustSlack(graph *G, vertex *v) {
   dll *edges = getNeighbors(G, v);
   for (edge *e = dllFirst(edges); e; e = dllNext(edges)) 
@@ -275,9 +278,11 @@ void hungarian(graph *G) {
         adjustHeights(G);
           // check the new edges that entered the equality 
           // subgraph after having adjusted the vertex heights
-        if (checkNewEdges(G, Q)) break;
+        if (checkNewEdges(G, Q)) 
+          break;
       }
-      if (findAugmentingPath(G, Q)) break;
+      if (findAugmentingPath(G, Q)) 
+        break;
     }
     nMatched++;
     freeQueue(Q);
@@ -286,12 +291,12 @@ void hungarian(graph *G) {
 
 //===================================================================
 // Adjusts the weights of the edges in the graph to allow for 
-// negative weights and to transform the cost type from MIN to MAX
-// Returns the minimum weight of the edges in the graph
+// negative weights and to compute the MIN or MAX cost of the 
+// matching; returns the minimum weight of the edges in the graph
 double adjustWeights(graph *G, int cType) {
 
-  // find the minimum weight of the edges in the graph and
-  // turn all weights negative if the cost type is MIN
+    // find the minimum weight of the edges in the graph and
+    // negate all weights if the cost type is MIN
   double minWeight = DBL_MAX;
   for (vertex *v = firstV(G); v; v = nextV(G)) {
     dll *edges = getNeighbors(G, v);
@@ -300,9 +305,9 @@ double adjustWeights(graph *G, int cType) {
       minWeight = MIN(minWeight, e->weight);
     }
   }
-  // if the minimum weight is negative, we shift all the weights
-  // by adding the absolute value of the minimum weight to each edge
-  // to make all the weights non-negative
+    // if the minimum weight is negative, we shift all the weights
+    // by adding the absolute value of the minimum weight to each 
+    // edge so as to make all the weights non-negative
   if (minWeight < 0)
     for (vertex *v = firstV(G); v; v = nextV(G)) {
       dll *edges = getNeighbors(G, v);

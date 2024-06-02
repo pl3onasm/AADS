@@ -46,10 +46,9 @@ bool isBipartite(network *N) {
 
 //===================================================================
 // Builds a new network N' from the input network N with edges
-// directed from the left set L to the right set R. The new network 
-// is also extended with a source and sink vertex: edges are added
-// from the source to all vertices in L and from all vertices in R
-// to the sink, all with unit capacity
+// directed from L to R. This network is also extended with a source 
+// and sink: edges are added from the source to all vertices in L 
+// and from all vertices in R to the sink, all with unit capacity
 network *buildNewNetwork(network *N, vertex **src, vertex **sink) {
   network *newN = newNetwork(nVertices(N) + 2, UNWEIGHTED);
   *src = addVertexR(newN, "SOURCE");

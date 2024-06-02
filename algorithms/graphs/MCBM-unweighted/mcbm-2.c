@@ -54,7 +54,7 @@ queue *initQueue(graph *G, vertex *nil) {
     if (u->match == nil) {
       u->level = 0;
       enqueue(Q, u);
-    } else u->level = SIZE_MAX;     // u is in the matching
+    } else u->level = SIZE_MAX;      // u is in the matching
   }
   nil->level = SIZE_MAX;
   return Q;
