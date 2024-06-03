@@ -29,10 +29,15 @@ $\qquad\qquad + \dots + S[m-1]) \mod p$
 
 After that, the hash value at each new shift $s+1$ can be recomputed in constant time as follows:
 
-$h(T[s+1:s + m]) = (d \cdot (h(T[s:s + m -1])$  
-$\qquad\qquad\qquad- T[s] \cdot h) + T[s + m]) \mod p$  
+$h(T[s+1:s + m]) = $
+$\qquad\qquad (d \cdot (h(T[s:s + m -1])$  
+$\qquad\qquad - T[s] \cdot h) + T[s + m]) \mod p$  
 
-where $h$ is precomputed as $h = d^{m-1} \mod p$. The subtraction of $T[s] \cdot h$ is necessary to remove the contribution of the character that just left the window, and the addition of $T[s + m]$ to add the contribution of the new character in the window. Note that the hash values are computed modulo $p$ at each step to avoid overflow. The probability of a hash collision is thus reduced to $1/p$.
+where $h$ is precomputed as  
+
+$h = d^{m-1} \mod p$.  
+
+The subtraction of $T[s] \cdot h$ is necessary to remove the contribution of the character that just left the window, and the addition of $T[s + m]$ to add the contribution of the new character in the window. Note that the hash values are computed modulo $p$ at each step to avoid overflow. The probability of a hash collision is thus reduced to $1/p$.
 
 Implementation: [Rabin-Karp](https://github.com/pl3onasm/AADS/blob/main/algorithms/string-matching/rabin-karp/rka.c)
 
