@@ -1,4 +1,4 @@
-# ${\color{Cadetblue}\text{Rabin-Karp algorithm (RKA)}}$
+# ${\color{Cadetblue}\text{Rabin-Karp algorithm}}$ ${\color{Cadetblue}\text{(RKA)}}$
 
 ## ${\color{Rosybrown}\text{Problem}}$
 
