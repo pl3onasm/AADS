@@ -29,7 +29,7 @@ $\qquad\qquad + \dots + S[m-1]) \mod p$
 
 After that, the hash value at each new shift $s+1$ can be recomputed in constant time as follows:
 
-$h(T[s+1:s + m]) = $
+$h(T[s+1:s + m]) = $  
 $\qquad\qquad (d \cdot (h(T[s:s + m -1])$  
 $\qquad\qquad - T[s] \cdot h) + T[s + m]) \mod p$  
 
