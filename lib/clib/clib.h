@@ -9,6 +9,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 //::::::::::::::::::::::::::: PRINTING ::::::::::::::::::::::::::://
 
@@ -159,31 +160,48 @@ void clearStdin(char *buffer);
 //:::::::::::::::::::::::::::: STRINGS ::::::::::::::::::::::::::://
 
 typedef struct {
-  char *str;
+  unsigned char *data;
   size_t size, cap;
 } string;
 
-  // macro for reading all text until the end of the file in a string
-  // Example:  READ_STRING(myString);
-#define READ_STRING(arr) \
+  // macro for reading all text until delimiter is found
+  // Example:  READ_STRING(myString, '\n');
+#define READ_STRING(arr, delim) \
   string *arr = safeCalloc(1, sizeof(string)); \
-  arr->str = safeCalloc(1000, sizeof(char)); \
-  arr->cap = 1000; \
-  size_t str##size##Len = 0; char str##size##var; \
-  while (scanf("%c", &str##size##var) == 1) { \
-    arr->str[str##size##Len++] = str##size##var; \
-    if (str##size##Len % 1000 == 0) {\
-      arr->str = safeRealloc(arr->str, \
-        (str##size##Len + 1000) * sizeof(char)); \
-      memset(arr->str + str##size##Len, 0, 1000); \
+  arr->data = safeCalloc(100, sizeof(unsigned char)); \
+  arr->cap = 100; \
+  size_t arr##size##Len = 0; unsigned char arr##size##var; \
+  while (scanf("%c", &arr##size##var) == 1 \
+         && arr##size##var != delim) { \
+    arr->data[arr##size##Len++] = arr##size##var; \
+    if (arr##size##Len % 100 == 0) {\
+      arr->data = safeRealloc(arr->data, \
+        (arr##size##Len + 100) * sizeof(unsigned char)); \
+      memset(arr->data + arr##size##Len, 0, 100); \
     } \
   } \
-  arr->size = str##size##Len;\
+  arr->size = arr##size##Len;\
 
   // shows a string
 void showString(string *s);
 
   // deallocates a string
 void freeString(string *s);
+
+  // returns the i-th character of a string
+inline unsigned char charAt(string *s, size_t i) {
+  return s->data[i];
+}
+
+  // checks if a substring is present in a string
+bool isSubstring(string *text, string *pattern, size_t start);
+
+inline unsigned char *str(string *s) {
+  return s->data;
+}
+
+inline size_t strLen(string *s) {
+  return s->size;
+}
 
 #endif // CLIB_H_INCLUDED
