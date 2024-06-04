@@ -15,7 +15,7 @@ The $\color{darkkhaki}\text{transition function }\delta$ is defined in terms of 
 $$
 \color{mediumpurple}\boxed{\space
 \begin{align*}
-\color{darkkhaki}\space \delta(q,a) &\color{peru} = \sigma(P_qa)\\
+\color{darkkhaki}\space \delta(q,a) \space  &\color{peru} = \sigma(P_qa)\\
  &\color{rosybrown} =\max \lbrace k : P_k \sqsupset P_qa \rbrace\\
 \end{align*}
 \space}
