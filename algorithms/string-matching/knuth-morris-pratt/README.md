@@ -11,7 +11,7 @@ If we look at the [string-matching automaton](https://github.com/pl3onasm/CLRS/t
 This is where the KMP algorithm comes in: it does not compute an exhaustive transition function $\delta$ in advance, but instead computes the transitions on the fly during the matching process, by using a ${\color{darkkhaki}\text{precomputed}}$ ${\color{darkkhaki}\text{prefix function }\pi}$ $: \lbrace 0, 1, \dots, m \rbrace \rightarrow \lbrace 0, 1, \dots, m \rbrace$, which maps a state $q$ to the length of the longest prefix of $P$ that is also a suffix of $P_q$, thus effectively using the information about the pattern $P$ to guide the matching process by indicating the next shift to try in case of a mismatch. This prefix function is defined as:
 
 $$
-\color{mediumpurple}\boxed{\color{darkkhaki}\space \pi(q) = \color{darkgoldenrod}\max \lbrace k : k < q \land P_k \sqsupset P_q \rbrace \space}\\
+\color{teal}\boxed{\color{darkkhaki}\space \pi(q) = \color{darkgoldenrod}\max \lbrace k : k < q \land P_k \sqsupset P_q \rbrace \space}\\
 $$
 
 The matching process then works in the same way as a [string-matching automaton](https://github.com/pl3onasm/CLRS/tree/main/algorithms/string-matching/finite-automata) with $m$ states, where the ${\color{rosybrown}\text{transition function}}$ is computed on the fly and is redefined to be:

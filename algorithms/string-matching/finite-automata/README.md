@@ -13,7 +13,7 @@ In order to use a finite automaton for string matching, the automaton must be co
 The $\color{darkkhaki}\text{transition function }\delta$ is defined in terms of a function $\sigma : \Sigma^\ast \rightarrow \lbrace 0, 1, ..., m \rbrace$, called the $\color{peru}\text{suffix function}$, which maps a string $x \in \Sigma^\ast$ to the length of the longest prefix of $P$ that is also a suffix of $x$. In this particular case, the string $x$ is the concatenation of the prefix $P_q$ that has been matched against $T$ so far and the next input symbol $a$. Thus, the transition function $\delta$ is defined as follows, with $k \leq m$: [^1]
 
 $$
-\color{mediumpurple}\boxed{\space
+\color{darkcyan}\boxed{\space
 \begin{align*}
 \color{darkkhaki}\space \delta(q,a) \space  &\color{peru} = \sigma(P_qa)\\
  &\color{rosybrown} =\max \lbrace k : P_k \sqsupset P_qa \rbrace\\
