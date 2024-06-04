@@ -1,14 +1,11 @@
-/* file: nsm.c
-   author: David De Potter
-   email: pl3onasm@gmail.com
-   license: MIT, see LICENSE file in repository root folder
-   description: string matching, naive approach
+/* 
+  file: nsm.c
+  author: David De Potter
+  email: pl3onasm@gmail.com
+  license: MIT, see LICENSE file in repository root folder
+  description: string matching, naive approach
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <string.h>
 #include "../../../lib/clib/clib.h"
 
 //===================================================================

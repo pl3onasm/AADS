@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
 //::::::::::::::::::::::::::: PRINTING ::::::::::::::::::::::::::://
 
@@ -154,7 +155,8 @@ void *safeCalloc(size_t n, size_t size);
     
   // reallocates memory and checks if it succeeded
 void *safeRealloc(void *ptr, size_t newSize);
-
+  
+  // clears the input buffer
 void clearStdin(char *buffer);
 
 //:::::::::::::::::::::::::::: STRINGS ::::::::::::::::::::::::::://
@@ -174,33 +176,36 @@ typedef struct {
   while (scanf("%c", &arr##size##var) == 1 \
          && arr##size##var != delim) { \
     arr->data[arr##size##Len++] = arr##size##var; \
-    if (arr##size##Len % 100 == 0) {\
+    if (arr##size##Len == arr->cap) { \
+      arr->cap <<= 1; \
       arr->data = safeRealloc(arr->data, \
-        (arr##size##Len + 100) * sizeof(unsigned char)); \
-      memset(arr->data + arr##size##Len, 0, 100); \
+        (arr->cap) * sizeof(unsigned char)); \
+      memset(arr->data + arr##size##Len, 0, arr->cap / 2); \
     } \
   } \
   arr->size = arr##size##Len;\
 
   // shows a string
-void showString(string *s);
+static inline void showString(string *s) {
+  printf("%s\n", s->data);
+}
 
   // deallocates a string
-void freeString(string *s);
+static inline void freeString(string *s) {
+  free(s->data);
+  free(s);
+}
 
   // returns the i-th character of a string
-inline unsigned char charAt(string *s, size_t i) {
+static inline unsigned char charAt(string *s, size_t i) {
   return s->data[i];
 }
 
-  // checks if a substring is present in a string
-bool isSubstring(string *text, string *pattern, size_t start);
-
-inline unsigned char *str(string *s) {
+static inline unsigned char *str(string *s) {
   return s->data;
 }
 
-inline size_t strLen(string *s) {
+static inline size_t strLen(string *s) {
   return s->size;
 }
 

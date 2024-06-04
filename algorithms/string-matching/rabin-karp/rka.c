@@ -1,30 +1,27 @@
-/* file: rka.c
-   author: David De Potter
-   email: pl3onasm@gmail.com
-   license: MIT, see LICENSE file in repository root folder
-   description: string matching using the Rabin-Karp algorithm
-   assumption: length of the alphabet is 256 (extended ASCII)
+/* 
+  file: rka.c
+  author: David De Potter
+  email: pl3onasm@gmail.com
+  license: MIT, see LICENSE file in repository root folder
+  description: string matching using the Rabin-Karp algorithm
+  assumption: length of the alphabet is 256 (extended ASCII)
 */
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <limits.h>
-#include <string.h>
 #include "../../../lib/clib/clib.h"
 
 #define d 256       // number of characters in the alphabet, d = |Σ|
 #define p ULONG_MAX // a large prime number
-typedef unsigned long long ull;
 
 //===================================================================
 // Determines all valid shifts of pattern in text and prints them
 void computeShifts (string *text, string* pattern) {
-  ull pHash = 0, tHash = 0, h = 1; 
+  unsigned long long pHash = 0, tHash = 0, h = 1; 
   
   printf("Shifts: ");
   bool foundShift = false;
 
-    // compute h = d^(m-1) % p
+    // precompute h = d^(m-1) % p
   for (size_t i = 0; i < strLen(pattern) - 1; i++) h = (h * d) % p;
 
     // precompute hash values for pattern and text[0..pLen-1]
@@ -45,7 +42,7 @@ void computeShifts (string *text, string* pattern) {
       // compute hash value for next shift
     if (i < strLen(text) - strLen(pattern)) 
       tHash = ((tHash - charAt(text, i) * h) * d 
-               + charAt(text, pattern->size + i)) % p;
+               + charAt(text, strLen(pattern) + i)) % p;
   }
   if (foundShift) printf("\n"); 
   else printf("None.\n");
