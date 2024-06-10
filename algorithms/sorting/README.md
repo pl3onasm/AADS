@@ -2,18 +2,18 @@
 
 ## ${\color{Rosybrown}\text{Overview}}$
 
-| ${\color{peru}\text{Complexity}}$ | ${\color{peru}\text{CLRS}^{3+4}}$ | ${\color{peru}\text{Link}}$ |
+| ${\color{peru}\text{Complexity}}$ | ${\color{peru}\text{CLRS}}$ | ${\color{peru}\text{Topic}}$ |
 |:---|:---:|:---|
-| ${\color{olive}\Theta(n + k)}$ | Chap 8.2 | [Counting sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/counting-sort)
-| ${\color{olive}\Theta(d(n + k))}$ | Chap 8.3 | [Radix sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/radix-sort)
-|  ${\color{olive} \sim \Theta(n)}$ [^1] | Chap 8.4 |  [Bucket sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/bucket-sort)
-| ${\color{olive}\Theta(n\log n)}$ | Chap 2.3 |  [Merge sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/merge-sort)
-| ${\color{olive}\Theta(n\log n)}$ | n/a |  [WHAM sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/merge-sort#wham-sort)
-| ${\color{olive}\mathcal{O}(n\log n)}$ | Chap 6.4 |   [Heapsort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/heap-sort)
-| ${\color{olive}\sim \mathcal{O}(n\log n)}$ | Chap 7.1-3 |  [Quicksort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/quick-sort)
-| ${\color{olive}\mathcal{O}(n^2)}$ | Chap 2.1-2 |  [Insertion sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/insertion-sort)
-| ${\color{olive}\mathcal{O}(n^2)}$ | Ex 2.2-2 |  [Selection sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/selection-sort)
-| ${\color{olive}\mathcal{O}(n^2)}$ | Prob 2-2 | [Bubble sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/bubble-sort)
+| ${\color{darkcyan}\Theta(n + k)}$ | 8.2 | [Counting sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/counting-sort)
+| ${\color{darkcyan}\Theta(d(n + k))}$ | 8.3 | [Radix sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/radix-sort)
+|  ${\color{darkcyan} \sim \Theta(n)}$ [^1] | 8.4 |  [Bucket sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/bucket-sort)
+| ${\color{darkcyan}\Theta(n\log n)}$ | 2.3 |  [Merge sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/merge-sort)
+| ${\color{darkcyan}\Theta(n\log n)}$ | – |  [WHAM sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/merge-sort#wham-sort)
+| ${\color{darkcyan}\mathcal{O}(n\log n)}$ | 6.4 |   [Heapsort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/heap-sort)
+| ${\color{darkcyan}\sim \mathcal{O}(n\log n)}$ | 7.1-3 |  [Quicksort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/quick-sort)
+| ${\color{darkcyan}\mathcal{O}(n^2)}$ | 2.1-2 |  [Insertion sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/insertion-sort)
+| ${\color{darkcyan}\mathcal{O}(n^2)}$ | Ex 2.2-2 |  [Selection sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/selection-sort)
+| ${\color{darkcyan}\mathcal{O}(n^2)}$ | Prob 2-2 | [Bubble sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/bubble-sort)
 
 [^1]: The tilde (~) means that this is the expected complexity: the complexity is not guaranteed,  
 but it is the average case complexity. The worst case complexity is higher.
@@ -38,7 +38,7 @@ This is illustrated in the below decision tree. Each internal node (in blue) is 
 
 The number of comparisons performed by a comparison sort algorithm for a given input corresponds to the path length from the root to the leaf in the decision tree. Thus, the longest path from the root to a leaf corresponds to the worst-case number of comparisons for a given input of size $n$. In other words, the height of the decision tree represents the worst-case running time of a comparison sort algorithm.
 
-Let $l$ be the number of leaves in the decision tree. Since a decision tree is a full binary tree (each decision node has exactly two children), it has at most $2^h$ leaves, where $h$ is the height of the tree, so that $l \leq 2^h$. Each permutation of the input elements appears as a label on one or more leaves of the decision tree[^2], so that $l \geq n!$. Thus, $n! \leq l \leq 2^h$, which implies $h \geq \log(n!)$. Rewriting the latter term as a sum, we get, for $n > 1$:
+Let $l$ be the number of leaves in the decision tree. Since a decision tree is a full binary tree (each decision node has exactly two children), it has at most $2^h$ leaves, where $h$ is the height of the tree, so that $l \leq 2^h$. Each permutation of the input elements appears as a label on one or more leaves of the decision tree[^2], so that $l \geq n!$. Thus, $n! \leq l \leq 2^h$, which implies $h \geq \log(n!)$. Rewriting the latter term as a sum, we get, for $n > 2$:
 
 $$
 \begin{align*}

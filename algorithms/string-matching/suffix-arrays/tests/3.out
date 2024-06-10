@@ -1,6 +1,5 @@
 Pattern: m
 Shifts (2): 4, 0
-Longest repeated substrings:
-  2 times: a
-Number of non-duplicate substrings: 13
+No repeated substrings found.
+Number of unique substrings: 13
 Longest palindromic substring: madam

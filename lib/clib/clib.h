@@ -185,9 +185,55 @@ typedef struct {
   } \
   arr->size = arr##size##Len;\
 
+  // creates a new string with a given capacity 
+static inline string *newString(size_t cap) {
+  string *s = safeCalloc(1, sizeof(string));
+  s->data = safeCalloc(cap, sizeof(unsigned char));
+  s->cap = cap;
+  return s;
+}
+
+  // copies a string  
+static inline string *copyString(string *s) {
+  string *copy = newString(s->cap);
+  copy->size = s->size;
+  memcpy(copy->data, s->data, s->size);
+  return copy;
+}
+
+  // reverses a string
+static inline string *reverseString(string *s) {
+  for (size_t i = 0; i < s->size / 2; i++) {
+    unsigned char tmp = s->data[i];
+    s->data[i] = s->data[s->size - i - 1];
+    s->data[s->size - i - 1] = tmp;
+  }
+  return s;
+}
+
+  // concatenates two strings
+static inline void concatStrings(string *s1, string *s2) {
+  if (s1->size + s2->size >= s1->cap) {
+    s1->cap = s1->size + s2->size + 1;
+    s1->data = safeRealloc(s1->data, 
+                           s1->cap * sizeof(unsigned char));
+  }
+  memcpy(s1->data + s1->size, s2->data, s2->size);
+  s1->size += s2->size;
+  s1->data[s1->size] = '\0';
+}
+
   // shows a string
 static inline void showString(string *s) {
   printf("%s\n", s->data);
+}
+
+  // shows a substring of a string
+static inline void showSubString(string *s, size_t start, 
+                                 size_t end) {
+  for (size_t i = start; i < end; i++) 
+    printf("%c", s->data[i]);
+  printf("\n");
 }
 
   // deallocates a string

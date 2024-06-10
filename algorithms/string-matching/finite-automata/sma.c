@@ -35,7 +35,8 @@ size_t **computeDelta (string *pattern) {
 
   CREATE_MATRIX(size_t, delta, strLen(pattern) + 1, d);
 
-    // compute the transition for each state q and each input a
+    // compute the transition for each state q ∈ {0, 1, ..., m}
+    // and each input character a ∈ Σ
   for (size_t q = 0; q <= strLen(pattern); q++) {
     for (size_t a = 0; a < d; a++) {
         // determine k as the length of the longest pattern

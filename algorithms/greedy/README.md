@@ -2,15 +2,15 @@
 
 ## ${\color{Rosybrown}\text{Overview}}$
 
-| ${\color{peru}\text{CLRS}^3}$ | ${\color{peru}\text{CLRS}^4}$ | ${\color{peru}\text{Link}}$ |
-|:---:|:---:|:---|
-| Chap 16.1 | Chap 15.1 | [Activity-selection Problem](https://github.com/pl3onasm/AADS/tree/main/algorithms/greedy/activity-selection)
-| Chap 16.2 | Chap 15.2 | [Fractional Knapsack](https://github.com/pl3onasm/AADS/tree/main/algorithms/greedy/fract-knapsack)
-| Chap 16.3 | Chap 15.3 | [Huffman Codes](https://github.com/pl3onasm/AADS/tree/main/algorithms/greedy/huffman)
-| Prob 16-1 | Prob 15-1 | [Coin Changing](https://github.com/pl3onasm/AADS/tree/main/algorithms/greedy/coin-changing)
-| Chap 23 | Chap 21 | [MST - Kruskal](https://github.com/pl3onasm/CLRS-in-C/tree/main/algorithms/graphs/MST-kruskal)
-| Chap 23 | Chap 21 | [MST - Prim](https://github.com/pl3onasm/CLRS-in-C/tree/main/algorithms/graphs/MST-prim)
-| Chap 24.3 | Chap 22.3 | [SSSP - Dijkstra](https://github.com/pl3onasm/CLRS-in-C/tree/main/algorithms/graphs/SSSP-dijkstra)
+| ${\color{peru}\text{CLRS (3/4)}}$ | ${\color{peru}\text{Link}}$ |
+|:---|:---|
+| 16/15.1 | [Activity-selection Problem](https://github.com/pl3onasm/AADS/tree/main/algorithms/greedy/activity-selection) |
+| 16/15.2 | [Fractional Knapsack](https://github.com/pl3onasm/AADS/tree/main/algorithms/greedy/fract-knapsack) |
+| 16/15.3 | [Huffman Codes](https://github.com/pl3onasm/AADS/tree/main/algorithms/greedy/huffman) |
+| Prob 16/15-1 | [Coin Changing](https://github.com/pl3onasm/AADS/tree/main/algorithms/greedy/coin-changing) |
+| 23/21 | [MST - Kruskal](https://github.com/pl3onasm/CLRS-in-C/tree/main/algorithms/graphs/MST-kruskal) |
+| 23/21 | [MST - Prim](https://github.com/pl3onasm/CLRS-in-C/tree/main/algorithms/graphs/MST-prim) |
+| 24/22.3 | [SSSP - Dijkstra](https://github.com/pl3onasm/CLRS-in-C/tree/main/algorithms/graphs/SSSP-dijkstra) |
 
 &nbsp;
 

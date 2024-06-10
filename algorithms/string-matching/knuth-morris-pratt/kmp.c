@@ -20,11 +20,17 @@ size_t *computePrefixFunction (string *pattern) {
   
   CREATE_ARRAY(size_t, pi, strLen(pattern));
 
+    // pi[0] is always 0, since no proper prefix exists for
+    // a string of length 1. This is why we start q at 1.
   for (size_t q = 1, k = 0; q < strLen(pattern); q++) {
+      // get longest pattern prefix of length k that is a
+      // proper suffix of pattern[0..q] 
     while (k > 0 && charAt(pattern, k) != charAt(pattern, q))
       k = pi[k - 1];
+      // increment k if next character matches
     if (charAt(pattern, k) == charAt(pattern, q)) 
       k++;
+      // store the length k of the longest prefix of pattern[0..q]
     pi[q] = k;
   }
   return pi;
@@ -54,7 +60,6 @@ void matcher (string *text, string *pattern, size_t *pi) {
   }
   if (foundShift) printf("\n");
   else printf("None.\n");
-  free(pi);
 }
 
 //===================================================================
@@ -67,6 +72,7 @@ int main () {
   size_t *pi = computePrefixFunction(pattern);
   matcher(text, pattern, pi);
 
+  free(pi);
   freeString(text);
   freeString(pattern);
   return 0;

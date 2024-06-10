@@ -1,6 +1,6 @@
-Pattern: an
-Shifts (2): 3, 1
+Pattern: na
+Shifts (3): 1, 18, 16
 Longest repeated substrings:
-  2 times: ana
-Number of non-duplicate substrings: 58
+  3 times: ana
+Number of unique substrings: 306
 Longest palindromic substring: bananab

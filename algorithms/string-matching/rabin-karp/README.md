@@ -13,7 +13,7 @@ The precomputation of the hash values of $P$ and $T_m$ can be done in $\mathcal{
 Fortunately, we can greatly reduce the probability of hash collisions by using a good hash function. For example, a merely $\color{orchid}{\text{additive}}$ rolling hash function is definitely not good enough. Such a hash function represents a string as the sum of the values of its characters and recomputes the hash value by adding the value of the new character in the window and subtracting the value of the character that just left the window. This is a poor hash function because it is easy to find two strings that have the same hash value. A much better hash function is the $\color{orchid}{\text{polynomial}}$ rolling hash function, which the Rabin-Karp algorithm uses. The hash value of a string $S$ of length $m$ is then computed as follows:  
 
 $$
-\color{mediumpurple}\boxed{\color{rosybrown}\space h(S) = \sum_{i=0}^{m-1} (S[i] \cdot d^i) \mod p\space}\\
+\color{mediumpurple}\boxed{\color{rosybrown}\space h(S) = \sum_{i=0}^{m-1} (S[i] \cdot d^i) \text{ mod } p \space}\\
 $$
 
 where:
@@ -25,17 +25,17 @@ where:
 The precomputation of the hash values of $P$ and $T_m$ can be done in $\mathcal{O}(m)$ time by applying $\color{orchid}{\text{Horner's rule}}$ to the above formula:  
 
 $h(S) = (((S[0] \cdot d + S[1]) \cdot d + S[2]) \cdot d$  
-$\qquad\qquad + \dots + S[m-1]) \mod p$  
+$\qquad\qquad + \dots + S[m-1]) \text{ mod } p$  
 
 After that, the hash value of the $m$-sized text window at each new shift $s+1$ can be recomputed in constant time as follows:
 
 $h(T[s+1:s + m]) = $  
 $\qquad\qquad (d \cdot (h(T[s:s + m -1])$  
-$\qquad\qquad - T[s] \cdot k) + T[s + m]) \mod p$  
+$\qquad\qquad - T[s] \cdot k) + T[s + m]) \text{ mod } p$  
 
 where $k$ is precomputed as  
 
-$k = d^{m-1} \mod p$.  
+$k = d^{m-1} \text{ mod } p$.  
 
 The subtraction of $T[s] \cdot k$ is necessary to remove the contribution of the character that just left the window, and the addition of $T[s + m]$ adds the contribution of the new character that just entered the text window. The hash values of $P$ and $T[s:s + m -1]$ can then be compared in constant time to check if the shift is valid. Note that these hash values are computed modulo $p$ at each step to avoid overflow and to keep the values within a reasonable range. The probability of a hash collision is thus reduced to $1/p$.
 

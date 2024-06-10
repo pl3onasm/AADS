@@ -4,11 +4,11 @@
 
 | ${\color{peru}\text{CLRS}}$ | ${\color{peru}\text{Topic}}$ |
 |:---|:---|
-| 32.1 | [Naive String-matching](https://github.com/pl3onasm/AADS/tree/main/algorithms/string-matching/naive-matching)
-| 32.2 | [Rabin-Karp Algorithm](https://github.com/pl3onasm/AADS/tree/main/algorithms/string-matching/rabin-karp)
-| 32.3 | [String-matching Automata](https://github.com/pl3onasm/AADS/tree/main/algorithms/string-matching/finite-automata)
-| 32.4 | [Knuth-Morris-Pratt Algorithm](https://github.com/pl3onasm/AADS/tree/main/algorithms/string-matching/knuth-morris-pratt)
-| 32.5 | [Suffix Arrays](https://github.com/pl3onasm/CLRS/tree/main/algorithms/string-matching/suffix-arrays)
+| 32.1 | [Naive String-matching](https://github.com/pl3onasm/AADS/tree/main/algorithms/string-matching/naive-matching) |
+| 32.2 | [Rabin-Karp Algorithm](https://github.com/pl3onasm/AADS/tree/main/algorithms/string-matching/rabin-karp) |
+| 32.3 | [String-matching Automata](https://github.com/pl3onasm/AADS/tree/main/algorithms/string-matching/finite-automata) |
+| 32.4 | [Knuth-Morris-Pratt Algorithm](https://github.com/pl3onasm/AADS/tree/main/algorithms/string-matching/knuth-morris-pratt) |
+| 32.5 [ed4] | [Suffix Arrays](https://github.com/pl3onasm/CLRS/tree/main/algorithms/string-matching/suffix-arrays) |
 
 &nbsp;
 
