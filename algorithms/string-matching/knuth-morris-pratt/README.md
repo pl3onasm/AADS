@@ -28,7 +28,7 @@ $$
 
 where $q' = \pi(q)$ is the next state to try in case of a mismatch, and can be defined as:
 
-$q' = \max \lbrace k: k \in \pi^\ast(q) \land a = P[k] , 0 \rbrace$. [^1]
+$q' = \max \lbrace k: k \in \pi^\ast(q) \land a = P[k] , \space 0 \rbrace$. [^1]
 
 [^1]: Since we are working with 0-based indices (contrary to the book), P[q] is in fact the (q+1)-st character of P. Prefix function values, just like state values, pertain to string lengths, not indices. Thus, there is always a difference of 1 when switching between state or prefix function values and string indices.
 
