@@ -31,7 +31,7 @@ where $q'$ is the next state to try in case of a mismatch or when the pattern ha
 $$
 {\color{peru}q' = }\begin{cases}
  \max \lbrace k: k \in \pi^\ast(q) \land P[k] = a \rbrace \\
-\qquad \text{if } \exists k \in \pi^\ast(q) \land \space a = P[k]  \\
+\qquad \text{if } \exists k \in \pi^\ast(q) : a = P[k]  \\
  0 \quad\space\space \text{otherwise}
 \end{cases}
 $$
