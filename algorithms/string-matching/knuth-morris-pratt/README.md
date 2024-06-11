@@ -21,7 +21,7 @@ Thus, the matching process actually simulates a finite automaton with $m$ states
 $$
 {\color{rosybrown}\delta(q, a) = } \begin{cases}
 q + 1 & \text{if } q < m \land a = P[q] \\
-{\color{peru}q'} + 1 & \text{if } q < m \land a = P[q] \\
+{\color{peru}q'} + 1 & \text{if } q < m \land a = P[q'] \\
 {\color{peru}q'} & \text{otherwise}
 \end{cases}
 $$
