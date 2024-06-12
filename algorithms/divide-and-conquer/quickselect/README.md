@@ -1,10 +1,10 @@
-# ${\color{Cadetblue}\text{Q u i c k s e l e c t}}$
+# ${\color{Cadetblue}\text{Quickse} \text{lect}}$
 
 ## ${\color{rosybrown}\text{Problem}}$
 
 Given an array of numbers, find the $k$-th order statistic, i.e. the $k$-th smallest element. In other words, find the element that would be at index $k$ if the array were sorted. For example, given the array $[3, 1, 4, 2, 5]$ and $k = 3$, the third smallest element is 3.
 
-## ${\color{darkseagreen}\text{Solution in expected linear time}}$
+## ${\color{darkseagreen}\text{Solution in expected}}$ ${\color{darkseagreen}\text{linear time}}$
 
 The name quickselect is derived from the fact that it uses the same partitioning scheme as the quicksort algorithm in order to select the $k$-th smallest element. The key idea is that it is not necessary to sort the entire array, but only to recursively partition the input array around a randomly picked pivot until the pivot is the $k$-th smallest element.
 
