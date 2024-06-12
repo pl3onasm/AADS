@@ -4,19 +4,18 @@
 
 | ${\color{peru}\text{Complexity}}$ | ${\color{peru}\text{CLRS}}$ | ${\color{peru}\text{Topic}}$ |
 |:---|:---:|:---|
-| ${\color{darkcyan}\Theta(n + k)}$ | 8.2 | [Counting sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/counting-sort)
-| ${\color{darkcyan}\Theta(d(n + k))}$ | 8.3 | [Radix sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/radix-sort)
-|  ${\color{darkcyan} \sim \Theta(n)}$ [^1] | 8.4 |  [Bucket sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/bucket-sort)
-| ${\color{darkcyan}\Theta(n\log n)}$ | 2.3 |  [Merge sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/merge-sort)
-| ${\color{darkcyan}\Theta(n\log n)}$ | – |  [WHAM sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/merge-sort#wham-sort)
-| ${\color{darkcyan}\mathcal{O}(n\log n)}$ | 6.4 |   [Heapsort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/heap-sort)
-| ${\color{darkcyan}\sim \mathcal{O}(n\log n)}$ | 7.1-3 |  [Quicksort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/quick-sort)
-| ${\color{darkcyan}\mathcal{O}(n^2)}$ | 2.1-2 |  [Insertion sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/insertion-sort)
-| ${\color{darkcyan}\mathcal{O}(n^2)}$ | Ex 2.2-2 |  [Selection sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/selection-sort)
-| ${\color{darkcyan}\mathcal{O}(n^2)}$ | Prob 2-2 | [Bubble sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/bubble-sort)
+| ${\color{darkcyan}\Theta(n + k)}$ | 8.2 | [Counting sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/counting-sort)|
+| ${\color{darkcyan}\Theta(d(n + k))}$ | 8.3 | [Radix sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/radix-sort)|
+|  ${\color{darkcyan} \approx \Theta(n)}$ [^1] | 8.4 |  [Bucket sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/bucket-sort)|
+| ${\color{darkcyan}\Theta(n\log n)}$ | 2.3 |  [Merge sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/merge-sort)|
+| ${\color{darkcyan}\Theta(n\log n)}$ | – |  [WHAM sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/merge-sort#wham-sort)|
+| ${\color{darkcyan}\mathcal{O}(n\log n)}$ | 6.4 |   [Heapsort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/heap-sort)|
+| ${\color{darkcyan}\approx \mathcal{O}(n\log n)}$ | 7.1-3 |  [Quicksort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/quick-sort)|
+| ${\color{darkcyan}\mathcal{O}(n^2)}$ | 2.1-2 |  [Insertion sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/insertion-sort)|
+| ${\color{darkcyan}\mathcal{O}(n^2)}$ | Ex 2.2-2 |  [Selection sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/selection-sort)|
+| ${\color{darkcyan}\mathcal{O}(n^2)}$ | Prob 2-2 | [Bubble sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/bubble-sort)|
 
-[^1]: The tilde (~) means that this is the expected complexity: the complexity is not guaranteed,  
-but it is the average case complexity. The worst case complexity is higher.
+[^1]: The $\approx$ symbol means that this is the expected complexity: the complexity is not guaranteed, but it is the average case complexity. The worst case complexity is higher.
 
 &nbsp;
 
