@@ -15,7 +15,7 @@
 | ${\color{darkcyan}\mathcal{O}(n^2)}$ | Ex 2.2-2 |  [Selection sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/selection-sort)|
 | ${\color{darkcyan}\mathcal{O}(n^2)}$ | Prob 2-2 | [Bubble sort](https://github.com/pl3onasm/Algorithms-and-data-structures/tree/main/algorithms/sorting/bubble-sort)|
 
-[^1]: The $\approx$ symbol means that this is the expected complexity: the complexity is not guaranteed, but it is the average case complexity. The worst case complexity is higher.
+[^1]: The ≈ symbol means that this is the expected complexity: the complexity is not guaranteed, but it is the average case complexity. The worst case complexity is higher.
 
 &nbsp;
 
