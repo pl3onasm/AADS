@@ -1,4 +1,4 @@
-# ${\color{cadetblue} \text{Selection sort}}$
+# ${\color{cadetblue} \text{S e l e c t i o n  sort}}$
 
 Just like [insertion sort](../insertion-sort), selection sort is an ${\color{darkseagreen} \text{in-place}}$ comparison sort which sorts an array $A[0:n-1]$ in ascending order by maintaining a sorted subarray $A[0:i]$ and an unsorted subarray $A[i+1:n-1]$. At each iteration, the boundary between the two subarrays is moved one element to the right after selecting the minimum element from the unsorted subarray and swapping it with $A[i+1]$, thus extending the sorted subarray by one element. This process is repeated until the entire array is sorted.
 
