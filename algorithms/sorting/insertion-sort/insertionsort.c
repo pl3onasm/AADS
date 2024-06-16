@@ -30,7 +30,7 @@ void insertionSort(int *arr, size_t n) {
 //===================================================================
 
 int main (){
-  size_t len;
+  
   READ(int, arr, "%d", len);
   
   insertionSort(arr, len);

@@ -50,7 +50,6 @@ void quickSort(int *arr, size_t left, size_t right){
 int main (){
   srand(time(NULL));
 
-  size_t len;
   READ(int, arr, "%d", len);
   
   quickSort(arr, 0, len);

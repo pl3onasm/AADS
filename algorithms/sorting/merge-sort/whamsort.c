@@ -63,7 +63,7 @@ void whamSort (int *arr, size_t left, size_t right) {
 //===================================================================
 
 int main (){
-  size_t len;
+  
   READ(int, arr, "%d", len);
   
   whamSort(arr, 0, len);

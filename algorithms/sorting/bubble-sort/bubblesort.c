@@ -36,7 +36,7 @@ void bubbleSort(int *arr, size_t n) {
 //===================================================================
 
 int main (){
-  size_t len;
+  
   READ(int, arr, "%d", len);
 
   bubbleSort(arr, len);

@@ -65,16 +65,15 @@
   //            READ(char, "%c", myChrs, size);
 #define READ(type, arr, format, size) \
   type *arr = safeCalloc(100, sizeof(type)); \
-  size_t arr##Len = 0; type arr##var; \
+  size_t size = 0; type arr##var; \
   while (scanf(format, &arr##var) == 1) { \
-    arr[arr##Len++] = arr##var; \
-    if (arr##Len % 100 == 0) { \
-      arr = safeRealloc(arr, (arr##Len + 100) * sizeof(type)); \
-      memset(arr + arr##Len, 0, 100); \
+    arr[size++] = arr##var; \
+    if (size % 100 == 0) { \
+      arr = safeRealloc(arr, (size + 100) * sizeof(type)); \
+      memset(arr + size, 0, 100); \
     } \
   } \
-  size = arr##Len;\
-  arr[arr##Len] = '\0';
+  arr[size] = '\0';
 
   // macro for reading input from stdin until a given 
   // delimiter is encountered 

@@ -43,7 +43,6 @@ void heapsort(binheap *H){
 //===================================================================
 
 int main (){
-  size_t size = 0;
   
     // reads the input array, sets the size
   READ(int, arr, "%d", size);
