@@ -23,7 +23,7 @@ size_t partition(int *arr, size_t left, size_t right) {
       i++;
     }
   }
-    // put pivot in its fial sorted position
+    // put pivot in its final sorted position
   SWAP(arr[i], arr[pivotIdx]);
   return i;
 }

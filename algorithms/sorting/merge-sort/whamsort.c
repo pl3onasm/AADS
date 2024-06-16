@@ -34,7 +34,7 @@ void merge (int *arr, int left, int invIndex, int right) {
 }
 
 //===================================================================
-// Returns the index of the first inversion in arr[left..right]
+// Returns the index of the first inversion in the array
 size_t getInvIndex (int *arr, size_t left, size_t right) {
   size_t idx = left + 1;
   while (idx < right && arr[idx - 1] <= arr[idx]) idx++;
@@ -47,7 +47,7 @@ void whamSort (int *arr, size_t left, size_t right) {
 
     // while the array has more than one element
   while (left + 1 < right) {
-      // find the first inversion in arr[left..right]
+      // find the first inversion in the array
     size_t invIndex = getInvIndex (arr, left, right); 
       // if there are no inversions, the array is sorted
     if (invIndex >= right) break;
