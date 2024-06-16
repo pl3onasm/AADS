@@ -33,10 +33,9 @@ void radixSort(suffix *suffixes, size_t n, size_t maxRank) {
   for (size_t i = 1; i < maxRank; ++i) 
     count[i] += count[i - 1];
     // sort suffixes
-  for (size_t i = n - 1; ; i--) {
+  for (size_t i = n; i--; ) {
     output[count[suffixes[i].rightRank] - 1] = suffixes[i];
     count[suffixes[i].rightRank]--;
-    if (i == 0) break;
   }
   
     // SORT BY LEFT RANKS
@@ -49,10 +48,9 @@ void radixSort(suffix *suffixes, size_t n, size_t maxRank) {
   for (size_t i = 1; i < maxRank; ++i) 
     count[i] += count[i - 1];
     // sort suffixes
-  for (size_t i = n - 1; ; i--) {
+  for (size_t i = n; i--; ) {
     suffixes[count[output[i].leftRank] - 1] = output[i];
     count[output[i].leftRank]--;
-    if (i == 0) break;
   }
   free(count);
   free(output);

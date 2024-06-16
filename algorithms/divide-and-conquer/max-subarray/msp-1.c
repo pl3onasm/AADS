@@ -7,24 +7,25 @@
 */
 
 #include "../../../lib/clib/clib.h"
+#include <limits.h>
 
-void printResult (int *arr, int l, int h, int max) {
+void printResult (int *arr, size_t l, size_t h, int max) {
   /* prints the result */
   printf("Maximum sum: %d\n", max);
   printf("Maximum subarray: \n[");
-  for (int i = l; i <= h; ++i) {
+  for (size_t i = l; i <= h; ++i) {
     printf("%d", arr[i]);
     if (i < h) printf(", ");
   }
   printf("]\n");
 }
 
-int getMaxSub(int *arr, int n, int *l, int *h) {
+int getMaxSub(int *arr, size_t n, size_t *l, size_t *h) {
   /* determines the maximum subarray */
   int max = INT_MIN;
-  for (int i = 0; i < n; ++i) {
+  for (size_t i = 0; i < n; ++i) {
     int sum = 0;
-    for (int j = i; j < n; ++j) {
+    for (size_t j = i; j < n; ++j) {
       sum += arr[j];
       if (sum > max) {
         max = sum;
@@ -37,13 +38,13 @@ int getMaxSub(int *arr, int n, int *l, int *h) {
 }
 
 int main(int argc, char *argv[]) {
-  int n; 
-  (void)! scanf("%d", &n);
+  size_t n; 
+  (void)! scanf("%zu", &n);
   
   CREATE_ARRAY(int, arr, n);
   READ_ARRAY(arr, "%d", n);
 
-  int l = 0, h = n - 1;  // low and high indices
+  size_t l = 0, h = n - 1;  // low and high indices
   
   int max = getMaxSub(arr, n, &l, &h);
   printResult(arr, l, h, max);

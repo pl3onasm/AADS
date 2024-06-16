@@ -8,9 +8,11 @@
 */
 
 #include "../../../lib/clib/clib.h"
+#include <limits.h>
 
 typedef struct {
-  int low, high, sum;
+  size_t low, high;
+  int sum;
 } Sub;
 
 void printResult (int *arr, Sub max) {
@@ -24,12 +26,12 @@ void printResult (int *arr, Sub max) {
   printf("]\n");
 }
 
-void getMaxCrossSub (int *arr, int mid, Sub *max) {
+void getMaxCrossSub (int *arr, size_t mid, Sub *max) {
   /* determines the maximum subarray crossing the midpoint */
   int sum = 0, leftSum = INT_MIN, rightSum = INT_MIN;
-  int left = max->low, right = max->high;
+  size_t left = max->low, right = max->high;
   // get maximum subarray on the left side of the midpoint
-  for (int i = mid; i >= left; --i) {
+  for (size_t i = mid; i >= left && i--; ) {
     sum += arr[i];
     if (sum > leftSum) {
       leftSum = sum;
@@ -38,7 +40,7 @@ void getMaxCrossSub (int *arr, int mid, Sub *max) {
   }
   // get maximum subarray on the right side of the midpoint
   sum = 0;
-  for (int j = mid + 1; j <= right; ++j) {
+  for (size_t j = mid; j <= right; ++j) {
     sum += arr[j];
     if (sum > rightSum) {
       rightSum = sum;
@@ -50,10 +52,10 @@ void getMaxCrossSub (int *arr, int mid, Sub *max) {
 
 void getMaxSub (int *arr, Sub *max) {
   /* computes the maximum subarray */
-  int low = max->low, high = max->high;
+  size_t low = max->low, high = max->high;
   if (low == high) max->sum = arr[low];
   else {
-    int mid = low + (high - low) / 2;
+    size_t mid = low + (high - low) / 2;
     Sub left = {low, mid, 0};
     getMaxSub(arr, &left);
     Sub right = {mid + 1, high, 0};
@@ -67,9 +69,9 @@ void getMaxSub (int *arr, Sub *max) {
   }
 }
 
-int main(int argc, char *argv[]) {
-  int n;
-  (void)! scanf("%d", &n);
+int main() {
+  size_t n;
+  (void)! scanf("%zu", &n);
 
   CREATE_ARRAY(int, arr, n);
   READ_ARRAY(arr, "%d", n);

@@ -8,8 +8,6 @@ Much of quicksort's performance depends on the ${\color{darkseagreen} \text{pivo
 
 Implementation: [Quicksort](https://github.com/pl3onasm/CLRS/tree/main/algorithms/sorting/quick-sort/quicksort.c)
 
-A generic implementation: [Generic Quicksort](https://github.com/pl3onasm/CLRS/tree/main/algorithms/sorting/quick-sort/genqsort.c)
-
 In order to avoid the worst case time complexity, the pivot can be chosen ${\color{darkseagreen} \text{randomly}}$ at each step. This ensures that the partitioning is balanced on average, and thus the average case time complexity is maintained. The worst case time complexity is still $\mathcal{O}(n^2)$, but the probability of this occurring is negligible. We say that the algorithm runs in expected $\mathcal{O}(n \log n)$ time.
 
 Implementation: [Randomized Quicksort](https://github.com/pl3onasm/CLRS/tree/main/algorithms/sorting/quick-sort/randomqsort.c)

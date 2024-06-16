@@ -1,75 +1,57 @@
-/* file: quicksort.c
-   author: David De Potter
-   email: pl3onasm@gmail.com
-   license: MIT, see LICENSE file in repository root folder
-   description: quicksort, using last element as pivot
-   time complexity: worst case O(n^2), average case O(nlogn)
+/* 
+  file: quicksort.c
+  author: David De Potter
+  email: pl3onasm@gmail.com
+  license: MIT, see LICENSE file in repository root folder
+  description: quicksort, using last element as pivot
+  time complexity: worst case O(n^2), average case O(nlogn)
 */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#include "../../../lib/clib/clib.h"
 
-void *safeMalloc (int n) {
-  /* allocates n bytes of memory and checks whether the allocation
-     was successful */
-  void *ptr = malloc(n);
-  if (ptr == NULL) {
-    printf("Error: malloc(%d) failed. Out of memory?\n", n);
-    exit(EXIT_FAILURE);
-  }
-  return ptr;
-}
+//===================================================================
+// Partitions an array around a pivot element (last element)
+size_t partition(int *arr, size_t left, size_t right) {
+  
+  size_t pivotIdx = right - 1, i = left;
 
-void printArray (int *arr, int n) {
-  /* prints an array of size n */
-  printf("[");
-  for (int i = 0; i < n; i++) {
-    printf("%d", (arr)[i]);
-    if (i < n-1) printf(", ");
-  }
-  printf("]\n");
-}
-
-void swap(int *arr, int i, int j) {
-  /* swaps elements at indices i and j in arr */
-  int temp = arr[i];
-  arr[i] = arr[j];
-  arr[j] = temp;
-}
-
-int partition(int *arr, int left, int right) {
-  /* partitions arr[left:right] around a pivot element */
-  int pivot = right, i = left;
-  // loop invariant: arr[left:i] < arr[pivot]
-  for (int j = left; j < right; j++) {
-    if (arr[j] < arr[pivot]) {
-      swap(arr, i, j);
+    // keep swapping elements smaller than the pivot
+    // loop invariant: arr[left:i-1] < pivot
+  for (size_t j = left; j < right - 1; j++) {
+    if (arr[j] < arr[pivotIdx]) {
+      SWAP(arr[i], arr[j]);
       i++;
     }
   }
-  swap(arr, i, pivot); // put pivot back in place
+    // put pivot in its fial sorted position
+  SWAP(arr[i], arr[pivotIdx]);
   return i;
 }
 
-void quickSort(int *arr, int left, int right){
-  /* sorts arr[left:right] in place */
-  if (left < right) {
-    // partition arr[left:right] around a pivot
-    int q = partition(arr, left, right);
-    // recursively sort the two partitions
-    quickSort(arr, left, q - 1);
+//===================================================================
+// Sorts an array of integers in place in ascending order
+void quickSort(int *arr, size_t left, size_t right){
+  
+    // if the array has more than one element
+  if (left + 1 < right) {
+      // partition the array around the last element
+    size_t q = partition(arr, left, right);
+      // recursively sort the two partitions
+    quickSort(arr, left, q);
     quickSort(arr, q + 1, right);
   }
 }
 
-int main (int argc, char *argv[]){
-  int intExample[] = {10, 8, -9, 6, 7, 5, 2, 3, 4, -1, 2,
-                      13, 7, 11, 20, 1, -15, 7, 16, 0};
-  printf("Unsorted:\n");
-  printArray(intExample, 20);
-  quickSort(intExample, 0, 19);
-  printf("Sorted:\n");
-  printArray(intExample, 20);
+//===================================================================
+
+int main (){
+
+  size_t len;
+  READ(int, arr, "%d", len);
+  
+  quickSort(arr, 0, len);
+  PRINT_ARRAY(arr, "%d", len);
+  
+  free(arr);
   return 0;
 }

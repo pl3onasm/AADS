@@ -37,7 +37,7 @@ where $k$ is precomputed as
 
 $k = d^{m-1} \text{ mod } p$.  
 
-The subtraction of $T[s] \cdot k$ is necessary to remove the contribution of the character that just left the window, and the addition of $T[s + m]$ adds the contribution of the new character that just entered the text window. The hash values of $P$ and the new text window $T[s+1:s + m]$ can then be compared in constant time to check if the new shift is valid. Note that these hash values are computed modulo $p$ at each step to avoid overflow and to keep the values within a reasonable range. The probability of a hash collision is thus reduced to $1/p$.
+The subtraction of $T[s] \cdot k$ is necessary to remove the contribution of the character that just left the window, and the addition of $T[s + m]$ adds the contribution of the new character that just entered the text window. The hash values of $P$ and the new text window $T[s+1:s + m]$ can then be compared in constant time to check if the new shift is potentially valid. If the hash values match, then the algorithm proceeds to compare all the characters of $P$ with the text window $T[s+1:s + m]$ to verify if the match is indeed valid. Note that these hash values are computed modulo $p$ at each step to avoid overflow and to keep the values within a reasonable range. The probability of a hash collision is thus reduced to $1/p$.
 
 Implementation: [Rabin-Karp](https://github.com/pl3onasm/AADS/blob/main/algorithms/string-matching/rabin-karp/rka.c)
 

@@ -12,6 +12,7 @@
 */
 
 #include "../../../../lib/clib/clib.h"
+typedef unsigned long long ull;
 
 ull gcd (ull a, ull b) {
   /* returns the greatest common divisor of a and b */

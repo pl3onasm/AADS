@@ -16,7 +16,7 @@ $$
 
 In case of a mismatch, the algorithm will then shift the pattern $P$ by $q - \pi(q)$ characters to the right, where $q$ is the current state of the matching process, so that the next character of $T$ is compared with $P[\pi(q)]$. This is possible because the prefix function $\pi$ tells us that the first $\pi(q)$ characters of $P$ are also the last $\pi(q)$ characters of $P_q$, so that we can safely skip the first $\pi(q)$ characters of $P$ in the next comparison. If the comparison is successful, the state is incremented by one, and the next character of $T$ is compared with the updated $P[q]$ (which is now the next character of $P$). If the state reaches $m$, we have found an occurrence of $P$ in $T$ and the shift is added to the result. If the comparison fails, the pattern is shifted again by $q - \pi(q)$ characters to the right, until there is a match or the pattern is shifted past the current position in $T$.
 
-Thus, the matching process actually simulates a finite automaton with $m$ states, where the ${\color{rosybrown}\text{transition function}}$ is computed on the fly and is redefined to be: [^1]
+Thus, the matching process actually simulates a finite automaton with $m+1$ states, where the ${\color{rosybrown}\text{transition function}}$ is computed on the fly and is redefined to be: [^1]
 
 $$
 {\color{rosybrown}\delta(q, a) = } \begin{cases}
@@ -30,8 +30,8 @@ where $q'$ is the next state to try in case of a mismatch or when the pattern ha
 
 $$
 {\color{peru}q' = }\begin{cases}
- \max \lbrace k: k \in \pi^\ast(q) \land P[k] = a \rbrace \\
-\qquad \text{if } \exists k \in \pi^\ast(q) : a = P[k]  \\
+ \max \lbrace k: k \in {\color{palevioletred}\pi^\ast(q)} \land P[k] = a \rbrace \\
+\qquad \text{if } \exists k \in {\color{palevioletred}\pi^\ast(q)} : a = P[k]  \\
  0 \quad\space\space \text{otherwise}
 \end{cases}
 $$

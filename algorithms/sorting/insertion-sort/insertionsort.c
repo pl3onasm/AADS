@@ -1,47 +1,41 @@
-/* file: insertionsort.c
-   author: David De Potter
-   email: pl3onasm@gmail.com
-   license: MIT, see LICENSE file in repository root folder
-   description: insertion sort
-   time complexity: O(n^2)
+/* 
+  file: insertionsort.c
+  author: David De Potter
+  email: pl3onasm@gmail.com
+  license: MIT, see LICENSE file in repository root folder
+  description: insertion sort
+  time complexity: O(n^2)
 */
 
-#include <stdlib.h>
-#include <stdio.h>
+#include "../../../lib/clib/clib.h"
 
-void printArray (int *arr, int n) {
-  /* prints an array of size n */
-  printf("[");
-  for (int i = 0; i < n; i++) {
-    printf("%d", (arr)[i]);
-    if (i < n-1) printf(", ");
-  }
-  printf("]\n");
-}
-
-void insertionSort(int *arr, int n) {
-  /* sorts an array of size n using insertion sort */
-  for (int i = 1; i < n; i++) {
+//===================================================================
+// Sorts an array of integers in ascending order in place 
+// in O(n^2) time
+void insertionSort(int *arr, size_t n) {
+  for (size_t i = 1; i < n; i++) {
     int key = arr[i];
-    int j = i - 1;
-    // shift elements of arr[0..i-1] to the right until
-    // the correct position for key is found
-    while (j >= 0 && arr[j] > key) {
-      arr[j + 1] = arr[j];
+    size_t j = i;
+      // shift elements of the sorted subarray arr[0..i-1] to
+      // the right until the correct position for key is found
+    while (j > 0 && arr[j - 1] > key) {
+      arr[j] = arr[j - 1];
       j--;
     }
-    // insert key into the correct position
-    arr[j + 1] = key;
+      // insert key into its sorted position
+    arr[j] = key;
   }
 }
 
-int main (int argc, char *argv[]){
-  int intExample[] = {10, 8, -9, 6, 7, 5, 2, 3, 4, -1, 2,
-                      13, 7, 11, 20, 1, -15, 7, 16, 0};
-  printf("Unsorted:\n");
-  printArray(intExample, 20);
-  insertionSort(intExample, 20);
-  printf("Sorted:\n");
-  printArray(intExample, 20);
+//===================================================================
+
+int main (){
+  size_t len;
+  READ(int, arr, "%d", len);
+  
+  insertionSort(arr, len);
+  PRINT_ARRAY(arr, "%d", len);
+  
+  free(arr);
   return 0;
 }
