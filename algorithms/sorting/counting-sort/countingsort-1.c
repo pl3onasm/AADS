@@ -1,66 +1,51 @@
-/* file: countingsort-1.c
-   author: David De Potter
-   email: pl3onasm@gmail.com
-   license: MIT, see LICENSE file in repository root folder
-   description: counting sort
-     This version can only be used to sort arrays
-     containing non-negative integers.
-   time complexity: O(n) provided that k = O(n)
+/* 
+  file: countingsort-1.c
+  author: David De Potter
+  email: pl3onasm@gmail.com
+  license: MIT, see LICENSE file in repository root folder
+  description: counting sort
+    This version can only be used to sort arrays
+    containing non-negative integers.
+  time complexity: O(n) provided that k = O(n)
 */
 
-#include <stdlib.h>
-#include <stdio.h>
+#include "../../../lib/clib/clib.h"
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
 
-void *safeCalloc (int n, int size) {
-  /* allocates n elements of size size, initializing them to 0, and
-     checks whether the allocation was successful */
-  void *ptr = calloc(n, size);
-  if (ptr == NULL) {
-    printf("Error: calloc(%d, %d) failed. Out of memory?\n", n, size);
-    exit(EXIT_FAILURE);
-  }
-  return ptr;
-}
-
-void printArray (int arr[], int n) {
-  /* prints an array of size n */
-  printf("[");
-  for (int i = 0; i < n; i++) {
-    printf("%d", (arr)[i]);
-    if (i < n-1) printf(", ");
-  }
-  printf("]\n");
-}
-
-int *countingSort(int arr[], int n) {
-  /* sorts an array of non-negative integers */
+//===================================================================
+// Sorts an array of non-negative integers in ascending order 
+int *countingSort(int *arr, size_t n) {
+    // find the maximum value k
   int max = arr[0];
-  // find maximum value k
-  for (int i = 1; i < n; i++) 
-    if (arr[i] > max) max = arr[i];
-  // count the number of occurences of each value
-  int *count = safeCalloc(max+1, sizeof(int));
-  for (int i = 0; i < n; i++) count[arr[i]]++;
-  // compute the cumulative sums of the counts
-  for (int i = 1; i <= max; i++) count[i] += count[i-1];
-  // place the elements in their correct positions
+  for (size_t i = 1; i < n; i++) 
+    max = MAX(max, arr[i]);
+    // count the number of occurences of each item
+  size_t *counts = safeCalloc(max + 1, sizeof(size_t));
+  for (size_t i = 0; i < n; i++) 
+    counts[arr[i]]++;
+    // compute the cumulative sums of the counts
+  for (size_t i = 1; i <= max; i++) 
+    counts[i] += counts[i - 1];
+    // place the items in their correct positions
   int *sorted = safeCalloc(n, sizeof(int));
-  for (int i = n-1; i >= 0; i--) {
-    sorted[count[arr[i]]-1] = arr[i];
-    count[arr[i]]--;
+  for (size_t i = n; i--; ) {
+    sorted[counts[arr[i]] - 1] = arr[i];
+    counts[arr[i]]--;
   }
-  free(count);
+  free(counts);
   return sorted;
 }
 
-int main (int argc, char *argv[]){
-  int example[] = {10, 8, 9, 6, 7, 5, 2, 3, 4, 1, 2,
-                   13, 7, 11, 20, 0, 15, 7, 16, 18};
-  printf("Unsorted:\n");
-  printArray(example, 20);
-  int *sorted = countingSort(example, 20);
-  printf("Sorted:\n");
-  printArray(sorted, 20);
+//===================================================================
+
+int main (){
+  
+  READ(int, arr, "%d", len);
+
+  int *sorted = countingSort(arr, len);
+  PRINT_ARRAY(sorted, "%d", len);
+  
   free(sorted);
+  free(arr);
   return 0;
 }

@@ -27,7 +27,7 @@ void merge (int *arr, int left, int invIndex, int right) {
     // of the auxiliary array
   while (l < invIndex) sorted[s++] = arr[l++];
   while (r < right) sorted[s++] = arr[r++];
-    // copy the merged subarray back to the input array
+    // copy the merged array back to the input array
   for (int i = left; i < right; i++) 
     arr[i] = sorted[i - left];
   free(sorted);

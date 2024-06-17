@@ -9,65 +9,48 @@
    time complexity: O(n) provided that k = O(n)
 */
 
-#include <stdlib.h>
-#include <stdio.h>
+#include "../../../lib/clib/clib.h"
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
 
-void *safeCalloc (int n, int size) {
-  /* allocates n elements of size size, initializing them to 0, and
-     checks whether the allocation was successful */
-  void *ptr = calloc(n, size);
-  if (ptr == NULL) {
-    printf("Error: calloc(%d, %d) failed. Out of memory?\n", n, size);
-    exit(EXIT_FAILURE);
+//===================================================================
+// Sorts an array of integers in ascending order
+int *countingSort(int *arr, int n) {
+    // find the minimum and maximum values to determine the range
+  int min = arr[0], max = arr[0];
+  for (size_t i = 1; i < n; i++) {
+    min = MIN(min, arr[i]);
+    max = MAX(max, arr[i]); 
   }
-  return ptr;
-}
-
-void printArray (int *arr, int n) {
-  /* prints an array of size n */
-  printf("[");
-  for (int i = 0; i < n; i++) {
-    printf("%d", arr[i]);
-    if (i < n-1) printf(", ");
-  }
-  printf("]\n");
-}
-
-int *countingSort(int arr[], int n) {
-  /* sorts an array of integers */
-  int min = arr[0], max = arr[0], range;
-  // find minimum and maximum values
-  for (int i = 1; i < n; i++) {
-    min = arr[i] < min ? arr[i] : min;
-    max = arr[i] > max ? arr[i] : max;
-  }
-  range = max - min;
-  int *count = safeCalloc(range+1, sizeof(int));
-  // count the number of occurences of each value
-  // subtracting min to make sure that the smallest value is 0
-  for (int i = 0; i < n; i++) 
-    count[arr[i] - min]++;
-  // compute the cumulative sums of the counts
-  for (int i = 1; i <= range; i++) 
-    count[i] += count[i-1];
-  // place the elements in their correct positions
+  int range = max - min;
+    // count the number of occurences of each item and subtract
+    // min from each item so that the counting array starts at 0
+  size_t *counts = safeCalloc(range + 1, sizeof(size_t));
+  for (size_t i = 0; i < n; i++) 
+    counts[arr[i] - min]++;
+    // compute the cumulative sums of the counts
+  for (size_t i = 1; i <= range; i++) 
+    counts[i] += counts[i - 1];
+    // place the elements in their correct positions
   int *sorted = safeCalloc(n, sizeof(int));
-  for (int i = n-1; i >= 0; i--) {
-    sorted[count[arr[i] - min] - 1] = arr[i];
-    count[arr[i] - min]--;
+  for (size_t i = n; i--; ) {
+    sorted[counts[arr[i] - min] - 1] = arr[i];
+    counts[arr[i] - min]--;
   }
-  free(count);
+  free(counts);
   return sorted; 
 }
 
-int main (int argc, char *argv[]){
-  int example[] = {10, -8, -9, 6, -7, 5, -2, 3, -4, 1, 2,
-                   -13, 7, -11, 20, -1, 15, -7, -16, -20};
-  printf("Unsorted:\n");
-  printArray(example, 20);
-  int *sorted = countingSort(example, 20);
-  printf("Sorted:\n");
-  printArray(sorted, 20);
+//===================================================================
+
+int main (){
+  
+  READ(int, arr, "%d", len);
+
+  int *sorted = countingSort(arr, len);
+  PRINT_ARRAY(sorted, "%d", len);
+  
   free(sorted);
+  free(arr);
   return 0;
 }
