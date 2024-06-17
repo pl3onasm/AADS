@@ -167,15 +167,12 @@ void dllInsert (dll *L, void *data) {
     fprintf(stderr, "dllInsert: comparison function not set\n");
     return;
   }
-
+    
   dllNode *new = dllNewNode();
   new->dllData = data;
 
-    // find the node to insert after
-    // the node is the first node that is not 
-    // smaller than the new node
+    // find the node to insert before
   dllNode *n = L->NIL->next;
-  
   while (n != L->NIL && L->cmp(n->dllData, data) < 0) 
     n = n->next;
 

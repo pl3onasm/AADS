@@ -1,129 +1,93 @@
-/* file: bucketsort.c
-   author: David De Potter
-   email: pl3onasm@gmail.com
-   license: MIT, see LICENSE file in repository root folder
-   description: bucket sort, using a singly linked list
-     to store the elements in each bucket, and insertion 
-     sort to sort the elements within each bucket
-   time complexity: O(n) provided that the elements are 
-     uniformly distributed over the interval [0, 1)
+/* 
+  file: bucketsort.c
+  author: David De Potter
+  email: pl3onasm@gmail.com
+  license: MIT, see LICENSE file in repository root folder
+  description: bucket sort, sorting an array of numbers  
+    uniformly distributed in [0,1) 
+  time complexity: O(n) provided that the elements are 
+    uniformly distributed over the interval [0, 1)
 */
 
-#include <stdlib.h>
-#include <stdio.h>
+#include "../../../datastructures/lists/dllist/dll.h"
+#include "../../../lib/clib/clib.h"
+#include <math.h>
 
-typedef struct node {
-  double value;
-  struct node *next;
-} node;
+//===================================================================
+// Comparison function for double values avoiding precision errors
+int compDoubles (void const *a, void const *b) {
+  if (fabs(*(double **)a - *(double **)b) < 0.000001) return 0;
+  return *(double **)a - *(double **)b > 0 ? 1 : -1;
+}
 
-void *safeCalloc (int n, int size) {
-  /* allocates n elements of given size, initializing them to 0 */
-  void *ptr = calloc(n, size);
-  if (ptr == NULL) {
-    printf("Error: calloc(%d, %d) failed. Out of memory?\n", n, size);
-    exit(EXIT_FAILURE);
+//===================================================================
+// Inserts the elements of the array in the buckets in ascending 
+// order
+void sortBuckets (dll **buckets, double *arr, size_t len) {
+  
+  for (size_t i = 0; i < len; i++) 
+    dllInsert(buckets[(size_t)(len * arr[i])], &arr[i]);
+}
+
+
+//===================================================================
+// Creates an array of doubly linked lists, one for each bucket
+dll **createBuckets (double *arr, size_t len) {
+  
+  dll **buckets = safeCalloc(len, sizeof(dll *));
+  
+  for (size_t i = 0; i < len; i++) {
+    buckets[i] = dllNew();
+    dllSetCmp(buckets[i], compDoubles);
   }
-  return ptr;
-}
-
-void printArray (double *arr, int n) {
-  /* prints an array of size n */
-  printf("[");
-  for (int i = 0; i < n; i++) {
-    printf("%.3lf", arr[i]);
-    if (i < n-1) printf(", ");
-  }
-  printf("]\n");
-}
-
-void insertionSort(int i, node **arr) {
-  /* insertion sort for a node list stored in arr[i] */
-  node* sorted = NULL;      // head of the sorted list
-  node* current = arr[i];   // head of the unsorted list
-  while (current) {
-    node* next = current->next;
-    // if sorted is empty or value of current is smaller
-    if (sorted == NULL || current->value < sorted->value) {
-      // prepend current to sorted list
-      current->next = sorted;
-      sorted = current;
-    } else { // else search for correct position to insert current
-      node *s = sorted;
-      while (s->next && current->value >= s->next->value)
-        s = s->next;
-      // insert current between s and s->next
-      current->next = s->next;
-      s->next = current;
-    }
-    current = next;
-  }
-  arr[i] = sorted;
-}
-
-void concatenate (node **buckets, double *arr, int n) {
-  /* concatenates the lists in the buckets to arr */
-  int k = 0;
-  for (int i = 0; i < n; i++) {
-    node *b = buckets[i];
-    while (b) {
-      arr[k++] = b->value;
-      node *temp = b;
-      b = b->next;
-      free(temp);
-    }
-  }
-  free(buckets);
-}
-
-void insert (node **buckets, int bucketNo, double value) {
-  /* inserts given value in the node list at buckets[bucketNo] */
-  node *new = safeCalloc(1, sizeof(node));
-  new->value = value;
-  if (buckets[bucketNo]) 
-    new->next = buckets[bucketNo];
-  else
-    new->next = NULL;
-  buckets[bucketNo] = new;
-}
-
-node **createBuckets (int n, double *arr) {
-  /* creates an array of n empty node lists and puts
-     the array elements in the corresponding buckets */
-  node **buckets = safeCalloc(n, sizeof(node*));
-  for (int i = 0; i < n; i++) 
-    insert(buckets, (int) n*arr[i], arr[i]);
   return buckets;
 }
 
-void bucketSort (double *arr, int n) {
-  /* sorts an array of numbers in range [0,1) 
-     in expected linear time */
-  node **buckets = createBuckets(n, arr);
-  for (int i = 0; i < n; i++) 
-    // sort each bucket
-    insertionSort(i, buckets);
-  // concatenate the buckets to form the sorted array
-  concatenate(buckets, arr, n);
+//===================================================================
+// Concatenates the buckets to form the sorted array
+double *concatenate (dll **buckets, double *arr, size_t len) {
+  
+  double *sorted = safeCalloc(len, sizeof(double));
+  size_t s = 0;
+  
+  for (size_t i = 0; i < len; i++) {
+    dll *bucket = buckets[i];
+    for (double *num = dllFirst(bucket); num; num = dllNext(bucket)) 
+      sorted[s++] = *num;
+    dllFree(buckets[i]);
+  }
+  free(buckets);
+  return sorted;
 }
 
-int main (int argc, char *argv[]){
-  double example[] = {0.78, 0.312, 0.95, 0.26, 0.72, 
-                      0.94, 0.745, 0.05, 0.823, 0.129,
-                      0.087, 0.51, 0.918, 0.231, 0.68,
-                      0.44, 0.166, 0.04, 0.98, 0.37,
-                      0.45, 0.595, 0.89, 0.34, 0.56,
-                      0.08, 0.182, 0.94, 0.46, 0.715,
-                      0.205, 0.15, 0.05, 0.25, 0.127,
-                      0.410, 0.21, 0.121, 0.23, 0.64,
-                      0.861, 0.79, 0.621, 0.017, 0.58,
-                      0.922, 0.4, 0.589, 0.48, 0.812,
-                      0.91, 0.7, 0.63, 0.69, 0.82,
-                      0.59, 0.83, 0.53, 0.8, 0.719};
-  printf("Unsorted:\n");
-  printArray(example, 60);
-  bucketSort(example, 60);
-  printf("Sorted:\n");
-  printArray(example, 60);
+//===================================================================
+// Sorts an array of numbers uniformly distributed in [0,1) in
+// expected linear time
+double *bucketSort (double *arr, size_t n) {
+  
+    // create n buckets 
+  dll **buckets = createBuckets(arr, n);
+  
+    // fill the buckets with the elements of the array
+    // sorted in ascending order
+  sortBuckets(buckets, arr, n);
+
+    // concatenate the buckets to return the sorted array
+  return concatenate(buckets, arr, n);
+}
+
+//===================================================================
+
+int main (){
+    
+  READ(double, arr, "%lf", len);
+
+  double *sorted = bucketSort(arr, len);
+
+  PRINT_ARRAY(sorted, "%lf", len);
+
+  free(arr);
+  free(sorted);
+  
   return 0;
 }    

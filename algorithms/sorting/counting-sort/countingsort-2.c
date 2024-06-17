@@ -15,7 +15,7 @@
 
 //===================================================================
 // Sorts an array of integers in ascending order
-int *countingSort(int *arr, int n) {
+int *countingSort(int *arr, size_t n) {
     // find the minimum and maximum values to determine the range
   int min = arr[0], max = arr[0];
   for (size_t i = 1; i < n; i++) {
@@ -31,7 +31,7 @@ int *countingSort(int *arr, int n) {
     // compute the cumulative sums of the counts
   for (size_t i = 1; i <= range; i++) 
     counts[i] += counts[i - 1];
-    // place the elements in their correct positions
+    // place the elements in their sorted positions
   int *sorted = safeCalloc(n, sizeof(int));
   for (size_t i = n; i--; ) {
     sorted[counts[arr[i] - min] - 1] = arr[i];

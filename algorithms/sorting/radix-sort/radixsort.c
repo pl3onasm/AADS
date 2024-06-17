@@ -47,7 +47,7 @@ void countingSort(int **dates, size_t len, int field) {
 }
 
 //===================================================================
-// Radix sort for the dates
+// Sorts the dates in ascending order using radix sort
 void radixSort (int **dates, size_t size, int *order) {
 
     // sort the date fields in the specified order
