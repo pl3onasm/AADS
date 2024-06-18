@@ -21,14 +21,13 @@ int compDoubles (void const *a, void const *b) {
 }
 
 //===================================================================
-// Inserts the elements of the array in the buckets in ascending 
-// order
+// Puts each element of the array in the appropriate bucket 
+// and inserts it in sorted order inside the bucket
 void sortBuckets (dll **buckets, double *arr, size_t len) {
   
   for (size_t i = 0; i < len; i++) 
     dllInsert(buckets[(size_t)(len * arr[i])], &arr[i]);
 }
-
 
 //===================================================================
 // Creates an array of doubly linked lists, one for each bucket
@@ -63,17 +62,17 @@ double *concatenate (dll **buckets, double *arr, size_t len) {
 //===================================================================
 // Sorts an array of numbers uniformly distributed in [0,1) in
 // expected linear time
-double *bucketSort (double *arr, size_t n) {
+double *bucketSort (double *arr, size_t len) {
   
     // create n buckets 
-  dll **buckets = createBuckets(arr, n);
+  dll **buckets = createBuckets(arr, len);
   
     // fill the buckets with the elements of the array
     // sorted in ascending order
-  sortBuckets(buckets, arr, n);
+  sortBuckets(buckets, arr, len);
 
     // concatenate the buckets to return the sorted array
-  return concatenate(buckets, arr, n);
+  return concatenate(buckets, arr, len);
 }
 
 //===================================================================
