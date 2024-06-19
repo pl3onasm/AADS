@@ -10,19 +10,18 @@
 #include "../../../lib/clib/clib.h"
 
 //===================================================================
-// Partitions an array around a pivot element (last element)
+// Partitions an array around a pivot element (last element) and
+// returns the sorted position of this pivot
 size_t partition(int *arr, size_t left, size_t right) {
   
   size_t pivotIdx = right - 1, i = left;
 
     // keep swapping elements smaller than the pivot
     // loop invariant: arr[left:i-1] < pivot
-  for (size_t j = left; j < right - 1; j++) {
-    if (arr[j] < arr[pivotIdx]) {
-      SWAP(arr[i], arr[j]);
-      i++;
-    }
-  }
+  for (size_t j = left; j < right - 1; j++)
+    if (arr[j] < arr[pivotIdx]) 
+      SWAP(arr[i++], arr[j]);
+
     // put pivot in its final sorted position
   SWAP(arr[i], arr[pivotIdx]);
   return i;
@@ -34,11 +33,11 @@ void quickSort(int *arr, size_t left, size_t right){
   
     // if the array has more than one element
   if (left + 1 < right) {
-      // partition the array around the last element
-    size_t q = partition(arr, left, right);
+      // partition the array around the last element as pivot
+    size_t pivotIdx = partition(arr, left, right);
       // recursively sort the two partitions
-    quickSort(arr, left, q);
-    quickSort(arr, q + 1, right);
+    quickSort(arr, left, pivotIdx);
+    quickSort(arr, pivotIdx + 1, right);
   }
 }
 

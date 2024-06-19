@@ -2,11 +2,11 @@
 
 ## ${\color{rosybrown}\text{Problem}}$
 
-Given an array of numbers, find the $k$-th order statistic, i.e. the $k$-th smallest element. In other words, find the element that would be at index $k$ if the array were sorted. For example, given the array $[3, 1, 4, 2, 5]$ and $k = 3$, the third smallest element is 3.
+Given an array of numbers, find the $k$-th order statistic, i.e. the $k$-th smallest element. In other words, find the element that would be at index $k - 1$ if the array were sorted. For example, given the array $[5, 1, 4, 2, 3]$ and $k = 3$, the third smallest element is $3$ at index $2$ if the array were sorted in increasing order.
 
 ## ${\color{darkseagreen}\text{Solution in expected}}$ ${\color{darkseagreen}\text{linear time}}$
 
-The name quickselect is derived from the fact that it uses the same partitioning scheme as the quicksort algorithm in order to select the $k$-th smallest element. The key idea is that it is not necessary to sort the entire array, but only to recursively partition the input array around a randomly picked pivot until the pivot is the $k$-th smallest element.
+The name quickselect is derived from the fact that it uses the same partitioning procedure as the [quicksort algorithm](https://github.com/pl3onasm/CLRS/tree/main/algorithms/sorting/quick-sort) in order to select the $k$-th smallest element. The key idea is that it is not necessary to sort the entire input array, but only to recursively partition the array around a randomly picked pivot until the pivot is the $k$-th smallest element.
 
 At each recursive step, the array is partitioned around a pivot element such that all elements to the left of the pivot are smaller and all elements to the right are larger. As we are looking for the $k$-th smallest element, the number $i$ of elements less than or equal to the pivot is compared to $k$ at each step. If they are equal, the pivot is the $k$-th smallest element and the algorithm terminates. If $k$ is smaller, the algorithm is recursively called on the right subarray. If $k$ is larger, this index is updated to be relative to the left subarray, since $i$ elements were found to be smaller and are removed from the left subarray on which the algorithm is recursively called.
 

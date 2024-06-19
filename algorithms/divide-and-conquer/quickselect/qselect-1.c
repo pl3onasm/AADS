@@ -10,51 +10,72 @@
   time complexity: expected O(n), worst case O(n^2)
 */
 
-#include <time.h>
 #include "../../../lib/clib/clib.h"
+#include <time.h>
 
+//===================================================================
+// Partitions an array around a random pivot element and returns
+// the sorted position of this pivot
 size_t partition(int *arr, size_t left, size_t right) {
-  /* partitions arr[left..right] around a random pivot */
-  srand(time(NULL));           // seed the random number generator
-  size_t idx = left + rand() % (right - left + 1);
-  int pivot = arr[idx];
-  SWAP(arr[idx], arr[right]);  // move pivot to the end
-  idx = left;                  // start of the partition's high end
   
-  // move all elements ≤ pivot to the left
-  for (size_t i = left; i < right; i++)
-    if (arr[i] <= pivot)       
-      SWAP(arr[i], arr[idx++]);
+  size_t i = left;
+    // put random pivot at the end of the array
+  SWAP(arr[left + rand() % (right - left)], arr[right - 1]);
+
+    // keep swapping elements smaller than the pivot
+    // loop invariant: arr[left:i-1] < pivot
+  for (size_t j = left; j < right - 1; j++) 
+    if (arr[j] < arr[right - 1]) 
+      SWAP(arr[i++], arr[j]);
   
-  SWAP(arr[idx], arr[right]);  // move pivot to its final place
-  return idx;
+    // put pivot in its final sorted position
+  SWAP(arr[i], arr[right - 1]);
+  return i;
 }
 
+//===================================================================
+// Returns the k-th smallest element in the input array, i.e. the
+// element that would be at index k - 1 if the array were sorted
 int quickSelect(int *arr, size_t left, size_t right, size_t k) {
-  /* returns the k-th smallest element in arr[left..right], i.e. the
-     element that would be at index k if the array were sorted */
-  if (left >= right) 
+  
+  if (left + 1 == right) 
     return arr[left];
-  size_t q = partition(arr, left, right);
-  size_t i = q - left + 1;    // i = number of elements ≤ pivot
+
+    // partition the array around a random pivot 
+  size_t pivotIdx = partition(arr, left, right);
+    // compute the number of elements < pivot
+  size_t i = pivotIdx - left + 1;    
+  
   if (k == i) 
-    return arr[q];
-  else if (k < i)          // search in the low end of the array
-    return quickSelect(arr, left, q-1, k);
-  else                     // search in the high end of the array
-    return quickSelect(arr, q+1, right, k-i);
-      // we update k to be relative to the new subarray,
-      // i.e. we search for the (k-i)th element in the high end
+      // we found the k-th smallest element
+    return arr[pivotIdx];
+  else if (k < i)          
+      // search in the low end of the array
+    return quickSelect(arr, left, pivotIdx, k);
+  else                     
+      // update the order statistic and
+      // search for the (k-i)th element in the high end
+    return quickSelect(arr, pivotIdx + 1, right, k - i);
 }
+
+//===================================================================
 
 int main () {
-  size_t n, k;
-  assert(scanf("%zu %zu", &n, &k) == 2);
+  srand(time(NULL)); 
   
-  CREATE_ARRAY(int, arr, n);
-  READ_ARRAY(arr, "%d", n);
+  size_t k;
+  assert(scanf("%zu", &k) == 1);
+  
+  READ(int, arr, "%d", len);
 
-  printf("%d\n", quickSelect(arr, 0, n-1, k));
+  if (k > len) {
+    fprintf(stderr, "Error: k is greater than the input length\n");
+    free(arr);
+    exit(EXIT_FAILURE);
+  }
+
+  printf("%d\n", quickSelect(arr, 0, len, k));
+
   free(arr);
   return 0;
 }

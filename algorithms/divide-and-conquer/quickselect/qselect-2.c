@@ -13,71 +13,120 @@
 
 #include "../../../lib/clib/clib.h"
 
+//===================================================================
+// Partitions the array around a given pivot value and returns
+// the sorted position of this pivot
 size_t partition(int *arr, size_t left, size_t right, int pivot) {
-  /* partitions arr[left..right] around a given pivot value */
-  size_t idx = left, pivotIdx = 0; 
-  for (size_t i = left; i <= right; i++) {
-    // move all elements <= pivot to the low end
-    if (arr[i] <= pivot){
-      if (arr[i] == pivot) pivotIdx = idx; // save pivot's index
-      SWAP(arr[i], arr[idx++]);
-    }
-  }
-  SWAP(arr[pivotIdx], arr[idx - 1]);  // move pivot to its final place
-  return idx - 1;
+  
+  size_t i = left, pivotIdx = 0; 
+
+    // keep swapping elements smaller than the pivot
+    // loop invariant: arr[left:i-1] < pivot
+  for (size_t j = left; j < right; j++) 
+    if (arr[j] < pivot) 
+      SWAP(arr[i++], arr[j]);
+    else if (arr[j] == pivot)
+      pivotIdx = j;
+    
+    // put pivot in its final sorted position
+  SWAP(arr[i], arr[pivotIdx]); 
+  return i;
 }
 
-int select (int *arr, size_t left, size_t right, size_t k) {
-  /* returns the k-th smallest element in arr[left..right] */
-
-  // makes sure that arr's length is divisible by 5
-  while ((right - left + 1) % 5) {
-    for (size_t j = left + 1; j <= right; j++) 
-      // get the minimum at arr[left]
-      if (arr[left] > arr[j]) SWAP(arr[left], arr[j]);
-    if (k == 1) 
-      return arr[left];
-    left++;   // move the left boundary by 1 to the right
-    k--;      // update k to reflect the new position 
-              // of the k-th smallest element
+//===================================================================
+// Trims the array by extracting the minima of the array and moving 
+// them to the left side of the array until the remaining array 
+// length is divisible by 5 or the order statistic k is found.
+// The function returns the new left index of the trimmed array 
+// and updates the value of k accordingly
+size_t trimArray(int *arr, size_t left, size_t right, size_t *k) {
+  
+  while ((right - left) % 5) {
+    for (size_t i = left + 1; i < right; i++) 
+      if (arr[left] > arr[i]) 
+        SWAP(arr[left], arr[i]);
+    if (*k == 1) 
+        // we found the k-th smallest element
+      return left;
+    ++left;
+    --*k;
   }
+  return left;
+}
 
-  // g = total number of 5-element groups
-  size_t g = (right - left + 1) / 5;
+//===================================================================
+// Sorts the groups of 5 elements in the array using insertion sort;
+// g is the total number of such groups in the array and is also the
+// distance between the elements in each group
+void sortGroups(int *arr, size_t left, size_t right, size_t g) {
 
-  // sort each group in place using insertion sort
-  for (size_t j = left; j < left + g; j++) {
-    for (size_t m = j + g; m < right; m += g) {
-      int key = arr[m];
-      size_t l = m;
-      while (l > j && arr[l - g] > key) {
-        arr[l] = arr[l - g];
-        l -= g;
+  for (size_t i = left; i < left + g; i++) {
+      // sort the next group of 5 elements
+    for (size_t j = i + g; j < right; j += g) {
+      int key = arr[j];
+      size_t k = j;
+        // shift elements of the sorted subarray in the group to 
+        // the right until the correct position for key is found
+      while (k > i && arr[k - g] > key) {
+        arr[k] = arr[k - g];
+        k -= g;
       }
-      arr[l] = key;
+        // insert key into its sorted position
+      arr[k] = key;
     }
   }
-
-  // find the pivot recursively as the median of the group medians
-  int pivot = select(arr, left + 2*g, left + 3*g - 1, g/2 + 1);
-
-  // partition around the median
-  size_t q = partition(arr, left, right, pivot);
-
-  size_t i = q - left + 1;   // number of elements ≤ median
-  if (i == k) return arr[q];
-  else if (k < i) return select(arr, left, q - 1, k);
-  else return select(arr, q + 1, right, k - i);
 }
+
+//===================================================================
+// Returns the k-th smallest element in the input array, i.e. the
+// element that would be at index k - 1 if the array were sorted
+int quickSelect (int *arr, size_t left, size_t right, size_t k) {
+  
+    // trim the array to a size divisible by 5
+  left = trimArray(arr, left, right, &k);
+  if (k == 1) 
+    return arr[left];
+
+    // compute the number of 5-element groups and sort them
+  size_t g = (right - left) / 5;
+  sortGroups(arr, left, right, g);
+
+    // find the pivot recursively as the median of the group medians
+  int pivot = quickSelect(arr, left + 2*g, left + 3*g, g/2 + 1);
+
+    // partition around the median
+  size_t pivotIdx = partition(arr, left, right, pivot);
+
+    // compute the number of elements < median
+  size_t i = pivotIdx - left + 1;   
+
+  if (i == k) 
+    return arr[pivotIdx];
+  else if (k < i)
+      // search in the low end of the array 
+    return quickSelect(arr, left, pivotIdx, k);
+  else
+      // update the order statistic and
+      // search for the (k-i)th element in the high end 
+    return quickSelect(arr, pivotIdx + 1, right, k - i);
+}
+
+//===================================================================
 
 int main () {
-  size_t n, k;   // n = number of elements, k = k-th order statistic
-  assert(scanf("%zu %zu", &n, &k) == 2);
+  size_t k;
+  assert(scanf("%zu", &k) == 1);
   
-  CREATE_ARRAY(int, arr, n);
-  READ_ARRAY(arr, "%d", n);
+  READ(int, arr, "%d", len);
 
-  printf("%d\n", select(arr, 0, n - 1, k));
+  if (k > len) {
+    fprintf(stderr, "Error: k is greater than the input length\n");
+    free(arr);
+    exit(EXIT_FAILURE);
+  }
+
+  printf("%d\n", quickSelect(arr, 0, len, k));
+
   free(arr);
   return 0;
 }

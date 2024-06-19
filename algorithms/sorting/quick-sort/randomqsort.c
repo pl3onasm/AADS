@@ -11,7 +11,8 @@
 #include <time.h>
 
 //===================================================================
-// Partitions an array around a random pivot
+// Partitions an array around a random pivot element and returns
+// the sorted position of this pivot
 size_t partition(int *arr, size_t left, size_t right) {
   
   size_t i = left;
@@ -20,12 +21,10 @@ size_t partition(int *arr, size_t left, size_t right) {
 
     // keep swapping elements smaller than the pivot
     // loop invariant: arr[left:i-1] < pivot
-  for (size_t j = left; j < right - 1; j++) {
-    if (arr[j] < arr[right - 1]) {
-      SWAP(arr[i], arr[j]);
-      i++;
-    }
-  }
+  for (size_t j = left; j < right - 1; j++) 
+    if (arr[j] < arr[right - 1]) 
+      SWAP(arr[i++], arr[j]);
+  
     // put pivot in its final sorted position
   SWAP(arr[i], arr[right - 1]);
   return i;
@@ -37,11 +36,11 @@ void quickSort(int *arr, size_t left, size_t right){
 
     // if the array has more than one element
   if (left + 1 < right) {
-      // partition the array around a random pivot
-    size_t q = partition(arr, left, right);
+      // partition the array around a random pivot element
+    size_t pivotIdx = partition(arr, left, right);
       // recursively sort the two partitions
-    quickSort(arr, left, q);
-    quickSort(arr, q + 1, right);
+    quickSort(arr, left, pivotIdx);
+    quickSort(arr, pivotIdx + 1, right);
   }
 }
 
