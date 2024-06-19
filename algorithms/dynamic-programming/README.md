@@ -2,7 +2,7 @@
 
 ## ${\color{Rosybrown}\text{Overview}}$
 
-| ${\color{peru}\text{CLRS (3/4)}}$ | ${\color{peru}\text{Link}}$ |
+| ${\color{peru}\text{CLRS (3/4)}}$ | ${\color{peru}\text{Topic}}$ |
 |:---|:---|
 | 15/14.1 | [Rod Cutting](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/dynamic-programming/rod-cutting) |
 | 15/14.2 | [Matrix Chain Multiplication](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/dynamic-programming/matrix-chain-mult) |

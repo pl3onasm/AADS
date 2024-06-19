@@ -2,7 +2,7 @@
 
 ## ${\color{Rosybrown}\text{Overview}}$
 
-| ${\color{peru}\text{CLRS (3/4)}}$ | ${\color{peru}\text{Link}}$ |
+| ${\color{peru}\text{CLRS (3/4)}}$ | ${\color{peru}\text{Topic}}$ |
 |:---|:---|
 | 16/15.1 | [Activity-selection Problem](https://github.com/pl3onasm/AADS/tree/main/algorithms/greedy/activity-selection) |
 | 16/15.2 | [Fractional Knapsack](https://github.com/pl3onasm/AADS/tree/main/algorithms/greedy/fract-knapsack) |
