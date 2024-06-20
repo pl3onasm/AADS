@@ -64,7 +64,7 @@ double *concatenate (dll **buckets, double *arr, size_t len) {
 // expected linear time
 double *bucketSort (double *arr, size_t len) {
   
-    // create n buckets 
+    // create len buckets 
   dll **buckets = createBuckets(arr, len);
   
     // fill the buckets with the elements of the array

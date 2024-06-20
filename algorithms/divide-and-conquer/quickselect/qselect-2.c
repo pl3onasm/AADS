@@ -65,8 +65,9 @@ void sortGroups(int *arr, size_t left, size_t right, size_t g) {
     for (size_t j = i + g; j < right; j += g) {
       int key = arr[j];
       size_t k = j;
-        // shift elements of the sorted subarray in the group to 
-        // the right until the correct position for key is found
+        // shift elements of the sorted subarray within the group 
+        // by distance g to the right until the correct position 
+        // for key is found
       while (k > i && arr[k - g] > key) {
         arr[k] = arr[k - g];
         k -= g;
