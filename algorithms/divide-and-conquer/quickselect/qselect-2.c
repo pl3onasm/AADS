@@ -12,6 +12,7 @@
 */
 
 #include "../../../lib/clib/clib.h"
+#include <math.h>
 
 //===================================================================
 // Partitions the array around a given pivot value and returns
@@ -93,7 +94,8 @@ int quickSelect (int *arr, size_t left, size_t right, size_t k) {
   sortGroups(arr, left, right, g);
 
     // find the pivot recursively as the median of the group medians
-  int pivot = quickSelect(arr, left + 2*g, left + 3*g, g/2 + 1);
+  int pivot = quickSelect(arr, left + 2*g, left + 3*g, 
+                          ceil(g / 2.0));
 
     // partition around the median
   size_t pivotIdx = partition(arr, left, right, pivot);
