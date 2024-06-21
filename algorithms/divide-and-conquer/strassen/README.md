@@ -20,7 +20,7 @@ If we want to multiply two $n \times n$ matrices $A$ and $B$, we can do so by ta
 
 In the above pseudocode, $Cᵢⱼ$ is the element in the $i$-th row and $j$-th column of $C$. Since we have three nested loops iterating over $n$ elements, the time complexity of this algorithm is in $\mathcal{O}(n^3)$.
 
-We can turn this algorithm into a divide and conquer algorithm by splitting the matrices $A$ and $B$ into four $n/2 \times n/2$ ${\color{peru}\text{block-matrices}}$ and then multiplying them recursively. Doing so, we make use of the fact that the standard rule for matrix multiplication is also true for block-matrices:
+We can turn this algorithm into a divide and conquer algorithm by splitting the matrices $A$ and $B$ into four $n/2 \times n/2$ ${\color{peru}\text{block-matrices}}$ and then multiplying them recursively. Doing so, we make use of the fact that the standard rule for matrix multiplication is also true for block-matrices:  
 
 $$ \begin{align*}
    &\quad
