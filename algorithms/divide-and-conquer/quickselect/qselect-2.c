@@ -21,23 +21,24 @@ size_t partition(int *arr, size_t left, size_t right, int pivot) {
   
   size_t i = left, pivotIdx = 0; 
 
-    // keep swapping elements smaller than the pivot
-    // loop invariant: arr[left:i-1] < pivot
+    // keep swapping elements smaller or equal to 
+    // the pivot to the left side of the array
   for (size_t j = left; j < right; j++) 
-    if (arr[j] < pivot) 
-      SWAP(arr[i++], arr[j]);
-    else if (arr[j] == pivot)
-      pivotIdx = j;
+    if (arr[j] <= pivot) {
+      if (arr[j] == pivot) 
+        pivotIdx = i; 
+      SWAP(arr[j], arr[i++]);
+    }
     
     // put pivot in its final sorted position
-  SWAP(arr[i], arr[pivotIdx]); 
-  return i;
+  SWAP(arr[i - 1], arr[pivotIdx]); 
+  return i - 1;
 }
 
 //===================================================================
 // Trims the array by extracting the minima of the array and moving 
-// them to the left side of the array until the remaining array 
-// length is divisible by 5 or the order statistic k is found.
+// them to the leftmost positions until the array length is
+// divisible by 5 or the order statistic k is found.
 // The function returns the new left index of the trimmed array 
 // and updates the value of k accordingly
 size_t trimArray(int *arr, size_t left, size_t right, size_t *k) {
@@ -84,9 +85,8 @@ void sortGroups(int *arr, size_t left, size_t right, size_t g) {
 // element that would be at index k - 1 if the array were sorted
 int quickSelect (int *arr, size_t left, size_t right, size_t k) {
   
-    // trim the array to a size divisible by 5
   left = trimArray(arr, left, right, &k);
-  if (k == 1) 
+  if ((right - left) % 5 && k == 1)
     return arr[left];
 
     // compute the number of 5-element groups and sort them
@@ -94,8 +94,7 @@ int quickSelect (int *arr, size_t left, size_t right, size_t k) {
   sortGroups(arr, left, right, g);
 
     // find the pivot recursively as the median of the group medians
-  int pivot = quickSelect(arr, left + 2*g, left + 3*g, 
-                          ceil(g / 2.0));
+  int pivot = quickSelect(arr, left + 2*g, left + 3*g, ceil(g/ 2.0));
 
     // partition around the median
   size_t pivotIdx = partition(arr, left, right, pivot);

@@ -30,18 +30,18 @@ where $q'$ is the next state to try in case of a mismatch or when the pattern ha
 
 $$
 {\color{peru}q' = }\begin{cases}
- \max \lbrace k: k \in {\color{palevioletred}\pi^\ast(q)} \land P[k] = a \rbrace \\
-\qquad \text{if } \exists k \in {\color{palevioletred}\pi^\ast(q)} : a = P[k]  \\
+ \max \lbrace k: k \in {\color{orchid}\pi^\ast(q)} \land P[k] = a \rbrace \\
+\qquad \text{if } \exists k \in {\color{orchid}\pi^\ast(q)} : a = P[k]  \\
  0 \quad\space\space \text{otherwise}
 \end{cases}
 $$
 
 [^1]: Since we are working with 0-based indices (contrary to the book), P[q] is in fact the (q+1)-st character of P. Prefix function values, just like state values, pertain to string lengths, not indices. Thus, there is always a difference of 1 when switching between state or prefix function values and string indices.
 
-The ${\color{palevioletred}\text{iterated prefix function } \pi^\ast}$ generates the set of all possible next states to try, by recursively applying the prefix function to the current state until the obtained state is 0. It can be defined as:
+The ${\color{orchid}\text{iterated prefix function } \pi^\ast}$ generates the set of all possible next states to try, by recursively applying the prefix function to the current state until the obtained state is 0. It can be defined as:
 
 $$
-{\color{palevioletred}\pi^\ast(q) = }\begin{cases}
+{\color{orchid}\pi^\ast(q) = }\begin{cases}
 \lbrace 0 \rbrace & \text{if } \pi(q) = 0 \\
 \lbrace \pi(q) \rbrace \cup  \pi^\ast(\pi(q)) & \text{otherwise}
 \end{cases}

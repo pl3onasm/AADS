@@ -25,7 +25,7 @@ size_t partition(int *arr, size_t left, size_t right) {
     // keep swapping elements smaller than the pivot
     // loop invariant: arr[left:i-1] < pivot
   for (size_t j = left; j < right - 1; j++) 
-    if (arr[j] < arr[right - 1]) 
+    if (arr[j] <= arr[right - 1]) 
       SWAP(arr[i++], arr[j]);
   
     // put pivot in its final sorted position
