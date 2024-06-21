@@ -99,7 +99,7 @@ int quickSelect (int *arr, size_t left, size_t right, size_t k) {
     // partition around the median
   size_t pivotIdx = partition(arr, left, right, pivot);
 
-    // compute the number of elements < median
+    // compute the number of elements <= median
   size_t i = pivotIdx - left + 1;   
 
   if (i == k) 

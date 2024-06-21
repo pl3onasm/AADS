@@ -43,7 +43,7 @@ int quickSelect(int *arr, size_t left, size_t right, size_t k) {
 
     // partition the array around a random pivot 
   size_t pivotIdx = partition(arr, left, right);
-    // compute the number of elements < pivot
+    // compute the number of elements <= pivot
   size_t i = pivotIdx - left + 1;    
   
   if (k == i) 
