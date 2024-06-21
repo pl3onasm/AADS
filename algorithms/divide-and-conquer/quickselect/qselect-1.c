@@ -22,8 +22,8 @@ size_t partition(int *arr, size_t left, size_t right) {
     // put random pivot at the end of the array
   SWAP(arr[left + rand() % (right - left)], arr[right - 1]);
 
-    // keep swapping elements smaller than the pivot
-    // loop invariant: arr[left:i-1] < pivot
+    // keep swapping elements smaller or equal to
+    // the pivot to the left side of the array
   for (size_t j = left; j < right - 1; j++) 
     if (arr[j] <= arr[right - 1]) 
       SWAP(arr[i++], arr[j]);
