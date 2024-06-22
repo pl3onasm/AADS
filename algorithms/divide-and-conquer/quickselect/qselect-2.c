@@ -85,6 +85,7 @@ void sortGroups(int *arr, size_t left, size_t right, size_t g) {
 // element that would be at index k - 1 if the array were sorted
 int quickSelect (int *arr, size_t left, size_t right, size_t k) {
   
+    // trim the array to have a length divisible by 5
   left = trimArray(arr, left, right, &k);
   if ((right - left) % 5 && k == 1)
     return arr[left];

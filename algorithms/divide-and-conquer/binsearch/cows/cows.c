@@ -15,7 +15,7 @@
 
 //===================================================================
 // Comparison function for qsort
-int cmpPositions (const void * a, const void * b) {
+int cmpPositions (void const *a, void const *b) {
   return ( *(size_t*)a - *(size_t*)b );
 }
 

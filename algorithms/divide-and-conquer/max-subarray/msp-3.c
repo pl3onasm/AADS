@@ -1,54 +1,57 @@
-/* file: msp-3.c
-   author: David De Potter
-   email: pl3onasm@gmail.com
-   license: MIT, see LICENSE file in repository root folder
-   description: Maximum subarray problem using 
-    an iterative linear approach
-   time complexity: O(n)
+/* 
+  file: msp-3.c
+  author: David De Potter
+  email: pl3onasm@gmail.com
+  license: MIT, see LICENSE file in repository root folder
+  description: Maximum subarray problem using 
+  an iterative linear approach
+  time complexity: O(n)
 */
 
 #include "../../../lib/clib/clib.h"
+#include <limits.h>
 
-void printResult (int *arr, size_t l, size_t h, int max) {
-  /* prints the result */
-  printf("Maximum sum: %d\n", max);
-  printf("Maximum subarray: \n[");
-  for (size_t i = l; i <= h; ++i) {
-    printf("%d", arr[i]);
-    if (i < h) printf(", ");
-  }
-  printf("]\n");
+//===================================================================
+// Prints the maximum sum and a subarray having this sum
+void printMaxSub (int *arr, size_t low, size_t high, int max) {
+  printf("Maximum sum: %d\n"
+         "A subarray with the maximum sum:\n  ", max);
+  for (size_t i = low; i <= high; ++i) 
+    printf(i == high ? "%d\n" : "%d, ", arr[i]);
 }
 
-int maxSubarray(int *arr, size_t n, size_t *l, size_t *h) {
-  /* computes the maximum subarray */
-  int max = INT_MIN, sum = 0, low = 0;
-  for (size_t i = 0; i < n; ++i) {
-    sum += arr[i];
-    if (sum > max) { // update max
-      max = sum;
-      *h = i;
-      *l = low;
+//===================================================================
+// Returns the maximum subarray sum and determines the bounds of
+// a subarray with this sum
+int getMaxSub(int *arr, size_t len, size_t *low, size_t *high) {
+  int maxSum = INT_MIN, tempSum = 0; 
+  size_t tempLow = 0;
+  for (size_t i = 0; i < len; ++i) {
+    tempSum += arr[i];
+    if (tempSum > maxSum) {   // update max and subarray bounds
+      maxSum = tempSum;
+      *high = i;
+      *low = tempLow;
     }
-    if (sum < 0) {   // reset sum
-      sum = 0;
-      low = i+1;
+    if (tempSum < 0) {        // reset sum and lower bound 
+      tempSum = 0;
+      tempLow = i + 1;
     }
   }
-  return max;
+  return maxSum;
 }
 
-int main(int argc, char *argv[]) {
-  size_t n;
-  (void)! scanf("%lu", &n);
+//===================================================================
 
-  CREATE_ARRAY(int, arr, n);
-  READ_ARRAY(arr, "%d", n);
-
-  size_t l = 0, h = n-1;  // low and high indices
+int main() {
   
-  int max = maxSubarray(arr, n, &l, &h);
-  printResult(arr, l, h, max);
+  READ(int, arr, "%d", len);
+
+  size_t low, high;
+  
+  int max = getMaxSub(arr, len, &low, &high);
+
+  printMaxSub(arr, low, high, max);
 
   free(arr);
   return 0; 
