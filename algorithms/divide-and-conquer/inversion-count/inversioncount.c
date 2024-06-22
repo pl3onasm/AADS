@@ -49,7 +49,7 @@ size_t merge(int *arr, size_t left, size_t mid, size_t right) {
 size_t inversionCount(int *arr, size_t left, size_t right) { 
   size_t count = 0; 
 
-  // if the array has more than one element
+    // if the array has more than one element
   if (left + 1 < right) {
       // divide the array in two subarrays
       // around the midpoint
