@@ -32,7 +32,7 @@ The algorithm can be implemented in linear time by iterating over the array and 
 
 At each iteration, the running sum is updated by adding the current element to it only if the resulting sum is non-negative. If adding the current element would turn the running sum negative, then the running sum is reset to zero, and the lower bound of the running subarray is reset to the next element to start a new running subarray in order to get a fresh start at finding the maximum sum.
 
-As the algorithm iterates over the array, the running sum is continuously compared to the maximum sum found so far and if at any point the running sum is found to be greater than the maximum sum, the maximum sum is updated to the running sum, and the corresponding maximum subarray bounds are updated to the corresponding running subarray bounds.
+As the algorithm iterates over the array, the running sum is continuously compared to the maximum sum found so far and if at any point the running sum is found to be greater, the maximum sum is updated to the running sum, as are the bounds of the maximum subarray.
 
 The algorithm is implemented using a single loop that iterates over the array once, and the time complexity is therefore in $\Theta(n)$.
 
