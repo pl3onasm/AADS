@@ -87,7 +87,7 @@ int quickSelect (int *arr, size_t left, size_t right, size_t k) {
   
     // trim the array to have a length divisible by 5
   left = trimArray(arr, left, right, &k);
-  if ((right - left) % 5 && k == 1)
+  if ((right - left) % 5)
     return arr[left];
 
     // compute the number of 5-element groups and sort them
