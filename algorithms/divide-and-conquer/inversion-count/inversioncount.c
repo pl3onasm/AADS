@@ -1,63 +1,76 @@
-/* file: inversioncount.c
-   author: David De Potter
-   email: pl3onasm@gmail.com
-   license: MIT, see LICENSE file in repository root folder
-   description: 
-     We want to find the number of inversions in the array. 
-     For this we simply sort the array with mergesort, and count the
-     number of inversions while merging. This approach gives a  
-     solution in O(nlogn), since it's just mergesort with a counter.
+/* 
+  file: inversioncount.c
+  author: David De Potter
+  email: pl3onasm@gmail.com
+  license: MIT, see LICENSE file in repository root folder
+  description: 
+    We want to find the number of inversions in the array. 
+    For this we simply sort the array with mergesort, and count the
+    number of inversions while merging. This approach gives a  
+    solution in O(nlogn), since it's just mergesort with a counter.
 */
 
 #include "../../../lib/clib/clib.h"
 
+//===================================================================
+// Merges two sorted subarrays into one sorted array while counting
+// the number of inversions
 size_t merge(int *arr, size_t left, size_t mid, size_t right) {
-  /* merges two sorted arrays, and counts the number of inversions */
-  CREATE_ARRAY(int, temp, right - left + 1);
-  size_t l = left, r = mid + 1, t = 0, count = 0;   
-  while (l <= mid && r <= right) {
-    if (arr[l] <= arr[r]){ 
-      // no inversions in this case 
-      temp[t++] = arr[l++];
-    } else {
-      // total number of inversions to add is the number of
-      // elements currently left in the left half 
-      temp[t++] = arr[r++];
-      count += mid - l + 1;
+    // allocate memory for an auxiliary array to 
+    // store the combined sorted array
+  int *sorted = safeMalloc((right - left) * sizeof(int));
+  size_t l = left, r = mid, s = 0, count = 0;
+    // merge the two subarrays into the auxiliary array
+    // in sorted order until one of the subarrays is exhausted
+  while (l < mid && r < right) {
+    if (arr[l] <= arr[r]) 
+        // no inversions
+      sorted[s++] = arr[l++];
+    else {
+        // total number of inversions is the number of 
+        // remaining elements in the left subarray
+      sorted[s++] = arr[r++];
+      count += mid - l;
     }
   }
-
-  // copy the remaining elements of the left and right halves
-  while (l <= mid) temp[t++] = arr[l++]; 
-  while (r <= right) temp[t++] = arr[r++];
-
-  // copy the merged array back to the original array
-  for (size_t i = left; i <= right; i++) arr[i] = temp[i - left];
-  free(temp);
+    // copy the remaining elements into the end 
+    // of the auxiliary array
+  while (l < mid) sorted[s++] = arr[l++];
+  while (r < right) sorted[s++] = arr[r++];
+    // copy the auxiliary array back to the input array
+  for (size_t i = left; i < right; i++) 
+    arr[i] = sorted[i - left];
+  free(sorted);
   return count;
 }
 
+//===================================================================
+// Counts the number of inversions in the array while sorting it
 size_t inversionCount(int *arr, size_t left, size_t right) { 
-  /* uses mergesort to count the number of inversions 
-     in the array */
   size_t count = 0; 
-  if (left < right) {
+
+  // if the array has more than one element
+  if (left + 1 < right) {
+      // divide the array in two subarrays
+      // around the midpoint
     size_t mid = left + (right - left)/2;
+      // conquer the subarrays
     count += inversionCount(arr, left, mid);
-    count += inversionCount(arr, mid + 1, right);
+    count += inversionCount(arr, mid, right);
+      // combine the sorted halves
     count += merge(arr, left, mid, right);
   }
   return count;
 }
 
-int main(int argc, char **argv){
-  size_t size; 
-  (void)! scanf("%lu\n", &size);
-  
-  CREATE_ARRAY(int, vect, size);
-  READ_ARRAY(vect, "%d ", size);
+//===================================================================
 
-  printf("%lu\n", inversionCount(vect, 0, size - 1));
-  free(vect); 
+int main (){
+
+  READ(int, arr, "%d", len);
+
+  printf("%lu\n", inversionCount(arr, 0, len));
+
+  free(arr); 
   return 0; 
 }

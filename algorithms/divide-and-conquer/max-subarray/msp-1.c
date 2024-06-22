@@ -23,19 +23,19 @@ void printMaxSub (int *arr, size_t low, size_t high, int max) {
 // Returns the maximum subarray sum and determines the bounds of
 // a subarray with this sum
 int getMaxSub(int *arr, size_t len, size_t *low, size_t *high) {
-  int max = INT_MIN;
+  int maxSum = INT_MIN;
   for (size_t i = 0; i < len; ++i) {
-    int sum = 0;
+    int tempSum = 0;
     for (size_t j = i; j < len; ++j) {
-      sum += arr[j];
-      if (sum > max) {
-        max = sum;
+      tempSum += arr[j];
+      if (tempSum > maxSum) {
+        maxSum = tempSum;
         *low = i;
         *high = j;
       }
     }
   }
-  return max;
+  return maxSum;
 }
 
 //===================================================================
