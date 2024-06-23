@@ -24,16 +24,13 @@ Nat *karatsuba(Nat *x, Nat *y) {
     return intToNat((x->digits[0] - '0') * (y->digits[0] - '0'));
  
   size_t exp = MAX(x->size, y->size) / 2;
-  Nat *s1, *s2, *s3, *s4;
+  Nat *s1, *s2, *s3, *s4, *x0, *x1, *y0, *y1;
   
     // split x and y into two parts:
     // x = x1 * 10^exp + x0
     // y = y1 * 10^exp + y0
-  Nat *x1 = newNat(x->size), *x0 = newNat(x->size);
-  Nat *y1 = newNat(y->size), *y0 = newNat(y->size);
-  
-  splitNat(x, exp, x1, x0);
-  splitNat(y, exp, y1, y0);
+  splitNat(x, exp, &x1, &x0);
+  splitNat(y, exp, &y1, &y0);
   
     // compute first component z1 = x1 * y1 
   Nat *z1 = karatsuba(x1, y1);    

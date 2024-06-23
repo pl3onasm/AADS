@@ -1,8 +1,8 @@
 #ifndef NAT_H_INCLUDED
 #define NAT_H_INCLUDED
 
-#include <stddef.h>
-#include <ctype.h>
+#include <stdbool.h>
+#include <stdlib.h>
 
 typedef struct {
   char *digits;
@@ -21,16 +21,30 @@ void showNat(Nat *n);
   // Reads a natural number from stdin
 Nat *readNat();
 
-  // Returns the sum of two natural numbers a and b
-Nat *addNat(Nat *a, Nat *b);
+  // Returns the sum of two natural numbers x and y
+Nat *addNat(Nat *x, Nat *y);
 
-  // Returns the difference of two natural numbers a and b
-Nat *subNat(Nat *a, Nat *b);
-void mulByPow10(Nat *n, int exp);
-void splitNat(Nat *n, int exp, Nat *a, Nat *b);
+  // Returns the difference of two natural numbers x and y
+  // Precondition: x >= y
+Nat *subNat(Nat *x, Nat *y);
+  
+  // Multiplies a natural number x by 10^exp
+void mulByPow10(Nat *n, size_t exp);
+
+  // Split a natural number n into two parts x and y
+  // such that n = x * 10^exp + y
+void splitNat(Nat *n, size_t exp, Nat **x, Nat **y);
+
+  // Returns true if n is zero
 bool isZero(Nat *n);
+
+  // Returns the natural number zero
 Nat *zero();
+
+  // Converts an integer to a natural number
 Nat *intToNat(int x);
+
+  // Reverses the digits of a natural number
 Nat *reverseNat(Nat *n);
 
 #endif // NAT_H_INCLUDED

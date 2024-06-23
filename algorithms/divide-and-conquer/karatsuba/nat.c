@@ -8,6 +8,7 @@
 
 #include "../../../lib/clib/clib.h"
 #include "nat.h"
+#include <ctype.h>
 
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 
@@ -47,7 +48,7 @@ Nat *readNat() {
 
   if (! isdigit(ch)) {  
     fprintf(stderr, "Invalid input\n");
-    exit(1);
+    exit(EXIT_FAILURE);
   }
 
   Nat *n = newNat(100);
@@ -87,7 +88,7 @@ Nat *addNat(Nat *x, Nat *y) {
   }
 
   if (digitSum) {
-    // move all digits one position to the right
+      // move all digits one position to the right
     memmove(sum->digits + 1, sum->digits, sumLen + 1);
     sum->digits[0] = digitSum + '0';
     sumLen++;
@@ -101,9 +102,9 @@ Nat *addNat(Nat *x, Nat *y) {
 // Requires x >= y
 Nat *subNat(Nat *x, Nat *y) {
   if (x->size < y->size) {
-    fprintf(stderr, "Subtraction not supported" 
+    fprintf(stderr, "Subtraction not supported " 
                     "for negative numbers\n");
-    exit(1);
+    exit(EXIT_FAILURE);
   }
 
   Nat *diff = newNat(x->size);
@@ -131,22 +132,24 @@ Nat *subNat(Nat *x, Nat *y) {
 
 //===================================================================
 // Splits n into two parts, x and y, such that n = x * 10^exp + y
-void splitNat(Nat *n, int exp, Nat *x, Nat *y) {
+void splitNat(Nat *n, size_t exp, Nat **x, Nat **y) {
+  
+  *x = newNat(n->size);
+  *y = newNat(n->size);
   size_t nSize = n->size;
-  while (nSize) {
-    if (exp-- > 0) 
-      y->digits[y->size++] = n->digits[--nSize];
-    else 
-      x->digits[x->size++] = n->digits[--nSize];
-  }
 
-  x = reverseNat(x);
-  y = reverseNat(y);
+  while (nSize && exp--) 
+    (*y)->digits[(*y)->size++] = n->digits[--nSize];
+  while (nSize)
+    (*x)->digits[(*x)->size++] = n->digits[--nSize];
+
+  *x = reverseNat(*x);
+  *y = reverseNat(*y);
 }
 
 //===================================================================
 // Multiplies n by 10^exp
-void mulByPow10 (Nat *n, int exp) {
+void mulByPow10 (Nat *n, size_t exp) {
   if (isZero(n)) 
     return;
   checkCapacity(n, n->size + exp);
@@ -186,7 +189,7 @@ Nat *intToNat(int x) {
     // allocate memory for the number: 
     // 10 digits suffice for any int
   Nat *n = newNat(10);  
-  
+
   while (x) {
     n->digits[n->size++] = x % 10 + '0';
     x /= 10;
