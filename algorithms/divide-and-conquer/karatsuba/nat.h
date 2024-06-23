@@ -9,11 +9,22 @@ typedef struct {
   size_t size, capacity;
 } Nat;
 
+  // Creates a new natural number with given capacity
 Nat *newNat(size_t capacity);
+  
+  // Deallocates the memory used by a natural number
 void freeNat(Nat *n);
-void printNat(Nat *n);
+
+  // Shows a natural number on stdout
+void showNat(Nat *n);
+
+  // Reads a natural number from stdin
 Nat *readNat();
+
+  // Returns the sum of two natural numbers a and b
 Nat *addNat(Nat *a, Nat *b);
+
+  // Returns the difference of two natural numbers a and b
 Nat *subNat(Nat *a, Nat *b);
 void mulByPow10(Nat *n, int exp);
 void splitNat(Nat *n, int exp, Nat *a, Nat *b);

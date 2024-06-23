@@ -9,32 +9,38 @@
 #include "../../../lib/clib/clib.h"
 #include "nat.h"
 
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
 
+//===================================================================
+// Creates a new natural number with given capacity
 Nat *newNat(size_t capacity) {
-  // creates a new natural number with the given capacity
-  Nat *n = safeMalloc(sizeof(Nat));
-  n->digits = safeMalloc(capacity * sizeof(char));
+  Nat *n = safeCalloc(1, sizeof(Nat));
+  n->digits = safeCalloc(capacity, sizeof(char));
   n->size = 0;  
   n->capacity = capacity;
   return n;
 }
 
+//===================================================================
+// Deallocates the memory used by a natural number
 void freeNat(Nat *n) {
-  // frees the memory allocated for n
   free(n->digits);
   free(n);
 }
 
+//===================================================================
+// Checks n's capacity and resizes if necessary
 void checkCapacity(Nat *n, size_t capacity) {
-  // resizes if necessary
-  if (n->capacity < capacity) {
+  if (n->capacity <= capacity) {
     n->capacity = 2 * capacity;
     n->digits = safeRealloc(n->digits, n->capacity * sizeof(char));
+    memset(n->digits + n->size, 0, n->capacity - n->size);
   }
 }
 
+//===================================================================
+// Reads a natural number from stdin
 Nat *readNat() {
-  // reads a natural number from stdin
   char ch = ' ';
   while (isspace(ch)) 
     ch = getchar();
@@ -54,8 +60,9 @@ Nat *readNat() {
   return n;
 }
 
-void printNat(Nat *n) {
-  // prints the natural number n
+//===================================================================
+// Shows a natural number
+void showNat(Nat *n) {
   if (n->size == 0) {
     printf("0\n");
     return;
@@ -65,17 +72,20 @@ void printNat(Nat *n) {
   printf("\n");
 }
 
+//===================================================================
+// Returns the sum of two natural numbers x and y
 Nat *addNat(Nat *x, Nat *y) {
-  // adds two natural numbers x and y
   size_t sumLen = MAX(x->size, y->size);
-  Nat *sum = newNat(sumLen + 1);  // +1 for possible carry
+  Nat *sum = newNat(sumLen + 2); 
   int digitSum = 0;
+
   for (size_t i = 0; i < sumLen; i++) {
     if (i < x->size) digitSum += x->digits[x->size - i - 1] - '0';
     if (i < y->size) digitSum += y->digits[y->size - i - 1] - '0';
     sum->digits[sumLen - i - 1] = digitSum % 10 + '0';
     digitSum /= 10;    // set carry
   }
+
   if (digitSum) {
     // move all digits one position to the right
     memmove(sum->digits + 1, sum->digits, sumLen + 1);
@@ -86,10 +96,13 @@ Nat *addNat(Nat *x, Nat *y) {
   return sum;
 }
 
+//===================================================================
+// Returns the difference x - y of two natural numbers x and y
+// Requires x >= y
 Nat *subNat(Nat *x, Nat *y) {
-  // subtracts two natural numbers x and y, where x >= y
   if (x->size < y->size) {
-    fprintf(stderr, "Subtraction not supported for negative numbers\n");
+    fprintf(stderr, "Subtraction not supported" 
+                    "for negative numbers\n");
     exit(1);
   }
 
@@ -104,20 +117,21 @@ Nat *subNat(Nat *x, Nat *y) {
     digitDiff = (digitDiff < 0) ? -1 : 0;   // set borrow
   }
 
-  // remove any leading zeros
+    // compute offset of first non-zero digit
   int offset = 0;
   while (offset < diff->size && diff->digits[offset] == '0') 
     offset++;
 
-  // move all digits offset positions to the left
+    // remove any leading zeros
   diff->size -= offset;
   memmove(diff->digits, diff->digits + offset, diff->size);
 
   return diff;
 }
 
+//===================================================================
+// Splits n into two parts, x and y, such that n = x * 10^exp + y
 void splitNat(Nat *n, int exp, Nat *x, Nat *y) {
-  // splits n into two parts, x and y, such that n = x * 10^exp + y
   size_t nSize = n->size;
   while (nSize) {
     if (exp-- > 0) 
@@ -130,8 +144,9 @@ void splitNat(Nat *n, int exp, Nat *x, Nat *y) {
   y = reverseNat(y);
 }
 
+//===================================================================
+// Multiplies n by 10^exp
 void mulByPow10 (Nat *n, int exp) {
-  // multiplies n by 10^exp
   if (isZero(n)) 
     return;
   checkCapacity(n, n->size + exp);
@@ -139,18 +154,21 @@ void mulByPow10 (Nat *n, int exp) {
     n->digits[n->size++] = '0';
 }
 
+//===================================================================
+// Checks if n is zero
 bool isZero(Nat *n) {
-  // checks if n is zero
   return n->size == 0;
 }
 
+//===================================================================
+// Returns the natural number 0
 Nat *zero() {
-  // returns the natural number 0
   return newNat(1);
 }
 
+//===================================================================
+// Reverse the digits of n in place
 Nat *reverseNat(Nat *n) {
-  // reverses the digits of n
   for (size_t i = 0; i < n->size / 2; ++i) {
     char temp = n->digits[i];
     n->digits[i] = n->digits[n->size - i - 1];
@@ -159,12 +177,16 @@ Nat *reverseNat(Nat *n) {
   return n;
 }
 
+//===================================================================
+// Converts an integer to a natural number
 Nat *intToNat(int x) {
-  // converts an integer to a natural number
   if (x == 0) 
     return zero();
 
-  Nat *n = newNat(10);  // 10 digits suffice for any int
+    // allocate memory for the number: 
+    // 10 digits suffice for any int
+  Nat *n = newNat(10);  
+  
   while (x) {
     n->digits[n->size++] = x % 10 + '0';
     x /= 10;
