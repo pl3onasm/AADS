@@ -27,16 +27,12 @@ Nat *karatsuba(Nat *x, Nat *y) {
   Nat *s1, *s2, *s3, *s4, *x0, *x1, *y0, *y1;
   
     // split x and y into two parts:
-    // x = x1 * 10^exp + x0
-    // y = y1 * 10^exp + y0
-  splitNat(x, exp, &x1, &x0);
-  splitNat(y, exp, &y1, &y0);
+    // x = x1 * 10^exp + x0; y = y1 * 10^exp + y0
+  splitNat(x, exp, &x1, &x0); splitNat(y, exp, &y1, &y0);
   
     // compute first component z1 = x1 * y1 
-  Nat *z1 = karatsuba(x1, y1);    
-
-    // compute third component z3 = x0 * y0 
-  Nat *z3 = karatsuba(x0, y0);    
+    // and third component z3 = x0 * y0
+  Nat *z1 = karatsuba(x1, y1), *z3 = karatsuba(x0, y0);    
 
     // compute second component 
     // z2 = (x1 + x0) * (y1 + y0) - z1 - z3
@@ -45,15 +41,13 @@ Nat *karatsuba(Nat *x, Nat *y) {
 
     // combine the three components to get the final result
     // z = [z1 * 10^(2*exp)] + [z2 * 10^exp] + z3
-  mulByPow10(z1, 2 * exp);
-  mulByPow10(z2, exp);
+  mulByPow10(z1, 2 * exp); mulByPow10(z2, exp);
   Nat *z = addNat((s4 = addNat(z1, z2)), z3);
 
     // free all intermediate results
-  freeNat(x0); freeNat(x1); freeNat(y0);
-  freeNat(y1); freeNat(z1); freeNat(z2);
-  freeNat(z3); freeNat(s1); freeNat(s2);
-  freeNat(s3); freeNat(s4); freeNat(p);
+  freeNat(x0); freeNat(x1); freeNat(y0); freeNat(y1); 
+  freeNat(z1); freeNat(z2); freeNat(z3); freeNat(s1); 
+  freeNat(s2); freeNat(s3); freeNat(s4); freeNat(p);
   
   return z;
 }
