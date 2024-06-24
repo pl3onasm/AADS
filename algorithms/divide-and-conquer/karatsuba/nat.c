@@ -134,9 +134,9 @@ Nat *subNat(Nat *x, Nat *y) {
 // Splits n into two parts, x and y, such that n = x * 10^exp + y
 void splitNat(Nat *n, size_t exp, Nat **x, Nat **y) {
   
-  *x = newNat(n->size); *y = newNat(n->size);
   size_t nSize = n->size;
-
+  *x = newNat(nSize + 1); *y = newNat(nSize + 1);
+  
   while (nSize && exp) { 
     (*y)->digits[nSize < exp ? nSize : --exp] = n->digits[--nSize];
     (*y)->size++;
