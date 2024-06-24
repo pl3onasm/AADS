@@ -64,7 +64,6 @@ int main() {
   for (int i = 0; i < n; i++) 
     assert(scanf("(%lf,%lf),", &points[i].x, &points[i].y) == 2);
 
-  
     // find closest pair of points
   pair pair = findClosestPair(points, n);
 

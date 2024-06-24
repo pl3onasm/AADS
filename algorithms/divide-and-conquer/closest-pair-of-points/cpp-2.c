@@ -58,7 +58,7 @@ void setPair (pair *p, point p1, point p2, double dist) {
 //===================================================================
 // Finds closest pair in strip of width 2*delta around median
 pair findClosestPairInStrip (point *ypoints, size_t ysize, 
-  double median, double delta) {
+                             double median, double delta) {
  
   CREATE_ARRAY(point, strip, ysize);
   size_t len = 0; pair p = {{0,0}, {0,0}, DBL_MAX};
@@ -89,7 +89,9 @@ pair findClosestPairInStrip (point *ypoints, size_t ysize,
 // Finds closest pair of points using a divide and conquer approach
 pair findClosestPair(point *xpoints, point *ypoints, 
                      size_t ysize, size_t n) {
-  pair minpair, pair1, pair2, pair3; double d1, d2, d3; 
+
+  pair minpair, pair1, pair2, pair3; 
+  double d1, d2, d3; 
 
     // BASE CASES: brute force for n <= 3
   if (n <= 3) {
