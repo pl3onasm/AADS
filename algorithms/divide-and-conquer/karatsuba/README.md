@@ -44,12 +44,12 @@ The product $z = x \cdot y$ is then given by:
 $\quad z \space = x \cdot y$  
 $\qquad = (x_1 \cdot 10^{n/2} + x_0) \cdot (y_1 \cdot 10^{n/2} + y_0)$  
 $\qquad= x_1 \cdot y_1 \cdot 10^n + (x_1 \cdot y_0 + x_0 \cdot y_1) \cdot 10^{n/2}$  
-$\qquad\quad+ x_0 \cdot y_0$  
+$\qquad\quad+ \space x_0 \cdot y_0$  
 
 Merely turning standard multiplication into a recursive problem like this, does not yield any improvement in the complexity of the algorithm. In fact, the complexity of the algorithm would be the same as the long multiplication algorithm, $\mathcal{O}{(n^2)}$. However, the key insight of Anatoly Karatsuba was to observe that we can compute the middle coefficient using only 1 multiplication instead of 2, after we have computed the other two coefficients. This is done by using the following identity:  
 
 $\quad x_1 \cdot y_0 + x_0 \cdot y_1$ $= (x_1 + x_0) \cdot (y_1 + y_0)$  
-$\qquad \qquad \qquad \qquad \quad - x_1 \cdot y_1 - x_0 \cdot y_0$
+$\qquad \qquad \qquad \qquad \quad - \space x_1 \cdot y_1 - x_0 \cdot y_0$
 
 This way, we can compute, at each step, the product $z$ using only three multiplications instead of four, at the cost of a few additions and subtractions, which are much cheaper as they are linear operations.  
 By continually dividing the numbers into halves, we eventually reach the base case, when the numbers have only one digit, in which case the product is simply the product of the two digits. As the recursion unwinds, the results of the subproblems are then combined to obtain the final result.

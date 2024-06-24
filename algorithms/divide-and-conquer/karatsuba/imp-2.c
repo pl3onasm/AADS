@@ -56,8 +56,7 @@ Nat *karatsuba(Nat *x, Nat *y) {
 
 int main() {
 
-  Nat *x = readNat();
-  Nat *y = readNat();
+  Nat *x = readNat(), *y = readNat();
 
   Nat *prod = karatsuba(x, y);
   showNat(prod);

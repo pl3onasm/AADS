@@ -31,7 +31,7 @@ void freeNat(Nat *n) {
 
 //===================================================================
 // Checks n's capacity and resizes if necessary
-void checkCapacity(Nat *n, size_t capacity) {
+static void checkCapacity(Nat *n, size_t capacity) {
   if (n->capacity <= capacity) {
     n->capacity = 2 * capacity;
     n->digits = safeRealloc(n->digits, n->capacity * sizeof(char));
@@ -119,7 +119,7 @@ Nat *subNat(Nat *x, Nat *y) {
   }
 
     // compute offset of first non-zero digit
-  int offset = 0;
+  size_t offset = 0;
   while (offset < diff->size && diff->digits[offset] == '0') 
     offset++;
 
@@ -134,17 +134,18 @@ Nat *subNat(Nat *x, Nat *y) {
 // Splits n into two parts, x and y, such that n = x * 10^exp + y
 void splitNat(Nat *n, size_t exp, Nat **x, Nat **y) {
   
-  *x = newNat(n->size);
-  *y = newNat(n->size);
+  *x = newNat(n->size); *y = newNat(n->size);
   size_t nSize = n->size;
 
-  while (nSize && exp--) 
-    (*y)->digits[(*y)->size++] = n->digits[--nSize];
-  while (nSize)
-    (*x)->digits[(*x)->size++] = n->digits[--nSize];
+  while (nSize && exp) { 
+    (*y)->digits[nSize < exp ? nSize : --exp] = n->digits[--nSize];
+    (*y)->size++;
+  }
 
-  *x = reverseNat(*x);
-  *y = reverseNat(*y);
+  while (nSize--) {
+    (*x)->digits[nSize] = n->digits[nSize];
+    (*x)->size++;
+  }
 }
 
 //===================================================================
@@ -170,14 +171,14 @@ Nat *zero() {
 }
 
 //===================================================================
-// Reverse the digits of n in place
-Nat *reverseNat(Nat *n) {
-  for (size_t i = 0; i < n->size / 2; ++i) {
-    char temp = n->digits[i];
-    n->digits[i] = n->digits[n->size - i - 1];
-    n->digits[n->size - i - 1] = temp;
+// Counts the digits of given integer
+static size_t countDigits(int x) {
+  size_t count = 0;
+  while (x) {
+    x /= 10;
+    count++;
   }
-  return n;
+  return count;
 }
 
 //===================================================================
@@ -186,13 +187,13 @@ Nat *intToNat(int x) {
   if (x == 0) 
     return zero();
 
-    // allocate memory for the number: 
-    // 10 digits suffice for any int
-  Nat *n = newNat(10);  
+  size_t size = countDigits(x);
+  Nat *n = newNat(size);
+  n->size = size;
 
   while (x) {
-    n->digits[n->size++] = x % 10 + '0';
+    n->digits[--size] = x % 10 + '0'; 
     x /= 10;
   }
-  return reverseNat(n);
+  return n;
 }

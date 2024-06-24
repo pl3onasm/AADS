@@ -44,7 +44,4 @@ Nat *zero();
   // Converts an integer to a natural number
 Nat *intToNat(int x);
 
-  // Reverses the digits of a natural number
-Nat *reverseNat(Nat *n);
-
 #endif // NAT_H_INCLUDED

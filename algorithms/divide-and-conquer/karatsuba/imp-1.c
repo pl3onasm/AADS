@@ -30,7 +30,7 @@ Nat *mulNat(Nat *x, Nat *y) {
     }
 
     // compute offset of first non-zero digit
-  int offset = 0;
+  size_t offset = 0;
   while (offset < res->size && res->digits[offset] == 0) 
     offset++;
 
