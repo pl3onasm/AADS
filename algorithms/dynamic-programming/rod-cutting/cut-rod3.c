@@ -25,7 +25,7 @@ double cutRod (double *prices, size_t n, double *revenues){
     double rev = -1;
     for (size_t i = 1; i <= j; i++) 
       rev = MAX(rev, prices[i] + revenues[j - i]);  
-    
+
       // store the computed value for future use
     revenues[j] = rev;  
   }

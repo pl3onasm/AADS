@@ -43,10 +43,9 @@ void printSolution (size_t *cuts, size_t n) {
 
   printf("Optimal cuts: ");
   while (n > 0) {
-    printf(n - cuts[n] == 0 ? "%zu" : "%zu, ", cuts[n]);
+    printf(n - cuts[n] == 0 ? "%zu\n" : "%zu, ", cuts[n]);
     n = n - cuts[n];    
   }
-  printf("\n");
 }
 
 //===================================================================
