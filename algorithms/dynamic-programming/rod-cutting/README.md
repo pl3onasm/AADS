@@ -15,7 +15,7 @@ More concretely, the optimal solution for a rod of length $n$ is the maximum of 
 A slightly different way of formulating the same idea is to define the revenue $r_n$ as the maximum revenue obtainable from a rod of length $n$, and to express the relationship between $r_n$ and $p_n$ as follows:
 
 $$
-{\color{darkviolet}\boxed{\color{rosybrown}\space r_n = \max \lbrace p_i + r_{n-i} : 1 \leq i \leq n \rbrace \space}}
+{\color{mediumpurple}\boxed{\color{rosybrown}\space r_n = \max \lbrace p_i + r_{n-i} : 1 \leq i \leq n \rbrace \space}}
 $$
 
 We simply try all possible combinations of an uncut piece of length $i$ and the recursive solution to the problem for the remaining piece of length $n-i$. The maximum revenue is then the maximum of all these combinations.
