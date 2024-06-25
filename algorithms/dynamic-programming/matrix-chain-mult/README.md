@@ -19,13 +19,13 @@ $$
 m[i,j] = \begin{cases}
 0 & \text{if } i = j  \\
 \min \lbrace m[i,k] + m[k+1,j] \\
-  \space \space \space  +\space p_{i-1} \cdot p_k \cdot p_j : i \leq k < j\rbrace& \text{if } i < j  \\
+  \qquad  +\space p_{i-1} \cdot p_k \cdot p_j \rbrace& \text{if } i < j  \\
 \end{cases}
 $$
 
-where $m[i,j]$ is the minimum number of scalar multiplications needed to compute the product of the matrices $A_i \dots A_j$, and $p_i$ is the dimension of the $i$-th matrix, i.e. $A_i$ is a $p_{i-1} \times p_i$ matrix.
+where $m[i,j]$ is the minimum number of scalar multiplications needed to compute the product of the matrices $A_i \dots A_j$, and $p_i$ is the dimension of the $i$-th matrix, i.e. $A_i$ is a $p_{i-1} \times p_i$ matrix, and $k$ varies between $i$ and $j$ in order to find the optimal split point.
 
-The base case is when the chain consists of only one matrix, in which case the cost is zero. From the recurrence, it is also clear that in order to compute the optimal solution for a chain of matrices $A_i \dots A_j$, we need to compute the optimal solutions for all subchains $A_i \dots A_k$ and $A_{k+1} \dots A_j$ for all possible values of $k$ between $i$ and $j$. In the end, the solution to the original problem is then the solution to the subproblem $m[1,n]$, which is the optimal cost to compute the product of the entire chain $A_1 \dots A_n$.  
+The base case is when the chain consists of only one matrix, in which case the cost is zero. From the recurrence, it is clear that in order to compute the optimal solution for a chain of matrices $A_i \dots A_j$, we need to compute the optimal solutions for all subchains $A_i \dots A_k$ and $A_{k+1} \dots A_j$ for all possible values of $k$ between $i$ and $j$. In the end, the solution to the original problem is then the solution to the subproblem $m[1,n]$, which is the optimal cost to compute the product of the entire chain $A_1 \dots A_n$.  
 
 In contrast to the rod cutting problem, subproblems may vary at both ends of the chain: both $i$ and $j$ need to vary in order to be able to find an optimal parenthesization for the chain $A_1 \dots A_n$. This is why the DP solution to the matrix chain multiplication problem is more complex than the one to the rod cutting problem, and why we need a two-dimensional table to store the solutions to the subproblems instead of a one-dimensional array as in the rod cutting problem.  
 
