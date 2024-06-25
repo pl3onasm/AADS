@@ -25,13 +25,13 @@ where:
 The precomputation of the hash values of $P$ and $T_m$ can be done in $\mathcal{O}(m)$ time by applying $\color{orchid}{\text{Horner's rule}}$ to the above formula:  
 
 $h(S) = (((S[0] \cdot d + S[1]) \cdot d + S[2]) \cdot d$  
-$\qquad\qquad + \dots + S[m-1]) \text{ mod } p$  
+$\qquad\qquad + \space\dots + S[m-1]) \text{ mod } p$  
 
 After that, the hash value of the $m$-sized text window at each new shift $s+1$ can be recomputed in constant time as follows:
 
 $h(T[s+1:s + m]) = $  
 $\qquad\qquad (d \cdot (h(T[s:s + m -1])$  
-$\qquad\qquad - T[s] \cdot k) + T[s + m]) \text{ mod } p$  
+$\qquad\qquad - \space T[s] \cdot k) + T[s + m]) \text{ mod } p$  
 
 where $k$ is precomputed as  
 

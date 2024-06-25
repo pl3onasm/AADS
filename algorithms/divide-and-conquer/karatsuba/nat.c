@@ -182,7 +182,7 @@ static size_t countDigits(int x) {
 }
 
 //===================================================================
-// Converts an integer to a natural number
+// Converts a non-negative integer to a natural number
 Nat *intToNat(int x) {
   if (x == 0) 
     return zero();

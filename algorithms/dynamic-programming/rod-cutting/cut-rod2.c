@@ -1,45 +1,63 @@
-/* file: cut-rod2.c
-   author: David De Potter
-   email: pl3onasm@gmail.com
-   license: MIT, see LICENSE file in repository root folder
-   description: top-down approach with memoization
-   The time complexity is in O(n²).
+/* 
+  file: cut-rod2.c
+  author: David De Potter
+  email: pl3onasm@gmail.com
+  license: MIT, see LICENSE file in repository root folder
+  description: top-down DP approach 
+  Time complexity: O(n²)
 */ 
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "../../../lib/clib/clib.h"
+#define MAX(a,b) ((a) > (b) ? (a) : (b))
 
-#define MAX(a,b) ((a)>(b)?(a):(b));
+//===================================================================
+// Returns the maximum revenue for a rod of length n given a price
+// list and an array to store the computed revenues
+double cutRod (double *prices, size_t n, double *revenues){
 
-int cut_rod (int prices[], int n, int revenues[]){
-  if (revenues[n] >= 0)  // return the stored value 
+    // if available, return the stored value
+  if (revenues[n] >= 0)  
     return revenues[n];
-  int q = -1;
-  if (n == 0) q = 0;
-  else {    // compute the maximum revenue
-    for (int i = 1; i <= n; i++) {
-      q = MAX(q, prices[i] + cut_rod(prices, n - i, revenues));
-    }
-  }
-  revenues[n] = q;  // store the computed value
-  return q;
+
+    // otherwise compute the maximum revenue
+  double rev = -1;
+  for (size_t i = 1; i <= n; i++) 
+    rev = MAX(rev, prices[i] + cutRod(prices, n - i, revenues));
+    
+    // store the computed value for future use 
+  revenues[n] = rev;  
+  return rev;
 }
 
-int main (int argc, char *argv[]) {
-  int prices[] = {0, 1, 5, 8, 9, 10, 17, 17, 
-                  20, 24, 30, 32, 35, 39, 43, 
-                  43, 45, 49, 50, 54, 57, 60, 
-                  65, 68, 70, 74, 80, 81, 84, 
-                  85, 87, 91, 95, 99, 101, 104, 
-                  107, 112, 115, 116, 119}; 
-  int revenues[40];
-  for (int i = 0; i < 40; i++) 
-    revenues[i] = -1; // initialize all revenues to -1
+//===================================================================
 
-  printf("The maximum revenue is %d for a rod of length"
-        " %d, and %d for a rod of length %d.\n", 
-        cut_rod(prices, 22, revenues), 22, 
-        cut_rod(prices, 35, revenues), 35);
+int main() {
+
+    // read the requested rod length
+  size_t n;
+  assert(scanf("%zu", &n) == 1);
+
+    // read the prices for each rod length
+  READ(double, prices, "%lf", len);
+
+  if (n > len) {
+    fprintf(stderr, "Requested rod length is greater " 
+                    "than the number of prices\n");
+    exit(EXIT_FAILURE);
+  }
+
+    // create an array to store the computed revenues and
+    // initialize it with -1 except for the first element
+    // since the revenue for a rod of length 0 is 0
+  CREATE_ARRAY(double, revenues, n + 1);
+  memset(revenues + 1, -1, sizeof(double) * n);
+
+  printf("Rod length: %zu\n"
+         "Maximum revenue: %.2lf\n", 
+         n, cutRod(prices, n, revenues));
+
+  free(prices);
+  free(revenues);
 
   return 0;
 }

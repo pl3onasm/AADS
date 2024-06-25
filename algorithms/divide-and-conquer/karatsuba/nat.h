@@ -41,7 +41,7 @@ bool isZero(Nat *n);
   // Returns the natural number zero
 Nat *zero();
 
-  // Converts an integer to a natural number
+  // Converts a non-negative integer to a natural number
 Nat *intToNat(int x);
 
 #endif // NAT_H_INCLUDED
