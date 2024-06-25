@@ -16,7 +16,9 @@ Given any such subchain of matrices $A_i \dots A_j$, the optimal solution is to 
 Thus, for a subchain of matrices $A_i \dots A_j$, the cost of parenthesizing it optimally is given by the following ${\color{peru}\text{recurrence}}$:
 
 $$
-m[i,j] = \begin{cases}
+\footnotesize
+m[i,j] =
+\begin{cases}
 0 & \text{if } i = j  \\
 \min \lbrace m[i,k] + m[k+1,j] \\
   \qquad  +\space p_{i-1} \cdot p_k \cdot p_j \rbrace& \text{if } i < j  \\
