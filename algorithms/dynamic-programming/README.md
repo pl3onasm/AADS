@@ -1,4 +1,4 @@
-# ${\color{Cadetblue}\text{Dynamic programming}}$
+# ${\color{Cadetblue}\text{Dynamic}}$ ${\color{Cadetblue}\text{Programming}}$
 
 ## ${\color{Rosybrown}\text{Overview}}$
 

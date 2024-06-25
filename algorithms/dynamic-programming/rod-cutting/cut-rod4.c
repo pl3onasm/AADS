@@ -34,7 +34,6 @@ double cutRod (double *prices, size_t n,
       // store the computed value for future use
     revenues[j] = rev;  
   }
-
   return revenues[n];
 }
 
@@ -69,10 +68,11 @@ int main() {
 
     // create an array to store the computed revenues and
     // an array to store the optimal cuts
-    // initialize the revenues with -1 except for the first element
-    // since the revenue for a rod of length 0 is 0
   CREATE_ARRAY(double, revenues, n + 1);
   CREATE_ARRAY(size_t, cuts, n + 1);
+
+    // initialize the revenues with -1 except for the first 
+    // element since the revenue for a rod of length 0 is 0
   memset(revenues + 1, -1, sizeof(double) * n);
 
   printf("Rod length: %zu\n"

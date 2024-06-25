@@ -3,7 +3,7 @@
   author: David De Potter
   email: pl3onasm@gmail.com
   license: MIT, see LICENSE file in repository root folder
-  description: top-down DP approach 
+  description: top-down DP approach to rod cutting
   Time complexity: O(n²)
 */ 
 
@@ -46,10 +46,12 @@ int main() {
     exit(EXIT_FAILURE);
   }
 
-    // create an array to store the computed revenues and
-    // initialize it with -1 except for the first element
-    // since the revenue for a rod of length 0 is 0
+    // create an array to store the computed revenues
   CREATE_ARRAY(double, revenues, n + 1);
+
+    // initialize the revenues to -1, except for
+    // the first element which is 0 as the revenue
+    // for a rod of length 0 is 0
   memset(revenues + 1, -1, sizeof(double) * n);
 
   printf("Rod length: %zu\n"

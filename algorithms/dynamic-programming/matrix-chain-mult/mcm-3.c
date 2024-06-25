@@ -1,34 +1,40 @@
-/* file: mcm-3.c
-   author: David De Potter
-   email: pl3onasm@gmail.com
-   license: MIT, see LICENSE file in repository root folder
-   description:
-    Matrix chain multiplication using dynamic programming, 
-    Bottom-up approach
-    We use an example where we want to compute the minimal
-    cost of the matrix chain multiplication A₁ * ... * A₆.
-    The dimensions of the matrices are: A₁ = 30x35, 
-    A₂ = 35x15, A₃ = 15x5, A₄ = 5x10, A₅ = 10x20, A₆ = 20x25
+/* 
+  file: mcm-3.c
+  author: David De Potter
+  email: pl3onasm@gmail.com
+  license: MIT, see LICENSE file in repository root folder
+  description:
+    Matrix chain multiplication using bottom-up DP approach
+    The input is stored in an array holding the dimensions of
+    the matrices A₁, ..., Aₙ as follows: A₁ = dims[0] x dims[1],
+    A₂ = dims[1] x dims[2], ..., Aₙ = dims[n-1] x dims[n].
+    The output is the minimal cost of the matrix chain product
+    A₁ * ... * Aₙ and an optimal parenthesization.
+  Time complexity: O(n³)
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>
+#include "../../../lib/clib/clib.h"
+#include <stdint.h>
 
-void computeMinCosts (int dims[], int minCosts[][7], int splitPoints[][7], int n) {
-  /* computes the minimum costs and optimal split points for all subproblems */
-  for (int i = 0; i < n; i++) {     // initializes the main diagonal
-    minCosts[i][i] = 0;             // costs of matrices of size 1 are 0
-  }
-  for (int l = 2; l <= n; l++) {    // fills table in order of increasing chain length l
-    for (int i = 1; i < n - l + 1; i++) {   // chain starts at i
-      int j = i + l - 1;                    // chain ends at j    
-      minCosts[i][j] = INT_MAX;             // initialize minCosts[i][j] to infinity
-      for (int k = i; k < j; k++) { // try all possible split points k
-        int q = minCosts[i][k] + minCosts[k + 1][j] + 
-                dims[i-1] * dims[k] * dims[j];
-        if (q < minCosts[i][j]) {   // smaller cost found ?
-          minCosts[i][j] = q;
+//===================================================================
+// Computes the minimum costs and optimal split points for all
+// subproblems in bottom-up fashion
+void computeMinCost (size_t *dims, size_t **minCosts, 
+                     size_t **splitPoints, size_t len) {
+  
+    // fill the table in order of increasing chain length l
+  for (size_t l = 2; l <= len; l++) { 
+    for (size_t i = 1; i < len - l + 1; i++) {   
+        // chain starts at i and ends at j
+      size_t j = i + l - 1;                    
+      minCosts[i][j] = SIZE_MAX; 
+        // try all possible split points k and choose
+        // the one that yields the minimum cost          
+      for (size_t k = i; k < j; k++) { 
+        size_t cost = minCosts[i][k] + minCosts[k + 1][j]  
+                    + dims[i-1] * dims[k] * dims[j];
+        if (cost < minCosts[i][j]) { 
+          minCosts[i][j] = cost;
           splitPoints[i][j] = k;
         }
       }
@@ -36,11 +42,12 @@ void computeMinCosts (int dims[], int minCosts[][7], int splitPoints[][7], int n
   }
 }
 
-void printOptimalParens (int splitPoints[][7], int i, int j) {
-  /* Prints the optimal parenthesization of the matrix chain
-     starting at i and ending at j. */
+//===================================================================
+// Prints the optimal parenthesization of the matrix chain
+// starting at i and ending at j
+void printOptimalParens (size_t **splitPoints, size_t i, size_t j) {
   if (i == j) {
-    printf("A%d", i);
+    printf("A%zu", i);
   } else {
     printf("(");
     printOptimalParens(splitPoints, i, splitPoints[i][j]);
@@ -50,20 +57,28 @@ void printOptimalParens (int splitPoints[][7], int i, int j) {
   }
 }
 
-int main (int argc, char *argv[]) {
-  int dims[] = {30,35,15,5,10,20,25};
-    // holds the dimensions of the matrices A₁, ..., A₆ 
-    // as follows: A₁ = dims[0] x dims[1], 
-    // A₂ = dims[1] x dims[2], ..., A₆ = dims[5] x dims[6]
-  int minCosts[7][7], splitPoints[7][7];
+//===================================================================
 
-  computeMinCosts(dims, minCosts, splitPoints, 7);
+int main () {
+    // read the matrix dimensions
+  READ(size_t, dims, "%zu", len);
 
-  printf("The minimal cost of the matrix chain product "
-         "is %d scalar multiplications.\n", minCosts[1][6]);
-  printf("The optimal parenthesization is: ");
-  printOptimalParens(splitPoints, 1, 6);
+    // create a table for memoization of subproblems
+    // and a table for storing the optimal split points
+  CREATE_MATRIX(size_t, minCosts, len, len);
+  CREATE_MATRIX(size_t, splitPoints, len, len);
+
+  computeMinCost(dims, minCosts, splitPoints, len);
+
+  printf("Min cost: %zu\n\n", minCosts[1][len - 1]);
+
+  printf("An optimal parenthesization:\n");
+  printOptimalParens(splitPoints, 1, len - 1);
   printf("\n");
+
+  FREE_MATRIX(minCosts, len);
+  FREE_MATRIX(splitPoints, len);
+  free(dims);
 
   return 0;
 }
