@@ -53,5 +53,7 @@ int main() {
 
   printf("Min cost: %zu\n", computeMinCost(dims, 1, len - 1));
 
+  free(dims);
+
   return 0;
 }
