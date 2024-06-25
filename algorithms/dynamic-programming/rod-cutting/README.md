@@ -7,7 +7,7 @@ Given a rod of length $n$ inches and a table of prices $p_i$ for rod lengths $i 
 ## ${\color{darkseagreen}\text{The key idea}}$
 
 The idea is to cut the rod into two pieces, and then solve the problem for each of the two pieces. The optimal solution for the original rod is then the sum of the optimal solutions for the two pieces.
-More concretely, the optimal solution for a rod of length $n$ is the maximum of the following two values:
+More generally, the optimal solution for a rod of length $n$ is the maximum of the following two values:
 
 1. The price $p_n$ for a rod of length $n$.  
 2. The sum of the optimal solutions for the two pieces of lengths $i$ and $n - i$ obtained by cutting the rod into two pieces at each possible position $1 \leq i \leq n-1$.  

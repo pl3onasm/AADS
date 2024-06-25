@@ -69,13 +69,11 @@ int main() {
 
     // create an array to store the computed revenues and
     // an array to store the optimal cuts
-    // initialize them with -1 except for the first element
-    // since the revenue for a rod of length 0 is 0 and
-    // there are no cuts to be made in that case
+    // initialize the revenues with -1 except for the first element
+    // since the revenue for a rod of length 0 is 0
   CREATE_ARRAY(double, revenues, n + 1);
   CREATE_ARRAY(size_t, cuts, n + 1);
   memset(revenues + 1, -1, sizeof(double) * n);
-  memset(cuts + 1, 0, sizeof(size_t) * n);
 
   printf("Rod length: %zu\n"
          "Maximum revenue: %.2lf\n", 
