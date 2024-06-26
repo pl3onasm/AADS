@@ -6,8 +6,7 @@ Given two sequences $X = \langle x_1, x_2, ..., x_m \rangle$ and $Y = \langle y_
 
 However, we do not care about just any subsequence, but about the longest one that is present in both sequences $X$ and $Y$. In other words, the problem is to find the maximum length of a subsequence $Z = \langle z_1, z_2, ..., z_k \rangle$ such that $z_i = x_j$ and $z_i = y_h$ for each $1 \leq i \leq k$ and for some $1 \leq j \leq m$ and $1 \leq h \leq n$.  
 
-For example, the longest common subsequence of the sequences $X = \langle A, B, C, B, D, A, B
-\rangle $ and $Y = \langle B, D, C, A, B, A \rangle$ is $Z = \langle B, C, A, B \rangle$, which has length $4$. Mind that the longest common subsequence is not necessarily unique: $Z = \langle B, D, A, B \rangle $ and $Z = \langle B, C, B, A \rangle$ are also valid solutions. Its length of course is unique, and in this case it is $4$.
+For example, the longest common subsequence of the sequences $X = \langle A, B, C, B, D, A, B \rangle$ and $Y = \langle B, D, C, A, B, A \rangle$ is $Z = \langle B, C, A, B \rangle$, which has length $4$. Mind that the longest common subsequence is not necessarily unique: $Z = \langle B, D, A, B \rangle $ and $Z = \langle B, C, B, A \rangle$ are also valid solutions. Its length of course is unique, and in this case it is $4$.
 
 ## ${\color{darkseagreen}\text{The key idea}}$
 
