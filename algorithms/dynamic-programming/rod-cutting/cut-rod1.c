@@ -47,6 +47,7 @@ int main() {
   if (n > len) {
     fprintf(stderr, "Requested rod length is greater " 
                     "than the number of prices\n");
+    free(prices);
     exit(EXIT_FAILURE);
   }
 

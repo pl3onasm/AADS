@@ -33,6 +33,7 @@ void computeMinCost (size_t *dims, size_t **minCosts,
       for (size_t k = i; k < j; k++) { 
         size_t cost = minCosts[i][k] + minCosts[k + 1][j]  
                     + dims[i-1] * dims[k] * dims[j];
+          // update the minimum cost and split point
         if (cost < minCosts[i][j]) { 
           minCosts[i][j] = cost;
           splitPoints[i][j] = k;

@@ -9,8 +9,8 @@ Given a rod of length $n$ inches and a table of prices $p_i$ for rod lengths $i 
 The idea is to cut the rod into two pieces, and then solve the problem for each of the two pieces. The optimal solution for the original rod is then the sum of the optimal solutions for the two pieces.
 More generally, the optimal solution for a rod of length $n$ is the maximum of the following two values:
 
-1. The price $p_n$ for a rod of length $n$.  
-2. The sum of the optimal solutions for the two pieces of lengths $i$ and $n - i$ obtained by cutting the rod into two pieces at each possible position $1 \leq i \leq n-1$.  
+1. The price $p_n$ for a rod of length $n$  
+2. The sum of the optimal solutions for the two pieces of lengths $i$ and $n - i$ obtained by cutting the rod into two pieces at each possible position $1 \leq i \leq n-1$  
 
 A slightly different way of formulating the same idea is to define the revenue $r_n$ as the maximum revenue obtainable from a rod of length $n$, and to express the relationship between $r_n$ and $p_n$ as follows:
 
@@ -18,11 +18,11 @@ $$
 {\color{mediumpurple}\huge\boxed{\color{rosybrown}\normalsize \space r_n = \max \lbrace p_i + r_{n-i} : 1 \leq i \leq n \rbrace \space}}
 $$
 
-We simply try all possible combinations of an uncut piece of length $i$ and the recursive solution to the problem for the remaining piece of length $n-i$. The maximum revenue is then the maximum of all these combinations.
+We simply try all possible combinations of an uncut piece of length $i$ (with price $p_i$) and the recursive solution to the problem for the remaining piece of length $n-i$. The maximum revenue is then the maximum of all these combinations.
 
 ## ${\color{darkseagreen}\text{Brute force}}$
 
-The brute force way of working out the above idea is to use a recursive approach that finds the maximum revenue by just trying all possible values for $i$ and keeping track of the maximum revenue found. Of course, this approach is very inefficient, since it completely ignores the fact that the same subproblem of finding the optimal cuts for a particular rod length is sure to be encountered multiple times during the recursive calls and is thus recomputed over and over again.  
+The brute force way of working out the above idea is to use a naive recursive approach that finds the maximum revenue by just trying all possible values for $i$ and keeping track of the maximum revenue found. Of course, this approach is very inefficient, since it completely ignores the fact that the same subproblem of finding the optimal cuts for a particular rod length is sure to be encountered multiple times during the recursive calls and is thus recomputed over and over again.  
 
 The running time of this approach is in $\mathcal{O}(2^n)$, and it is easy to see why: each possible solution is a permutation of cut decisions, and there are $2^{n-1}$ such permutations, all of which need to be checked.  
 

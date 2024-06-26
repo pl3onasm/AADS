@@ -15,7 +15,7 @@
 
 #include "../../../lib/clib/clib.h"
 #include <stdint.h>
-#define MIN(a,b) ((a) < (b) ? (a) : (b));
+#define MIN(a,b) ((a) < (b) ? (a) : (b))
 
 //===================================================================
 // Computes the minimum cost of multiplying a chain of matrices
@@ -33,6 +33,7 @@ int computeMinCost(size_t *dims, size_t **minCosts,
     size_t cost = computeMinCost(dims, minCosts, i, k) 
                 + computeMinCost(dims, minCosts, k + 1, j)  
                 + dims[i - 1] * dims[k] * dims[j];
+      // store the computed value for future use
     minCosts[i][j] = MIN(minCosts[i][j], cost);
   }
   return minCosts[i][j];

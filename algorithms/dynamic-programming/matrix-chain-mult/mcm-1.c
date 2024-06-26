@@ -20,7 +20,7 @@
 
 #include "../../../lib/clib/clib.h"
 #include <stdint.h>
-#define MIN(a,b) ((a) < (b) ? (a) : (b));
+#define MIN(a,b) ((a) < (b) ? (a) : (b))
 
 //===================================================================
 // Compute the minimum cost of multiplying a chain of 
@@ -38,6 +38,7 @@ size_t computeMinCost (size_t *dims, size_t i, size_t j) {
       size_t cost = computeMinCost(dims, i, k) 
                   + computeMinCost(dims, k + 1, j) 
                   + dims[i - 1] * dims[k] * dims[j];
+        // store the computed value for future use
       minCost = MIN(minCost, cost);
     }
     return minCost;
