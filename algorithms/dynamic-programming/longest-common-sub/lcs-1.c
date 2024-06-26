@@ -1,79 +1,52 @@
-/* file: lcs-1.c
-   author: David De Potter
-   email: pl3onasm@gmail.com
-   license: MIT, see LICENSE file in repository root folder
-   description: longest common subsequence
-     naive recursive implementation
-     As the example strings get longer, the running time 
-     of this algorithm grows exponentially.
-   Note: we need to reverse the LCS string at the end,
-     because we filled it in reverse order: we can't get around
-     this, because we are working our way from the end of the
-     strings to the beginning and don't know the length of the
-     LCS in advance. In the second version, we'll get to
-     a more natural implementation by working our way up from 
-     the start of the strings to the end.
+/* 
+  file: lcs-1.c
+  author: David De Potter
+  email: pl3onasm@gmail.com
+  license: MIT, see LICENSE file in repository root folder
+  description: longest common subsequence
+    naive recursive implementation
+    As the input strings get longer, the running time 
+    of this algorithm grows exponentially.
+  Time complexity: O(2^n)
+  Don't try this code at home!
 */ 
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#include "../../../lib/clib/clib.h"
+#define MAX(a,b) ((a) > (b) ? (a) : (b))
 
-void *safeCalloc (int n, int size) {
-  /* allocates n elements of size size, initializing them to 0, and
-     checks whether the allocation was successful */
-  void *ptr = calloc(n, size);
-  if (ptr == NULL) {
-    printf("Error: calloc(%d, %d) failed. Out of memory?\n", n, size);
-    exit(EXIT_FAILURE);
-  }
-  return ptr;
+//===================================================================
+// Returns the length of the longest common subsequence of X and Y
+// using a naive recursive approach
+size_t computeLcs (string *X, string *Y, size_t m, size_t n) {
+
+  if (m == 0 || n == 0)
+    // base case: reached the end of one of the strings 
+    return 0;
+
+  if (charAt(X, m-1) == charAt(Y, n - 1)) 
+    // last chars of X and Y are identical: add 1 
+    return 1 + computeLcs(X, Y, m - 1, n - 1);
+
+  else 
+    // compute the maximum of the LCSs of the two alternatives:
+    // either we remove the last char of X or the last char of Y
+    return MAX(computeLcs(X, Y, m, n - 1), 
+               computeLcs(X, Y, m - 1, n));
 }
 
-char *reverse (char *s) {
-  /* reverses string s in place */
-  int i, j; char c;
-  for (i = 0, j = strlen(s)-1; i < j; i++, j--) {
-    c = s[i];
-    s[i] = s[j];
-    s[j] = c;
-  }
-  return s;
-}
+//===================================================================
 
-void computeLcs (char *a, char *b, int la, int lb, char *lcs, 
-  int lcslen, int *maxlen, char *maxlcs) {
-  if (la == 0 || lb == 0) {
-    if (lcslen > *maxlen) {
-      *maxlen = lcslen;
-      strcpy(maxlcs, lcs);
-      lcs[lcslen] = '\0';
-    }
-    return; 
-  }
-  if (a[la-1] == b[lb-1]) { // last characters are equal
-    lcs[lcslen] = a[la-1];
-    computeLcs(a, b, la-1, lb-1, lcs, lcslen+1, maxlen, maxlcs);
-  } else {                  // last characters are different
-    // try without last character of a
-    computeLcs(a, b, la-1, lb, lcs, lcslen, maxlen, maxlcs);
-    // try without last character of b
-    computeLcs(a, b, la, lb-1, lcs, lcslen, maxlen, maxlcs);
-  }
-}
-
-int main (int argc, char *argv[]) {
-  char *a = "ACCGATATCAGGATCGGAC", 
-       *b = "GTAGTAATTACGAACA";
-  int la = strlen(a), lb = strlen(b);
-  char *lcs = safeCalloc(la < lb ? la+1:lb+1, sizeof(char));
-  char *maxlcs = safeCalloc(la < lb ? la+1:lb+1, sizeof(char));
-  int maxlen = 0;
+int main () {
   
-  computeLcs(a, b, la, lb, lcs, 0, &maxlen, maxlcs);
-  printf("Given strings:\n%s\n%s\n", a, b);
-  printf("The length of the LCS is %d.\n", maxlen);
-  printf("A possibly non-unique LCS is %s.\n", reverse(maxlcs));
-  free(lcs); free(maxlcs);
+  READ_STRING(X, '\n'); 
+  READ_STRING(Y, '\n');
+
+  size_t lcs = computeLcs(X, Y, strLen(X), strLen(Y));
+
+  printf("Max length: %lu\n", lcs);
+
+  freeString(X);
+  freeString(Y);
+  
   return 0;
 }

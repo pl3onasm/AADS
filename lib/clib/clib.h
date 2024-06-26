@@ -223,6 +223,17 @@ static inline void concatStrings(string *s1, string *s2) {
   s1->data[s1->size] = '\0';
 }
 
+  // appends a character to a string
+static inline void appendChar(string *s, unsigned char c) {
+  if (s->size == s->cap) {
+    s->cap <<= 1;
+    s->data = safeRealloc(s->data,
+                          s->cap * sizeof(unsigned char));
+  }
+  s->data[s->size++] = c;
+  s->data[s->size] = '\0';
+}
+
   // shows a string
 static inline void showString(string *s) {
   printf("%s\n", s->data);

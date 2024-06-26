@@ -23,7 +23,7 @@
 #define MIN(a,b) ((a) < (b) ? (a) : (b))
 
 //===================================================================
-// Compute the minimum cost of multiplying a chain of 
+// Computes the minimum cost of multiplying a chain of 
 // matrices starting at index i and ending at index j.
 size_t computeMinCost (size_t *dims, size_t i, size_t j) {
   

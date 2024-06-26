@@ -1,49 +1,54 @@
-# Longest Common Subsequence (LCS)
+# ${\color{Cadetblue}\text{Longest Common}}$ ${\color{Cadetblue}\text{Subsequence}}$ ${\color{Cadetblue}\text{(LCS)}}$
 
-## Problem
+## ${\color{rosybrown}\text{Problem}}$
 
-Given two sequences $X = (x_1, x_2, ..., x_m)$ and $Y = (y_1, y_2, ..., y_n)$, find the length of their longest common subsequence (LCS), i.e. the longest subsequence that is present in both sequences. A subsequence of a given sequence is derived from that sequence by deleting some elements (possibly none) without changing the order of the remaining elements. For example, the sequence $(A, B, D)$ is a subsequence of $(A, B, C, D, B, A)$.  
-In other words, the problem is to find the length of the longest subsequence $Z = (z_1, z_2, ..., z_k)$ such that $z_i = x_j$ and $z_i = y_h$ for each $1 \leq i \leq k$ and some $1 \leq j \leq m$ and $1 \leq h \leq n$. For example, the longest common subsequence of the sequences $X = (A, B, C, B, D, A, B)$ and $Y = (B, D, C, A, B, A)$ is $Z = (B, C, A, B)$, which has length $4$. Mind that the longest common subsequence is not necessarily unique: $Z = (B, D, A, B)$ is also a valid solution.
+Given two sequences $X = \langle x_1, x_2, ..., x_m \rangle$ and $Y = \langle y_1, y_2, ..., y_n \rangle$, find the length of their longest common subsequence (LCS). A ${\color{peru}\text{subsequence}}$ is derived from a given sequence by deleting some elements from it (possibly none) without changing the order of the remaining elements. For example, the sequence $\langle A, B, D \rangle$ is a subsequence of $\langle A, B, C, D, B, A \rangle$, but $\langle B, D, A, B \rangle$ is not, since the order of the elements is not preserved.  
 
-The idea is to start at the end of the sequences $X$ and $Y$ and compare their last elements, $x_m$ and $y_n$:
+However, we do not care about just any subsequence, but the longest one that is present in both sequences $X$ and $Y$. In other words, the problem is to find the maximum length of a subsequence $Z = \langle z_1, z_2, ..., z_k \rangle$ such that $z_i = x_j$ and $z_i = y_h$ for each $1 \leq i \leq k$ and for some $1 \leq j \leq m$ and $1 \leq h \leq n$.  
 
-- If they are equal, then this identical element is necessarily part of the LCS $Z$. So we add it to $Z$, and move on to establishing an LCS for the remaining elements of $X$ and $Y$, i.e. an LCS for the sequences $X_{m-1}$ and $Y_{n-1}$.
-- If they are not equal, then we can either remove the last element of $X$ and establish an LCS for $X_{m-1}$ and $Y$, or we can remove the last element of $Y$ and establish an LCS for $X$ and $Y_{n-1}$. Both of these subproblems should be considered, and the longest LCS should be chosen.
+For example, the longest common subsequence of the sequences $X = \langle A, B, C, B, D, A, B
+\rangle $ and $Y = \langle B, D, C, A, B, A \rangle$ is $Z = \langle B, C, A, B \rangle$, which has length $4$. Mind that the longest common subsequence is not necessarily unique: $Z = \langle B, D, A, B \rangle $ and $Z = \langle B, C, B, A \rangle$ are also valid solutions. Its length of course is unique, and in this case it is $4$.
 
-As we keep repeating this process for the remaining elements of $X$ and $Y$, we continually reduce the size of the problem to smaller subproblems, i.e. to smaller prefixes of $X$ and $Y$. Eventually, we will reach the base case of an empty sequence, when we reach the beginning of one of the original sequences, at which point a possible LCS $Z$ is fully computed.
+## ${\color{darkseagreen}\text{The key idea}}$
 
-Thus, the *length* of an LCS can be computed recursively as follows:
+The main idea is to think of the subproblems in terms of prefixes of the input sequences $X$ and $Y$: the length of the LCS of $X$ and $Y$ can be found by considering the LCS of the prefixes $X_{m-1}$ and $Y_{n-1}$, and then adding $1$ to the length if $x_m = y_n$. If they are not equal, we need to consider two subproblems: finding the LCS of $X_{m-1}$ and $Y$, and finding the LCS of $X$ and $Y_{n-1}$, so that we can take the maximum of the two solutions. Clearly, these subproblems overlap and also exhibit the property of ${\color{peru}\text{optimal substructure}}$: the optimal solution to any of them can be found by combining the optimal solutions to their subproblems.  
+
+As we keep repeating the process for the remaining elements of $X$ and $Y$, we continually reduce the size of the problem to smaller subproblems, i.e. to smaller prefixes of $X$ and $Y$. Eventually, we will reach the base case of an empty sequence, when we reach the beginning of one of the original sequences, at which point the maximum length of the LCS is fully computed.  
+
+This process can be formulated as a recurrence, which defines the length of the LCS in terms of the lengths of the prefixes of $X$ and $Y$:
+<br/>
 
 $$
-LCS(X, Y) = \begin{cases}
-0 & \text{if } m = 0 \text{ or } n = 0 \\
-LCS(X_{m-1}, Y_{n-1}) + 1 & \text{if } m > 0 \text{ and } n > 0 \text{ and } x_m = y_n \\
-\max(LCS(X_{m-1}, Y), LCS(X, Y_{n-1})) & \text{if } m > 0 \text{ and } n > 0 \text{ and } x_m \neq y_n
-\end{cases}
+\color{darkslateblue}\huge\boxed{\color{rosybrown}\small \space
+\small \text{len}(X,Y) = \begin{cases}
+\small 0 & \scriptsize \text{if } m = 0 \lor n = 0 \\
+\small \text{len}(X_{m-1}, Y_{n-1}) + 1 & \scriptsize \text{if } m, n > 0 \\
+&\scriptsize \quad \land \space x_m = y_n \\
+\small \text{max}\lbrace \text{len}(X_{m-1}, Y), & \scriptsize \text{if } m, n > 0  \\
+\small \qquad \space  \text{len}(X, Y_{n-1}) \rbrace &\scriptsize \quad \land \space x_m \neq y_n
+\end{cases}\space}
 $$
 
-## Brute Force Solution
+## ${\color{darkseagreen}\text{Brute force}}$
 
-This is a straightforward recursive implementation of the idea described above. It is exponential in the length of the input sequences, since it computes the LCS for all possible prefixes of $X$ and $Y$, ignoring the fact that many of these prefixes may reoccur (overlap). The time complexity is in $O(2^{m+n})$.
+The brute force solution simply implements the recurrence without any optimization, and ignores the fact that identical subproblems (finding longest common subsequences for the same prefixes of $X$ and $Y$) are encountered multiple times during the recursive calls. This leads to an exponential running time, as the same subproblems are recomputed over and over again. The running time of this approach is in $\mathcal{O}(2^{m+n})$.
 
 Implementation: [LCS - Brute Force](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/dynamic-programming/longest-common-sub/lcs-1.c)
 
-The code can be simplified and looks more natural if we start at the beginning of the sequences $X$ and $Y$ instead of the end. The idea is the same, but the subproblems are now defined in terms of suffixes of $X$ and $Y$ instead of prefixes, and the base case is when these suffixes are reduced to an empty sequence. The time complexity is still exponential.
+## ${\color{darkseagreen}\text{Top-down}}$
 
-Implementation: [LCS - Brute Force - suffixes](https://github.com/pl3onasm/Algorithms/blob/main/algorithms/dynamic-programming/longest-common-sub/lcs-2.c)
-
-## Top-down Approach with Memoization
-
-This approach maintains the top-down strategy of the previous solution, but it uses a memoization table to avoid recomputing the LCS for the same prefixes of $X$ and $Y$ multiple times. The time complexity is in $O(mn)$. The space complexity is also in $O(mn)$, since the memoization table has $m$ rows and $n$ columns. If we don't want to reconstruct the LCS, we can use a 2D array of size $2 \times n$ instead of a 2D array of size $m \times n$, since we only need the previous row of the memoization table to compute the next row.
+The top-down DP approach fixes the flaw of the brute force solution by using a ${\color{peru}\text{memoization}}$ ${\color{peru}\text{table}}$ to avoid recomputing the LCS for the same prefixes of $X$ and $Y$ multiple times. This memoization table stores the length of the LCS for each pair of prefixes of $X$ and $Y$ as soon as it is computed, so that it can be used again when encountering the same subproblem. The space complexity of the table is in $\mathcal{O}(mn)$, since it has $m \cdot n$ entries: one for each possible pair of prefixes of $X$ and $Y$. The final solution is then the value stored in the memoization table for the pair $X$ and $Y$ itself which is the entry found at the last row and last column of the table. As the memoization table ensures that each subproblem is computed only once, the running time of the algorithm is able to drop from exponential to $\mathcal{O}(mn)$.  
 
 Implementation: [LCS - Top-Down DP](https://github.com/pl3onasm/Algorithms/blob/main/algorithms/dynamic-programming/longest-common-sub/lcs-3.c)
 
-## Bottom-up Approach
+## ${\color{darkseagreen}\text{Bottom-up}}$
 
-Here we use a bottom-up approach, which is more natural for dynamic programming. We start from the base case of an empty sequence, and we compute the LCS for all possible prefixes of $X$ and $Y$ in a bottom-up fashion. Both the time and space complexity are in $O(mn)$. The same space optimization as in the previous solution can be applied here.
+The bottom-up DP approach also uses a memoization table, but does not use recursion. Instead, subproblems are solved iteratively, starting with the base case of a pair of empty sequences, and computing the LCS for all possible pairs of prefixes of $X$ and $Y$ in a bottom-up fashion, until we reach the original problem of finding the LCS for the pair $X$ and $Y$ itself. The running time of this approach is also in $\mathcal{O}(mn)$.
+
+${\color{peru}\text{Reconstruction}}$ of an actual LCS from the memoization table is also possible. We can do this by starting at the last row and last column of the table, and moving backwards through the table, literally tracing the steps of the recurrence relation. The idea is as follows: if the value in the current cell is equal to the value in the cell above or the cell to the left, we move to that cell, otherwise we add the corresponding element from $X$ or $Y$ to the LCS and move diagonally up and to the left. We continue this process until we reach the first row or the first column of the table, at which point an actual LCS has been reconstructed in reverse order and in $\mathcal{O}(m+n)$ time.  
+
+As multiple LCSs are possible, this process does not necessarily yield a unique solution. If we want to return all possible LCSs, we can use a recursive backtracking algorithm to explore all possible paths through the table.
 
 Implementation: [LCS - Bottom-up DP](https://github.com/pl3onasm/Algorithms/blob/main/algorithms/dynamic-programming/longest-common-sub/lcs-4.c)
 
-## Notes
 
-The implementations can of course be simplified if you only want to return the length of the LCS, but it is more interesting to return both the length of the LCS and an actual LCS. It should be an easy exercise to extend the code so that it returns all possible LCSs if there are multiple of the same maximum length.  

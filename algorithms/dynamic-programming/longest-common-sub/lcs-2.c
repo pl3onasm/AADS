@@ -1,61 +1,102 @@
-/* file: lcs-2.c
-   author: David De Potter
-   email: pl3onasm@gmail.com
-   license: MIT, see LICENSE file in repository root folder
-   description: longest common subsequence
-     This is a more natural implementation of the naive  
-     recursive solution. 
+/* 
+  file: lcs-2.c
+  author: David De Potter
+  email: pl3onasm@gmail.com
+  license: MIT, see LICENSE file in repository root folder
+  description: longest common subsequence, top-down DP approach
+  Time complexity: O(nm)
+  Space complexity: O(nm)
 */ 
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#include "../../../lib/clib/clib.h"
+#include <stdint.h> 
+#define MAX(a,b) ((a) > (b) ? (a) : (b))
 
-void *safeCalloc (int n, int size) {
-  /* allocates n elements of size size, initializing them to 0, and
-     checks whether the allocation was successful */
-  void *ptr = calloc(n, size);
-  if (ptr == NULL) {
-    printf("Error: calloc(%d, %d) failed. Out of memory?\n", n, size);
-    exit(EXIT_FAILURE);
-  }
-  return ptr;
-}
+//===================================================================
+// Returns a table of size n x m initialized with SIZE_MAX
+size_t **makeTable (size_t n, size_t m) {
 
-void computeLcs (char *a, char *b, char *lcs, 
-  int lcslen, int *maxlen, char *maxlcs) {
-  if (*a == '\0' || *b == '\0') {
-    if (lcslen > *maxlen) {
-      *maxlen = lcslen;
-      strcpy(maxlcs, lcs);
-      lcs[lcslen] = '\0';
-    }
-    return; 
-  }
-  if (*a == *b) { // first characters are equal
-    lcs[lcslen] = *a;
-    computeLcs(a+1, b+1, lcs, lcslen+1, maxlen, maxlcs);
-  } else {        // first characters are different
-    // try without first character of a
-    computeLcs(a+1, b, lcs, lcslen, maxlen, maxlcs);
-    // try without first character of b
-    computeLcs(a, b+1, lcs, lcslen, maxlen, maxlcs);
-  }
-}
+  CREATE_MATRIX(size_t, table, n, m);
 
-int main (int argc, char *argv[]) {
-  char *a = "ACCGATATCAGGATCGGAC", 
-       *b = "GTAGTAATTACGAACA";
-  int la = strlen(a), lb = strlen(b);
-  char *lcs = safeCalloc(la < lb ? la+1:lb+1, sizeof(char));
-  char *maxlcs = safeCalloc(la < lb ? la+1:lb+1, sizeof(char));
-  int maxlen = 0;
+  for (int i = 0; i < n; i++)
+    for (int j = 0; j < m; j++)
+      table[i][j] = SIZE_MAX;
   
-  computeLcs(a, b, lcs, 0, &maxlen, maxlcs);
-  printf("Given strings:\n%s\n%s\n", a, b);
-  printf("The length of the LCS is %d.\n", maxlen);
-  printf("A possibly non-unique LCS is %s.\n", maxlcs);
-  free(lcs); free(maxlcs);
+  return table;
+}
+
+//===================================================================
+// Returns the length of the longest common subsequence of X and Y
+// using a top-down dynamic programming approach
+size_t computeLcs (size_t **table, string *X, string *Y, 
+                   size_t x, size_t y) {
+    
+    // compute length of LCS if not available
+  if (table[x][y] == SIZE_MAX) {
+      
+    if (x == 0 || y == 0) 
+      // base case: reached the end of one of the strings
+      table[x][y] = 0;
+
+    else if (charAt(X, x - 1) == charAt(Y, y - 1))
+      // last chars of X and Y are identical: add 1 
+      table[x][y] = computeLcs(table, X, Y, x - 1, y - 1) + 1;
+
+    else 
+      // compute the maximum of the LCSs of the two alternatives:
+      // either we remove the last char of X or the last char of Y
+      table[x][y] = MAX(computeLcs(table, X, Y, x, y - 1),
+                        computeLcs(table, X, Y, x - 1, y));
+  }
+
+  return table[x][y];
+}
+
+//===================================================================
+// Recursively reconstructs the longest common subsequence
+// from the memoization table
+void reconstructLcs (size_t **table, string *X, size_t x, 
+                     size_t y, string *lcs) {
+  
+  if (x == 0 || y == 0) 
+    return;
+
+  if (table[x][y] == table[x - 1][y]) 
+    // if the value to the left is the same, we move to the left
+    reconstructLcs(table, X, x - 1, y, lcs);
+
+  else if (table[x][y] == table[x][y - 1]) 
+    // if the value above is the same, we move up
+    reconstructLcs(table, X, x, y - 1, lcs);
+
+  else {
+    // add the character to the LCS and move diagonally up
+    appendChar(lcs, charAt(X, x - 1));
+    reconstructLcs(table, X, x - 1, y - 1, lcs);
+  }
+} 
+
+//===================================================================
+
+int main () {
+  
+  READ_STRING(X, '\n'); 
+  READ_STRING(Y, '\n');
+
+  size_t **table = makeTable(strLen(X) + 1, strLen(Y) + 1);
+
+  size_t lcs = computeLcs(table, X, Y, strLen(X), strLen(Y));
+  
+  string *lcsStr = newString(lcs + 1);
+  reconstructLcs(table, X, strLen(X), strLen(Y), lcsStr);
+
+  printf("Max length: %zu\nExample LCS:\n  ", lcs);
+  showString(lcsStr);
+
+  FREE_MATRIX(table, strLen(X) + 1);
+  freeString(X);
+  freeString(Y);
+  freeString(lcsStr);
+  
   return 0;
 }
-

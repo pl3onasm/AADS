@@ -11,10 +11,10 @@ If we want to multiply two $n \times n$ matrices $A$ and $B$, we can do so by ta
 ```c
   matrixMultiply(A, B, C, n)
     for i = 1 to n
-        for j = 1 to n
-          Cᵢⱼ = 0
-          for k = 1 to n
-            Cᵢⱼ += Aᵢⱼ * Bᵢⱼ
+      for j = 1 to n
+        Cᵢⱼ = 0
+        for k = 1 to n
+          Cᵢⱼ += Aᵢⱼ * Bᵢⱼ
     return C
 ```
 
