@@ -2,7 +2,7 @@
 
 ## ${\color{rosybrown}\text{Problem}}$
 
-Given two sequences $X = \langle x_1, x_2, ..., x_m \rangle$ and $Y = \langle y_1, y_2, ..., y_n \rangle$, find the length of their longest common subsequence (LCS). A ${\color{peru}\text{subsequence}}$ is derived from a given sequence by deleting some elements from it (possibly none) without changing the order of the remaining elements. For example, the sequence $\langle A, B, D \rangle$ is a subsequence of $\langle A, B, C, D, B, A \rangle$, but $\langle B, D, A, B \rangle$ is not, since the order of the elements is not preserved.  
+Given two sequences $X = \langle x_1, x_2, ..., x_m \rangle$ and $Y = \langle y_1, y_2, ..., y_n \rangle$, find the length of their longest common subsequence. A ${\color{peru}\text{subsequence}}$ is derived from a given sequence by deleting some elements from it (possibly none) without changing the order of the remaining elements. For example, the sequence $\langle A, B, D \rangle$ is a subsequence of $\langle A, B, C, D, B, A \rangle$, but $\langle B, D, A, B \rangle$ is not, since the order of the elements is not preserved.  
 
 However, we do not care about just any subsequence, but the longest one that is present in both sequences $X$ and $Y$. In other words, the problem is to find the maximum length of a subsequence $Z = \langle z_1, z_2, ..., z_k \rangle$ such that $z_i = x_j$ and $z_i = y_h$ for each $1 \leq i \leq k$ and for some $1 \leq j \leq m$ and $1 \leq h \leq n$.  
 
