@@ -4,7 +4,7 @@
 
 Given two sequences $X = \langle x_1, x_2, ..., x_m \rangle$ and $Y = \langle y_1, y_2, ..., y_n \rangle$, find the length of their longest common subsequence. A ${\color{peru}\text{subsequence}}$ is derived from a given sequence by deleting some elements from it (possibly none) without changing the order of the remaining elements. For example, the sequence $\langle A, B, D \rangle$ is a subsequence of $\langle A, B, C, D, B, A \rangle$, but $\langle B, D, A, B \rangle$ is not, since the order of the elements is not preserved.  
 
-However, we do not care about just any subsequence, but the longest one that is present in both sequences $X$ and $Y$. In other words, the problem is to find the maximum length of a subsequence $Z = \langle z_1, z_2, ..., z_k \rangle$ such that $z_i = x_j$ and $z_i = y_h$ for each $1 \leq i \leq k$ and for some $1 \leq j \leq m$ and $1 \leq h \leq n$.  
+However, we do not care about just any subsequence, but about the longest one that is present in both sequences $X$ and $Y$. In other words, the problem is to find the maximum length of a subsequence $Z = \langle z_1, z_2, ..., z_k \rangle$ such that $z_i = x_j$ and $z_i = y_h$ for each $1 \leq i \leq k$ and for some $1 \leq j \leq m$ and $1 \leq h \leq n$.  
 
 For example, the longest common subsequence of the sequences $X = \langle A, B, C, B, D, A, B
 \rangle $ and $Y = \langle B, D, C, A, B, A \rangle$ is $Z = \langle B, C, A, B \rangle$, which has length $4$. Mind that the longest common subsequence is not necessarily unique: $Z = \langle B, D, A, B \rangle $ and $Z = \langle B, C, B, A \rangle$ are also valid solutions. Its length of course is unique, and in this case it is $4$.
