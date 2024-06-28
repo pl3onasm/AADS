@@ -35,26 +35,25 @@ size_t computeLcs (size_t **table, string *X, string *Y) {
 } 
 
 //===================================================================
-// Recursively reconstructs the longest common subsequence
-// from the memoization table
-void reconstructLcs (size_t **table, string *X, size_t x, 
-                     size_t y, string *lcs) {
+// Recursively reconstructs a longest common subsequence
+// from the memoization table and prints it
+void reconstructLcs (size_t **table, string *X, size_t x, size_t y) {
   
   if (x == 0 || y == 0) 
     return;
 
   if (table[x][y] == table[x - 1][y]) 
     // if the value to the left is the same, we move to the left
-    reconstructLcs(table, X, x - 1, y, lcs);
+    reconstructLcs(table, X, x - 1, y);
 
   else if (table[x][y] == table[x][y - 1]) 
     // if the value above is the same, we move up
-    reconstructLcs(table, X, x, y - 1, lcs);
+    reconstructLcs(table, X, x, y - 1);
 
   else {
-    // add the character to the LCS and move diagonally up
-    appendChar(lcs, charAt(X, x - 1));
-    reconstructLcs(table, X, x - 1, y - 1, lcs);
+    // move diagonally up and left and print char after recursion
+    reconstructLcs(table, X, x - 1, y - 1);
+    printf("%c", charAt(X, x - 1));
   }
 } 
 
@@ -69,16 +68,12 @@ int main () {
 
   size_t lcs = computeLcs(table, X, Y);
   
-  string *lcsStr = newString(lcs + 1);
-  reconstructLcs(table, X, strLen(X), strLen(Y), lcsStr);
-
   printf("Max length: %zu\nExample LCS:\n  ", lcs);
-  showString(lcsStr);
+  reconstructLcs(table, X, strLen(X), strLen(Y));
 
   FREE_MATRIX(table, strLen(X) + 1);
   freeString(X);
   freeString(Y);
-  freeString(lcsStr);
   
   return 0;
 }

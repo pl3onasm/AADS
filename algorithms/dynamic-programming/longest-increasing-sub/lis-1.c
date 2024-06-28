@@ -1,66 +1,43 @@
-/* file: lis-1.c
-   author: David De Potter
-   email: pl3onasm@gmail.com
-   license: MIT, see LICENSE file in repository root folder
-   description: longest increasing subsequence
-     naive recursive implementation
+/* 
+  file: lis-1.c
+  author: David De Potter
+  email: pl3onasm@gmail.com
+  license: MIT, see LICENSE file in repository root folder
+  description: longest increasing subsequence
+    naive recursive implementation
+  time complexity: O(2^n)
+  Use at your own risk for n > 20
 */ 
 
-#include <stdlib.h>
-#include <stdio.h>
+#include "../../../lib/clib/clib.h"
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
 
-void *safeMalloc (int n) {
-  /* allocates n bytes of memory and checks whether the allocation
-     was successful */
-  void *ptr = malloc(n);
-  if (ptr == NULL) {
-    printf("Error: malloc(%d) failed. Out of memory?\n", n);
-    exit(EXIT_FAILURE);
-  }
-  return ptr;
+//===================================================================
+// Returns the length of the longest increasing subsequence
+size_t computeLis (int *arr, size_t len, size_t i, size_t j) {
+  
+  if (i == 0)
+    return arr[i] < arr[j];
+
+  if (j == len || arr[i] < arr[j])
+      // take maximum of including or excluding current element
+    return MAX(1 + computeLis(arr, len, i - 1, i),
+               computeLis(arr, len, i - 1, j));
+  else 
+      // exclude current element
+    return computeLis(arr, len, i - 1, j);
 }
 
-void getMaxLis (int *a, int *lis, int n, int idx, int subLen, int *maxLis, int *maxLen) {
-  /* computes the LIS of a and stores it in lis */
-  if (idx == n) {
-    if (subLen > *maxLen) {
-      *maxLen = subLen;
-      for (int i = 0; i < subLen; i++)  // copy lis to maxLis
-        maxLis[i] = lis[i];
-    }
-    return;
-  }
-  if (subLen == 0 || a[idx] > lis[subLen-1]) {
-    lis[subLen] = a[idx];
-    getMaxLis(a, lis, n, idx+1, subLen+1, maxLis, maxLen);
-  }
-  getMaxLis(a, lis, n, idx+1, subLen, maxLis, maxLen);
-}
+//===================================================================
 
-void printArray (int *arr, int n) {
-  // prints an array of size n
-  printf("[");
-  for (int i = 0; i < n; i++) {
-    printf("%d", (arr)[i]);
-    if (i < n-1) printf(", ");
-  }
-  printf("]\n");
-}
+int main () {
 
-int main (int argc, char *argv[]) {
-  int arr[] = {12, 8, 1, 4, 2, 9, 10, 18, 15, 7, 3, 
-               20, 14, 30, 24, 40, 5, 10, 26, 11};
-  int n = 20; 
-  int *lis = safeMalloc(n * sizeof(int));
-  int *maxLis = safeMalloc(n * sizeof(int));
-  int maxLen = 0;
-  getMaxLis(arr, lis, n, 0, 0, maxLis, &maxLen);
-  printf("The given array is:\n");
-  printArray(arr, n);
-  printf("The length of the longest increasing subsequence is %d.\n", maxLen);
-  printf("A possible LIS is:\n");
-  printArray(maxLis, maxLen);
-  free(lis); free(maxLis);
+  READ(int, arr, "%d", len);
+
+  printf("Max length: %zu\n", computeLis(arr, len, len - 1, len));
+
+  free(arr);
+  
   return 0;
 }
 
