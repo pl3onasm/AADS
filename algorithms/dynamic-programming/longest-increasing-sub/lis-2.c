@@ -48,15 +48,13 @@ void reconstructLis(int *arr, size_t len, size_t **table,
 
   CREATE_ARRAY(int, lis, subLen);
 
-  for (size_t i = len - 1, j = len, s = subLen; i > 0; i--) {
-    if (j == len || arr[i] < arr[j]) {
+  for (size_t i = len - 1, j = len, s = subLen; i > 0; i--) 
+    if (j == len || arr[i] < arr[j]) 
       if (table[i][j] == 1 + table[i - 1][i]) {
         lis[--s] = arr[i];
         j = i;
       }
-    }
-  }
-
+  
   PRINT_ARRAY(lis, "%d", subLen);
   free(lis);
 }
@@ -85,7 +83,6 @@ int main () {
   size_t subLen = computeLis(arr, len, len - 1, len, table);
 
   printf("Max length: %zu\nSubsequence:\n ", subLen);
-  
   reconstructLis(arr, len, table, subLen);
 
   FREE_MATRIX(table, len);
