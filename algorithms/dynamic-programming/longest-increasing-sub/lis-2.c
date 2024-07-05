@@ -22,14 +22,15 @@
 size_t computeLis (int *arr, size_t len, size_t i, 
                    size_t j, size_t **table) {
     
-    // base case: check if first element can be included
-  if (i == 0) table[i][j] = arr[i] < arr[j];
+    // base case: no more elements to consider
+  if (i == SIZE_MAX)
+    return 0;
 
-    // if value is not available, compute it,
-    // otherwise return stored value
+    // if value is not available, compute, store and return it
+    // otherwise simply return memoized value
   if (table[i][j] == SIZE_MAX) {
     
-    if (j == len || arr[i] < arr[j])
+    if (j == len || arr[i] <= arr[j])
         // take maximum of including or excluding current element
       table[i][j] = MAX(1 + computeLis(arr, len, i - 1, i, table),
                         computeLis(arr, len, i - 1, j, table));
@@ -49,11 +50,10 @@ void reconstructLis(int *arr, size_t len, size_t **table,
   CREATE_ARRAY(int, lis, subLen);
 
   for (size_t i = len - 1, j = len, s = subLen; i > 0; i--) 
-    if (j == len || arr[i] < arr[j]) 
-      if (table[i][j] == 1 + table[i - 1][i]) {
-        lis[--s] = arr[i];
-        j = i;
-      }
+    if (table[i][j] == 1 + table[i - 1][i]) {
+      lis[--s] = arr[i];
+      j = i;
+    }
   
   PRINT_ARRAY(lis, "%d", subLen);
   free(lis);

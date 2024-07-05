@@ -10,7 +10,7 @@ For example, the longest common subsequence of the sequences $X = \langle A, B, 
 
 ## ${\color{darkseagreen}\text{The key idea}}$
 
-The main idea is to think of the subproblems in terms of prefixes of the input sequences $X$ and $Y$: the length of the LCS of $X$ and $Y$ can be found by considering the LCS of the prefixes $X_{m-1}$ and $Y_{n-1}$, and then adding $1$ to the length if $x_m = y_n$. If they are not equal, we need to consider two subproblems: finding the LCS of $X_{m-1}$ and $Y$, and finding the LCS of $X$ and $Y_{n-1}$, so that we can take the maximum of the two solutions. Clearly, these subproblems overlap and also exhibit the property of ${\color{peru}\text{optimal substructure}}$: the optimal solution to any of them can be found by combining the optimal solutions to their subproblems.  
+The main idea is to think of the subproblems in terms of ${\color{peru}\text{prefixes}}$ of the input sequences $X$ and $Y$: the length of the LCS of $X$ and $Y$ can be found by considering the LCS of the prefixes $X_{m-1}$ and $Y_{n-1}$, and then adding $1$ to the length if $x_m = y_n$. If they are not equal, we need to consider two subproblems: finding the LCS of $X_{m-1}$ and $Y$, and finding the LCS of $X$ and $Y_{n-1}$, so that we can take the maximum of the two solutions. Clearly, these subproblems overlap and also exhibit the property of ${\color{peru}\text{optimal substructure}}$: the optimal solution to any of them can be found by combining the optimal solutions to their subproblems.  
 
 As we keep repeating the process for the remaining elements of $X$ and $Y$, we continually reduce the size of the problem to smaller subproblems, i.e. to smaller prefixes of $X$ and $Y$. Eventually, we will reach the base case of an empty sequence, when we reach the beginning of one of the original sequences, at which point the maximum length of the LCS is fully computed.  
 
@@ -20,12 +20,12 @@ This process can be formulated as a recurrence, which defines the length of the 
 
 $$
 \color{darkslateblue}\huge\boxed{\color{rosybrown}\small \space
-\small \text{len}(X,Y) = \begin{cases}
+\small L(X,Y) = \begin{cases}
 \small 0 & \scriptsize \text{if } m = 0 \lor n = 0 \\
-\small \text{len}(X_{m-1}, Y_{n-1}) + 1 & \scriptsize \text{if } m, n > 0 \\
+\small L(X_{m-1}, Y_{n-1}) + 1 & \scriptsize \text{if } m, n > 0 \\
 &\scriptsize \quad \land \space x_m = y_n \\
-\small \text{max}\lbrace \text{len}(X_{m-1}, Y), & \scriptsize \text{if } m, n > 0  \\
-\small \qquad \space  \text{len}(X, Y_{n-1}) \rbrace &\scriptsize \quad \land \space x_m \neq y_n
+\small \text{max}\lbrace L(X_{m-1}, Y), & \scriptsize \text{if } m, n > 0  \\
+\small \qquad \space  L(X, Y_{n-1}) \rbrace &\scriptsize \quad \land \space x_m \neq y_n
 \end{cases}\space}
 $$
 

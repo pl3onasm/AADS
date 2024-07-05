@@ -11,7 +11,7 @@
 
 //===================================================================
 // Populates the memoization table and returns the length of the LIS
-size_t computeLIS (int *arr, size_t len, size_t *table, 
+size_t computeLis (int *arr, size_t len, size_t *table, 
                    size_t *parents) {
   
   size_t subLen = 1;
@@ -37,12 +37,12 @@ size_t computeLIS (int *arr, size_t len, size_t *table,
 
 //===================================================================
 // Reconstructs a LIS from the parent array and prints it
-void reconstructLIS (int *arr, size_t *parents, size_t p, 
+void reconstructLis (int *arr, size_t *parents, size_t p, 
                      size_t subLen) {
   
   CREATE_ARRAY(int, lis, subLen);
   
-  for (int i = subLen - 1; i >= 0; i--) {
+  for (size_t i = subLen; i--; ) {
     lis[i] = arr[p]; 
     p = parents[p];
   }
@@ -60,10 +60,10 @@ int main () {
   CREATE_ARRAY(size_t, table, len);
   CREATE_ARRAY(size_t, prev, len);
 
-  size_t subLen = computeLIS(arr, len, table, prev);
+  size_t subLen = computeLis(arr, len, table, prev);
 
   printf("Max length: %zu\nSubsequence:\n ", subLen);
-  reconstructLIS(arr, prev, table[subLen - 1], subLen);
+  reconstructLis(arr, prev, table[subLen - 1], subLen);
   
   free(prev); free(table); free(arr);
   return 0;

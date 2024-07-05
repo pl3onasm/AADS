@@ -70,6 +70,7 @@ int main () {
   
   printf("Max length: %zu\nExample LCS:\n  ", lcs);
   reconstructLcs(table, X, strLen(X), strLen(Y));
+  printf("\n");
 
   FREE_MATRIX(table, strLen(X) + 1);
   freeString(X);

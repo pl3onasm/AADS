@@ -10,22 +10,24 @@
 */ 
 
 #include "../../../lib/clib/clib.h"
+#include <stdint.h>
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 
 //===================================================================
 // Returns the length of the longest increasing subsequence
-size_t computeLis (int *arr, size_t len, size_t i, size_t j) {
+size_t computeLis (int *arr, size_t i, size_t j) {
   
-  if (i == 0)
-    return arr[i] < arr[j];
+  if (i == SIZE_MAX)
+      // base case: no more elements to consider
+    return 0;
 
-  if (j == len || arr[i] < arr[j])
+  if (j == SIZE_MAX || arr[i] <= arr[j])
       // take maximum of including or excluding current element
-    return MAX(1 + computeLis(arr, len, i - 1, i),
-               computeLis(arr, len, i - 1, j));
+    return MAX(1 + computeLis(arr, i - 1, i),
+               computeLis(arr, i - 1, j));
   else 
       // exclude current element
-    return computeLis(arr, len, i - 1, j);
+    return computeLis(arr, i - 1, j);
 }
 
 //===================================================================
@@ -34,7 +36,7 @@ int main () {
 
   READ(int, arr, "%d", len);
 
-  printf("Max length: %zu\n", computeLis(arr, len, len - 1, len));
+  printf("Max length: %zu\n", computeLis(arr, len - 1, SIZE_MAX));
 
   free(arr);
   
