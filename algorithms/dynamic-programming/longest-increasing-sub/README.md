@@ -5,7 +5,7 @@
 Given an array of integers, find the length of the longest ${\color{peru}\text{monotonically}}$ ${\color{peru}\text{increasing}}$ (so not necessarily strictly increasing) subsequence. A ${\color{peru}\text{subsequence}}$ is a sequence that can be derived from the original array by deleting some elements (possibly none) from it without changing the order of the remaining elements.  
 
 In other words, given an array $X$ of length $n$, find the maximum length $m$ of a sequence $X'$ where $X'[i] = X[j]$ for all $0 \leq i < m$ and some $0 \leq j < n$. Note that the elements of the subsequence can but do not have to be adjacent in the original array.  
-v
+
 For example, given the array $X = [12, 8, 1, 4, 2, 9, 10, 18, 15, 7, 20]$, the length of the LIS is $6$. A possible LIS is for example $X' = [1, 2, 9, 10, 15, 20]$. This LIS is not unique, however. For example, $X'' = [1, 4, 9, 10, 18, 20]$ is also a valid LIS. Note that if the array $X$ is sorted in ascending order, then we have $m = n$ and $X' = X$.  
 
 ## ${\color{darkseagreen}\text{The key idea}}$
