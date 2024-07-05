@@ -23,7 +23,7 @@ size_t computeLis (int *arr, size_t len, size_t *table,
       size_t low = 0, high = subLen - 1;
       while (low < high) {
         size_t mid = low + (high - low) / 2;
-        if (arr[table[mid]] < arr[i]) 
+        if (arr[table[mid]] <= arr[i]) 
           low = mid + 1;
         else high = mid;
       }
