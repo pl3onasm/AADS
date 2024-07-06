@@ -15,22 +15,24 @@
 // Populates the memoization table and returns the length of the LIS
 size_t computeLis(int *arr, size_t n, size_t *table) {
 
-  size_t max = 0;
-    // work by gradually increasing the sequence length 
-    // and check if any elements can be included
+  size_t maxLen = 1;
+  table[0] = 1;
+    // work by gradually increasing the prefix length and
+    // check if any elements can be included in the subsequence
   for (size_t i = 1; i < n; i++){
-      // i is the current maximum index of the subsequence 
+      // i is the current prefix length
+    table[i] = 1;
     for (size_t j = 0; j < i; j++) 
-      if (arr[j] <= arr[i] && table[j] >= table[i]) {
-          // found an element that can be included so
+      if (arr[j] <= arr[i] && table[j] == table[i]) {
+          // found an element that can be included such
           // that the subsequence length can be increased
         table[i] = table[j] + 1;
-          // check if it yields a new maximum
-        max = MAX(max, table[i]);
+          // update the maximum length of the subsequence
+        maxLen = MAX(maxLen, table[i]);
       }
   }
   
-  return max + 1;
+  return maxLen;
 }
 
 //===================================================================
@@ -41,7 +43,7 @@ void reconstructLis(int *arr, size_t len, size_t *table,
   CREATE_ARRAY(int, lis, subLen);
 
   for (size_t i = len, s = subLen; i--; ) 
-    if (table[i] == s - 1) 
+    if (table[i] == s) 
       lis[--s] = arr[i];
 
   PRINT_ARRAY(lis, "%d", subLen);
