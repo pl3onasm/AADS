@@ -17,11 +17,11 @@ The subproblem for a prefix $X[0..i]$ can be solved by considering the possible 
 As a result, we can define the following recurrence to compute the length $L(i,j)$ of the longest increasing subsequence of the prefix $X[0..i]$ for decreasing indices $i$ and where $j$ is the index of the last element that was included in the subsequence (or $\infty$ if no element was included yet and we start from an empty subsequence):
 
 $$
-\color{darkslateblue}\huge\boxed{\color{rosybrown}\small \space
-\small L(i,j) = \begin{cases} \small 0 & \scriptsize \text{if } i = \infty \\
-\small \text{max}\lbrace L(i-1,j), & \scriptsize \text{if } j = \infty \\
-\small \qquad \space 1 + L(i-1,i) \rbrace &\scriptsize \space  \lor \space X[i] \leq X[j] \\
-\small L(i-1,j) &\scriptsize \text{otherwise}
+\color{darkslateblue}\huge\boxed{\color{rosybrown}\normalsize \space
+\normalsize L(i,j) = \begin{cases} \small 0 & \scriptsize \text{if } i = \infty \\
+\normalsize \text{max}\lbrace L(i-1,j), & \scriptsize \text{if } j = \infty \\
+\normalsize \quad \space 1 + L(i-1,i) \rbrace &\scriptsize \space  \lor \space X[i] \leq X[j] \\
+\normalsize L(i-1,j) &\scriptsize \text{otherwise}
 \end{cases}\space}
 $$
 

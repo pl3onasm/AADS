@@ -19,13 +19,13 @@ This process can be formulated as a recurrence, which defines the length of the 
 <br />
 
 $$
-\color{darkslateblue}\huge\boxed{\color{rosybrown}\small \space
-\small L(X,Y) = \begin{cases}
-\small 0 & \scriptsize \text{if } m = 0 \lor n = 0 \\
-\small L(X_{m-1}, Y_{n-1}) + 1 & \scriptsize \text{if } m, n > 0 \\
-&\scriptsize \quad \land \space x_m = y_n \\
-\small \text{max}\lbrace L(X_{m-1}, Y), & \scriptsize \text{if } m, n > 0  \\
-\small \qquad \space  L(X, Y_{n-1}) \rbrace &\scriptsize \quad \land \space x_m \neq y_n
+\color{darkslateblue}\huge\boxed{\color{rosybrown} \space
+\normalsize L(X,Y) = \begin{cases}
+\normalsize 0 & \scriptsize \text{if } m = 0 \\
+ & \scriptsize \space \lor \space n = 0 \\
+\normalsize L(X_{m-1}, Y_{n-1}) + 1 & \scriptsize \text{if } x_m = y_n \\
+\normalsize \text{max}\lbrace L(X_{m-1}, Y), & \scriptsize \text{if } x_m \neq y_n  \\
+\normalsize \qquad \space  L(X, Y_{n-1}) \rbrace
 \end{cases}\space}
 $$
 
