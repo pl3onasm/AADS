@@ -1,20 +1,48 @@
-# 0-1 Knapsack Problem
+# ${\color{Cadetblue}\text{0-1 Knapsack}}$ ${\color{Cadetblue}\text{problem}}$
 
-We are given a knapsack of a given size and a set of items. Each item has a weight and a value. The goal is to maximize the total value of the items in the knapsack while keeping the total weight less than or equal to the knapsack size. The items can't be used more than once and can't be broken up into smaller pieces: we can either put the whole item in the knapsack (1) or not (0).  
-The input to the program is a knapsack of capacity $W$, and two arrays containing n elements: $weights$ and $values$, denoting the weights and values of the items. The output is the maximum value that can be obtained by putting items in the knapsack without exceeding its capacity, as well as the (possibly non-unique) combination of items that yields this value.
+## ${\color{rosybrown}\text{Problem}}$
 
-## Brute Force
+We are given a knapsack of a given capacity $W$ and a set of $n$ items. Each item has a certain weight and value. The aim is to fill the knapsack with items such that the total weight is less than or equal to the capacity of the knapsack and the total value is maximized. The problem is called 0-1 knapsack because for each item, we can either choose to include it entirely in the knapsack or exclude it. It is not allowed to include a fraction of an item or include an item more than once.
 
-A brute force solution would be to try all possible combinations of items and see which one yields the highest value. This is a recursive solution where in each subproblem we try to put the current item in the knapsack or skip it. If we put it in the knapsack, we subtract the weight of the item from the knapsack size and add the value of the item to the total value. If we skip it, we don't change the knapsack size or the total value. We keep doing this for all subproblems until we have tried all items. The time complexity of this solution is $O(2^n)$ because we have 2 choices for each item and we have n items.
+## ${\color{darkseagreen}\text{The key idea}}$
+
+The key idea is to think of each subproblem in terms of a ${\color{peru}\text{prefix}}$ of the item list and a remaining knapsack capacity $j \leq W$. At each step, we can choose to include the last item of the prefix in the knapsack if it fits or exclude it. If inclusion is possible, we need to consider the maximum value between including and excluding the item. Of course, if the item does not fit, we can only exclude it. The value of the subproblem is the maximum value we can get from the prefix of the item list and the remaining knapsack capacity.  
+
+Clearly, the subproblems are ${\color{peru}\text{overlapping}}$ because we can have the same prefix of the item list and the same remaining knapsack capacity in multiple subproblems. The subproblems also have the ${\color{peru}\text{optimal substructure}}$ property because the optimal solution to a subproblem can be obtained by combining the optimal solutions to its own subproblems.
+
+A recursive solution to the problem can be obtained by defining a function $V(i,j)$ that returns the maximum value that can be obtained from the first $i$ items and a knapsack capacity of $j$. The function can be defined as follows:
+<br />
+
+$$
+\color{darkslateblue}\huge\boxed{\color{rosybrown}\normalsize \space
+\normalsize V(i,j) = \begin{cases} \small 0 & \scriptsize \text{if } i = 0 \\
+& \scriptsize \space \space \lor \space j = 0\\
+\normalsize \text{max}\lbrace V(i-1,j), & \scriptsize \text{if } j \leq w_i \\
+\normalsize \quad \space v_i + V(i-1,j-w_i) \rbrace  \\
+\normalsize V(i-1,j) &\scriptsize \text{otherwise}
+\end{cases}\space}
+$$
+
+<br />
+
+The base case is when we have no items left or the knapsack capacity is zero. In this case, the value of the subproblem is zero. If we choose to include the $i$-th item, we subract its weight $w_i$ from the remaining capacity $j$ and add its value $v_i$ to the total value. Excluding the item means the total value and the remaining capacity remain unchanged. The value of the original problem is obtained by calling $V(n,W)$.
+
+## ${\color{darkseagreen}\text{Brute force}}$
+
+The brute force solution implements the recursive function $V(i,j)$ as described above without any optimization. It ignores the fact that the subproblems overlap and recomputes the value of the same subproblem multiple times. The time complexity of the brute force solution is therefore exponential.
 
 Implementation: [Knapsack - Brute Force](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/dynamic-programming/knapsack/knapsack-1.c)
 
-## Top-down DP (Memoization)
+## ${\color{darkseagreen}\text{Top-down}}$
 
+The top-down solution implements the same recursive function $V(i,j)$ but uses a ${\color{peru}\text{memoization}}$ ${\color{peru}\text{table}}$ to store the value of each subproblem once it is computed. After initializing this table with a special value that indicates the subproblem has not been computed yet (e.g. -1), the program is modified to check at each recursive step if the value of the subproblem has already been computed. If it has, the stored value is returned. Otherwise, the value is computed as before and stored in the table. As each suproblem is thus guaranteed to be computed only once, the time complexity of the top-down solution is reduced to $O(nW)$.
 
 Implementation: [Knapsack - Top-down DP](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/dynamic-programming/knapsack/knapsack-2.c)
 
-## Bottom-up DP (Tabulation)
+## ${\color{darkseagreen}\text{Bottom-up}}$
 
+The bottom-up solution is based on the same idea as the top-down solution but computes the values of the subproblems from the smallest to the largest, starting from the base case. The benefit of this approach is that all the partial solutions needed to compute the value of a subproblem are already computed and available when the subproblem is considered, so there is no need to check if the value of the subproblem has already been computed. It also avoids the overhead of recursive calls. The time complexity of the bottom-up approach, however, is the same as the top-down approach, $O(nW)$.
+
+${\color{peru}\text{Reconstruction}}$ of an optimal solution from the memoization table is also straightforward. We start from the last item and the last knapsack capacity stored in the cell $V(n,W)$ and then keep moving to the previous item and the previous knapsack capacity. At each step, we check if the value of the subproblem is the same as the value of the subproblem without the last item. If it is, we know the last item was not included in the knapsack. Otherwise, we include the item and subtract its weight from the remaining capacity. The process is repeated until we reach the first item.
 
 Implementation: [Knapsack - Bottom-up DP](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/dynamic-programming/knapsack/knapsack-3.c)
