@@ -60,7 +60,7 @@ void setPair (pair *p, point p1, point p2, double dist) {
 pair findClosestPairInStrip (point *ypoints, size_t ysize, 
                              double median, double delta) {
  
-  CREATE_ARRAY(point, strip, ysize);
+  point *strip = safeCalloc(ysize, sizeof(point));
   size_t len = 0; pair p = {{0,0}, {0,0}, DBL_MAX};
 
     // make strip of points within 2*delta around median
@@ -109,8 +109,9 @@ pair findClosestPair(point *xpoints, point *ypoints,
 
     // DIVIDE: split ypoints into left and right half based on
     //         whether they are left or right of the median
-  CREATE_ARRAY(point, yrpoints, ysize);
-  CREATE_ARRAY(point, ylpoints, ysize);
+  point *ylpoints = safeCalloc(n, sizeof(point));
+  point *yrpoints = safeCalloc(n, sizeof(point));
+
   size_t yl = 0, yr = 0, mid = n / 2;
   size_t median = xpoints[mid].x;
   for (size_t i = 0; i < ysize; ++i) {
@@ -143,8 +144,8 @@ int main() {
   size_t n; 
   assert(scanf("%zu\n", &n) == 1);
 
-  CREATE_ARRAY(point, xpoints, n);
-  CREATE_ARRAY(point, ypoints, n);
+  point *xpoints = safeCalloc(n, sizeof(point));
+  point *ypoints = safeCalloc(n, sizeof(point));
 
     // read points from stdin
   for (int i = 0; i < n; i++) {

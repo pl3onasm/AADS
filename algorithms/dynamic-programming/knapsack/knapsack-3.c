@@ -1,79 +1,99 @@
-/* file: knapsack-3.c
-   author: David De Potter
-   email: pl3onasm@gmail.com
-   license: MIT, see LICENSE file in repository root folder
-   description: 0-1 knapsack problem
-     bottom-up dynamic programming
+/* 
+  file: knapsack-3.c
+  author: David De Potter
+  email: pl3onasm@gmail.com
+  license: MIT, see LICENSE file in repository root folder
+  description: 0-1 knapsack problem
+    bottom-up DP approach
+  time complexity: O(nW)
 */ 
  
-#include <stdlib.h>
-#include <stdio.h>
+#include "../../../lib/clib/clib.h"
+#include <stdint.h>
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 
-void *safeCalloc (int n, int size) {
-  /* allocates n elements of size size, initializing them to 0, and
-     checks whether the allocation was successful */
-  void *ptr = calloc(n, size);
-  if (ptr == NULL) {
-    printf("Error: calloc(%d, %d) failed. Out of memory?\n", n, size);
-    exit(EXIT_FAILURE);
-  }
-  return ptr;
-}
+//===================================================================
+// Definition of item structure
+typedef struct {
+  size_t weight;
+  double value;
+} Item;
 
-int **newTable (int n, int m) {
-  /* allocates a 2D array of size n x m and initializes it to -1 */
-  int **arr = safeCalloc(n, sizeof(int *));
-  for (int i = 0; i < n; i++)
-    arr[i] = safeCalloc(m, sizeof(int));
-  return arr;
-}
-
-void free2Dmem (int **arr, int n) {
-  /* frees the memory allocated for a 2D array of size n x m */
-  for (int i = 0; i < n; i++)
-    free(arr[i]);
-  free(arr);
-}
-
-void printItems (int *weights, int *values, int **dp, int n, int w) {
-  /* prints the items that were included in the knapsack */
-  while (n > 0 && w > 0) {
-    if (dp[n][w] != dp[n-1][w]) {
-      printf("Item %d: weight = %d, value = %d\n", 
-              n+1, weights[n], values[n]);
-      w -= weights[n];
-    }
-    n--;
-  }
-}
-
-int knapsack (int *weights, int *values, int n, int W, int **dp) {
-  /* computes the maximum value that can be put in a knapsack of
-     capacity W, given n items with given weights and values,
-     using a bottom-up approach */
-  for (int i = 1; i <= n; i++) {
-    for (int w = 1; w <= W; w++) {
-      if (weights[i] <= w) {
-        dp[i][w] = MAX(values[i] + dp[i-1][w-weights[i]], dp[i-1][w]);
-      } else {
-        dp[i][w] = dp[i-1][w];
-      }
+//===================================================================
+// Reads items from stdin
+Item *readItems (size_t *len) {
+  size_t cap = 100;
+  Item *items = safeCalloc(cap, sizeof(Item));
+  while (scanf(" ( %zu , %lf ) , ", &items[*len].weight, 
+                                    &items[*len].value) == 2) {
+    if (++(*len) == cap) {
+      cap *= 2;
+      items = safeRealloc(items, cap * sizeof(Item));
     }
   }
-  return dp[n][W];
+
+  items = safeRealloc(items, *len * sizeof(Item));
+  return items;
 }
 
-int main (int argc, char *argv[]) {
-  int weights[] = {10, 25, 15, 20, 30, 18, 5, 12, 9, 13};
-  int values[] = {120, 90, 80, 200, 280, 180, 50, 20, 100, 250};
-  int n = 10;   // number of items
-  int W = 60;   // capacity of the knapsack
-  int **dp = newTable(n+1, W+1);
-  int maxVal = knapsack(weights, values, n-1, W, dp);
-  printf("Maximum value: %d\n", maxVal);
-  printf("Items included in the knapsack:\n");
-  printItems(weights, values, dp, n-1, W);
-  free2Dmem (dp, n+1);
+//===================================================================
+// Shows the items that are included in the knapsack along with
+// the total value and weight
+void showItems (Item *items, size_t len, size_t W, double **memo) {
+  
+  printf("Items included:\n");
+  size_t w = W, totalWeight = 0;
+
+  for (size_t i = len; --i; ) {
+    if (memo[i][w] != memo[i - 1][w] ) {
+      printf("  (%zu,%.2lf)\n", items[i - 1].weight, 
+                                items[i - 1].value);
+      w -= items[i - 1].weight;
+      totalWeight += items[i - 1].weight;
+    }
+  }
+
+  printf("\nTotal value: € %.2lf\n"
+         "Total weight: %zu kg\n", memo[len - 1][W], totalWeight);
+}
+
+//===================================================================
+// Computes the maximum value that can be put in a knapsack of
+// capacity W, given len items and their weights and values
+void fillKnapsack (Item *items, size_t len, size_t W, 
+                     double **memo) {
+
+    // work bottom-up by gradually increasing the number of items
+  for (size_t i = 1; i <= len; i++) 
+    for (size_t w = 1; w <= W; w++) 
+      if (items[i - 1].weight <= w) 
+        memo[i][w] = MAX(memo[i - 1][w], 
+                         memo[i - 1][w - items[i - 1].weight] 
+                         + items[i - 1].value);
+      else 
+        memo[i][w] = memo[i - 1][w];
+}
+
+//===================================================================
+
+int main () {
+
+    // read knapsack capacity
+  size_t W;
+  assert(scanf("%zu ", &W) == 1);
+
+    // read items
+  size_t len = 0;
+  Item *items = readItems(&len);
+
+  CREATE_MATRIX(double, memo, len + 1, W + 1, 0);
+
+  fillKnapsack(items, len, W, memo);
+
+  showItems(items, len + 1, W, memo);
+
+  free(items);
+  FREE_MATRIX(memo, len + 1);
+  
   return 0;
 }

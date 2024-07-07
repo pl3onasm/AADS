@@ -33,7 +33,7 @@ bool isSuffix (string *pattern, size_t q, size_t a, size_t k) {
 // a is the input character and k is the next state
 size_t **computeDelta (string *pattern) {
 
-  CREATE_MATRIX(size_t, delta, strLen(pattern) + 1, d);
+  CREATE_MATRIX(size_t, delta, strLen(pattern) + 1, d, 0);
 
     // compute the transition for each state q ∈ {0, 1, ..., m}
     // and each input character a ∈ Σ

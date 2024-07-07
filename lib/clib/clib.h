@@ -97,20 +97,27 @@
 //::::::::::::::::::::::: MEMORY MANAGEMENT :::::::::::::::::::::://
 
   // macro for creating a 1D array of a given type and length
-  // Examples:  CREATE_ARRAY(int, myInts, 10);
-  //            CREATE_ARRAY(double, myDbls, 20);
-  //            CREATE_ARRAY(char, myString, 15);
-#define CREATE_ARRAY(type, arr, len) \
-  type *arr = safeCalloc(len, sizeof(type))
+  // Examples:  CREATE_ARRAY(int, myInts, 10, 0);
+  //            CREATE_ARRAY(double, myDbls, 20, DBL_MAX);
+  //            CREATE_ARRAY(char, myString, 15, '\0');
+#define CREATE_ARRAY(type, arr, len, init) \
+  type *arr = safeCalloc(len, sizeof(type)); \
+  if (init) \
+    for (size_t arr##i = 0; arr##i < len; ++arr##i) \
+      arr[arr##i] = init;
 
   // macro for creating a 2D matrix of given type and dimensions
-  // Examples:  CREATE_MATRIX(int, myInts, 10, 10);
-  //            CREATE_MATRIX(double, myDbls, 10, 15);
-  //            CREATE_MATRIX(char, myChrs, 15, 10);
-#define CREATE_MATRIX(type, matrix, rows, cols) \
+  // Examples:  CREATE_MATRIX(int, myInts, 10, 10, INT_MAX);
+  //            CREATE_MATRIX(double, myDbls, 10, 15, 0);
+  //            CREATE_MATRIX(char, myChrs, 15, 10, '\0');
+#define CREATE_MATRIX(type, matrix, rows, cols, init) \
   type **matrix = safeCalloc(rows, sizeof(type *)); \
-  for (size_t matrix##i = 0; matrix##i < rows; ++matrix##i) \
+  for (size_t matrix##i = 0; matrix##i < rows; ++matrix##i) { \
     matrix[matrix##i] = safeCalloc(cols, sizeof(type)); \
+    if (init) \
+      for (size_t matrix##j = 0; matrix##j < cols; ++matrix##j) \
+        matrix[matrix##i][matrix##j] = init; \
+  }
 
   // macro for creating a 3D matrix of given type and dimensions
   // A 3D matrix is a stack of 2D matrices, just like a 2D matrix

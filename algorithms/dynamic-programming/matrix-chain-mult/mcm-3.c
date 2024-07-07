@@ -22,12 +22,15 @@
 void computeMinCost (size_t *dims, size_t **minCosts, 
                      size_t **splitPoints, size_t len) {
   
+    // base case: the cost of multiplying a single matrix is 0
+  for (size_t i = 0; i < len; i++)
+    minCosts[i][i] = 0;
+
     // fill the table in order of increasing chain length l
   for (size_t l = 2; l <= len; l++) { 
     for (size_t i = 1; i < len - l + 1; i++) {   
         // chain starts at i and ends at j
       size_t j = i + l - 1;                    
-      minCosts[i][j] = SIZE_MAX; 
         // try all possible split points k and choose
         // the one that yields the minimum cost          
       for (size_t k = i; k < j; k++) { 
@@ -66,8 +69,8 @@ int main () {
 
     // create a table for memoization of subproblems
     // and a table for storing the optimal split points
-  CREATE_MATRIX(size_t, minCosts, len, len);
-  CREATE_MATRIX(size_t, splitPoints, len, len);
+  CREATE_MATRIX(size_t, minCosts, len, len, SIZE_MAX);
+  CREATE_MATRIX(size_t, splitPoints, len, len, 0);
 
   computeMinCost(dims, minCosts, splitPoints, len);
 

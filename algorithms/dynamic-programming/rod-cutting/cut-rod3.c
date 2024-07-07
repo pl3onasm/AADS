@@ -15,20 +15,14 @@
 // list and an array to store the computed revenues
 double cutRod (double *prices, size_t n, double *revenues){
 
-    // if available, return the stored value
-  if (revenues[n] >= 0)  
-    return revenues[n];
+    // base case: revenue for a rod of length 0 is 0
+  revenues[0] = 0;
 
-    // otherwise compute the maximum revenue in
-    // a bottom-up fashion
-  for (size_t j = 1; j <= n; j++) {
-    double rev = -1;
+    // compute maximum revenue for each rod length
+  for (size_t j = 1; j <= n; j++) 
     for (size_t i = 1; i <= j; i++) 
-      rev = MAX(rev, prices[i] + revenues[j - i]);  
+      revenues[j] = MAX(revenues[j], prices[i] + revenues[j - i]);
 
-      // store the computed value for future use
-    revenues[j] = rev;  
-  }
   return revenues[n];
 }
 
@@ -51,12 +45,7 @@ int main() {
   }
 
     // create an array to store the computed revenues 
-  CREATE_ARRAY(double, revenues, n + 1);
-
-    // initialize the revenues to -1, except for
-    // the first element which is 0 as the revenue
-    // for a rod of length 0 is 0
-  memset(revenues + 1, -1, sizeof(double) * n);
+  CREATE_ARRAY(double, revenues, n + 1, -1);
 
   printf("Rod length: %zu\n"
          "Maximum revenue: %.2lf\n", 

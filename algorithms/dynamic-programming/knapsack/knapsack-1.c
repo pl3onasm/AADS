@@ -1,71 +1,76 @@
-/* file: knapsack-1.c
-   author: David De Potter
-   email: pl3onasm@gmail.com
-   license: MIT, see LICENSE file in repository root folder
-   description: 0-1 knapsack problem
-     naive recursive implementation
+/* 
+  file: knapsack-1.c
+  author: David De Potter
+  email: pl3onasm@gmail.com
+  license: MIT, see LICENSE file in repository root folder
+  description: binary knapsack problem
+    naive recursive implementation
+  time complexity: O(2^n)
 */ 
  
-#include <stdlib.h>
-#include <stdio.h>
+#include "../../../lib/clib/clib.h"
+#include <stdint.h>
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
 
-void *safeCalloc (int n, int size) {
-  /* allocates n elements of size size, initializing them to 0, and
-     checks whether the allocation was successful */
-  void *ptr = calloc(n, size);
-  if (ptr == NULL) {
-    printf("Error: calloc(%d, %d) failed. Out of memory?\n", n, size);
-    exit(EXIT_FAILURE);
-  }
-  return ptr;
-}
+//===================================================================
+// Definition of item structure
+typedef struct {
+  size_t weight;
+  double value;
+} Item;
 
-void printItems (int *weights, int *values, int *taken, int n) {
-  /* prints the items that were taken */
-  printf("The following items were taken: \n");
-  for (int i = 0; i < n; i++) {
-    if (taken[i]) printf("item %d: weight = %d kg, value = € %d\n", 
-                          i+1, weights[i], values[i]);
-  }
-}
-
-void knapsack (int *weights, int *values, int *taken, int n, int idx, 
-  int W, int val, int *maxVal, int *maxTaken) {
-  /* computes the maximum value that can be put in a knapsack of
-     capacity W, given n items with given weights and values; 
-     also stores the items that were chosen to get this max value */
-  if (idx < 0) {
-    if (val > *maxVal) {
-      *maxVal = val;
-      for (int i = 0; i < n; i++)  // store the items that were taken
-        maxTaken[i] = taken[i];
+//===================================================================
+// Reads items from stdin
+Item *readItems (size_t *len) {
+  size_t cap = 100;
+  Item *items = safeCalloc(cap, sizeof(Item));
+  while (scanf(" ( %zu , %lf ) , ", &items[*len].weight, 
+                                    &items[*len].value) == 2) {
+    if (++(*len) == cap) {
+      cap *= 2;
+      items = safeRealloc(items, cap * sizeof(Item));
     }
-    return;
   }
-  if (weights[idx] <= W) {
-    taken[idx] = 1;   // take the current item
-    knapsack(weights, values, taken, n, idx-1, W-weights[idx], 
-             val+values[idx], maxVal, maxTaken);
-  }
-  taken[idx] = 0;     // skip the current item
-  knapsack(weights, values, taken, n, idx-1, W, val, maxVal, maxTaken);
+
+  items = safeRealloc(items, *len * sizeof(Item));
+  return items;
 }
 
+//===================================================================
+// Naive recursive implementation of the binary knapsack problem;
+// computes the maximum value that can be put in a knapsack of
+// capacity W, given len items and their weights and values
+double fillKnapsack (Item *items, size_t idx, size_t W) {
 
-int main (int argc, char *argv[]) {
-  int weights[] = {10, 25, 15, 20, 30, 18, 5, 12, 9, 13};
-  int values[] = {120, 90, 80, 200, 280, 180, 50, 20, 100, 250};
-  int n = 10;   // number of items
-  int W = 60;   // capacity of the knapsack
-  int *taken = safeCalloc (n, sizeof(int));
-  int *maxTaken = safeCalloc (n, sizeof(int));
-  int maxVal = 0;
-  knapsack(weights, values, taken, n, n-1, W, 0, &maxVal, maxTaken);
-  printf("Maximum value: %d\n", maxVal);
-  printItems(weights, values, maxTaken, n);
-  free(taken); free(maxTaken);
+    // base case: no more items or no more capacity
+  if (idx == SIZE_MAX || W == 0) return 0;
+  
+    // if the current item fits in the knapsack, we compute the
+    // maximum value obtained by either including it or excluding it
+  if (items[idx].weight <= W) 
+    return MAX(items[idx].value + 
+               fillKnapsack(items, idx -  1, W - items[idx].weight),
+               fillKnapsack(items, idx - 1, W));
+  
+    // skip the current item if it doesn't fit
+  return fillKnapsack(items, idx - 1, W);
+}
+
+//===================================================================
+
+int main () {
+
+    // read knapsack capacity
+  size_t W;
+  assert(scanf("%zu ", &W) == 1);
+
+    // read items
+  size_t len = 0;
+  Item *items = readItems(&len);
+  
+  printf("Max value: %.2lf\n", fillKnapsack(items, len - 1, W));
+
+  free(items);
+  
   return 0;
 }
-
-
-

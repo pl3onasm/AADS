@@ -43,7 +43,7 @@ size_t computeLis (int *arr, size_t len, size_t *table,
 void reconstructLis (int *arr, size_t *parents, size_t p, 
                      size_t subLen) {
   
-  CREATE_ARRAY(int, lis, subLen);
+  CREATE_ARRAY(int, lis, subLen, 0);
   
   for (size_t i = subLen; i--; ) {
     lis[i] = arr[p]; 
@@ -60,8 +60,8 @@ int main () {
 
   READ(int, arr, "%d", len);
 
-  CREATE_ARRAY(size_t, table, len);
-  CREATE_ARRAY(size_t, prev, len);
+  CREATE_ARRAY(size_t, table, len, 0);
+  CREATE_ARRAY(size_t, prev, len, 0);
 
   size_t subLen = computeLis(arr, len, table, prev);
 

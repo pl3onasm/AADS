@@ -18,7 +18,7 @@
 // Computes the prefix function of the pattern
 size_t *computePrefixFunction (string *pattern) {
   
-  CREATE_ARRAY(size_t, pi, strLen(pattern));
+  CREATE_ARRAY(size_t, pi, strLen(pattern), 0);
 
     // pi[0] is always 0, since no proper prefix exists for
     // a string of length 1. This is why we start q at 1.

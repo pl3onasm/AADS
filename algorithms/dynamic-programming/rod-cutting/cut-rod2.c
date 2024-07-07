@@ -8,12 +8,17 @@
 */ 
 
 #include "../../../lib/clib/clib.h"
+#include <float.h>
 #define MAX(a,b) ((a) > (b) ? (a) : (b))
 
 //===================================================================
 // Returns the maximum revenue for a rod of length n given a price
 // list and an array to store the computed revenues
 double cutRod (double *prices, size_t n, double *revenues){
+
+    // base case: revenue for a rod of length 0 is 0
+  if (n == 0)
+    return revenues[n] = 0;
 
     // if available, return the stored value
   if (revenues[n] >= 0)  
@@ -47,12 +52,7 @@ int main() {
   }
 
     // create an array to store the computed revenues
-  CREATE_ARRAY(double, revenues, n + 1);
-
-    // initialize the revenues to -1, except for
-    // the first element which is 0 as the revenue
-    // for a rod of length 0 is 0
-  memset(revenues + 1, -1, sizeof(double) * n);
+  CREATE_ARRAY(double, revenues, n + 1, -1);
 
   printf("Rod length: %zu\n"
          "Maximum revenue: %.2lf\n", 

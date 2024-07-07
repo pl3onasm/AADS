@@ -1,5 +1,5 @@
 /* 
-  file: lis-1.c
+  file: lis-2.c
   author: David De Potter
   email: pl3onasm@gmail.com
   license: MIT, see LICENSE file in repository root folder
@@ -47,7 +47,7 @@ size_t computeLis (int *arr, size_t len, size_t i,
 void reconstructLis(int *arr, size_t len, size_t **table, 
                     size_t subLen) {
 
-  CREATE_ARRAY(int, lis, subLen);
+  CREATE_ARRAY(int, lis, subLen, 0);
 
   for (size_t i = len - 1, j = len, s = subLen; i > 0; i--) 
     if (table[i][j] == 1 + table[i - 1][i]) {
@@ -60,25 +60,12 @@ void reconstructLis(int *arr, size_t len, size_t **table,
 }
 
 //===================================================================
-// Creates and initializes a table of size rows x cols
-size_t **makeTable (size_t rows, size_t cols) {
-  
-  CREATE_MATRIX(size_t, table, rows, cols);
-  
-  for (size_t i = 0; i < rows; i++)
-    for (size_t j = 0; j < cols; j++)
-      table[i][j] = SIZE_MAX;
-
-  return table;
-}
-
-//===================================================================
 
 int main () {
 
   READ(int, arr, "%d", len);
 
-  size_t **table = makeTable(len, len + 1);
+  CREATE_MATRIX(size_t, table, len, len + 1, SIZE_MAX);
 
   size_t subLen = computeLis(arr, len, len - 1, len, table);
 

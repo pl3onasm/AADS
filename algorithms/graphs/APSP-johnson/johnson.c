@@ -226,8 +226,8 @@ int main () {
   }
 
     // create distance and predecessor matrices
-  CREATE_MATRIX(double, D, nV, nV);
-  CREATE_MATRIX(size_t, P, nV, nV);
+  CREATE_MATRIX(double, D, nV, nV, 0);
+  CREATE_MATRIX(size_t, P, nV, nV, 0);
 
   reweightEdges(G);
 

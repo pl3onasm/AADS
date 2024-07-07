@@ -72,9 +72,9 @@ int main(int argc, char *argv[]) {
   size_t p = padSize(m, l);
 
     // allocate pxp matrices
-  CREATE_MATRIX(int, A, p, p);
-  CREATE_MATRIX(int, B, p, p);
-  CREATE_MATRIX(int, C, p, p);
+  CREATE_MATRIX(int, A, p, p, 0);
+  CREATE_MATRIX(int, B, p, p, 0);
+  CREATE_MATRIX(int, C, p, p, 0);
 
     // read matrices
   READ_MATRIX(A, "%d", m, n);

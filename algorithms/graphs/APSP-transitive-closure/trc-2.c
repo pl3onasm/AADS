@@ -16,7 +16,7 @@
 // Initializes the reachability matrix T
 bool **initT (graph *G) {
   size_t n = nVertices(G);
-  CREATE_MATRIX(bool, T, n, n);
+  CREATE_MATRIX(bool, T, n, n, 0);
   for (size_t i = 0; i < n; i++)
     for (size_t j = 0; j < n; j++) 
       T[i][j] = G->W[i][j] == DBL_MAX && i != j ? false : true;

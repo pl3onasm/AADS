@@ -19,7 +19,7 @@
 //===================================================================
 // Initializes the distance matrix D
 double **initD (size_t n, double **W) {
-  CREATE_MATRIX(double, D, n, n);
+  CREATE_MATRIX(double, D, n, n, 0);
   for (size_t i = 0; i < n; i++)
     for (size_t j = 0; j < n; j++) 
       D[i][j] = (i == j) ? 0 : (W[i][j] == 0) ? DBL_MAX : W[i][j];
@@ -29,7 +29,7 @@ double **initD (size_t n, double **W) {
 //===================================================================
 // Initializes the predecessor matrix P
 size_t **initP (size_t n, double **D) {
-  CREATE_MATRIX(size_t, P, n, n);
+  CREATE_MATRIX(size_t, P, n, n, 0);
   for (size_t i = 0; i < n; i++) 
     for (size_t j = 0; j < n; j++) 
       P[i][j] = (i == j || D[i][j] == DBL_MAX) ? SIZE_MAX : i;

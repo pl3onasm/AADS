@@ -22,6 +22,10 @@
 // starting at index i and ending at index j
 int computeMinCost(size_t *dims, size_t **minCosts, 
                    size_t i, size_t j) {
+
+    // base case: the cost of multiplying a single matrix is 0
+  if (i == j)
+    return minCosts[i][j] = 0;
   
     // if available, return the minimum cost
   if (minCosts[i][j] != SIZE_MAX)
@@ -40,21 +44,6 @@ int computeMinCost(size_t *dims, size_t **minCosts,
 }
 
 //===================================================================
-// Initializes the memoization table with SIZE_MAX values 
-// except for the main diagonal which is initialized to 0  
-// as the cost of multiplying a single matrix is 0
-void initMinCosts(size_t **minCosts, size_t len) {
-  for (size_t i = 0; i < len; i++) {
-    for (size_t j = 0; j < len; j++) {
-      if (i == j)
-        minCosts[i][j] = 0;
-      else
-        minCosts[i][j] = SIZE_MAX;
-    }
-  }
-}
-
-//===================================================================
 
 int main() {
     
@@ -62,9 +51,7 @@ int main() {
   READ(size_t, dims, "%zu", len);
 
     // create a table for memoization of subproblems
-  CREATE_MATRIX(size_t, minCosts, len, len);
-
-  initMinCosts(minCosts, len);
+  CREATE_MATRIX(size_t, minCosts, len, len, SIZE_MAX);
 
   computeMinCost(dims, minCosts, 1, len - 1);
 

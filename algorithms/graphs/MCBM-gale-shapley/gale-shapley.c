@@ -60,7 +60,7 @@ size_t **createLookupTable(graph *G) {
     else v->index = right++;
   }
 
-  CREATE_MATRIX(size_t, table, nVertices(G)/2, nVertices(G)/2);
+  CREATE_MATRIX(size_t, table, nVertices(G)/2, nVertices(G)/2, 0);
   for (vertex *v = firstV(G); v; v = nextV(G)) {
     if (v->type == RIGHT) {
       size_t i = 0;

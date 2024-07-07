@@ -64,7 +64,7 @@ int main () {
   READ_STRING(X, '\n'); 
   READ_STRING(Y, '\n');
 
-  CREATE_MATRIX(size_t, table, strLen(X) + 1, strLen(Y) + 1);
+  CREATE_MATRIX(size_t, table, strLen(X) + 1, strLen(Y) + 1, 0);
 
   size_t lcs = computeLcs(table, X, Y);
   

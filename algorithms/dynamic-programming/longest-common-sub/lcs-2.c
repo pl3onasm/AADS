@@ -13,19 +13,6 @@
 #define MAX(a,b) ((a) > (b) ? (a) : (b))
 
 //===================================================================
-// Returns a table of size n x m initialized with SIZE_MAX
-size_t **makeTable (size_t n, size_t m) {
-
-  CREATE_MATRIX(size_t, table, n, m);
-
-  for (int i = 0; i < n; i++)
-    for (int j = 0; j < m; j++)
-      table[i][j] = SIZE_MAX;
-  
-  return table;
-}
-
-//===================================================================
 // Returns the length of the longest common subsequence of X and Y
 // using a top-down dynamic programming approach
 size_t computeLcs (size_t **table, string *X, string *Y, 
@@ -82,7 +69,8 @@ int main () {
   READ_STRING(X, '\n'); 
   READ_STRING(Y, '\n');
 
-  size_t **table = makeTable(strLen(X) + 1, strLen(Y) + 1);
+  CREATE_MATRIX(size_t, table, strLen(X) + 1, 
+                strLen(Y) + 1, SIZE_MAX);
 
   size_t lcs = computeLcs(table, X, Y, strLen(X), strLen(Y));
 

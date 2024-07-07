@@ -14,13 +14,14 @@
 #include "../../../datastructures/heaps/binheaps/binheap.h"
 #include "../../../lib/clib/clib.h"
 
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
 #define LENGTH  256
 
 //:::::::::::::::::::::::: data structures ::::::::::::::::::::::::://
 
 typedef struct node {
   size_t freq;          // frequency of the character
-  uchar ch;             // character
+  unsigned char ch;             // character
   struct node *left;    // left child
   struct node *right;   // right child
 } node;
@@ -60,7 +61,7 @@ binheap *readInput (void) {
      then creates a node for each character with non-zero 
      frequency and inserts it into a min binary heap */
   size_t freqs[LENGTH] = {0};
-  uchar ch;
+  unsigned char ch;
   while (scanf("%c", &ch) != EOF)
     if (ch >= 32 && ch < LENGTH)  // only printable characters
       freqs[ch-0]++;

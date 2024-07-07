@@ -58,7 +58,7 @@ int main() {
   size_t n; 
   assert(scanf("%zu\n", &n) == 1);
 
-  CREATE_ARRAY(point, points, n);
+  point *points = safeCalloc(n, sizeof(point));
 
     // read points from stdin
   for (int i = 0; i < n; i++) 
