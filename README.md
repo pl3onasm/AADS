@@ -23,13 +23,24 @@
 
 ## ${\color{darkseagreen}\text{Notes}}$
 
-The aim is to implement all the algorithms and data structures discussed in the textbook *Introduction to Algorithms* by Thomas H. Cormen, et al. The third edition of this textbook will be referred to as CLRS³, and the fourth edition as CLRS⁴. Folders usually contain several versions of the same algorithm or data structure, in accordance with the different pseudocode and explanations in the textbook.
+The aim is to implement all the algorithms and data structures discussed in the textbook *Introduction to Algorithms* by Thomas H. Cormen, et al. We will be working with both the third and fourth edition. Folders usually contain several versions of the same algorithm or data structure, in accordance with the different pseudocode and explanations in the textbook.
 
-In addition, you will also find other algorithms and data structures that are not discussed or merely referenced in the book. All implementations will be in C, and will follow the pseudocode—if available—in the textbook as closely as possible, unless this results in a less efficient or unnecessarily complex implementation. I strive to make the code as transparent and economical as possible, and have it reflect the underlying reasoning. Brief explanations and summaries of the algorithms and data structures will be added as well. Contrary to the textbook, I will always use zero-based indexing. I will also link to helpful videos that explain the concepts in a more visual way.
+In addition, you will also find other algorithms and data structures that are not discussed or merely referenced in the book. All implementations will be in C, and will follow the pseudocode—if available—in the textbook as closely as possible, unless this results in a less efficient or unnecessarily complex implementation. I strive to make the code as transparent and economical as possible, and have it reflect the underlying reasoning. Brief explanations and summaries of the algorithms and data structures will be added as well. Contrary to the textbook, I will always use zero-based indexing. I will also link to helpful videos that explain the concepts in a more visual way when available.
 
-Please refer to the license if you wish to use any of the code in this repository. Any images were created using Photoshop. If you find any errors or have any suggestions, please let me know. Some of the solutions to the textbook's third edition exercises can be found [here](https://community.wvu.edu/~krsubramani/courses/backupcourses/CS520Fa2013/CormenSolutions/9780262033848-Instructors.pdf). Selected solutions to the exercises of the fourth edition can be found [here](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/11599/selected-solutions.pdf).
+Please refer to the license if you wish to use any of the code in this repository. Any images were created using Photoshop. If you find any errors or have any suggestions, please let me know.
 
-Note that this is very much a work in progress. It simply takes time to develop and test all the code and write the explanations. Some of the code took me days to think through and implement. Currently, I am revising all the code and explanations. Updates will be made regularly. I will also add makefiles in the near future.
+Please note that this is very much a work in progress. It simply takes time to develop and test all the code and write the explanations. Some of the code took me days to think through and implement. Currently, I am in the process of revising and improving everything. Updates will be made regularly. I will also add makefiles in the near future.
+
+## ${\color{darkseagreen}\text{CLRS solutions}}$
+
+* [Selected solutions to the third edition](https://community.wvu.edu/~krsubramani/courses/backupcourses/CS520Fa2013/CormenSolutions/9780262033848-Instructors.pdf)
+* [Selected solutions to the fourth edition](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/11599/selected-solutions.pdf)
+
+## ${\color{darkseagreen}\text{Recommended}}$
+
+* [MIT Introduction to Algorithms](https://www.youtube.com/playlist?list=PLUl4u3cNGP61Oq3tWYp6V_F-5jb5L2iHb)
+* [MIT Design and Analysis of Algorithms](https://www.youtube.com/playlist?list=PLUl4u3cNGP6317WaSNfmCvGym2ucw3oGp)
+* [MIT Advanced Data Structures](https://www.youtube.com/playlist?list=PLUl4u3cNGP61hsJNdULdudlRL493b-XZf)
 
 ## ${\color{darkseagreen}\text{References}}$
 

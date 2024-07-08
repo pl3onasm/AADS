@@ -26,7 +26,7 @@ Item *readItems(size_t *len) {
   Item *items = safeCalloc(cap, sizeof(Item));
   while (scanf(" ( %zu , %lf ) , ", &items[*len].weight, 
                                     &items[*len].value) == 2) {
-    if (++(*len) == cap) {
+    if (++*len == cap) {
       cap *= 2;
       items = safeRealloc(items, cap * sizeof(Item));
     }
@@ -96,6 +96,7 @@ int main () {
   size_t len = 0;
   Item *items = readItems(&len);
 
+    // create memoization table
   CREATE_MATRIX(double, memo, len + 1, W + 1, SIZE_MAX);
   
   double maxVal = fillKnapsack(items, len, W, memo);

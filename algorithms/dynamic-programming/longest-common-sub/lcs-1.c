@@ -23,7 +23,7 @@ size_t computeLcs (string *X, string *Y, size_t m, size_t n) {
     // base case: reached the end of one of the strings 
     return 0;
 
-  if (charAt(X, m-1) == charAt(Y, n - 1)) 
+  if (charAt(X, m - 1) == charAt(Y, n - 1)) 
     // last chars of X and Y are identical: add 1 
     return 1 + computeLcs(X, Y, m - 1, n - 1);
 

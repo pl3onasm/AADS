@@ -10,7 +10,7 @@ The key idea is to think of each subproblem in terms of a ${\color{peru}\text{pr
 
 Clearly, the subproblems are ${\color{peru}\text{overlapping}}$ because we can have the same prefix of the item list and the same remaining knapsack capacity in multiple subproblems. The subproblems also have the ${\color{peru}\text{optimal substructure}}$ property because the optimal solution to a subproblem can be obtained by combining the optimal solutions to its own subproblems.
 
-A recursive solution to the problem can be obtained by defining a function $V(i,j)$ that returns the maximum value that can be obtained from the first $i$ items and a knapsack capacity of $j$. The function can be defined as follows:
+A recursive solution to the problem can be found by defining a function $V(i,j)$ that returns the maximum value that can be obtained from the first $i$ items and a knapsack capacity of $j$. The function can be defined as follows:
 <br />
 
 $$
@@ -43,6 +43,6 @@ Implementation: [Knapsack - Top-down DP](https://github.com/pl3onasm/Algorithms/
 
 The bottom-up solution is based on the same idea as the top-down solution but computes the values of the subproblems from the smallest to the largest, starting from the base case. The benefit of this approach is that all the partial solutions needed to compute the value of a subproblem are already computed and available when the subproblem is considered, so there is no need to check if the value of the subproblem has already been computed. It also avoids the overhead of recursive calls. The time complexity of the bottom-up approach, however, is the same as the top-down approach, $\mathcal{O}(nW)$.
 
-${\color{peru}\text{Reconstruction}}$ of an optimal solution from the memoization table is also straightforward. We start from the last item and the last knapsack capacity stored in the cell $V(n,W)$ and then keep moving to the previous item and the previous knapsack capacity. At each step, we check if the value of the subproblem is the same as the value of the subproblem without the last item. If it is, we know the last item was not included in the knapsack. Otherwise, we include the item and subtract its weight from the remaining capacity. The process is repeated until we reach the first item.
+${\color{peru}\text{Reconstruction}}$ of an optimal solution from the memoization table is also straightforward. We start from the last item and the last knapsack capacity and then keep moving to the previous item and the previous knapsack capacity. At each step, we check if the value of the subproblem is the same as the value of the subproblem without the last item. If it is, we know the last item was not included in the knapsack. Otherwise, we include the item and subtract its weight from the remaining capacity. The process is repeated until we reach the first item.
 
 Implementation: [Knapsack - Bottom-up DP](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/dynamic-programming/knapsack/knapsack-3.c)

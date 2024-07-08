@@ -26,7 +26,7 @@ Item *readItems (size_t *len) {
   Item *items = safeCalloc(cap, sizeof(Item));
   while (scanf(" ( %zu , %lf ) , ", &items[*len].weight, 
                                     &items[*len].value) == 2) {
-    if (++(*len) == cap) {
+    if (++*len == cap) {
       cap *= 2;
       items = safeRealloc(items, cap * sizeof(Item));
     }
@@ -61,9 +61,10 @@ void showItems (Item *items, size_t len, size_t W, double **memo) {
 // Computes the maximum value that can be put in a knapsack of
 // capacity W, given len items and their weights and values
 void fillKnapsack (Item *items, size_t len, size_t W, 
-                     double **memo) {
+                   double **memo) {
 
-    // work bottom-up by gradually increasing the number of items
+    // work bottom-up by gradually increasing the number of items,
+    // i.e. the prefix length of the items array
   for (size_t i = 1; i <= len; i++) 
     for (size_t w = 1; w <= W; w++) 
       if (items[i - 1].weight <= w) 
@@ -86,6 +87,7 @@ int main () {
   size_t len = 0;
   Item *items = readItems(&len);
 
+    // create memoization table
   CREATE_MATRIX(double, memo, len + 1, W + 1, 0);
 
   fillKnapsack(items, len, W, memo);

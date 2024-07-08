@@ -26,7 +26,7 @@ Item *readItems (size_t *len) {
   Item *items = safeCalloc(cap, sizeof(Item));
   while (scanf(" ( %zu , %lf ) , ", &items[*len].weight, 
                                     &items[*len].value) == 2) {
-    if (++(*len) == cap) {
+    if (++*len == cap) {
       cap *= 2;
       items = safeRealloc(items, cap * sizeof(Item));
     }
