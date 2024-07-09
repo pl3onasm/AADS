@@ -2,29 +2,29 @@
 
 ## ${\color{rosybrown}\text{Problem}}$
 
-Given two sequences $X = \langle x_1, x_2, ..., x_m \rangle$ and $Y = \langle y_1, y_2, ..., y_n \rangle$, find the length of their longest common subsequence. A ${\color{peru}\text{subsequence}}$ is derived from a given sequence by deleting some elements from it (possibly none) without changing the order of the remaining elements. For example, the sequence $\langle A, B, D \rangle$ is a subsequence of $\langle A, B, C, D, B, A \rangle$, but $\langle B, D, A, B \rangle$ is not, since the order of the elements is not preserved.  
+Given two sequences $X_m = \langle x_0, x_1, ..., x_{m-1} \rangle$ and $Y_n = \langle y_0, y_1, ..., y_{n-1} \rangle$, find the length of their longest common subsequence. A ${\color{peru}\text{subsequence}}$ is derived from a given sequence by deleting some elements from it (possibly none) without changing the order of the remaining elements. For example, the sequence $\langle A, B, D \rangle$ is a subsequence of $\langle A, B, C, D, B, A \rangle$, but $\langle B, D, A, B \rangle$ is not, since the order of the elements is not preserved.  
 
-However, we do not care about just any subsequence, but about the longest one that is present in both sequences $X$ and $Y$. In other words, the problem is to find the maximum length of a subsequence $Z = \langle z_1, z_2, ..., z_k \rangle$ such that $z_i = x_j$ and $z_i = y_h$ for each $1 \leq i \leq k$ and for some $1 \leq j \leq m$ and $1 \leq h \leq n$.  
+However, we do not care about just any subsequence, but about the longest one that is present in both sequences $X$ and $Y$. In other words, the problem is to find the maximum length of a subsequence $Z_k = \langle z_0, z_1, ..., z_{k-1} \rangle$ such that $z_i = x_j$ and $z_i = y_h$ for each $0 \leq i < k$ and for some $0 \leq j < m$ and $0 \leq h < n$.  
 
 For example, the longest common subsequence of the sequences $X = \langle A, B, C, B, D, A, B \rangle$ and $Y = \langle B, D, C, A, B, A \rangle$ is $Z = \langle B, C, A, B \rangle$, which has length $4$. Mind that the longest common subsequence is not necessarily unique: $Z = \langle B, D, A, B \rangle$ and $Z = \langle B, C, B, A \rangle$ are also valid solutions. Its length of course is unique, and in this case it is $4$.
 
 ## ${\color{darkseagreen}\text{The key idea}}$
 
-The main idea is to think of the subproblems in terms of ${\color{peru}\text{prefixes}}$ of the input sequences $X$ and $Y$: the length of the LCS of $X$ and $Y$ can be found by considering the LCS of the prefixes $X_{m-1}$ and $Y_{n-1}$, and then adding $1$ to the length if $x_m = y_n$. If they are not equal, we need to consider two subproblems: finding the LCS of $X_{m-1}$ and $Y$, and finding the LCS of $X$ and $Y_{n-1}$, so that we can take the maximum of the two solutions. Clearly, these subproblems overlap and also exhibit the property of ${\color{peru}\text{optimal substructure}}$: the optimal solution to any of them can be found by combining the optimal solutions to their subproblems.  
+The main idea is to think of the subproblems in terms of ${\color{peru}\text{prefixes}}$ of the input sequences $X$ and $Y$: the length of the LCS of $X$ and $Y$ can be found by considering the LCS of the prefixes $X_{m-1}$ and $Y_{n-1}$, and then adding $1$ to the LCS length if $X[m-1] = Y[n-1]$. If they are not equal, we need to consider two subproblems: finding the LCS of $X_{m-1}$ and $Y$, and finding the LCS of $X$ and $Y_{n-1}$, so that we can take the maximum of the two solutions. Clearly, these subproblems overlap and also exhibit the property of ${\color{peru}\text{optimal substructure}}$: the optimal solution to any of them can be found by combining the optimal solutions to their subproblems.  
 
 As we keep repeating the process for the remaining elements of $X$ and $Y$, we continually reduce the size of the problem to smaller subproblems, i.e. to smaller prefixes of $X$ and $Y$. Eventually, we will reach the base case of an empty sequence, when we reach the beginning of one of the original sequences, at which point the maximum length of the LCS is fully computed.  
 
-This process can be formulated as a recurrence, which defines the length of the LCS in terms of the lengths of the prefixes of $X$ and $Y$:
-
+This process can be formulated as a recurrence, which defines the length of the LCS in terms of the *lengths* of the prefixes of $X$ and $Y$:
 <br />
 
 $$
 \color{darkslateblue}\huge\boxed{\color{rosybrown} \space
 \normalsize L(X,Y) = \begin{cases}
 \normalsize 0 & \scriptsize \text{if } m = 0 \\
- & \scriptsize \space \lor \space n = 0 \\
-\normalsize L(X_{m-1}, Y_{n-1}) + 1 & \scriptsize \text{if } x_m = y_n \\
-\normalsize \text{max}\lbrace L(X_{m-1}, Y), & \scriptsize \text{if } x_m \neq y_n  \\
+ & \scriptsize \space \space \lor \space n = 0 \\
+\normalsize L(X_{m-1}, Y_{n-1}) + 1 & \scriptsize \text{if } X[m-1] \\
+ & \scriptsize \space \space = Y[n-1] \\
+\normalsize \text{max}\lbrace L(X_{m-1}, Y), & \scriptsize \text{otherwise } \\
 \normalsize \qquad \space  L(X, Y_{n-1}) \rbrace
 \end{cases}\space}
 $$

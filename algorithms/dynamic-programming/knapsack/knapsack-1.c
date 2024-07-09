@@ -40,20 +40,21 @@ Item *readItems (size_t *len) {
 // Naive recursive implementation of the binary knapsack problem;
 // computes the maximum value that can be put in a knapsack of
 // capacity W, given len items and their weights and values
-double fillKnapsack (Item *items, size_t idx, size_t W) {
+double fillKnapsack (Item *items, size_t len, size_t W) {
 
     // base case: no more items or no more capacity
-  if (idx == SIZE_MAX || W == 0) return 0;
+  if (len == 0 || W == 0) return 0;
   
     // if the current item fits in the knapsack, we compute the
     // maximum value obtained by either including it or excluding it
-  if (items[idx].weight <= W) 
-    return MAX(items[idx].value + 
-               fillKnapsack(items, idx -  1, W - items[idx].weight),
-               fillKnapsack(items, idx - 1, W));
+  if (items[len - 1].weight <= W) 
+    return 
+      MAX(items[len - 1].value + 
+          fillKnapsack(items, len - 1, W - items[len - 1].weight),
+          fillKnapsack(items, len - 1, W));
   
     // skip the current item if it doesn't fit
-  return fillKnapsack(items, idx - 1, W);
+  return fillKnapsack(items, len - 1, W);
 }
 
 //===================================================================
@@ -68,7 +69,7 @@ int main () {
   size_t len = 0;
   Item *items = readItems(&len);
   
-  printf("Max value: %.2lf\n", fillKnapsack(items, len - 1, W));
+  printf("Max value: %.2lf\n", fillKnapsack(items, len, W));
 
   free(items);
   

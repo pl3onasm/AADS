@@ -10,13 +10,13 @@ The key idea is to think of each subproblem in terms of a ${\color{peru}\text{pr
 
 Clearly, the subproblems are ${\color{peru}\text{overlapping}}$ because we can have the same prefix of the item list and the same remaining knapsack capacity in multiple subproblems. The subproblems also have the ${\color{peru}\text{optimal substructure}}$ property because the optimal solution to a subproblem can be obtained by combining the optimal solutions to its own subproblems.
 
-A recursive solution to the problem can be found by defining a function $V(i,j)$ that returns the maximum value that can be obtained from the first $i$ items and a knapsack capacity of $j$. The function can be defined as follows:
+A recursive solution to the problem can be found by defining a function $V(i,j)$ that returns the maximum value that can be obtained from the prefix with last item having index $i$ and a knapsack capacity of $j$. The function can be defined as follows:
 <br />
 
 $$
 \color{darkslateblue}\huge\boxed{\color{rosybrown}\normalsize \space
-\normalsize V(i,j) = \begin{cases} \small 0 & \scriptsize \text{if } i = 0 \\
-& \scriptsize \space \space \lor \space j = 0\\
+\normalsize V(i,j) = \begin{cases} 0 & \scriptsize \text{if } i = \infty \\
+\scriptsize & \scriptsize \space \space \lor \space j = 0\\
 \normalsize \text{max}\lbrace V(i-1,j), & \scriptsize \text{if } j \leq w_i \\
 \normalsize \quad \space v_i + V(i-1,j-w_i) \rbrace  \\
 \normalsize V(i-1,j) &\scriptsize \text{otherwise}
@@ -25,7 +25,7 @@ $$
 
 <br />
 
-The base case is when we have no items left or the knapsack capacity is zero. In this case, the value of the subproblem is zero. If we choose to include the $i$-th item, we subract its weight $w_i$ from the remaining capacity $j$ and add its value $v_i$ to the total value. Excluding the item means the total value and the remaining capacity remain unchanged. The value of the original problem is obtained by calling $V(n,W)$.
+The value of the original problem is obtained by calling $V(n-1,W)$. The base case occurs when we have no items left ($i = \infty$) or the knapsack capacity is zero. In this case, the value of the subproblem is zero. If we choose to include the last item in the knapsack, , we update the optimal solution of the previous subproblem by subracting its weight $w_i$ from the remaining capacity $j$ and adding its value $v_i$ to the total value. Excluding the item means the total value and the remaining capacity found in the previous subproblem remain unchanged.
 
 ## ${\color{darkseagreen}\text{Brute force}}$
 
