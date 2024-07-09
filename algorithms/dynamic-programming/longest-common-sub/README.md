@@ -14,18 +14,18 @@ The main idea is to think of the subproblems in terms of ${\color{peru}\text{pre
 
 As we keep repeating the process for the remaining elements of $X$ and $Y$, we continually reduce the size of the problem to smaller subproblems, i.e. to smaller prefixes of $X$ and $Y$. Eventually, we will reach the base case of an empty sequence, when we reach the beginning of one of the original sequences, at which point the maximum length of the LCS is fully computed.  
 
-This process can be formulated as a recurrence, which defines the length of the LCS in terms of the *lengths* of the prefixes of $X$ and $Y$:
+This process can be formulated as a recurrence, which defines the length of the LCS in terms of the *lengths* $m$ and $n$ of the prefixes of $X$ and $Y$ respectively:
 <br />
 
 $$
 \color{darkslateblue}\huge\boxed{\color{rosybrown} \space
-\normalsize L(X,Y) = \begin{cases}
+\normalsize L(m,n) = \begin{cases}
 \normalsize 0 & \scriptsize \text{if } m = 0 \\
  & \scriptsize \space \space \lor \space n = 0 \\
-\normalsize L(X_{m-1}, Y_{n-1}) + 1 & \scriptsize \text{if } X[m-1] \\
+\normalsize L(m-1, n-1) + 1 & \scriptsize \text{if } X[m-1] \\
  & \scriptsize \space \space = Y[n-1] \\
-\normalsize \text{max}\lbrace L(X_{m-1}, Y), & \scriptsize \text{otherwise } \\
-\normalsize \qquad \space  L(X, Y_{n-1}) \rbrace
+\normalsize \text{max}\lbrace L(m-1, n), & \scriptsize \text{otherwise } \\
+\normalsize \qquad \space  L(m, n-1) \rbrace
 \end{cases}\space}
 $$
 
