@@ -48,3 +48,5 @@ Implementation: [LPS - top-down DP](https://github.com/pl3onasm/Algorithms/tree/
 ## ${\color{darkseagreen}\text{Bottom-up}}$
 
 In the bottom-up DP approach, we start by setting the base cases of the memoization table $T$ and then fill the table in a bottom-up manner, starting from the smallest substrings and working our way up to the original problem by gradually increasing the length of the substrings we consider. The time complexity of the bottom-up solution is $\mathcal{O}(n^2)$, the same as the top-down solution. Reconstruction of an optimal solution is done in the same way as in the top-down solution.
+
+Implementation: [LPS - bottom-up DP](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/dynamic-programming/longest-palin-sub/lps-3.c)
