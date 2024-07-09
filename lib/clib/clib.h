@@ -265,6 +265,11 @@ static inline unsigned char charAt(string *s, size_t i) {
   return s->data[i];
 }
 
+  // sets the i-th character of a string
+static inline void setCharAt(string *s, size_t i, unsigned char c) {
+  s->data[i] = c;
+}
+
 static inline unsigned char *str(string *s) {
   return s->data;
 }
