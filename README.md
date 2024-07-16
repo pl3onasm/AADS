@@ -41,7 +41,6 @@ Please note that this is very much a work in progress. It simply takes time to d
 
 --------------------------
 
-<br/>
 
 $\Large{\color{darkseagreen}\text{CLRS solutions}}$
 
@@ -56,7 +55,9 @@ $\Large{\color{darkseagreen}\text{Recommended}}$
 * [MIT Design and Analysis of Algorithms](https://www.youtube.com/playlist?list=PLUl4u3cNGP6317WaSNfmCvGym2ucw3oGp)
 * [MIT Advanced Data Structures](https://www.youtube.com/playlist?list=PLUl4u3cNGP61hsJNdULdudlRL493b-XZf)
   
-<br/>
+
+
+--------------------------------
 
 $\Large{\color{darkseagreen}\text{References}}$
 
