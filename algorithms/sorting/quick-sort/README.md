@@ -1,4 +1,6 @@
-# ${\color{cadetblue} \text{Quicksort}}$
+${\color{cadetblue} \text{\huge Quicksort}}$
+
+<br/>
 
 Quicksort is a comparison sort based on the ${\color{darkseagreen} \text{divide and conquer}}$ paradigm. It divides the original problem into subproblems of the same type by selecting a ${\color{darkseagreen} \text{pivot element}}$ around which the array is then partitioned. The result of this partitioning is that the pivot is in its final sorted position, and we are left with two subarrays: one with all elements less than the pivot and another with all elements greater than the pivot. These subarrays are then recursively sorted using the same process. The base case is when the subarray contains only one element, at which point the entire subarray is trivially sorted. Unlike [merge sort](https://github.com/pl3onasm/CLRS/tree/main/algorithms/sorting/merge-sort), quicksort has no need for a combine step in the form of a merge procedure, since the partitioning step ensures that in the end all the elements are in their final sorted positions. Quicksort is an ${\color{darkseagreen} \text{unstable}}$ and ${\color{darkseagreen} \text{in-place}}$ sort, meaning that it does not preserve the relative order of elements with equal values, and it does not require any additional memory.
 

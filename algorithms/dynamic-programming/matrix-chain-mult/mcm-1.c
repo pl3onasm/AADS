@@ -27,22 +27,21 @@
 // matrices starting at index i and ending at index j.
 size_t computeMinCost (size_t *dims, size_t i, size_t j) {
   
+    // base case: the cost of multiplying a single matrix is 0
   if (i == j)
-      // cost of multiplying a single matrix is 0 
-    return 0;   
-  else {
-    size_t minCost = SIZE_MAX;
-      // try all possible split points k and choose 
-      // the one that yields the minimum cost
-    for (size_t k = i; k < j; k++) { 
-      size_t cost = computeMinCost(dims, i, k) 
-                  + computeMinCost(dims, k + 1, j) 
-                  + dims[i - 1] * dims[k] * dims[j];
-        // store the computed value for future use
-      minCost = MIN(minCost, cost);
-    }
-    return minCost;
+    return 0;
+
+  size_t minCost = SIZE_MAX;
+    // try all possible split points k and choose 
+    // the one that yields the minimum cost
+  for (size_t k = i; k < j; k++) { 
+    size_t cost = computeMinCost(dims, i, k) 
+                + computeMinCost(dims, k + 1, j) 
+                + dims[i - 1] * dims[k] * dims[j];
+      // store the computed value for future use
+    minCost = MIN(minCost, cost);
   }
+  return minCost;
 }
 
 //===================================================================

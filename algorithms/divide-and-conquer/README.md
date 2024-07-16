@@ -1,6 +1,8 @@
-# ${\color{Cadetblue}\text{Divide-and-Conquer}}$ ${\color{Cadetblue}\text{Algorithms}}$
+${\color{Cadetblue}\text{\huge Divide-and-Conquer}}$ ${\color{Cadetblue}\text{\huge Algorithms}}$
 
-## ${\color{Rosybrown}\text{Overview}}$
+<br/>
+
+${\color{Rosybrown}\text{\Large Overview}}$
 
 | ${\color{peru}\text{CLRS}}$ | ${\color{peru}\text{Topic}}$ |
 |:---|:---|
@@ -14,9 +16,9 @@
 | 2.3 | [Merge Sort](https://github.com/pl3onasm/CLRS/tree/main/algorithms/sorting/merge-sort)|
 | 7.1-3 | [Quicksort](https://github.com/pl3onasm/CLRS/tree/main/algorithms/sorting/quick-sort)|
 
-&nbsp;
+<br/>
 
-## ${\color{Rosybrown}\text{The D-and-C Approach}}$
+${\color{Rosybrown}\text{\Large The D-and-C Approach}}$
 
 When a problem is too difficult to solve directly, it is often possible to attack the problem by dividing it into subproblems that are themselves smaller instances of the same problem and then solving these subproblems ${\color{peru}\text{recursively}}$. Such an approach is known as *divide and conquer*, and it is typically described by a ${\color{peru}\text{recurrence relation}}$, which expresses the solution to a problem in terms of solutions to smaller instances of the same problem.
 

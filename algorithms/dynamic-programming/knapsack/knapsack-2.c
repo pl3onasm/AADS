@@ -64,11 +64,11 @@ void showItems(Item *items, size_t len, size_t W, double **memo,
 // using top-down dynamic programming with memoization
 double fillKnapsack(Item *items, size_t n, size_t W, double **memo) {
   
-    // base case: no more items or no more capacity
-  if (n == 0 || W == 0) return 0;
-  
     // if the value is already memoized, return it
   if (memo[n][W] != SIZE_MAX) return memo[n][W];
+
+    // base case: no more items or no more capacity
+  if (n == 0 || W == 0) return 0;
   
     // if the current item still fits in the knapsack, compute the
     // maximum value obtained by either including it or excluding it

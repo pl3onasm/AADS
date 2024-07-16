@@ -1,6 +1,8 @@
-# ${\color{Cadetblue}\text{Dynamic}}$ ${\color{Cadetblue}\text{Programming}}$
+${\color{Cadetblue}\text{\huge Dynamic}}$ ${\color{Cadetblue}\text{\huge Programming}}$
 
-## ${\color{Rosybrown}\text{Overview}}$
+<br/>
+
+${\color{Rosybrown}\text{\Large Overview}}$
 
 | ${\color{peru}\text{CLRS (3/4)}}$ | ${\color{peru}\text{Topic}}$ |
 |:---|:---|
@@ -14,9 +16,9 @@
 | Prob 15/14-5 | [Minimum Edit Distance](https://github.com/pl3onasm/AADS/tree/main/algorithms/dynamic-programming/min-edit-dist) |
 | 25/23.2 | [Floyd-Warshall](https://github.com/pl3onasm/CLRS-in-C/tree/main/algorithms/graphs/APSP-floyd) |
 
-&nbsp;
+<br/>
 
-## ${\color{Rosybrown}\text{The DP approach}}$
+${\color{Rosybrown}\text{\Large The DP approach}}$
 
 Dynamic programming is most suited for optimization problems: this is clear from the type of problems in the list above, which all involve finding a solution that is optimal in some sense, most often the maximum or minimum of some function. Such problems should have two main properties in order to justify the use of dynamic programming:
 

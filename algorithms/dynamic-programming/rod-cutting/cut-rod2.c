@@ -16,15 +16,15 @@
 // list and an array to store the computed revenues
 double cutRod (double *prices, size_t n, double *revenues){
 
-    // base case: revenue for a rod of length 0 is 0
-  if (n == 0)
-    return revenues[n] = 0;
-
     // if available, return the stored value
   if (revenues[n] >= 0)  
     return revenues[n];
 
-    // otherwise compute the maximum revenue
+    // base case: revenue for a rod of length 0 is 0
+  if (n == 0)
+    return revenues[n] = 0;
+
+    // compute the maximum revenue for a rod of length n
   double rev = -1;
   for (size_t i = 1; i <= n; i++) 
     rev = MAX(rev, prices[i] + cutRod(prices, n - i, revenues));

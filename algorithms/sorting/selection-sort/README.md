@@ -1,4 +1,6 @@
-# ${\color{cadetblue} \text{Selec} \text{tion sort}}$
+${\color{cadetblue} \text{\huge Selec} \text{\huge tion sort}}$
+
+<br/>
 
 Just like [insertion sort](https://github.com/pl3onasm/CLRS/tree/main/algorithms/sorting/insertion-sort), selection sort is an ${\color{darkseagreen} \text{in-place}}$ comparison sort which sorts an array $A[0:n-1]$ in ascending order by maintaining a sorted subarray $A[0:i]$ and an unsorted subarray $A[i+1:n-1]$. At each iteration, the boundary between the two subarrays is moved one element to the right after selecting the minimum element from the unsorted subarray and swapping it with $A[i+1]$, thus extending the sorted subarray by one element. This process is repeated until the entire array is sorted.
 

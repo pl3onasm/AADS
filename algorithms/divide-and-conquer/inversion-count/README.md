@@ -1,10 +1,14 @@
-# ${\color{Cadetblue}\text{Inversion count}}$
+${\color{Cadetblue}\text{\huge Inversion count}}$
 
-## ${\color{rosybrown}\text{Problem}}$
+<br/>
+
+${\color{rosybrown}\text{\Large Problem}}$
 
 Given an array of integers, find the number of ${\color{peru}\text{inversions}}$, i.e. the number of pairs of indices $i < j$ such that $A[i] > A[j]$. In other words, find the number of pairs of elements that are ${\color{peru}\text{out of order}}$. For example, given the array $[2,3,8,6,1]$, the number of inversions is 5, since the pairs $(2,1)$, $(3,1)$, $(8,6)$, $(8,1)$, and $(6,1)$ are all inversions.
 
-## ${\color{darkseagreen}\text{Solution}}$
+<br/>
+
+${\color{darkseagreen}\text{\Large Solution}}$
 
 A solution in linearithmic time that makes use of the divide-and-conquer paradigm can be realized by a modified [merge sort](https://github.com/pl3onasm/CLRS/tree/main/algorithms/sorting/merge-sort). It draws on the observation that the merge step in this sorting algorithm is in fact already checking for inversions when merging two subarrays into a single sorted array. After all, merging is done with the left and right subarrays already sorted on their own, comparing at each step the current element in the left subarray to the one in the right subarray to determine which element to add next to the combined sorted array.  
 

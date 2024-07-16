@@ -1,4 +1,6 @@
-# ${\color{cadetblue} \text{Counting sort}}$
+${\color{cadetblue} \text{\huge Counting sort}}$
+
+<br/>
 
 Counting sort is a ${\color{darkseagreen} \text{linear-time}}$ sorting algorithm that sorts an array $A[0:n-1]$ in ascending order by exploiting the fact that the input consists of non-negative integers in a relatively small range $[0, k]$, where $k = \mathcal{O}(n)$.
 
@@ -8,7 +10,10 @@ Since the algorithm independently iterates through $A$ and $C$, it runs in ${\co
 
 Implementation: [Counting Sort](https://github.com/pl3onasm/CLRS/blob/main/algorithms/sorting/counting-sort/countingsort-1.c)
 
-# ${\color{cadetblue} \text{Adaptation}}$
+<br/>
+
+${\color{rosybrown} \text{\Large Adaptation}}$
+
 An adaptation can be made in cases where the array $A$ contains negative integers or has a minimum element that is much larger than 0. This is done by ${\color{darkseagreen} \text{shifting}}$ the elements in the array to the right or left by a constant equal to the minimum element in the array. If the minimum element is negative, then the array is shifted to the right by the absolute value of the minimum element. If the minimum element is positive, then the array is shifted to the left by the value of the minimum element. Either way, the minimum element is shifted to the first position in the output array $B$.  
 The algorithm then works as before, except that the size of the auxiliary array $C$ is now $k+1$, where $k$ is the absolute value of the difference between the maximum and minimum elements in the array.
 

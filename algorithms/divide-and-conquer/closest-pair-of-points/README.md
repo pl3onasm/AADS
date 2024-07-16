@@ -1,16 +1,22 @@
-# ${\color{Cadetblue}\text{Closest Pair of Points}}$
+${\color{Cadetblue}\text{\huge Closest Pair of Points}}$
 
-## ${\color{rosybrown}\text{Problem}}$
+<br/>
+
+${\color{rosybrown}\text{\Large Problem}}$
 
 Given a set of points in the plane $P$, find the closest pair of points, where closeness is measured in terms of Euclidean distance.
 
-## ${\color{darkseagreen}\text{Quadratic Solution}}$
+<br/>
+
+${\color{darkseagreen}\text{\Large Quadratic Solution}}$
 
 A brute-force approach to solving this problem would be to compute the distance between all pairs of points in $P$ and return the closest pair. This would take $\mathcal{O}(n^2)$ time.
 
 Implementation: [closest pair of points (brute-force)](cpp-1.c)
 
-## ${\color{darkseagreen}\text{Linearithmic Solution}}$
+<br/>
+
+${\color{darkseagreen}\text{\Large Linearithmic Solution}}$
 
 A divide and conquer strategy starts by sorting all the points in the plane $P$ by their x-coordinate. Next, we recursively keep dividing $P$ at each step into two equal-sized subplanes $P_L$ and $P_R$ around the median x-coordinate in $P$ at that step. Once we reach the base case of a subplane having only two or three points, we simply compute the distance between all these points and return the closest pair in constant time using a brute-force approach. As recursive calls then start to return, we obtain the closest pairs in the right and left subplanes, with minimum distances $d_L$ and $d_R$, respectively.  
 
@@ -28,7 +34,9 @@ By case 2 of the master theorem, we then get a much better total running time of
 
 Implementation: [closest pair of points (divide and conquer)](https://github.com/pl3onasm/AADS/blob/main/algorithms/divide-and-conquer/closest-pair-of-points/closestpair.c)
 
-#### ${\color{darkseagreen}\text{Video}}$
+<br/>
+
+${\color{darkseagreen}\text{\large Video}}$
 
 [![Problem](https://img.youtube.com/vi/6u_hWxbOc7E/0.jpg)](https://www.youtube.com/watch?v=6u_hWxbOc7E)
 

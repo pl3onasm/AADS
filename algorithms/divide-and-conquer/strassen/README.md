@@ -1,10 +1,14 @@
-# ${\color{Cadetblue}\text{Matrix Multiplication}}$
+${\color{Cadetblue}\text{\huge Matrix Multiplication}}$
 
-## ${\color{rosybrown}\text{Problem}}$
+<br/>
+
+${\color{rosybrown}\text{\Large Problem}}$
 
 Given two square matrices $A$ and $B$ of size $n \times n$, we want to compute their product $C = A \cdot B$. The result should be a square matrix of size $n \times n$.
 
-## ${\color{darkseagreen}\text{Standard Matrix}}$ ${\color{darkseagreen}\text{Multiplication}}$
+<br/>
+
+${\color{darkseagreen}\text{\Large Standard Matrix}}$ ${\color{darkseagreen}\text{\Large Multiplication}}$
 
 If we want to multiply two $n \times n$ matrices $A$ and $B$, we can do so by taking the ${\color{peru}\text{dot product}}$ of each row of $A$ with each column of $B$. This is the naive approach, which is shown in the following pseudocode:
 
@@ -60,7 +64,9 @@ By case 1 of the master theorem (CLRS 4.5), we can conclude that $T(n) = \Theta(
 
 Implementation: [Matrix Multiplication - D&C](https://github.com/pl3onasm/AADS/blob/main/algorithms/divide-and-conquer/strassen/mmp-1.c)
 
-## ${\color{darkseagreen}\text{Strassen's Matrix}}$ ${\color{darkseagreen}\text{Multiplication}}$
+<br/>
+
+${\color{darkseagreen}\text{\Large Strassen's Matrix}}$ ${\color{darkseagreen}\text{\Large Multiplication}}$
 
 The idea behind Strassen's algorithm is to reduce the number of (quadratic time) multiplications performed at each dividing step from 8 to 7 by substituting one of the multiplications with a number of (linear time) additions and subtractions. This way, it is possible to reduce the time complexity of the matrix multiplication algorithm to below $\Theta(n^3)$.
 

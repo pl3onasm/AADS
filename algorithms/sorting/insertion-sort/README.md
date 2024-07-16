@@ -1,4 +1,6 @@
-# ${\color{cadetblue} \text{Insertion sort}}$
+${\color{cadetblue} \text{\huge Insertion sort}}$
+
+<br/>
 
 Insertion sort is an ${\color{darkseagreen} \text{in-place}}$ comparison sort which sorts an array $A[0:n-1]$ in ascending order in a similar manner to how we sort a hand of cards. We start with an empty left hand and the cards face down on the table. We then remove one card at a time from the pile on the table and insert it into the correct position in the left hand. To find the correct position for a card, we compare it with each of the cards in the left hand, from right to left, until we find a card that is smaller than it, or until we reach the left end of the hand. At that point, the card we are trying to insert is placed into the position immediately to the right of the card that is smaller than it, or at the left end of the hand if all cards in the hand are larger than it.
 

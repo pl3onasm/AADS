@@ -1,4 +1,6 @@
-# ${\color{cadetblue} \text{Bubble sort}}$
+${\color{cadetblue} \text{\huge Bubble sort}}$
+
+<br/>
 
 Bubble sort is a comparison sort that sorts an array $A[0:n-1]$ in ascending order by maintaining two subarrays: a sorted subarray $A[0:i]$ and an unsorted subarray $A[i+1:n-1]$. At each iteration, the boundary between the two subarrays is shifted one element to the right by moving the minimum element in the unsorted subarray $A[i+1:n-1]$ to the front of this subarray through a series of swaps so that the sorted subarray $A[0:i]$ can be extended by one element. Getting that minimum element to appear at index $i+1$ requires a pass through the unsorted subarray from $n-1$ down to $i+1$, swapping adjacent elements as necessary, i.e. if they form an inversion. This is also where the name comes from: as we keep swapping from the back to the front of the unsorted subarray, smaller elements keep "bubbling" to the front of that subarray, similar to bubbles rising to the surface of a liquid. It is also sometimes referred to as ${\color{darkseagreen} \text{sinking sort}}$, since larger elements "sink" to the bottom of the unsorted subarray as we move the boundary between the two subarrays to the right.
 

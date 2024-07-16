@@ -1,6 +1,8 @@
-# ${\color{Cadetblue}\text{String-matching}}$
+${\color{Cadetblue}\text{\huge String-matching}}$
 
-## ${\color{Rosybrown}\text{Overview}}$
+<br/>
+
+${\color{Rosybrown}\text{\Large Overview}}$
 
 | ${\color{peru}\text{CLRS}}$ | ${\color{peru}\text{Topic}}$ |
 |:---|:---|
@@ -10,9 +12,9 @@
 | 32.4 | [Knuth-Morris-Pratt Algorithm](https://github.com/pl3onasm/AADS/tree/main/algorithms/string-matching/knuth-morris-pratt) |
 | 32.5 [ed4] | [Suffix Arrays](https://github.com/pl3onasm/CLRS/tree/main/algorithms/string-matching/suffix-arrays) |
 
-&nbsp;
+<br/>
 
-## ${\color{Rosybrown}\text{String-matching Problem}}$
+${\color{Rosybrown}\text{\Large String-matching Problem}}$
 
 String matching is the problem of finding all occurrences of a string pattern $P$ of length $m$ in a text $T$ of lenght $n$, where $m \leq n$. The characters in the pattern and the text come from a finite set $\Sigma$ called the $\color{orchid}{\text{alphabet}}$.
 
@@ -20,7 +22,9 @@ We say that pattern $P$ occurs with shift $s$ in text $T$ if $0 \leq s \leq n - 
 
 In other words, the string-matching problem is to find all valid shifts for $P$ in $T$, i.e. the shift set of $P$ in $T$. Using the terminology below, the string-matching problem is to $\color{mediumpurple}{\text{find all shifts } s}$ $\color{mediumpurple}{\text{such that } P \sqsupset T_{s+m}}$, where $0 \leq s \leq n - m$ and $T_{s + m}$ is the prefix of $T$ of length $s + m$.
 
-## ${\color{Rosybrown}\text{Terminology and properties}}$
+<br/>
+
+${\color{Rosybrown}\text{\Large Terminology and properties}}$
 
 - $\Sigma^*$: the set of all finite-length strings over $\Sigma$
 - $\epsilon$: the empty string, i.e. the string of length $0$

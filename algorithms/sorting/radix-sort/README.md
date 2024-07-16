@@ -1,4 +1,6 @@
-# ${\color{cadetblue} \text{Radix sort}}$
+${\color{cadetblue} \text{\huge Radix sort}}$
+
+<br/>
 
 Radix sort is a ${\color{darkseagreen} \text{linear-time}}$ sorting algorithm that exploits the fact that the input consists of a sequence of $n$ d-digit numbers, where each digit can take on up to k possible values. For example, we might sort 20-digit decimal numbers, where each digit is in the range 0 through 9 ($d=20$, $k = 10$), or 5-digit binary numbers, where each digit is either 0 or 1 ($d=5$, $k = 2$).
 

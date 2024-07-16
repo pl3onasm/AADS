@@ -1,4 +1,6 @@
-# ${\color{cadetblue} \text{Merge sort}}$
+${\color{cadetblue} \text{\huge Merge sort}}$
+
+<br/>
 
 Merge sort is a comparison sort based on the  ${\color{darkseagreen} \text{divide and conquer}}$ paradigm. It starts out by computing the middle index, after which it divides the input array into two subarrays of equal size. It then recursively calls itself on each of the subarrays, until the base case is reached, which is when the subarrays contain only one element and are trivially sorted. At this point, recursion starts to unwind, and the merge procedure is called, which combines the two sorted subarrays into a single sorted array. This merging is done by maintaining two pointers, one for each subarray, and comparing the elements at the pointers. At each comparison, the smaller element is copied into the sorted output array, and the pointer is incremented. This process is repeated until one of the subarrays is exhausted, at which point the remaining elements of the other subarray are copied into the end of the sorted output array. The merge procedure is repeated recursively until recursion has unwound completely, and the entire input array is sorted.
 
@@ -14,7 +16,11 @@ Implementation: [Merge Sort](https://github.com/pl3onasm/CLRS/tree/main/algorith
 
 A generic implementation: [Generic Merge Sort](https://github.com/pl3onasm/CLRS/tree/main/algorithms/sorting/merge-sort/genmergesort.c)
 
-# ${\color{cadetblue} \text{WHAM sort}}$
+<br/>
+
+${\color{cadetblue} \text{\huge WHAM sort}}$
+
+<br/>
 
 WHAM sort is an optimization of merge sort. The name is an acronym for the names of its creators, Wim Hesselink and Arnold Meijster. It draws on the observation that merge sort is inefficient when the input array is already entirely or partially sorted, since it will still follow the same old recipe of dividing the original problem into two equal-sized subproblems around the middle index, regardless of the input. WHAM sort improves on this by dividing the input array around the first index where the elements are out of order, i.e. the first index where an ${\color{darkseagreen} \text{inversion}}$ occurs. This means that the left subarray is already sorted, and WHAM sort only needs to be recursively called on the unsorted right subarray which is stretched to the same length as the left part (or until the right bound if stretching exceeds the length of the input array). Once the base case is reached, and recursion starts to unwind, the merge procedure combines the two sorted subarrays into a single sorted array and is repeated recursively until the entire input array is sorted.
 

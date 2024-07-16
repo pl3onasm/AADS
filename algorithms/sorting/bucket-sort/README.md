@@ -1,4 +1,6 @@
-# ${\color{cadetblue} \text{Bucket sort}}$
+${\color{cadetblue} \text{\huge Bucket sort}}$
+
+<br/>
 
 Bucket sort is a ${\color{darkseagreen} \text{linear-time}}$ sorting algorithm that sorts elements by distributing them into buckets based on their values, and then sorting the elements in each bucket. The expected linear-time performance is achieved by the fact that bucket sort assumes that the input is drawn from a ${\color{darkseagreen} \text{uniform distribution}}$, such that the input can be distributed evenly over the buckets and the size of each bucket remains small, allowing for sorting a bucket to be performed in expected constant time.
 

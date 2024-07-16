@@ -1,12 +1,16 @@
-# ${\color{Cadetblue}\text{Longest palindromic}}$ ${\color{Cadetblue}\text{subsequence}}$ ${\color{Cadetblue}\text{(LPS)}}$
+${\color{Cadetblue}\text{\huge Longest palindromic}}$ ${\color{Cadetblue}\text{\huge subsequence}}$ ${\color{Cadetblue}\text{\huge (LPS)}}$
 
-## ${\color{rosybrown}\text{Problem}}$
+<br />
 
-Given a sequence $X = \langle x_0, x_1, \ldots, x_{n-1} \rangle$, we want to find the longest palindromic subsequence of $X$. A ${\color{peru}\text{subsequence}}$ is derived from a given sequence by deleting some or no elements from it without changing the order of the remaining elements. Such a sequence is ${\color{peru}\text{palindromic}}$ if it reads the same forwards and backwards.
+${\color{rosybrown}\text{\Large Problem}}$
+
+Given a sequence $X = \langle x_0, x_1, \ldots, x_{n-1} \rangle \space$, we want to find the longest palindromic subsequence of $X$. A ${\color{peru}\text{subsequence}}$ is derived from a given sequence by deleting some or no elements from it without changing the order of the remaining elements. Such a sequence is ${\color{peru}\text{palindromic}}$ if it reads the same forwards and backwards.
 
 For example, the sequence $X = \langle C, A, D, B, D, C, B, E, A, B \rangle$ has a longest palindromic subsequence of length 5, which is $\langle A, B, C, B, A \rangle$. The subsequence itself does not have to be unique, however: the input sequence $X$, has also $\langle A, D, B, D, A \rangle$ and $\langle C, D, B, D, C \rangle$ as palindromic subsequences of length 5. The length of the LPS is of course unique.
 
-## ${\color{darkseagreen}\text{The key idea}}$
+<br />
+
+${\color{darkseagreen}\text{\Large The key idea}}$
 
 The idea is to think of each subproblem in terms of a ${\color{peru}\text{substring}}$ with indices $i$ and $j$ of the sequence $X$. The subproblem is then to find the LPS of the substring $X[i \ldots j]$. We start with the substring $X[0 \ldots n-1]$, the input sequence itself, and work our way down to the base cases, which are substrings of length $1$ or $0$.
 
@@ -31,13 +35,17 @@ $$
 
 The solution to the original problem is then obtained by calling $L(0,n-1)$. The base cases occur when the substring has only one or no characters left: in the first case, the length of the LPS is $1$ (since a single character is a palindrome), and in the second case, its length is $0$. If, at a given step, the first and last characters of the substring are the same, we update the optimal solution of the previous subproblem by increasing the LPS length by 2. If the characters are different, we compute the maximum LPS length between excluding the first character and excluding the last character of the substring at the current step.
 
-## ${\color{darkseagreen}\text{Brute force}}$
+<br />
+
+${\color{darkseagreen}\text{\Large Brute force}}$
 
 The brute force solution implements the recursive function $L(i,j)$ as described above without any optimization. It ignores the fact that the subproblems overlap and recomputes the length of the LPS of the same substrings multiple times. The time complexity of the brute force solution is therefore exponential.
 
 Implementation: [LPS - brute force](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/dynamic-programming/longest-palin-sub/lps-1.c)
 
-## ${\color{darkseagreen}\text{Top-down}}$
+<br />
+
+${\color{darkseagreen}\text{\Large Top-down}}$
 
 The top-down DP solution implements the same recursive function $L(i,j)$ but uses a ${\color{peru}\text{memoization}}$ ${\color{peru}\text{table}}$ to store the length of the LPS of each substring once it is computed. After initializing this table with a special value that indicates the subproblem has not been computed yet (e.g. $0$), the program is modified to check at each recursive step if the length of the LPS of the substring has already been computed. If it has, the stored length is returned. Otherwise, the length is computed as before and stored in the table. As each subproblem is thus guaranteed to be computed only once, the time complexity of the top-down solution is reduced to $\mathcal{O}(n^2)$.
 
@@ -45,7 +53,9 @@ ${\color{peru}\text{Reconstruction}}$ of an optimal solution from the memoizatio
 
 Implementation: [LPS - top-down DP](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/dynamic-programming/longest-palin-sub/lps-2.c)
 
-## ${\color{darkseagreen}\text{Bottom-up}}$
+<br />
+
+${\color{darkseagreen}\text{\Large Bottom-up}}$
 
 In the bottom-up DP approach, we start by setting the base cases of the memoization table $T$ and then fill the table in a bottom-up manner, starting from the smallest substrings and working our way up to the original problem by gradually increasing the length of the substrings we consider. The time complexity of the bottom-up solution is $\mathcal{O}(n^2)$, the same as the top-down solution. Reconstruction of an optimal solution is done in the same way as in the top-down solution.
 

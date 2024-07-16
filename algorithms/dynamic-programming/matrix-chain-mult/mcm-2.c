@@ -22,14 +22,14 @@
 // starting at index i and ending at index j
 int computeMinCost(size_t *dims, size_t **minCosts, 
                    size_t i, size_t j) {
-
-    // base case: the cost of multiplying a single matrix is 0
-  if (i == j)
-    return minCosts[i][j] = 0;
   
     // if available, return the minimum cost
   if (minCosts[i][j] != SIZE_MAX)
     return minCosts[i][j];
+
+    // base case: the cost of multiplying a single matrix is 0
+  if (i == j)
+    return minCosts[i][j] = 0;
 
     // try all possible split points k and choose
     // the one that yields the minimum cost

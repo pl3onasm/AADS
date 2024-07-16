@@ -1,4 +1,6 @@
-# ${\color{Cadetblue}\text{Heapsort}}$
+${\color{Cadetblue}\text{\huge Heapsort}}$
+
+<br/>
 
 Heapsort is an ${\color{darkseagreen} \text{in-place}}$ sorting algorithm that sorts an array $A[0:n-1]$ in ascending order by using a binary heap. To achieve this, it first turns the input array $A$ into a ${\color{darkseagreen} \text{binary max-heap}}$ structure, after which the root of the heap is the maximum element of $A$. It then places this maximum element in its correct position by swapping it with the last element of the heap, and decreasing the heap size by 1 to exclude it from the rest of the algorithm and consolidate its position in the sorted array.
 
