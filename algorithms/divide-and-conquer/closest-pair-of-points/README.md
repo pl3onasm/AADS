@@ -8,7 +8,7 @@ Given a set of points in the plane $P$, find the closest pair of points, where c
 
 <br/>
 
-${\color{darkseagreen}\text{\Large Quadratic Solution}}$
+${\color{darkseagreen}\text{\Large Quadratic}}$ ${\color{darkseagreen}\text{\Large Solution}}$
 
 A brute-force approach to solving this problem would be to compute the distance between all pairs of points in $P$ and return the closest pair. This would take $\mathcal{O}(n^2)$ time.
 

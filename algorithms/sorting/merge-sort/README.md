@@ -18,6 +18,8 @@ A generic implementation: [Generic Merge Sort](https://github.com/pl3onasm/CLRS/
 
 <br/>
 
+<br/>
+
 ${\color{cadetblue} \text{\huge WHAM sort}}$
 
 <br/>

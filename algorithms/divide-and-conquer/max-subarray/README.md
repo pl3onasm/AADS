@@ -10,7 +10,7 @@ Note that when all the numbers are negative, the maximum subarray will consist o
 
 <br/>
 
-${\color{darkseagreen}\text{\Large Quadratic Solution}}$
+${\color{darkseagreen}\text{\Large Quadratic}}$ ${\color{darkseagreen}\text{\Large Solution}}$
 
 A naive solution is to try all possible subarrays and find the one with the largest sum. This can be done in $\Theta(n^2)$ time by using two nested loops and keeping track of the largest sum found so far.
 
