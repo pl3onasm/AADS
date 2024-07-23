@@ -1,0 +1,3 @@
+Min cuts: 36
+An optimal partitioning:
+  abba | cc | cabdbac | aa | b | ccdcc | dd | ababa | cdc | bb | d | c | aaa | bb | baaaab | dccd | eddccdde | asa | b | e | a | b | d | cccc | deed | abba | b | aa | cc | deed | dd | ceddec | ccc | d | aaa | b | ccdcc
