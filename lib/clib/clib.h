@@ -247,11 +247,11 @@ static inline void showString(string *s) {
 }
 
   // shows a substring of a string
-static inline void showSubString(string *s, size_t start, 
-                                 size_t end) {
-  for (size_t i = start; i < end; i++) 
+static inline void showSubstring(string *s, size_t start, 
+                                 size_t end, char delim) {
+  for (size_t i = start; i <= end; i++) 
     printf("%c", s->data[i]);
-  printf("\n");
+  printf("%c", delim);
 }
 
   // deallocates a string

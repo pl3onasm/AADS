@@ -14,13 +14,11 @@
 // Reconstructs an optimal palindromic partitioning of a given string
 void showCuts(string *S, size_t *cuts, size_t k) {
   if (cuts[k] == k) {
-    for (size_t i = 0; i <= k; i++) 
-      printf("%c", charAt(S, i));
+    showSubstring(S, 0, k, ' ');
   } else {
     showCuts(S, cuts, cuts[k]);
-    printf(" | ");
-    for (size_t i = cuts[k] + 1; i <= k; i++) 
-      printf("%c", charAt(S, i));
+    printf("| ");
+    showSubstring(S, cuts[k] + 1, k, ' ');
   }
 }
 
@@ -45,7 +43,7 @@ bool **computePalindromes(string *S) {
 // into palindromes, using bottom-up DP
 size_t partition(string *S, size_t *dp, size_t *cuts) {
 
-  bool **isPalindrome = getPalindromes(S);
+  bool **isPalindrome = computePalindromes(S);
 
   for (size_t i = 0; i < strLen(S); i++) {
     if (isPalindrome[0][i]) 

@@ -228,7 +228,7 @@ void getLrs(string *text, size_t *sa, size_t *lcp) {
         idx++;
       }
       printf("  %zu times: ", times);
-      showSubString(text, sa[idx], sa[idx] + max);
+      showSubstring(text, sa[idx], sa[idx] + max - 1, '\n');
     }
     idx++;
   }
@@ -272,7 +272,7 @@ void getLps(string *text) {
     }
 
   printf("Longest palindromic substring: ");
-  showSubString(str, k, k + max);
+  showSubstring(str, k, k + max - 1, '\n');
   free(lps); freeString(str); freeString(rev);
   free(sa); free(lcp);
 }

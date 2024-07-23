@@ -15,13 +15,11 @@
 // Reconstructs an optimal palindromic partitioning of a given string
 void showCuts(string *S, size_t *cuts, size_t k) {
   if (cuts[k] == k) {
-    for (size_t i = 0; i <= k; i++) 
-      printf("%c", charAt(S, i));
+    showSubstring(S, 0, k, ' ');
   } else {
     showCuts(S, cuts, cuts[k]);
-    printf(" | ");
-    for (size_t i = cuts[k] + 1; i <= k; i++) 
-      printf("%c", charAt(S, i));
+    printf("| ");
+    showSubstring(S, cuts[k] + 1, k, ' ');
   }
 }
 
