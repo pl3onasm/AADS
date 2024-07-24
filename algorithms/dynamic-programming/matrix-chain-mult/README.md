@@ -1,4 +1,5 @@
-${\color{Cadetblue}\text{\huge Matrix Chain}}$ ${\color{Cadetblue}\text{\huge Multiplication}}$ ${\color{Cadetblue}\text{\huge (MCM)}}$
+${\color{Cadetblue}\text{\huge Matrix Chain}}$  
+${\color{Cadetblue}\text{\huge Multiplication (MCM)}}$
 
 <br />
 

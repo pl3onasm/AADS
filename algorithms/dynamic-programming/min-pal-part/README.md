@@ -1,4 +1,4 @@
-${\color{Cadetblue}\text{\huge Minimal Palindromic}}$
+${\color{Cadetblue}\text{\huge Minimal Palindromic}}$  
 ${\color{Cadetblue}\text{\huge Partitioning (MPP)}}$
 
 <br />

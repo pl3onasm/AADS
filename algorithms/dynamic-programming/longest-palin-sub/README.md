@@ -1,4 +1,5 @@
-${\color{Cadetblue}\text{\huge Longest palindromic}}$ ${\color{Cadetblue}\text{\huge subsequence}}$ ${\color{Cadetblue}\text{\huge (LPS)}}$
+${\color{Cadetblue}\text{\huge Longest palindromic}}$  
+${\color{Cadetblue}\text{\huge subsequence (LPS)}}$ 
 
 <br />
 

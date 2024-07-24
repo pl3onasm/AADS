@@ -1,4 +1,5 @@
-${\color{Cadetblue}\text{\huge Longest Common}}$ ${\color{Cadetblue}\text{\huge Subsequence}}$ ${\color{Cadetblue}\text{\huge (LCS)}}$
+${\color{Cadetblue}\text{\huge Longest Common}}$  
+${\color{Cadetblue}\text{\huge Subsequence (LCS)}}$
 
 <br />
 
