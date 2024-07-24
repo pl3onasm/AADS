@@ -9,16 +9,17 @@
 */ 
 
 #include "../../../lib/clib/clib.h"
+#include <stdint.h>
 
 //===================================================================
 // Reconstructs an optimal palindromic partitioning of a given string
-void showCuts(string *S, size_t *cuts, size_t k) {
-  if (cuts[k] == k) {
+void showCuts(string *S, size_t *cutPoints, size_t k) {
+  if (cutPoints[k] == k) 
     showSubstring(S, 0, k, ' ');
-  } else {
-    showCuts(S, cuts, cuts[k]);
+  else {
+    showCuts(S, cutPoints, cutPoints[k]);
     printf("| ");
-    showSubstring(S, cuts[k] + 1, k, ' ');
+    showSubstring(S, cutPoints[k] + 1, k, ' ');
   }
 }
 
@@ -41,23 +42,21 @@ bool **computePalindromes(string *S) {
 //===================================================================
 // Computes the minimal number of cuts required to partition a string
 // into palindromes, using bottom-up DP
-size_t partition(string *S, size_t *dp, size_t *cuts) {
+size_t partition(string *S, size_t *dp, size_t *cutPoints) {
 
   bool **isPalindrome = computePalindromes(S);
 
-  for (size_t i = 0; i < strLen(S); i++) {
-    if (isPalindrome[0][i]) 
-      cuts[i] = i;
-    else {
-      dp[i] = i + 1;
-      for (size_t j = 0; j < i; j++) {
+  for (size_t i = 0; i < strLen(S); i++) 
+    if (isPalindrome[0][i]) {
+      cutPoints[i] = i;
+      dp[i] = 0;
+    } else {
+      for (size_t j = 0; j < i; j++) 
         if (isPalindrome[j + 1][i] && dp[j] + 1 < dp[i]) {
           dp[i] = dp[j] + 1;
-          cuts[i] = j;
+          cutPoints[i] = j;
         }
-      }
     }
-  }
 
   FREE_MATRIX(isPalindrome, strLen(S));
   return dp[strLen(S) - 1];
@@ -69,19 +68,19 @@ int main() {
 
   READ_STRING(S, '\n');
 
-  CREATE_ARRAY(size_t, dp, strLen(S), 0);
-  CREATE_ARRAY(size_t, cuts, strLen(S), 0);
+  CREATE_ARRAY(size_t, dp, strLen(S), SIZE_MAX);
+  CREATE_ARRAY(size_t, cutPoints, strLen(S), 0);
 
-  partition(S, dp, cuts);
+  partition(S, dp, cutPoints);
 
   printf("Min cuts: %zu\n", dp[strLen(S) - 1]);
   printf("An optimal partitioning:\n  ");
-  showCuts(S, cuts, strLen(S) - 1);
+  showCuts(S, cutPoints, strLen(S) - 1);
   printf("\n");
 
   freeString(S);
   free(dp);
-  free(cuts);
+  free(cutPoints);
 
   return 0;
 }

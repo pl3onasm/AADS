@@ -1,4 +1,5 @@
-${\color{Cadetblue}\text{\huge Longest Increasing}}$ ${\color{Cadetblue}\text{\huge Subsequence}}$ ${\color{Cadetblue}\text{\huge (LIS)}}$
+${\color{Cadetblue}\text{\huge Longest Increasing}}$
+${\color{Cadetblue}\text{\huge Subsequence (LIS)}}$
 
 <br />
 

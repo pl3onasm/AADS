@@ -13,13 +13,13 @@
 
 //===================================================================
 // Reconstructs an optimal palindromic partitioning of a given string
-void showCuts(string *S, size_t *cuts, size_t k) {
-  if (cuts[k] == k) {
+void showCuts(string *S, size_t *cutPoints, size_t k) {
+  if (cutPoints[k] == k) {
     showSubstring(S, 0, k, ' ');
   } else {
-    showCuts(S, cuts, cuts[k]);
+    showCuts(S, cutPoints, cutPoints[k]);
     printf("| ");
-    showSubstring(S, cuts[k] + 1, k, ' ');
+    showSubstring(S, cutPoints[k] + 1, k, ' ');
   }
 }
 
@@ -42,28 +42,26 @@ bool **computePalindromes(string *S) {
 //===================================================================
 // Computes the minimal number of cuts required to partition a 
 // string into palindromes, using top-down DP with memoization
-size_t partition(string *S, size_t i, size_t *dp, size_t *cuts, 
-                 bool **isPalindrome) {
+size_t partition(string *S, size_t i, size_t *dp, 
+                 size_t *cutPoints, bool **isPalindrome) {
 
   if (dp[i] != SIZE_MAX) 
     return dp[i];
   
   if (isPalindrome[0][i]) {
-    cuts[i] = i;
+    cutPoints[i] = i;
     return dp[i] = 0;
   }
 
-  size_t minCuts = i + 1;
-
   for (size_t j = 0; j < i; j++) {
-    if (isPalindrome[j + 1][i] 
-        && 1 + partition(S, j, dp, cuts, isPalindrome) < minCuts) {
-      minCuts = 1 + dp[j];
-      cuts[i] = j;
+    if (isPalindrome[j + 1][i] && 
+        partition(S, j, dp, cutPoints, isPalindrome) + 1 < dp[i]) {
+      dp[i] = 1 + dp[j];
+      cutPoints[i] = j;
     }
   }
 
-  return dp[i] = minCuts;
+  return dp[i];
 }
 
 //===================================================================
@@ -73,21 +71,21 @@ int main() {
   READ_STRING(S, '\n');
 
   CREATE_ARRAY(size_t, dp, strLen(S), SIZE_MAX);
-  CREATE_ARRAY(size_t, cuts, strLen(S), 0);
+  CREATE_ARRAY(size_t, cutPoints, strLen(S), 0);
   
   bool **isPalindrome = computePalindromes(S);
 
-  partition(S, strLen(S) - 1, dp, cuts, isPalindrome);
+  partition(S, strLen(S) - 1, dp, cutPoints, isPalindrome);
 
   printf("Min cuts: %zu\n", dp[strLen(S) - 1]);
   printf("An optimal partitioning:\n  ");
-  showCuts(S, cuts, strLen(S) - 1);
+  showCuts(S, cutPoints, strLen(S) - 1);
   printf("\n");
 
   FREE_MATRIX(isPalindrome, strLen(S));
   freeString(S);
   free(dp);
-  free(cuts);
+  free(cutPoints);
 
   return 0;
 }

@@ -36,7 +36,7 @@ size_t partition(string *S, size_t i, bool **isPalindrome) {
   if (isPalindrome[0][i]) 
     return 0;
 
-  size_t minCuts = i + 1;
+  size_t minCuts = i;
 
   for (size_t j = 0; j < i; j++)
     if (isPalindrome[j + 1][i]) 
