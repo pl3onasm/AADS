@@ -42,7 +42,7 @@ C(i) = \begin{cases}
 \small 0 & \scriptsize \text{if } P(0, i) \\
 \small \min \lbrace C(j) + 1 :  & \scriptsize \text{otherwise}\\
 \quad \small 0 \leq j < i \land P(j+1, i) \rbrace
-\end{cases}}
+\end{cases}\space}
 $$
 
 <br />

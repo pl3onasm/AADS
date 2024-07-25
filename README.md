@@ -1,8 +1,9 @@
-${\color{cadetblue}\text{\huge CLRS: Data Structures}}$ ${\color{cadetblue}\text{\huge and Algorithms}}$
+${\color{cadetblue}\text{\huge CLRS: Data Structures}}$  
+${\color{cadetblue}\text{\huge and Algorithms}}$
 
 <br/>
 
-$\Large{\color{peru}\text{Algorithms}}$
+${\color{peru}\text{\Large Algorithms}}$
 
 * [Divide and conquer](algorithms/divide-and-conquer)
 * [Dynamic programming](algorithms/dynamic-programming)
@@ -13,7 +14,7 @@ $\Large{\color{peru}\text{Algorithms}}$
 
 <br/>
 
-$\Large{\color{peru}\text{Data structures}}$
+${\color{peru}\text{\Large Data structures}}$
 
 * Stacks
 * [Queues](datastructures/queues)
@@ -29,7 +30,7 @@ $\Large{\color{peru}\text{Data structures}}$
 
 --------------------------------
 
-$\Large{\color{darkseagreen}\text{Notes}}$
+${\color{darkseagreen}\text{\Large Notes}}$
 
 The aim is to implement all the algorithms and data structures discussed in the textbook *Introduction to Algorithms* by Thomas H. Cormen, et al. We will be working with both the third and fourth edition. Folders usually contain several versions of the same algorithm or data structure, in accordance with the different pseudocode and explanations in the textbook.
 
@@ -41,25 +42,23 @@ Please note that this is very much a work in progress. It simply takes time to d
 
 --------------------------
 
+${\color{darkseagreen}\text{\Large CLRS solutions}}$
 
-$\Large{\color{darkseagreen}\text{CLRS solutions}}$
-
-* [Selected solutions to the third edition](https://community.wvu.edu/~krsubramani/courses/backupcourses/CS520Fa2013/CormenSolutions/9780262033848-Instructors.pdf)
-* [Selected solutions to the fourth edition](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/11599/selected-solutions.pdf)
+* [Selected solutions to the third edition](solutions/solutions-3ed.pdf)
+* [Selected solutions to the fourth edition](solutions/solutions-4ed.pdf)
 
 <br/>
 
-$\Large{\color{darkseagreen}\text{Recommended}}$
+${\color{darkseagreen}\text{\Large Recommended}}$
 
 * [MIT Introduction to Algorithms](https://www.youtube.com/playlist?list=PLUl4u3cNGP61Oq3tWYp6V_F-5jb5L2iHb)
 * [MIT Design and Analysis of Algorithms](https://www.youtube.com/playlist?list=PLUl4u3cNGP6317WaSNfmCvGym2ucw3oGp)
 * [MIT Advanced Data Structures](https://www.youtube.com/playlist?list=PLUl4u3cNGP61hsJNdULdudlRL493b-XZf)
   
 
-
 --------------------------------
 
-$\Large{\color{darkseagreen}\text{References}}$
+${\color{darkseagreen}\text{\Large References}}$
 
 CLRS³: Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. (2009). [Introduction to algorithms](https://mitpress.mit.edu/9780262533058/introduction-to-algorithms/). MIT press.  
 CLRS⁴: Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. (2022). [Introduction to algorithms](http://mitpress.mit.edu/9780262046305/introduction-to-algorithms/). MIT press.  
