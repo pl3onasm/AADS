@@ -1,0 +1,36 @@
+Minimum edit distance: 12
+
+Optimal operation sequence:
+
+Source:
+  simplicity
+Delete s:
+   | implicity
+Delete i:
+   | mplicity
+Insert c:
+  c | mplicity
+Insert o:
+  co | mplicity
+Copy m:
+  com | plicity
+Copy p:
+  comp | licity
+Copy l:
+  compl | icity
+Delete i:
+  compl | city
+Delete c:
+  compl | ity
+Insert e:
+  comple | ity
+Insert x:
+  complex | ity
+Copy i:
+  complexi | ty
+Copy t:
+  complexit | y
+Copy y:
+  complexity | 
+Target:
+  complexity

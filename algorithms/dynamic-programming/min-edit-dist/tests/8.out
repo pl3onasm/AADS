@@ -1,0 +1,20 @@
+Minimum edit distance: 23
+
+Optimal operation sequence:
+
+Source:
+  kitten
+Replace k with s:
+  s | itten
+Copy i:
+  si | tten
+Swap tt with tt:
+  sitt | en
+Replace e with i:
+  sitti | n
+Insert n:
+  sittin | n
+Replace n with g:
+  sitting | 
+Target:
+  sitting

@@ -1,0 +1,26 @@
+Minimum edit distance: 9
+
+Optimal operation sequence:
+
+Source:
+  democracy
+Replace d with o:
+  o | emocracy
+Replace e with l:
+  ol | mocracy
+Replace m with i:
+  oli | ocracy
+Replace o with g:
+  olig | cracy
+Replace c with a:
+  oliga | racy
+Copy r:
+  oligar | acy
+Replace a with c:
+  oligarc | cy
+Replace c with h:
+  oligarch | y
+Copy y:
+  oligarchy | 
+Target:
+  oligarchy

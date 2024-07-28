@@ -1,0 +1,16 @@
+Minimum edit distance: 8
+
+Optimal operation sequence:
+
+Source:
+  <Empty string>
+Insert t:
+  t | 
+Insert e:
+  te | 
+Insert s:
+  tes | 
+Insert t:
+  test | 
+Target:
+  test

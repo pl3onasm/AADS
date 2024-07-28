@@ -1,0 +1,24 @@
+Minimum edit distance: 21
+
+Optimal operation sequence:
+
+Source:
+  afflictions
+Swap af with fa:
+  fa | flictions
+Delete f:
+  fa | lictions
+Swap li with il:
+  fail | ctions
+Insert u:
+  failu | ctions
+Insert r:
+  failur | ctions
+Insert e:
+  failure | ctions
+Insert s:
+  failures | ctions
+Kill 6 remaining chars:
+  failures | 
+Target:
+  failures

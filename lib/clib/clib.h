@@ -237,12 +237,16 @@ static inline void appendChar(string *s, unsigned char c) {
     s->data = safeRealloc(s->data,
                           s->cap * sizeof(unsigned char));
   }
-  s->data[s->size++] = c;
-  s->data[s->size] = '\0';
+  s->data[s->size] = c;
+  s->data[++s->size] = '\0';
 }
 
   // shows a string
 static inline void showString(string *s) {
+  if (s->size == 0) {
+    printf("<Empty string>\n");
+    return;
+  }
   printf("%s\n", s->data);
 }
 
@@ -251,7 +255,7 @@ static inline void showSubstring(string *s, size_t start,
                                  size_t end, char delim) {
   for (size_t i = start; i <= end; i++) 
     printf("%c", s->data[i]);
-  printf("%c", delim);
+  if (delim) printf("%c", delim);
 }
 
   // deallocates a string

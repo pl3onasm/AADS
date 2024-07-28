@@ -1,0 +1,10 @@
+Minimum edit distance: 20
+
+Optimal operation sequence:
+
+Source:
+  algorithm
+Kill 9 remaining chars:
+   | 
+Target:
+  <Empty string>

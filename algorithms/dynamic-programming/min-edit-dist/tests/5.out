@@ -1,0 +1,26 @@
+Minimum edit distance: 27
+
+Optimal operation sequence:
+
+Source:
+  algorithm
+Delete a:
+   | lgorithm
+Delete l:
+   | gorithm
+Delete g:
+   | orithm
+Delete o:
+   | rithm
+Delete r:
+   | ithm
+Delete i:
+   | thm
+Delete t:
+   | hm
+Delete h:
+   | m
+Delete m:
+   | 
+Target:
+  <Empty string>

@@ -1,0 +1,26 @@
+Minimum edit distance: 11
+
+Optimal operation sequence:
+
+Source:
+  quaternion
+Insert e:
+  e | quaternion
+Insert q:
+  eq | quaternion
+Insert u:
+  equ | quaternion
+Insert a:
+  equa | quaternion
+Insert t:
+  equat | quaternion
+Insert i:
+  equati | quaternion
+Insert o:
+  equatio | quaternion
+Insert n:
+  equation | quaternion
+Kill 10 remaining chars:
+  equation | 
+Target:
+  equation

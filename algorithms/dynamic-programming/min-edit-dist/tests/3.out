@@ -1,0 +1,28 @@
+Minimum edit distance: 15
+
+Optimal operation sequence:
+
+Source:
+  intrusion
+Replace i with c:
+  c | ntrusion
+Insert o:
+  co | ntrusion
+Copy n:
+  con | trusion
+Replace t with c:
+  conc | rusion
+Replace r with l:
+  concl | usion
+Copy u:
+  conclu | sion
+Copy s:
+  conclus | ion
+Copy i:
+  conclusi | on
+Copy o:
+  conclusio | n
+Copy n:
+  conclusion | 
+Target:
+  conclusion

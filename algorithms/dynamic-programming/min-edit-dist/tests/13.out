@@ -1,0 +1,26 @@
+Minimum edit distance: 9
+
+Optimal operation sequence:
+
+Source:
+  identical
+Copy i:
+  i | dentical
+Copy d:
+  id | entical
+Copy e:
+  ide | ntical
+Copy n:
+  iden | tical
+Copy t:
+  ident | ical
+Copy i:
+  identi | cal
+Copy c:
+  identic | al
+Copy a:
+  identica | l
+Copy l:
+  identical | 
+Target:
+  identical

@@ -1,0 +1,28 @@
+Minimum edit distance: 21
+
+Optimal operation sequence:
+
+Source:
+  exuberant
+Copy e:
+  e | xuberant
+Copy x:
+  ex | uberant
+Replace u with o:
+  exo | berant
+Replace b with r:
+  exor | erant
+Replace e with b:
+  exorb | rant
+Replace r with i:
+  exorbi | ant
+Insert t:
+  exorbit | ant
+Copy a:
+  exorbita | nt
+Copy n:
+  exorbitan | t
+Copy t:
+  exorbitant | 
+Target:
+  exorbitant

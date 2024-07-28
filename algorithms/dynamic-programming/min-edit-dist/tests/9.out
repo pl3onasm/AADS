@@ -1,0 +1,20 @@
+Minimum edit distance: 15
+
+Optimal operation sequence:
+
+Source:
+  retaliate
+Replace r with s:
+  s | etaliate
+Swap et with te:
+  ste | aliate
+Insert l:
+  stel | aliate
+Swap al with la:
+  stella | iate
+Insert r:
+  stellar | iate
+Kill 4 remaining chars:
+  stellar | 
+Target:
+  stellar

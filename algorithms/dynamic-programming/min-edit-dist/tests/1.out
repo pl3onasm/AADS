@@ -1,0 +1,30 @@
+Minimum edit distance: 21
+
+Optimal operation sequence:
+
+Source:
+  algorithm
+Copy a:
+  a | lgorithm
+Copy l:
+  al | gorithm
+Replace g with t:
+  alt | orithm
+Delete o:
+  alt | rithm
+Copy r:
+  altr | ithm
+Insert u:
+  altru | ithm
+Copy i:
+  altrui | thm
+Insert s:
+  altruis | thm
+Copy t:
+  altruist | hm
+Replace h with i:
+  altruisti | m
+Replace m with c:
+  altruistic | 
+Target:
+  altruistic
