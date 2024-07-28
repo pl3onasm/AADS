@@ -29,8 +29,7 @@ size_t computeMED(string *src, string *tgt, size_t i, size_t j,
     // source is empty: insert remaining target chars
   if (i == 0) return j * costs[INSERT];
 
-    // target is empty: choose minimum between
-    // deleting or killing all remaining source chars
+    // target is empty: delete all remaining source chars
   if (j == 0) return MIN(i * costs[DELETE], costs[KILL]);
 
   if (charAt(src, i - 1) == charAt(tgt, j - 1)) {
