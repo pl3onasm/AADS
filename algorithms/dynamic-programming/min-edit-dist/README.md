@@ -76,7 +76,7 @@ Implementation: [MED - Top-down](https://github.com/pl3onasm/CLRS/blob/main/algo
 
 A ${\color{peru}\text{reconstruction}}$ of an optimal sequence of operations can be achieved by storing the previous operation that led to the minimum edit distance of the prefixes $S_i$ and $T_j$ in a separate table. This way, we can trace back the sequence of operations that were applied to reach the minimum edit distance of the entire input strings $S$ and $T$.
 
-Implementation: [MED - Top-down with Reconstruction]([W9SM3CV2VD3GE2S7](https://github.com/pl3onasm/CLRS/blob/main/algorithms/dynamic-programming/min-edit-dist/med-3.c))
+Implementation: [MED - Top-down with Reconstruction](https://github.com/pl3onasm/CLRS/blob/main/algorithms/dynamic-programming/min-edit-dist/med-3.c)
 
 <br />
 
