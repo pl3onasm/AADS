@@ -1,0 +1,32 @@
+Minimum edit distance: 18
+
+Optimal operation sequence:
+
+Source:
+  desorientation
+Copy d:
+  d | esorientation
+Copy e:
+  de | sorientation
+Copy s:
+  des | orientation
+Replace o with c:
+  desc | rientation
+Copy r:
+  descr | ientation
+Copy i:
+  descri | entation
+Replace e with p:
+  descrip | ntation
+Insert t:
+  descript | ntation
+Insert i:
+  descripti | ntation
+Insert o:
+  descriptio | ntation
+Copy n:
+  description | tation
+Kill 6 remaining chars:
+  description | 
+Target:
+  description

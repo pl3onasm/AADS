@@ -10,17 +10,17 @@
 
 #include "../../../lib/clib/clib.h"
 #include <stdint.h>
-#define MIN(a,b) ((a) < (b) ? (a) : (b))
 typedef enum { COPY, INSERT, DELETE, REPLACE, SWAP, KILL } op;
 
 //===================================================================
 // Updates the minimum value and operation if a new minimum is found
-void updateMin(size_t **dp, op **ops, size_t i, size_t j, 
-               size_t oldCost, op newOp, size_t *costs) {
+void checkMin(size_t **dp, op **ops, size_t i, size_t j, 
+              size_t oldCost, op newOp, size_t *costs, size_t k) {
 
   if (dp[i][j] > oldCost + costs[newOp]) {
     dp[i][j] = oldCost + costs[newOp];
     ops[i][j] = newOp;
+    if (newOp == KILL) costs[6] = i - k;
   }
 }
 
@@ -28,12 +28,10 @@ void updateMin(size_t **dp, op **ops, size_t i, size_t j,
 // Top-down DP approach to compute the minimum edit distance
 // between source and target strings using memoization
 size_t computeMED(string *src, string *tgt, size_t i, size_t j, 
-    size_t *costs, size_t **dp, op **ops, size_t *kill) {
+                  size_t *costs, size_t **dp, op **ops) {
 
     // return the value if it has already been computed
   if (dp[i][j] != SIZE_MAX) return dp[i][j];
-  
-  size_t med;
 
     // source is empty: insert remaining target chars
   if (i == 0) {
@@ -42,45 +40,42 @@ size_t computeMED(string *src, string *tgt, size_t i, size_t j,
   }
 
     // check if killing last remaining chars is cheaper
-  if (i == strLen(src) && j == strLen(tgt)) {
+  size_t med;
+  if (i == strLen(src) && j == strLen(tgt)) 
     for (size_t k = 0; k < strLen(src); ++k) {
-      med = computeMED(src, tgt, k, j, costs, dp, ops, kill);
-      updateMin(dp, ops, i, j, med, KILL, costs);
-      if (dp[i][j] == dp[k][j] + costs[KILL]) *kill = k;
+      med = computeMED(src, tgt, k, j, costs, dp, ops);
+      checkMin(dp, ops, i, j, med, KILL, costs, k);
     }
-  }
 
-    // target is empty: choose between deleting or killing
-    // all remaining source chars
+    // target is empty: delete all remaining source chars 
+    // or kill if it's the only and cheapest operation
   if (j == 0) {
-    if (i == strLen(src) && i * costs[DELETE] > costs[KILL]) {
-      ops[i][j] = KILL;
-      return dp[i][j] = costs[KILL];
-    } 
+    if (ops[i][j] == KILL && i * costs[DELETE] > costs[KILL])
+      return dp[i][j];
     ops[i][j] = DELETE;
     return dp[i][j] = i * costs[DELETE];
   }
 
   if (charAt(src, i - 1) == charAt(tgt, j - 1)){
-    med = computeMED(src, tgt, i - 1, j - 1, costs, dp, ops, kill);
-    updateMin(dp, ops, i, j, med, COPY, costs);
+    med = computeMED(src, tgt, i - 1, j - 1, costs, dp, ops);
+    checkMin(dp, ops, i, j, med, COPY, costs, 0);
   }
 
   if (i > 1 && j > 1 && charAt(src, i - 1) == charAt(tgt, j - 2) 
       && charAt(src, i - 2) == charAt(tgt, j - 1)) {
-    med = computeMED(src, tgt, i - 2, j - 2, costs, dp, ops, kill);
-    updateMin(dp, ops, i, j, med, SWAP, costs);
+    med = computeMED(src, tgt, i - 2, j - 2, costs, dp, ops);
+    checkMin(dp, ops, i, j, med, SWAP, costs, 0);
   }
 
-  med = computeMED(src, tgt, i, j - 1, costs, dp, ops, kill);
-  updateMin(dp, ops, i, j, med, INSERT, costs);
+  med = computeMED(src, tgt, i, j - 1, costs, dp, ops);
+  checkMin(dp, ops, i, j, med, INSERT, costs, 0);
 
-  med = computeMED(src, tgt, i - 1, j, costs, dp, ops, kill);
-  updateMin(dp, ops, i, j, med, DELETE, costs);
+  med = computeMED(src, tgt, i - 1, j, costs, dp, ops);
+  checkMin(dp, ops, i, j, med, DELETE, costs, 0);
 
   if (charAt(src, i - 1) != charAt(tgt, j - 1)) {
-    med = computeMED(src, tgt, i - 1, j - 1, costs, dp, ops, kill);
-    updateMin(dp, ops, i, j, med, REPLACE, costs);
+    med = computeMED(src, tgt, i - 1, j - 1, costs, dp, ops);
+    checkMin(dp, ops, i, j, med, REPLACE, costs, 0);
   }
 
   return dp[i][j];
@@ -101,8 +96,8 @@ void showEdit(string *str, string *src, unsigned char ch,
 //===================================================================
 // Reconstructs the optimal operation sequence to transform source 
 // into target string while showing all intermediate edit steps
-void reconstructPath(string *src, string *tgt, size_t i, size_t j, 
-                     op **ops, size_t kill, string *str) {
+void recPath(string *src, string *tgt, size_t i, size_t j, 
+             op **ops, string *str, size_t *costs) {
 
   if (i == 0 && j == 0) {
     printf("Source:\n  ");
@@ -112,36 +107,36 @@ void reconstructPath(string *src, string *tgt, size_t i, size_t j,
 
   switch (ops[i][j]) {
     case COPY:
-      reconstructPath(src, tgt, i - 1, j - 1, ops, kill, str);
+      recPath(src, tgt, i - 1, j - 1, ops, str, costs);
       printf("Copy %c:\n  ", charAt(src, i - 1)), 
       showEdit(str, src, charAt(src, i - 1), i);
       break;
     case INSERT:
-      reconstructPath(src, tgt, i, j - 1, ops, kill, str);
+      recPath(src, tgt, i, j - 1, ops, str, costs);
       printf("Insert %c:\n  ", charAt(tgt, j - 1));
       showEdit(str, src, charAt(tgt, j - 1), i);
       break;
     case DELETE:
-      reconstructPath(src, tgt, i - 1, j, ops, kill, str);
+      recPath(src, tgt, i - 1, j, ops, str, costs);
       printf("Delete %c:\n  ", charAt(src, i - 1));
       showEdit(str, src, '\0', i);
       break;
     case REPLACE:
-      reconstructPath(src, tgt, i - 1, j - 1, ops, kill, str);
+      recPath(src, tgt, i - 1, j - 1, ops, str, costs);
       printf("Replace %c with %c:\n  ", charAt(src, i - 1), 
              charAt(tgt, j - 1));
       showEdit(str, src, charAt(tgt, j - 1), i);
       break;
     case SWAP:
-      reconstructPath(src, tgt, i - 2, j - 2, ops, kill, str);
+      recPath(src, tgt, i - 2, j - 2, ops, str, costs);
       printf("Swap %c%c with %c%c:\n  ", charAt(src, i - 2), 
         charAt(src, i - 1), charAt(tgt, j - 2), charAt(tgt, j - 1));
       appendChar(str, charAt(tgt, j - 2));
       showEdit(str, src, charAt(tgt, j - 1), i);
       break;
     case KILL:
-      reconstructPath(src, tgt, kill, j, ops, kill, str);
-      printf("Kill %zu remaining chars:\n  ", strLen(src) - kill);
+      recPath(src, tgt, strLen(src) - costs[6], j, ops, str, costs);
+      printf("Kill %zu remaining chars:\n  ", costs[6]);
       showEdit(str, src, '\0', strLen(src));
       break;
   }
@@ -160,8 +155,9 @@ int main () {
   READ_STRING(src, '\n');
   READ_STRING(tgt, '\n');
 
-    // read operation costs 
-  size_t costs[6];
+    // read operation costs (copy, insert, delete, replace, swap,
+    // kill); the 7th cell is for storing the number of chars killed
+  size_t costs[7]; 
   READ_ARRAY(costs, "%zu", 6);
 
     // create memoization table
@@ -169,21 +165,18 @@ int main () {
                 strLen(tgt) + 1, SIZE_MAX);
 
     // create operations table
-  CREATE_MATRIX(op, ops, strLen(src) + 1, 
-                strLen(tgt) + 1, INSERT);
+  CREATE_MATRIX(op, ops, strLen(src) + 1, strLen(tgt) + 1, INSERT);
 
     // populate the memoization table and operations table
-  size_t kill = strLen(src);
   size_t med = computeMED(src, tgt, strLen(src), 
-                          strLen(tgt), costs, dp, ops, &kill);
+                          strLen(tgt), costs, dp, ops);
 
     // show edit distance and an optimal operation sequence
   printf("Minimum edit distance: %zu\n\n"
          "Optimal operation sequence:\n\n", med);
   if (med) {
     string *str = newString(strLen(src) + strLen(tgt) + 1);
-    reconstructPath(src, tgt, strLen(src), strLen(tgt), 
-                    ops, kill, str);
+    recPath(src, tgt, strLen(src), strLen(tgt), ops, str, costs);
     freeString(str);
   } else printf("None\n");
 

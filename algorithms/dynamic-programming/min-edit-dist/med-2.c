@@ -33,11 +33,11 @@ size_t computeMED(string *src, string *tgt, size_t i, size_t j,
       dp[i][j] = MIN(dp[i][j], med + costs[KILL]);
     }
 
-    // target is empty: choose between deleting or killing
-    // all remaining source chars
+    // target is empty: delete all remaining source chars 
+    // or kill if it's the only and cheapest operation
   if (j == 0) {
-    if (i == strLen(src) && i * costs[DELETE] > costs[KILL])
-      return dp[i][j] = costs[KILL];
+    if (dp[i][j] == costs[KILL] && i * costs[DELETE] > costs[KILL])
+      return dp[i][j];
     return dp[i][j] = i * costs[DELETE];
   }
 

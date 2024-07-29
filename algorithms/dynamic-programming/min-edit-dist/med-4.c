@@ -14,19 +14,20 @@ typedef enum { COPY, INSERT, DELETE, REPLACE, SWAP, KILL } op;
 
 //===================================================================
 // Updates the minimum value and operation if a new minimum is found
-void updateMin(size_t **dp, op **ops, size_t i, size_t j, 
-               size_t oldCost, op newOp, size_t *costs) {
+void checkMin(size_t **dp, op **ops, size_t i, size_t j, 
+              size_t oldCost, op newOp, size_t *costs, size_t k) {
 
   if (dp[i][j] > oldCost + costs[newOp]) {
     dp[i][j] = oldCost + costs[newOp];
     ops[i][j] = newOp;
+    if (newOp == KILL) costs[6] = i - k;
   }
 }
 
 //===================================================================
 // Bottom-up approach to compute the minimum edit distance
 size_t computeMED(string *src, string *tgt, size_t *costs, 
-                  size_t **dp, op **ops, size_t *kill) {
+                  size_t **dp, op **ops) {
 
     // target is empty: delete all source chars
   for (size_t i = 0; i <= strLen(src); ++i) {
@@ -44,30 +45,26 @@ size_t computeMED(string *src, string *tgt, size_t *costs,
     for (size_t j = 1; j <= strLen(tgt); ++j) {
       
       if (charAt(src, i - 1) == charAt(tgt, j - 1))
-        updateMin(dp, ops, i, j, dp[i - 1][j - 1], COPY, costs);
+        checkMin(dp, ops, i, j, dp[i - 1][j - 1], COPY, costs, 0);
       
       if (i > 1 && j > 1 && charAt(src, i - 1) == charAt(tgt, j - 2) 
           && charAt(src, i - 2) == charAt(tgt, j - 1)) {
-        updateMin(dp, ops, i, j, dp[i - 2][j - 2], SWAP, costs);
+        checkMin(dp, ops, i, j, dp[i - 2][j - 2], SWAP, costs, 0);
       }
 
-      updateMin(dp, ops, i, j, dp[i][j - 1], INSERT, costs);
+      checkMin(dp, ops, i, j, dp[i][j - 1], INSERT, costs, 0);
       
-      updateMin(dp, ops, i, j, dp[i - 1][j], DELETE, costs);
+      checkMin(dp, ops, i, j, dp[i - 1][j], DELETE, costs, 0);
 
       if (charAt(src, i - 1) != charAt(tgt, j - 1))
-        updateMin(dp, ops, i, j, dp[i - 1][j - 1], REPLACE, costs);
+        checkMin(dp, ops, i, j, dp[i - 1][j - 1], REPLACE, costs, 0);
     }
   }
   
     // check if killing last remaining chars is cheaper
-  for (size_t k = 0; k < strLen(src); ++k) {
-    size_t oldCost = dp[k][strLen(tgt)];
-    updateMin(dp, ops, strLen(src), strLen(tgt), 
-              oldCost, KILL, costs);
-    if (dp[strLen(src)][strLen(tgt)] == oldCost + costs[KILL])
-      *kill = k;
-  }
+  for (size_t k = 0; k < strLen(src); ++k) 
+    checkMin(dp, ops, strLen(src), strLen(tgt), 
+             dp[k][strLen(tgt)], KILL, costs, k);
 
   return dp[strLen(src)][strLen(tgt)];
 }
@@ -86,9 +83,9 @@ void showEdit(string *str, string *src, unsigned char ch,
 
 //===================================================================
 // Reconstructs the optimal operation sequence to transform source 
-// into target string while showing all intermediate edits
-void reconstructPath(string *src, string *tgt, size_t i, size_t j, 
-                     op **ops, size_t kill, string *str) {
+// into target string while showing all intermediate edit steps
+void recPath(string *src, string *tgt, size_t i, size_t j, 
+             op **ops, string *str, size_t *costs) {
 
   if (i == 0 && j == 0) {
     printf("Source:\n  ");
@@ -98,36 +95,36 @@ void reconstructPath(string *src, string *tgt, size_t i, size_t j,
 
   switch (ops[i][j]) {
     case COPY:
-      reconstructPath(src, tgt, i - 1, j - 1, ops, kill, str);
+      recPath(src, tgt, i - 1, j - 1, ops, str, costs);
       printf("Copy %c:\n  ", charAt(src, i - 1)), 
       showEdit(str, src, charAt(src, i - 1), i);
       break;
     case INSERT:
-      reconstructPath(src, tgt, i, j - 1, ops, kill, str);
+      recPath(src, tgt, i, j - 1, ops, str, costs);
       printf("Insert %c:\n  ", charAt(tgt, j - 1));
       showEdit(str, src, charAt(tgt, j - 1), i);
       break;
     case DELETE:
-      reconstructPath(src, tgt, i - 1, j, ops, kill, str);
+      recPath(src, tgt, i - 1, j, ops, str, costs);
       printf("Delete %c:\n  ", charAt(src, i - 1));
       showEdit(str, src, '\0', i);
       break;
     case REPLACE:
-      reconstructPath(src, tgt, i - 1, j - 1, ops, kill, str);
+      recPath(src, tgt, i - 1, j - 1, ops, str, costs);
       printf("Replace %c with %c:\n  ", charAt(src, i - 1), 
              charAt(tgt, j - 1));
       showEdit(str, src, charAt(tgt, j - 1), i);
       break;
     case SWAP:
-      reconstructPath(src, tgt, i - 2, j - 2, ops, kill, str);
+      recPath(src, tgt, i - 2, j - 2, ops, str, costs);
       printf("Swap %c%c with %c%c:\n  ", charAt(src, i - 2), 
         charAt(src, i - 1), charAt(tgt, j - 2), charAt(tgt, j - 1));
       appendChar(str, charAt(tgt, j - 2));
       showEdit(str, src, charAt(tgt, j - 1), i);
       break;
     case KILL:
-      reconstructPath(src, tgt, kill, j, ops, kill, str);
-      printf("Kill %zu remaining chars:\n  ", strLen(src) - kill);
+      recPath(src, tgt, strLen(src) - costs[6], j, ops, str, costs);
+      printf("Kill %zu remaining chars:\n  ", costs[6]);
       showEdit(str, src, '\0', strLen(src));
       break;
   }
@@ -146,8 +143,9 @@ int main () {
   READ_STRING(src, '\n');
   READ_STRING(tgt, '\n');
 
-    // read operation costs 
-  size_t costs[6];
+    // read operation costs (copy, insert, delete, replace, swap,
+    // kill); the 7th cell is for storing the number of chars killed
+  size_t costs[7]; 
   READ_ARRAY(costs, "%zu", 6);
 
     // create memoization table
@@ -155,12 +153,10 @@ int main () {
                 strLen(tgt) + 1, SIZE_MAX);
 
     // create operations table
-  CREATE_MATRIX(op, ops, strLen(src) + 1, 
-                strLen(tgt) + 1, COPY);
+  CREATE_MATRIX(op, ops, strLen(src) + 1, strLen(tgt) + 1, INSERT);
 
     // compute minimum edit distance
-  size_t kill = 0;
-  size_t med = computeMED(src, tgt, costs, dp, ops, &kill);
+  size_t med = computeMED(src, tgt, costs, dp, ops);
 
     // show edit distance and an optimal operation sequence
   printf("Minimum edit distance: %zu\n\n"
@@ -168,8 +164,7 @@ int main () {
 
   if (med) {
     string *str = newString(strLen(src) + strLen(tgt) + 1);
-    reconstructPath(src, tgt, strLen(src), strLen(tgt), 
-                    ops, kill, str);
+    recPath(src, tgt, strLen(src), strLen(tgt), ops, str, costs);
     freeString(str);
   } else printf("None\n");
 
