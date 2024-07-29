@@ -5,6 +5,7 @@
   license: MIT, see LICENSE file in repository root folder
   description: minimum edit distance
     using top-down DP with memoization and path reconstruction
+  time complexity: O(n*m)
 */
 
 #include "../../../lib/clib/clib.h"
@@ -55,10 +56,9 @@ size_t computeMED(string *src, string *tgt, size_t i, size_t j,
     if (i == strLen(src) && i * costs[DELETE] > costs[KILL]) {
       ops[i][j] = KILL;
       return dp[i][j] = costs[KILL];
-    } else {
-      ops[i][j] = DELETE;
-      return dp[i][j] = i * costs[DELETE];
-    }
+    } 
+    ops[i][j] = DELETE;
+    return dp[i][j] = i * costs[DELETE];
   }
 
   if (charAt(src, i - 1) == charAt(tgt, j - 1)){
@@ -100,7 +100,7 @@ void showEdit(string *str, string *src, unsigned char ch,
 
 //===================================================================
 // Reconstructs the optimal operation sequence to transform source 
-// into target string while showing the intermediate steps
+// into target string while showing all intermediate edit steps
 void reconstructPath(string *src, string *tgt, size_t i, size_t j, 
                      op **ops, size_t kill, string *str) {
 

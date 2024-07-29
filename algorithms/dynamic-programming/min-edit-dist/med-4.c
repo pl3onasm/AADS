@@ -86,7 +86,7 @@ void showEdit(string *str, string *src, unsigned char ch,
 
 //===================================================================
 // Reconstructs the optimal operation sequence to transform source 
-// into target string while showing the intermediate steps
+// into target string while showing all intermediate edits
 void reconstructPath(string *src, string *tgt, size_t i, size_t j, 
                      op **ops, size_t kill, string *str) {
 

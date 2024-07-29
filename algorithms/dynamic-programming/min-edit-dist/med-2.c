@@ -5,6 +5,7 @@
   license: MIT, see LICENSE file in repository root folder
   description: minimum edit distance
     using top-down DP with memoization, no path reconstruction
+  time complexity: O(n*m)
 */
 
 #include "../../../lib/clib/clib.h"
