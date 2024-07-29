@@ -1,0 +1,48 @@
+Minimum edit distance: 40
+
+Optimal operation sequence:
+
+Source:
+  divide and conquer
+Copy d:
+  d | ivide and conquer
+Insert y:
+  dy | ivide and conquer
+Insert n:
+  dyn | ivide and conquer
+Insert a:
+  dyna | ivide and conquer
+Insert m:
+  dynam | ivide and conquer
+Copy i:
+  dynami | vide and conquer
+Replace v with c:
+  dynamic | ide and conquer
+Insert  :
+  dynamic  | ide and conquer
+Insert p:
+  dynamic p | ide and conquer
+Insert r:
+  dynamic pr | ide and conquer
+Insert o:
+  dynamic pro | ide and conquer
+Insert g:
+  dynamic prog | ide and conquer
+Insert r:
+  dynamic progr | ide and conquer
+Insert a:
+  dynamic progra | ide and conquer
+Insert m:
+  dynamic program | ide and conquer
+Insert m:
+  dynamic programm | ide and conquer
+Copy i:
+  dynamic programmi | de and conquer
+Insert n:
+  dynamic programmin | de and conquer
+Insert g:
+  dynamic programming | de and conquer
+Kill 14 remaining chars:
+  dynamic programming | 
+Target:
+  dynamic programming

@@ -1,0 +1,36 @@
+Minimum edit distance: 23
+
+Optimal operation sequence:
+
+Source:
+  anarchist
+Delete a:
+   | narchist
+Delete n:
+   | archist
+Copy a:
+  a | rchist
+Copy r:
+  ar | chist
+Copy c:
+  arc | hist
+Copy h:
+  arch | ist
+Insert e:
+  arche | ist
+Insert o:
+  archeo | ist
+Insert l:
+  archeol | ist
+Insert o:
+  archeolo | ist
+Insert g:
+  archeolog | ist
+Copy i:
+  archeologi | st
+Copy s:
+  archeologis | t
+Copy t:
+  archeologist | 
+Target:
+  archeologist

@@ -1,0 +1,44 @@
+Minimum edit distance: 39
+
+Optimal operation sequence:
+
+Source:
+  dynamic programming
+Copy d:
+  d | ynamic programming
+Replace y with i:
+  di | namic programming
+Insert v:
+  div | namic programming
+Insert i:
+  divi | namic programming
+Insert d:
+  divid | namic programming
+Insert e:
+  divide | namic programming
+Insert  :
+  divide  | namic programming
+Swap na with an:
+  divide an | mic programming
+Insert d:
+  divide and | mic programming
+Insert  :
+  divide and  | mic programming
+Insert c:
+  divide and c | mic programming
+Insert o:
+  divide and co | mic programming
+Insert n:
+  divide and con | mic programming
+Insert q:
+  divide and conq | mic programming
+Insert u:
+  divide and conqu | mic programming
+Insert e:
+  divide and conque | mic programming
+Insert r:
+  divide and conquer | mic programming
+Kill 15 remaining chars:
+  divide and conquer | 
+Target:
+  divide and conquer

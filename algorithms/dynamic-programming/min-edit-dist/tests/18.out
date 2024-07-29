@@ -1,0 +1,28 @@
+Minimum edit distance: 19
+
+Optimal operation sequence:
+
+Source:
+  archeologist
+Insert a:
+  a | archeologist
+Insert n:
+  an | archeologist
+Copy a:
+  ana | rcheologist
+Copy r:
+  anar | cheologist
+Copy c:
+  anarc | heologist
+Copy h:
+  anarch | eologist
+Insert i:
+  anarchi | eologist
+Insert s:
+  anarchis | eologist
+Insert t:
+  anarchist | eologist
+Kill 8 remaining chars:
+  anarchist | 
+Target:
+  anarchist

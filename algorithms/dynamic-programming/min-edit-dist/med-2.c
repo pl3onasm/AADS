@@ -21,17 +21,24 @@ size_t computeMED(string *src, string *tgt, size_t i, size_t j,
   if (dp[i][j] != SIZE_MAX) return dp[i][j];
 
   size_t med;
+  
+    // source is empty: insert remaining target chars
+  if (i == 0) return dp[i][j] = j * costs[INSERT];
+
+    // check if killing last remaining chars is cheaper
   if (i == strLen(src) && j == strLen(tgt))
     for (size_t k = 0; k < strLen(src); ++k) {
       med = computeMED(src, tgt, k, j, costs, dp);
       dp[i][j] = MIN(dp[i][j], med + costs[KILL]);
     }
-  
-    // source is empty: insert remaining target chars
-  if (i == 0) return dp[i][j] = j * costs[INSERT];
 
-    // target is empty: delete all remaining source chars
-  if (j == 0) return dp[i][j] = i * costs[DELETE];
+    // target is empty: choose between deleting or killing
+    // all remaining source chars
+  if (j == 0) {
+    if (i == strLen(src) && i * costs[DELETE] > costs[KILL])
+      return dp[i][j] = costs[KILL];
+    return dp[i][j] = i * costs[DELETE];
+  }
 
   if (charAt(src, i - 1) == charAt(tgt, j - 1)) {
     med = computeMED(src, tgt, i - 1, j - 1, costs, dp);

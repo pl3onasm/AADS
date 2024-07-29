@@ -18,19 +18,26 @@ typedef enum { COPY, INSERT, DELETE, REPLACE, SWAP, KILL } op;
 // Naive recursive approach to compute the minimum edit distance
 size_t computeMED(string *src, string *tgt, size_t i, size_t j, 
                   size_t *costs) { 
-
+  
+    // source is empty: insert remaining target chars
+  if (i == 0) return j * costs[INSERT];
+ 
   size_t med, minCost = SIZE_MAX;
+
+    // check if killing last remaining chars is cheaper
   if (i == strLen(src) && j == strLen(tgt))
     for (size_t k = 0; k < strLen(src); ++k) {
       med = computeMED(src, tgt, k, j, costs);
       minCost = MIN(minCost, med + costs[KILL]);
     }
-  
-    // source is empty: insert remaining target chars
-  if (i == 0) return j * costs[INSERT];
 
-    // target is empty: delete all remaining source chars
-  if (j == 0) return MIN(i * costs[DELETE], costs[KILL]);
+    // target is empty: choose between deleting or killing
+    // all remaining source chars
+  if (j == 0) {
+    if (i == strLen(src) && i * costs[DELETE] > costs[KILL])
+      return costs[KILL];
+    return i * costs[DELETE];
+  }
 
   if (charAt(src, i - 1) == charAt(tgt, j - 1)) {
     med = computeMED(src, tgt, i - 1, j - 1, costs);

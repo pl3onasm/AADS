@@ -1,0 +1,26 @@
+Minimum edit distance: 21
+
+Optimal operation sequence:
+
+Source:
+  catholic
+Delete c:
+   | atholic
+Copy a:
+  a | tholic
+Copy t:
+  at | holic
+Copy h:
+  ath | olic
+Replace o with e:
+  athe | lic
+Delete l:
+  athe | ic
+Copy i:
+  athei | c
+Replace c with s:
+  atheis | 
+Insert t:
+  atheist | 
+Target:
+  atheist

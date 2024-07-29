@@ -60,6 +60,7 @@ size_t computeMED(string *src, string *tgt, size_t *costs,
     }
   }
   
+    // check if killing last remaining chars is cheaper
   for (size_t k = 0; k < strLen(src); ++k) {
     size_t oldCost = dp[k][strLen(tgt)];
     updateMin(dp, ops, strLen(src), strLen(tgt), 

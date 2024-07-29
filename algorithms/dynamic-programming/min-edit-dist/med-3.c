@@ -31,9 +31,17 @@ size_t computeMED(string *src, string *tgt, size_t i, size_t j,
 
     // return the value if it has already been computed
   if (dp[i][j] != SIZE_MAX) return dp[i][j];
-
+  
   size_t med;
-  if (i && i == strLen(src) && j == strLen(tgt)) {
+
+    // source is empty: insert remaining target chars
+  if (i == 0) {
+    ops[i][j] = INSERT;
+    return dp[i][j] = j * costs[INSERT];
+  }
+
+    // check if killing last remaining chars is cheaper
+  if (i == strLen(src) && j == strLen(tgt)) {
     for (size_t k = 0; k < strLen(src); ++k) {
       med = computeMED(src, tgt, k, j, costs, dp, ops, kill);
       updateMin(dp, ops, i, j, med, KILL, costs);
@@ -41,16 +49,16 @@ size_t computeMED(string *src, string *tgt, size_t i, size_t j,
     }
   }
 
-    // base case: source is empty
-  if (i == 0) {
-    ops[i][j] = INSERT;
-    return dp[i][j] = j * costs[INSERT];
-  }
-
-    // base case: target is empty
+    // target is empty: choose between deleting or killing
+    // all remaining source chars
   if (j == 0) {
-    ops[i][j] = DELETE;
-    return dp[i][j] = i * costs[DELETE];
+    if (i == strLen(src) && i * costs[DELETE] > costs[KILL]) {
+      ops[i][j] = KILL;
+      return dp[i][j] = costs[KILL];
+    } else {
+      ops[i][j] = DELETE;
+      return dp[i][j] = i * costs[DELETE];
+    }
   }
 
   if (charAt(src, i - 1) == charAt(tgt, j - 1)){
