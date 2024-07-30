@@ -40,14 +40,7 @@ Please refer to the license if you wish to use any of the code in this repositor
 
 Please note that this is very much a work in progress. It simply takes time to develop and test all the code and write the explanations. Some of the code took me days to think through and implement. Currently, I am in the process of revising and improving everything. Updates will be made regularly. I will also add makefiles in the near future.
 
---------------------------
-
-${\color{darkseagreen}\text{\Large CLRS solutions}}$
-
-* [Selected solutions to the third edition](solutions/solutions-3ed.pdf)
-* [Selected solutions to the fourth edition](solutions/solutions-4ed.pdf)
-
-<br/>
+--------------------------------
 
 ${\color{darkseagreen}\text{\Large Recommended}}$
 
@@ -55,7 +48,6 @@ ${\color{darkseagreen}\text{\Large Recommended}}$
 * [MIT Design and Analysis of Algorithms](https://www.youtube.com/playlist?list=PLUl4u3cNGP6317WaSNfmCvGym2ucw3oGp)
 * [MIT Advanced Data Structures](https://www.youtube.com/playlist?list=PLUl4u3cNGP61hsJNdULdudlRL493b-XZf)
   
-
 --------------------------------
 
 ${\color{darkseagreen}\text{\Large References}}$
