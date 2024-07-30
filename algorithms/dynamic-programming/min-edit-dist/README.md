@@ -9,12 +9,12 @@ Given are two strings $S$ and $T$ of lengths $m$ and $n$ respectively, and a set
 
 At each step of the transformation process, we can choose from the following operations:
 
-- ${\color{cornflowerblue}\text{Copy}}$ the current character from $S$, if it matches the current character from $T$, with cost $c_c$
-- ${\color{cornflowerblue}\text{Insert}}$ a character at the current position to match the current character from $T$ with cost $c_i$
-- ${\color{cornflowerblue}\text{Delete}}$ the current character from $S$, if it does not match the current character from $T$, with cost $c_d$
-- ${\color{cornflowerblue}\text{Replace}}$ the current non-matching character from $S$ with the current character from $T$ with cost $c_r$
-- ${\color{cornflowerblue}\text{Swap}}$ the current and next characters in $S$ and copy them with cost $c_s$ in the same step in order to match the next two characters in $T$
-- ${\color{cornflowerblue}\text{Kill}}$ the remaining characters in $S$ with cost $c_k$ in order to reach the end of $T$. This operation is necessarily the last operation in the sequence.
+- ${\color{cornflowerblue}\text{Copy}}$ the current character from $S$, if it matches the current character from $T$, with cost ${\color{orchid}c_c}$  
+- ${\color{cornflowerblue}\text{Insert}}$ a character at the current position in $S$, if it fails to match the current character from $T$ with cost ${\color{orchid}c_i}$
+- ${\color{cornflowerblue}\text{Delete}}$ the current character from $S$, if it does not match the current character from $T$, with cost ${\color{orchid}c_d}$
+- ${\color{cornflowerblue}\text{Replace}}$ the current non-matching character from $S$ with the current character from $T$ with cost ${\color{orchid}c_r}$
+- ${\color{cornflowerblue}\text{Swap}}$ the current and next character in $S$ and copy them with cost ${\color{orchid}c_s}$ in the same step in order to match the next two characters in $T$
+- ${\color{cornflowerblue}\text{Kill}}$ the remaining characters in $S$ with cost ${\color{orchid}c_k}$ in order to reach the end of $T$. This operation is necessarily the last operation in the sequence.
 
 For example, given $S =$ `five` and $T =$ `six`, with costs $c_c = 1$, $c_i = 2$, $c_d = 3$, $c_r = 4$, $c_s = 5$, and $c_k = 6$, an optimal operation sequence is:
 
@@ -26,13 +26,23 @@ For example, given $S =$ `five` and $T =$ `six`, with costs $c_c = 1$, $c_i = 2$
 
 The total cost of this transformation is the total sum of the costs of the operations, which is $4 + 1$ $+ 4 + 3$ $= 12$. This is the minimum edit distance between the two strings $S$ and $T$.
 
+Note that the optimal sequence of operations is ${\color{peru}\text{not unique}}$, as there may be multiple ways to transform the source string to the target string with the same minimum cost. For the example above, another optimal operation sequence is:
+
+- `|five` &emsp; &emsp;Insert `s`
+- `s|five` &emsp; &ensp;Insert `i`
+- `si|five` &emsp; Insert `x`
+- `six|five` &ensp; Kill 4 chars
+- `six|`
+
+The total cost of this transformation is the same as before: $2 + 2$ $+ 2 + 6$ $= 12$.
+
 <br />
 
 ${\color{darkseagreen}\text{\Large The key idea}}$
 
-The idea is to think of the subproblems in terms of ${\color{peru}\text{prefixes}}$ of the two given strings. Let $S_i$ and $T_j$ be the prefixes of lengths $i$ and $j$ respectively. By solving the subproblems for smaller and smaller prefixes, we can build up the solution for the entire input strings, as the minimum edit distance can be expressed in terms of the minimum edit distances of the prefixes by considering all the possible options for the previous operation that could have been applied to reach the current state and choosing the one that minimizes the total cost.  
+The idea is to think of the subproblems in terms of ${\color{peru}\text{prefixes}}$ of the two given strings. Let $S_i$ and $T_j$ be the prefixes of lengths $i$ and $j$ respectively. By solving the subproblems for smaller and smaller prefixes, we can build up the solution for the entire input strings, as the minimum edit distance can be expressed in terms of the minimum edit distances of the prefixes by considering at each step all the possible options for the last operation and eventually choosing the one that minimizes the total cost.
 
-For example, if the last operation was a ${\color{cornflowerblue}\text{copy}}$, then the minimum edit distance of the prefixes $S_i$ and $T_j$ is the minimum edit distance of their prefixes without their last characters, i.e., $S_{i-1}$ and $T_{j-1}$, plus the cost of the copy operation $c_r$. If, on the other hand, the last operation was a ${\color{cornflowerblue}\text{delete}}$, then the minimum edit distance of the prefixes $S_i$ and $T_j$ is the minimum edit distance of their prefixes without the last character of $S$, i.e., $S_{i-1}$, plus the cost of the delete operation $c_d$, and so on.
+For example, if the last operation is a ${\color{cornflowerblue}\text{copy}}$, then the minimum edit distance of the prefixes $S_i$ and $T_j$ is the minimum edit distance of their prefixes $S_{i-1}$ and $T_{j-1}$, plus the cost of the copy operation ${\color{orchid}c_c}$. If, on the other hand, the last operation is a ${\color{cornflowerblue}\text{delete}}$, then the minimum edit distance of the prefixes $S_i$ and $T_j$ is the minimum edit distance of their prefixes $S_{i-1}$ and $T_j$, plus the cost of the delete operation ${\color{orchid}c_d}$, and so on.
 
 Clearly, the subproblems are ${\color{peru}\text{overlapping}}$, and also exhibit ${\color{peru}\text{optimal substructure}}$, as the minimum edit distance of the prefixes can be expressed in terms of the minimum edit distances of their prefixes. This makes the problem an ideal candidate for dynamic programming.  
 
@@ -41,20 +51,20 @@ As a consequence, we can define a recursive function $D(i, j)$ that returns the 
 $$
 \color{darkslateblue}\huge\boxed{\color{rosybrown}\normalsize \space
 D(i,j) = \min \begin{cases}
-\small D(i-1, j-1) + {\color{cornflowerblue}c_r} & \scriptsize \text{if } S[i-1] \neq T[j-1] \\
-\small D(i-1, j-1) + {\color{cornflowerblue}c_c} & \scriptsize \text{if } S[i-1] = T[j-1] \\
-\small D(i-1, j) + {\color{cornflowerblue}c_d} \\
-\small D(i, j-1) + {\color{cornflowerblue}c_i} \\
-\small D(i-2, j-2) + {\color{cornflowerblue}c_s} & \scriptsize \text{if } S[i-1] = T[j-2] \\
+\small D(i-1, j-1) + {\color{orchid}c_r} & \scriptsize \text{if } S[i-1] \neq T[j-1] \\
+\small D(i-1, j-1) + {\color{orchid}c_c} & \scriptsize \text{if } S[i-1] = T[j-1] \\
+\small D(i-1, j) + {\color{orchid}c_d} \\
+\small D(i, j-1) + {\color{orchid}c_i} \\
+\small D(i-2, j-2) + {\color{orchid}c_s} & \scriptsize \text{if } S[i-1] = T[j-2] \\
 & \space \scriptsize \land \space S[i-2] = T[j-1] \\
-\small \min \lbrace D(k-1, n) + {\color{cornflowerblue}c_k}   \\
+\small \min \lbrace D(k-1, n) + {\color{orchid}c_k}   \\
 \qquad \small : 0 \leq k < m \rbrace  & \scriptsize \text{if } i = m \land j = n
 \end{cases}\space}
 $$
 
 <br />
 
-The base cases are $D(0, j) = i \cdot c_i$ and $D(i, 0) = j \cdot c_d$, since reaching an empty source string $S$ requires inserting $j$ characters, the ones that are still left in $T$, at a total cost of $j \cdot c_i$, and similarly, reaching an empty target string $T$ requires deleting $i$ characters, the ones that are still left in $S$, at a total cost of $i \cdot c_d$. The recursive case is when the last operation is a copy, delete, insert, replace, or swap. The kill operation, on the other hand, is necessarily the last operation in the sequence, so it is only considered when the end of both strings is reached. The final answer then is obtained by computing $D(m, n)$ for the entire input strings $S$ and $T$.  
+The base cases are $D(0, j) = j \cdot c_i$ and $D(i, 0) = i \cdot c_d$, since reaching an empty source string $S$ requires inserting $j$ characters, the ones that are still left in $T$, at a total cost of $j \cdot c_i$, and similarly, reaching an empty target string $T$ requires deleting $i$ characters, the ones that are still left in $S$, at a total cost of $i \cdot c_d$. The recursive case is when the last operation is a copy, delete, insert, replace, or swap. The kill operation, on the other hand, is necessarily the last operation in the sequence, so it is only considered when the end of both strings is reached. The final answer then is obtained by computing $D(m, n)$ for the entire input strings $S$ and $T$.  
 
 <br />
 
