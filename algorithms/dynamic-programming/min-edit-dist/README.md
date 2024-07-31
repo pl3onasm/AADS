@@ -10,8 +10,8 @@ Given are two strings $S$ and $T$ of lengths $m$ and $n$ respectively, and a set
 At each step of the transformation process, we can choose from the following operations:
 
 - ${\color{cornflowerblue}\text{Copy}}$ the current character from $S$, if it matches the current character from $T$, with cost ${\color{orchid}c_c}$  
-- ${\color{cornflowerblue}\text{Insert}}$ a character at the current position in $S$, if it fails to match the current character from $T$ with cost ${\color{orchid}c_i}$
-- ${\color{cornflowerblue}\text{Delete}}$ the current character from $S$, if it does not match the current character from $T$, with cost ${\color{orchid}c_d}$
+- ${\color{cornflowerblue}\text{Insert}}$ a character at the current position in $S$ with cost ${\color{orchid}c_i}$. This operation is always possible.
+- ${\color{cornflowerblue}\text{Delete}}$ the current character from $S$ with cost ${\color{orchid}c_d}$. This operation is always possible.
 - ${\color{cornflowerblue}\text{Replace}}$ the current non-matching character from $S$ with the current character from $T$ with cost ${\color{orchid}c_r}$
 - ${\color{cornflowerblue}\text{Swap}}$ the current and next character in $S$ and copy them with cost ${\color{orchid}c_s}$ in the same step in order to match the next two characters in $T$
 - ${\color{cornflowerblue}\text{Kill}}$ the remaining characters in $S$ with cost ${\color{orchid}c_k}$ in order to reach the end of $T$. This operation is necessarily the last operation in the sequence.
@@ -57,7 +57,7 @@ D(i,j) = \min \begin{cases}
 \small D(i, j-1) + {\color{orchid}c_i} \\
 \small D(i-2, j-2) + {\color{orchid}c_s} & \scriptsize \text{if } S[i-1] = T[j-2] \\
 & \space \scriptsize \land \space S[i-2] = T[j-1] \\
-\small \min \lbrace D(k-1, n) + {\color{orchid}c_k}   \\
+\small \min \lbrace D(k, n) + {\color{orchid}c_k}   \\
 \qquad \small : 0 \leq k < m \rbrace  & \scriptsize \text{if } i = m \land j = n
 \end{cases}\space}
 $$
