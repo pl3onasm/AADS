@@ -6,11 +6,14 @@
   description: longest increasing subsequence
     top-down DP implementation
   time complexity: O(n^2)
-  note: for top-down DP it is necessary to initialize the entire 
+  notes: for top-down DP it is necessary to initialize the entire 
     table with a value that is not a valid result so that we can  
     check whether the value has been computed. This is different 
     from bottom-up DP where the table only needs to be initialized
     with the base cases.
+    Also note that the solutions are not unique, so the subsequence
+    printed may not be the same as the one printed by the bottom-up
+    implementation.
 */ 
 
 #include "../../../lib/clib/clib.h"
@@ -26,9 +29,9 @@ size_t computeLis (int *arr, size_t len, size_t i,
     // otherwise simply return memoized value
   if (table[i][j] == SIZE_MAX) {
 
-    // base case: no more elements to consider
+      // base case: no more elements to consider
     if (i == 0)
-      return 0;
+      return table[i][j] = 0;
     
     if (j == len || arr[i - 1] <= arr[j])
         // take maximum of including or excluding current element
