@@ -24,7 +24,7 @@ For example, given $S =$ `five` and $T =$ `six`, with costs $c_c = 1$, $c_i = 2$
 - `six|e` &emsp; Delete `e`
 - `six|`
 
-The total cost of this transformation is the total sum of the costs of the operations, which is $4 + 1$ $+ 4 + 3$ $= 12$. This is the minimum edit distance between the two strings $S$ and $T$.
+The total cost of this transformation is the total sum of the costs of the operations, which is $4 + 1 +$ $4 + 3$ $= 12$. This is the minimum edit distance between the two strings $S$ and $T$.
 
 Note that the optimal sequence of operations is ${\color{peru}\text{not unique}}$, as there may be multiple ways to transform the source string to the target string with the same minimum cost. For the example above, another optimal operation sequence is:
 
@@ -34,7 +34,7 @@ Note that the optimal sequence of operations is ${\color{peru}\text{not unique}}
 - `six|five` &ensp; Kill 4 chars
 - `six|`
 
-The total cost of this transformation is the same as before: $2 + 2$ $+ 2 + 6$ $= 12$.
+The total cost of this transformation is the same as before: $2 + 2 +$ $2 + 6$ $= 12$.
 
 <br />
 

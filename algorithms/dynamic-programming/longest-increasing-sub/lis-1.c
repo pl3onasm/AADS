@@ -17,13 +17,13 @@
 // Returns the length of the longest increasing subsequence
 size_t computeLis (int *arr, size_t i, size_t j) {
   
-  if (i == SIZE_MAX)
+  if (i == 0)
       // base case: no more elements to consider
     return 0;
 
-  if (j == SIZE_MAX || arr[i] <= arr[j])
+  if (j == SIZE_MAX || arr[i - 1] <= arr[j])
       // take maximum of including or excluding current element
-    return MAX(1 + computeLis(arr, i - 1, i),
+    return MAX(1 + computeLis(arr, i - 1, i - 1),
                computeLis(arr, i - 1, j));
   else 
       // exclude current element
@@ -36,7 +36,7 @@ int main () {
 
   READ(int, arr, "%d", len);
 
-  printf("Max length: %zu\n", computeLis(arr, len - 1, SIZE_MAX));
+  printf("Max length: %zu\n", computeLis(arr, len, SIZE_MAX));
 
   free(arr);
   

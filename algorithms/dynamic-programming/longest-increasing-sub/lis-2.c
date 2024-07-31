@@ -22,17 +22,17 @@
 size_t computeLis (int *arr, size_t len, size_t i, 
                    size_t j, size_t **table) {
     
-    // base case: no more elements to consider
-  if (i == SIZE_MAX)
-    return 0;
-
     // if value is not available, compute, store and return it
     // otherwise simply return memoized value
   if (table[i][j] == SIZE_MAX) {
+
+    // base case: no more elements to consider
+    if (i == 0)
+      return 0;
     
-    if (j == len || arr[i] <= arr[j])
+    if (j == len || arr[i - 1] <= arr[j])
         // take maximum of including or excluding current element
-      table[i][j] = MAX(1 + computeLis(arr, len, i - 1, i, table),
+      table[i][j] = MAX(1 + computeLis(arr, len, i - 1, i - 1, table),
                         computeLis(arr, len, i - 1, j, table));
     else 
         // exclude current element
@@ -49,11 +49,12 @@ void reconstructLis(int *arr, size_t len, size_t **table,
 
   CREATE_ARRAY(int, lis, subLen, 0);
 
-  for (size_t i = len - 1, j = len, s = subLen; i > 0; i--) 
-    if (table[i][j] == 1 + table[i - 1][i]) {
-      lis[--s] = arr[i];
-      j = i;
-    }
+  for (size_t i = len, j = len, s = subLen; s; i--) {
+    if (table[i][j] == table[i - 1][j]) 
+      continue;
+    lis[--s] = arr[i - 1];
+    j = i - 1;
+  }
   
   PRINT_ARRAY(lis, "%d", subLen);
   free(lis);
@@ -65,14 +66,14 @@ int main () {
 
   READ(int, arr, "%d", len);
 
-  CREATE_MATRIX(size_t, table, len, len + 1, SIZE_MAX);
+  CREATE_MATRIX(size_t, table, len + 1, len + 1, SIZE_MAX);
 
-  size_t subLen = computeLis(arr, len, len - 1, len, table);
+  size_t subLen = computeLis(arr, len, len, len, table);
 
   printf("Max length: %zu\nSubsequence:\n ", subLen);
   reconstructLis(arr, len, table, subLen);
 
-  FREE_MATRIX(table, len);
+  FREE_MATRIX(table, len + 1);
   free(arr);
   
   return 0;
