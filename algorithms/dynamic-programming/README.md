@@ -12,8 +12,10 @@ ${\color{Rosybrown}\text{\Large Overview}}$
 | Prob 15/14-2 | [Longest Palindromic Subsequence](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/dynamic-programming/longest-palin-sub) |
 | Ex 15/14.4-5,6 |[Longest Increasing Subsequence](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/dynamic-programming/longest-increasing-sub) |
 | Ex 16/15.2-2 | [0-1 Knapsack Problem](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/dynamic-programming/knapsack) |
-| – | [Minimal Palindromic Partitioning](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/dynamic-programming/min-pal-part) |
 | Prob 15/14-5 | [Minimum Edit Distance](https://github.com/pl3onasm/AADS/tree/main/algorithms/dynamic-programming/min-edit-dist) |
+| –/14.5 | [Optimal Binary Search Trees](https://github.com/pl3onasm/AADS/tree/main/algorithms/dynamic-programming/opt-bsts) |
+| –/– | [Minimal Palindromic Partitioning](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/dynamic-programming/min-pal-part) |
+| –/– | [Wild Card Pattern Matching](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/dynamic-programming/wd-matching) |
 | 25/23.2 | [Floyd-Warshall](https://github.com/pl3onasm/CLRS-in-C/tree/main/algorithms/graphs/APSP-floyd) |
 
 <br/>

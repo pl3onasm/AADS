@@ -14,7 +14,7 @@ At each step of the transformation process, we can choose from the following ope
 - ${\color{cornflowerblue}\text{Delete}}$ the current character from $S$ with cost ${\color{orchid}c_d}$. This operation is always possible.
 - ${\color{cornflowerblue}\text{Replace}}$ the current non-matching character from $S$ with the current character from $T$ with cost ${\color{orchid}c_r}$
 - ${\color{cornflowerblue}\text{Swap}}$ the current and next character in $S$ and copy them with cost ${\color{orchid}c_s}$ in the same step in order to match the next two characters in $T$
-- ${\color{cornflowerblue}\text{Kill}}$ the remaining characters in $S$ with cost ${\color{orchid}c_k}$ in order to reach the end of $T$. This operation is necessarily the last operation in the sequence.
+- ${\color{cornflowerblue}\text{Kill}}$ the remaining characters in $S$ with cost ${\color{orchid}c_k}$ in order to reach the end of $S$ and finish the transformation process. This operation is necessarily the last operation in the sequence.
 
 For example, given $S =$ `five` and $T =$ `six`, with costs $c_c = 1$, $c_i = 2$, $c_d = 3$, $c_r = 4$, $c_s = 5$, and $c_k = 6$, an optimal operation sequence is:
 
