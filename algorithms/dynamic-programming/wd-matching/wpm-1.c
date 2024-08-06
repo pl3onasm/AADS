@@ -34,7 +34,7 @@ bool matchPattern (string *src, string *ptn, size_t i, size_t j) {
       || charAt(ptn, j - 1) == '?')
     return matchPattern(src, ptn, i - 1, j - 1);
   
-    // current pattern char is wildcard *: skip source char
+    // current pattern char is a * wildcard: skip source char
     // or skip pattern char
   if (charAt(ptn, j - 1) == '*')
     return matchPattern(src, ptn, i, j - 1) 

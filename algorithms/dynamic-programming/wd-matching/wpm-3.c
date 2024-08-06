@@ -10,7 +10,6 @@
 */
 
 #include "../../../lib/clib/clib.h"
-#include <stdint.h>
 
 //===================================================================
 // Bottom-up DP approach to determine if a source string matches
@@ -22,7 +21,7 @@ bool matchPattern (string *src, string *ptn, bool **dp) {
   dp[0][0] = true;
 
     // base case: source is empty but pattern is not;
-    // check if the pattern is a sequence of '*' characters
+    // check if the remaining pattern chars are all '*'
   for (size_t i = 1; i <= strLen(ptn); ++i) 
     if (charAt(ptn, i - 1) == '*') 
       dp[0][i] = dp[0][i - 1];

@@ -35,8 +35,9 @@ size_t computeLis (int *arr, size_t len, size_t i,
     
     if (j == len || arr[i - 1] <= arr[j])
         // take maximum of including or excluding current element
-      table[i][j] = MAX(1 + computeLis(arr, len, i - 1, i - 1, table),
-                        computeLis(arr, len, i - 1, j, table));
+      table[i][j] = 
+        MAX(1 + computeLis(arr, len, i - 1, i - 1, table),
+            computeLis(arr, len, i - 1, j, table));
     else 
         // exclude current element
       table[i][j] = computeLis(arr, len, i - 1, j, table);

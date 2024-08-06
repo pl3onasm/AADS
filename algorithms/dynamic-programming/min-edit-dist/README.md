@@ -46,7 +46,7 @@ For example, if the last operation is a ${\color{cornflowerblue}\text{copy}}$, t
 
 Clearly, the subproblems are ${\color{peru}\text{overlapping}}$, and also exhibit ${\color{peru}\text{optimal substructure}}$, as the minimum edit distance of the prefixes can be expressed in terms of the minimum edit distances of their prefixes. This makes the problem an ideal candidate for dynamic programming.  
 
-As a consequence, we can define a recursive function $D(i, j)$ that returns the minimum edit distance of the prefixes $S_i$ and $T_j$ as follows:
+As a consequence, we can define a recursive function $D(i, j)$ that returns the minimum edit distance of non-empty prefixes $S_i$ and $T_j$ as follows:
 
 $$
 \color{darkslateblue}\huge\boxed{\color{rosybrown}\normalsize \space
@@ -64,7 +64,9 @@ $$
 
 <br />
 
-The base cases are $D(0, j) = j \cdot c_i$ and $D(i, 0) = i \cdot c_d$, since reaching an empty source string $S$ requires inserting $j$ characters, the ones that are still left in $T$, at a total cost of $j \cdot c_i$, and similarly, reaching an empty target string $T$ requires deleting $i$ characters, the ones that are still left in $S$, at a total cost of $i \cdot c_d$. The recursive case is when the last operation is a copy, delete, insert, replace, or swap. The kill operation, on the other hand, is necessarily the last operation in the sequence, so it is only considered when the end of both strings is reached. The final answer then is obtained by computing $D(m, n)$ for the entire input strings $S$ and $T$.  
+The base cases are $D(0, j) = j \cdot c_i$ and $D(i, 0) = i \cdot c_d$, since reaching an empty source string $S$ requires inserting $j$ characters, the ones that are still left in $T$, at a total cost of $j \cdot c_i$, and similarly, reaching an empty target string $T$ requires deleting $i$ characters, the ones that are still left in $S$, at a total cost of $i \cdot c_d$. In the latter base case, we also need to consider the kill operation: if it is the only operation of the sequence and costs less than deleting the remaining characters one by one, then it is the optimal choice.
+
+The recursive case is when the last operation is a copy, delete, insert, replace, or swap: for each of these operations, we consider the cost of this last operation and add it to the minimum edit distance of the prefixes $S_i$ and $T_j$ obtained by applying the operation. The kill operation, on the other hand, is necessarily the last operation in the sequence, so it is only considered when the end of both strings is reached. The final answer then is obtained by computing $D(m, n)$ for the entire input strings $S$ and $T$.  
 
 <br />
 
@@ -95,3 +97,9 @@ ${\color{darkseagreen}\text{\Large Bottom-up}}$
 The bottom-up approach is a more efficient way to solve the MED problem, as it avoids the overhead of recursive calls. The idea here is to build up the final solution by solving the subproblems in a ${\color{peru}\text{topological order}}$ determined by the lengths of the prefixes, starting with the smallest prefixes and working our way up to the entire input strings. The time complexity of this approach is the same as that of the top-down approach, $\mathcal{O}(m \cdot n)$.
 
 Implementation: [MED - Bottom-up](https://github.com/pl3onasm/CLRS/blob/main/algorithms/dynamic-programming/min-edit-dist/med-4.c)
+
+<br />
+
+${\color{darkseagreen}\text{\Large Notes}}$
+
+The MED problem is related to the ${\color{peru}\text{Levenshtein distance}}$, which is a metric used to measure the dissimilarity between two strings: it is the minimum number of single-character edits (insertions, deletions, or substitutions) required to change one string into the other, each operation having a cost of $1$, while a copy is considered as a substitution with cost $0$. The [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) is a special case of the MED problem, where all operations have the same unit cost: it can be obtained by running the above algorithms with $c_c = 0$, $c_i = c_d = c_r = 1$ and $c_s = c_k = \infty$.

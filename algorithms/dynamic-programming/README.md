@@ -13,9 +13,9 @@ ${\color{Rosybrown}\text{\Large Overview}}$
 | Ex 15/14.4-5,6 |[Longest Increasing Subsequence](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/dynamic-programming/longest-increasing-sub) |
 | Ex 16/15.2-2 | [0-1 Knapsack Problem](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/dynamic-programming/knapsack) |
 | Prob 15/14-5 | [Minimum Edit Distance](https://github.com/pl3onasm/AADS/tree/main/algorithms/dynamic-programming/min-edit-dist) |
-| –/14.5 | [Optimal Binary Search Trees](https://github.com/pl3onasm/AADS/tree/main/algorithms/dynamic-programming/opt-bsts) |
+| 15/14.5 | [Optimal Binary Search Trees](https://github.com/pl3onasm/AADS/tree/main/algorithms/dynamic-programming/opt-bsts) |
 | –/– | [Minimal Palindromic Partitioning](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/dynamic-programming/min-pal-part) |
-| –/– | [Wild Card Pattern Matching](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/dynamic-programming/wd-matching) |
+| –/– | [Wildcard Pattern Matching](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/dynamic-programming/wd-matching) |
 | 25/23.2 | [Floyd-Warshall](https://github.com/pl3onasm/CLRS-in-C/tree/main/algorithms/graphs/APSP-floyd) |
 
 <br/>
@@ -31,4 +31,3 @@ Dynamic programming is most suited for optimization problems: this is clear from
    resounding ${\color{peru}\text{DRY}}$: Don't Repeat Yourself, and compute each problem only once!  
 
 A good test for the second property is to see if the recursive solution has repeated calls for the same inputs. Note that this is different from the type of subproblems that [divide-and-conquer](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/divide-and-conquer) algorithms solve, where recursive calls typically generate new (but of the same type as the original) subproblems each time. A divide-and-conquer approach for a problem whose subproblems overlap would be inefficient, since it would solve the same subproblem each time it reappears in the recursion tree.
-

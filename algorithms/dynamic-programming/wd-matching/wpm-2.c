@@ -8,16 +8,17 @@
   time complexity: O(n*m)
   note: we can't use a boolean matrix for memoization
     because we need to distinguish between true, false and
-    uninitialized values. We use -1 for uninitialized values.
+    values that have not been computed yet. We use -1 for
+    the latter.
 */
 
 #include "../../../lib/clib/clib.h"
 
 //===================================================================
-// Naive recursive approach to determine if a source string matches
+// Top-down DP approach to determine if a source string matches
 // a pattern string with wildcards
 short matchPattern (string *src, string *ptn, size_t i, size_t j, 
-                   short **dp) {
+                    short **dp) {
     
     // check if value is already memoized
   if (dp[i][j] != -1) return dp[i][j];
@@ -26,7 +27,7 @@ short matchPattern (string *src, string *ptn, size_t i, size_t j,
   if (i == 0 && j == 0) return dp[i][j] = 1;
 
     // source is empty but pattern is not:
-    // check if remaining pattern is all *
+    // check if remaining pattern chars are all '*'
   if (i == 0)
     return dp[i][j] = charAt(ptn, j - 1) == '*'
                       && matchPattern(src, ptn, i, j - 1, dp);
@@ -39,7 +40,7 @@ short matchPattern (string *src, string *ptn, size_t i, size_t j,
       || charAt(ptn, j - 1) == '?')
     return dp[i][j] = matchPattern(src, ptn, i - 1, j - 1, dp);
   
-    // current pattern char is wildcard: skip source char
+    // current pattern char is a * wildcard: skip source char
     // or skip pattern char
   if (charAt(ptn, j - 1) == '*')
     return dp[i][j] = matchPattern(src, ptn, i, j - 1, dp)

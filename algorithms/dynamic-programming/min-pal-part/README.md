@@ -26,7 +26,7 @@ $$
 
 <br />
 
-Now we have a means to determine the basic building blocks of the problem (i.e., palindromic substrings) in constant time. The next step then is to identify the subproblems of the MPP problem. The idea here is to think of the problem in terms of ${\color{peru}\text{prefixes}}$ of the input string $S$, and of each subproblem as the task of finding the minimum number of cuts required to partition the prefix $S[0:i]$ into palindromic substrings, for some $0 \leq i < n$. In other words, we want find the minimum number of atomic building blocks (palindromic substrings) required to construct the prefix $S[0:i]$.
+Now we have a means to indentify the basic building blocks of the problem (i.e., palindromic substrings) in constant time. The next step then is to determine the subproblems of the MPP problem. The idea here is to think of the subproblems in terms of ${\color{peru}\text{prefixes}}$ of the input string $S$. Each subproblem then has the task of finding the minimum number of cuts required to partition the prefix $S[0:i]$ into palindromic substrings, for some $0 \leq i < n$. In other words, we want find the minimum number of atomic building blocks (palindromic substrings) required to construct the prefix $S[0:i]$.
 
 Obviously, if the prefix $S[0:i]$ is already a palindrome, then no cuts are required. Otherwise, we need to consider all possible ways to partition this prefix into palindromic substrings in order to find the partition with the minimum number of cuts: that is, we need to consider all possible cuts between $S[0:j]$ and $S[j+1:i]$, for all $0 \leq j < i$ and then take the minimum of all such combinations.
 
