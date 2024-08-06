@@ -7,7 +7,7 @@ ${\color{rosybrown}\text{\Large Problem}}$
 
 Given a sequence (chain) of matrices, which are not necessarily square, find the most efficient way to multiply these matrices together. The aim is not to actually perform the matrix multiplications, but rather to determine in which order to perform them so as to minimize the total number of scalar multiplications and thus minimize the total cost of the operation.  
 
-In other words, try to find the ${\color{peru}\text{optimal}}$ ${\color{peru}\text{parenthesization}}$ of the matrix product. A matrix product is associative, so the order in which the products are performed does not affect the final result. However, the chosen order may dramatically affect the total number of scalar multiplications required to obtain that result and thus affect the overall cost of the operation.  
+In other words, the task is to find the ${\color{peru}\text{optimal}}$ ${\color{peru}\text{parenthesization}}$ of the matrix product. A matrix product is associative, so the order in which the products are performed does not affect the final result. However, the chosen order may dramatically affect the total number of scalar multiplications required to obtain that result and thus affect the overall cost of the entire operation on the chain of matrices.
 
 As an example, consider the chain of matrices $A_1, A_2, A_3$ with dimensions $10 \times 100$, $100 \times 5$, and $5 \times 50$, respectively. The number of scalar multiplications needed to compute the product $(A_1 A_2) A_3$ is $10 \times 100 \times 5 + 10 \times 5 \times 50 = 7500$. However, if we parenthesize the product as $A_1 (A_2 A_3)$, the number of scalar multiplications needed is $10 \times 100 \times 50 + 100 \times 5 \times 50 = 75000$, which is ten times as many as in the first case. So, the goal we are trying to achieve in every given chain of matrices is to find the parenthesization that ${\color{peru}\text{minimizes}}$ ${\color{peru}\text{the cost}}$ of the operation, i.e. minimizes the total number of scalar multiplications required to compute the product of the entire chain.
 
@@ -15,7 +15,7 @@ As an example, consider the chain of matrices $A_1, A_2, A_3$ with dimensions $1
 
 ${\color{darkseagreen}\text{\Large The key idea}}$
 
-The overall idea is very similar to the one behind the [rod cutting problem](https://github.com/pl3onasm/CLRS/tree/main/algorithms/dynamic-programming/rod-cutting): while in that problem we tried to find the optimal cuts for a rod of length $n$ in order to maximize the total revenue, here we try to find the optimal points $k$ to split the matrix chain $A_1 \dots A_n$ into subchains (marked by parentheses) so as to minimize the overall cost to compute the product of the entire chain.  
+The problem has some similarities with the [rod cutting problem](https://github.com/pl3onasm/CLRS/tree/main/algorithms/dynamic-programming/rod-cutting): while in that problem we tried to find the optimal cuts for a rod of length $n$ in order to maximize the total revenue, here we try to find the optimal points $k$ to split the matrix chain $A_1 \dots A_n$ into subchains (marked by parentheses) so as to minimize the overall cost to compute the product of the entire chain.  
 
 Given any such subchain of matrices $A_i \dots A_j$, we can find its optimal parenthesization by considering all possible split points $k$ between $i$ and $j$ and then choosing the one that minimizes the total cost. We then recursively apply this strategy to each of the two resulting subchains, until we reach the base case of a chain consisting of only one matrix. This way of working is possible because the problem exhibits the property of ${\color{peru}\text{optimal substructure}}$: the optimal solution to the original problem can be found by combining the optimal solutions to the subproblems.
 
@@ -36,9 +36,9 @@ $$
 
 <br />
 
-where $m[i,j]$ is the minimum number of scalar multiplications needed to compute the product of the matrices $A_i \dots A_j$, and $p_i$ is the column dimension of the $i$-th matrix in the chain, i.e. $A_i$ is a $p_{i-1} \times p_i$ matrix, with $p_0$ being the row dimension of the first matrix, and $p_n$ being the column dimension of the last matrix.  
+where $m[i,j]$ is the minimum number of scalar multiplications needed to compute the product of the matrices $A_i \dots A_j$, and $p_i$ is the column dimension of the $i$-th matrix in the chain, i.e. $A_i$ is a $p_{i-1} \times p_i$ matrix, with $p_0$ being the row dimension of the first matrix $A_1$ in the chain, and $p_n$ being the column dimension of the last matrix $A_n$ in the chain.
 
-The base case occurs when the chain consists of only one matrix, in which case the cost is zero. From the recurrence, it is also clear that in order to compute the optimal solution for a chain of matrices $A_i \dots A_j$, we need to compute the optimal solutions for all subchains $A_i \dots A_k$ and $A_{k+1} \dots A_j$ for all possible values of $k$ between $i$ and $j$. In the end, the solution to the original problem is then the solution to the subproblem $m[1,n]$, which is the optimal cost to compute the product of the entire chain $A_1 \dots A_n$.  
+The base case occurs when the chain consists of only one matrix, in which case the cost is zero. From the recurrence, it is also clear that the subproblems actually correspond to all possible ${\color{peru}\text{substrings}}$ of the original chain: in order to compute the optimal solution for a chain of matrices $A_i \dots A_j$, we need to compute the optimal solutions for all subchains $A_i \dots A_k$ and $A_{k+1} \dots A_j$ for all possible values of $k$ between $i$ and $j$. In the end, the solution to the original problem is then the solution to the subproblem $m[1,n]$, which is the optimal cost to compute the product of the entire chain $A_1 \dots A_n$.  
 
 In contrast to the rod cutting problem, subproblems may vary at both ends of the chain: both $i$ and $j$ need to vary in order to be able to find an optimal parenthesization for the chain $A_1 \dots A_n$. This is why the DP solution to the matrix chain multiplication problem is more complex than the one to the rod cutting problem, and why we need a two-dimensional table to store the solutions to the subproblems instead of a one-dimensional array as in the rod cutting problem.  
 
@@ -51,10 +51,11 @@ The brute force solution tackles the problem by implementing the above recurrenc
 Implementation: [MCM - Brute Force](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/dynamic-programming/matrix-chain-mult/mcm-1.c)
 
 <br />
-
+ 
 ${\color{darkseagreen}\text{\Large Top-down}}$
 
-This approach seeks to preserve the top-down strategy of the ${\color{peru}\text{recursive}}$ brute force solution, but also to avoid recomputing the same subproblems over and over again. It does this by storing the solutions to the subproblems in a table as soon as they are computed, and checking this table to see if the solution is already available before computing anything. This strategy is called ${\color{peru}\text{memoization}}$: we keep a memo of each solution to a subproblem, and use this memo instead of recomputing the solution again when we encounter the same subproblem. Using this approach, the running time of the algorithm drops to $\mathcal{O}(n^3)$. Note the difference in the running time of the DP solution to the rod cutting problem, which is $\mathcal{O}(n^2)$: this is because the matrix chain multiplication problem has two varying indices, $i$ and $j$, which need to be considered in order to find an optimal solution.
+This approach seeks to preserve the top-down strategy of the ${\color{peru}\text{recursive}}$ brute force solution, but also to avoid recomputing the same subproblems over and over again. It does this by storing the solutions to the subproblems in a table as soon as they are computed, and checking this table to see if the solution is already available before computing anything. This strategy is called ${\color{peru}\text{memoization}}$: we keep a memo of each solution to a subproblem, and use this memo instead of recomputing the solution again when we encounter the same subproblem. Using this approach, the running time of the algorithm drops to $\mathcal{O}(n^3)$. 
+
 
 Implementation: [MCM - Top-down DP](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/dynamic-programming/matrix-chain-mult/mcm-2.c)
 

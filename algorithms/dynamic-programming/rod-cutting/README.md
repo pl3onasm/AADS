@@ -20,20 +20,20 @@ A slightly different and easier way of approaching the problem is to think of ea
 
 Clearly, the subproblems are ${\color{peru}\text{overlapping}}$, since the same subproblem of finding the optimal cuts for a particular rod length is sure to be encountered multiple times during the recursive calls. They also show an ${\color{peru}\text{optimal substructure}}$, since the optimal solution for the original rod can be constructed from the optimal solutions for the subproblems: the optimal solution for a rod of length $n$ is the maximum of the optimal solutions for the subproblems of lengths $1, 2, ..., n-1$.
 
-Thus, we can define the revenue $r_n$, the maximum revenue obtainable from a rod of length $n$, as follows:
+Thus, we can define a function $r(n)$ that yields the maximum revenue obtainable from a rod of length $n$ as follows:
 
 $$
 \color{darkslateblue}\huge\boxed{\color{rosybrown}\normalsize \space
-r_n = \begin{cases}
-\small 0 & \scriptsize \text{if } n = 0 \\
-\small \max \lbrace p_i + r_{n-i} :  & \scriptsize \text{otherwise}\\
-\quad \small 1 \leq i \leq n \rbrace
+r(n) = \begin{cases}
+ 0 & \scriptsize \text{if } n = 0 \\
+ \max \lbrace p_i + r(n-i) :  & \scriptsize \text{otherwise}\\
+\quad  1 \leq i \leq n \rbrace
 \end{cases}\space}
 $$
 
 <br/>
 
-where $p_i$ is the price for an uncut piece of length $i$, readily available from the table of prices, and $r_{n-i}$ is the maximum revenue obtainable from a rod of length $n-i$. The base case is $r_0 = 0$, since the maximum revenue obtainable from a rod of length $0$ is $0$.
+where $p_i$ is the price for an uncut piece of length $i$, readily available from the table of prices, and $r(n-i)$ represents the recursive call to the function, which yields the maximum revenue obtainable from a rod of length $n-i$. The base case occurs when the rod length is $0$, in which case the revenue is $0$, since the maximum revenue obtainable from a rod of length $0$ is $0$.
 
 <br/>
 
