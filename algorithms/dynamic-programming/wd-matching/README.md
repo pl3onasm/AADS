@@ -25,10 +25,10 @@ M(i,j) = \begin{cases}
 \small {\color{cornflowerblue}\text{true}} & \scriptsize \text{if } i =  0 \land j = 0 \\
 \small {\color{orchid}\text{false}} & \scriptsize \text{if } i \neq 0 \land j = 0  \\
 \small M(i, j - 1) & \scriptsize \text{if } i = 0 \land j \neq 0\\
-\small M(i, j -1)  & \scriptsize \text{if } P[j - 1] =  \text{`*'} \\
+\small M(i, j -1)  & \scriptsize \text{if } P[j - 1] =  \text{'*'} \\
 \quad \small \lor \space M(i - 1, j) \\
 \small M(i-1, j-1) & \scriptsize \text{if } T[i-1] = P[j-1] \\
-& \space \scriptsize \lor \space P[j - 1] =  \text{`?'}\\
+& \space \scriptsize \lor \space P[j - 1] =  \text{'?'}\\
 \small {\color{orchid}\text{false}} & \scriptsize \text{otherwise}
 \end{cases}\space}
 $$
