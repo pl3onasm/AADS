@@ -4,7 +4,7 @@ ${\color{Cadetblue}\text{\huge Rod cutting}}$
 
 ${\color{rosybrown}\text{\Large Problem}}$
 
-Given a rod of length $n$ inches and a table $P$ of prices for rod lengths from $0$ to $m$ meters, where $m \geq n$, determine the maximum revenue obtainable by cutting up the rod and selling the pieces. Note that if the price $P[n]$ for a rod of length $n$ is large enough, an optimal solution may require no cutting at all.
+Given a rod of length $n$ meters and a table $P$ of prices for rod lengths from $0$ to $m$ meters, where $m \geq n$, determine the maximum revenue obtainable by cutting up the rod and selling the pieces. Note that if the price $P[n]$ for a rod of length $n$ is large enough, an optimal solution may require no cutting at all.
 
 <br/>
 
