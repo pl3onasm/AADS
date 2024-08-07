@@ -13,7 +13,7 @@ ${\color{darkseagreen}\text{\Large The key idea}}$
 The idea is to cut the rod into two pieces, and then solve the problem for each of the two pieces. The optimal solution for the original rod is then the sum of the optimal solutions for the two pieces. In other words, the optimal solution for a rod of length $n$ is the maximum of the following two values:
 
 1. The price $P[n]$ for a rod of length $n$  
-2. The sum of the optimal solutions (maximum revenues) for the two pieces of lengths $i$ and $n - i$ obtained by cutting or not cutting the rod into two pieces at each possible position $1 \leq i \leq n-1$  
+2. The sum of the optimal solutions (maximum revenues) for the two pieces of lengths $i$ and $n - i$ obtained by cutting the rod into two pieces of lengths $i$ and $n - i$, respectively, where $1 \leq i \leq n$
 
 A slightly different and easier way of approaching the problem is to think of each subproblem as the combination of an uncut piece of length $i$ and the optimal solution for the remaining piece of length $n-i$, a ${\color{peru}\text{suffix}}$ of the original rod, which becomes our new subproblem, the new rod to be cut. The optimal solution (maximum revenue) for the original rod is then the maximum sum of all optimal solutions for the subproblems of lengths $1, 2, ..., n-1$.
 
