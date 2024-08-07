@@ -13,7 +13,7 @@ For example, the pattern `a*d?c` matches the text `abcdec`, but not the text `ab
 
 ${\color{darkseagreen}\text{\Large The key idea}}$
 
-The idea is to think of the subproblems in terms of the ${\color{peru}\text{prefixes}}$ of the text and the pattern. To consider each subproblem, we start at the end of the text and the pattern, and work our way towards the beginning. At each step, we consider the last character of the text and the pattern, and determine whether they match. If they do, we move one step back in both the text and the pattern. If they don't, we consider the wildcard characters `*` and `?` in the pattern, and move back in the text accordingly. If we reach both the beginning of the text and the pattern, with all characters matching, then the pattern matches the text.
+The idea is to think of the subproblems in terms of ${\color{peru}\text{prefixes}}$ of the text and the pattern. To consider each subproblem, we start at the end of the text and the pattern, and work our way towards the beginning. At each step, we consider the last character of the text and the pattern, and determine whether they match. If they do, we move one step back in both the text and the pattern. If they don't, we consider the wildcard characters `*` and `?` in the pattern, and move back in the text accordingly. If we reach both the beginning of the text and the pattern, with all characters matching, then the pattern matches the text.
 
 The subproblems are ${\color{peru}\text{overlapping}}$, as the same prefixes of the text and the pattern may be considered multiple times during the matching process. The subproblems also exhibit ${\color{peru}\text{optimal substructure}}$, as the result of the matching of the prefixes can be expressed in terms of the matching of their prefixes. This makes the problem a good fit for dynamic programming.
 
@@ -35,9 +35,11 @@ $$
 
 <br />
 
-To obtain the answer to the original problem, we call $M(n, m)$. The base cases of the function occur when both the text and the pattern are empty, in which case the function returns true, or when the pattern is empty but the text is not, in which case the function returns false. Another base case occurs when the text is empty but the pattern is not, in which case the function returns true iff the remaining characters of the pattern are all `*` wildcards.  
+To obtain the answer to the original problem, we call $M(n, m)$. The base cases of the function occur when both the text and the pattern are empty, in which case the function returns true, or when the pattern is empty but the text is not, in which case the function returns false.  
 
-The recursive cases of the function occur when the last characters of the text and the pattern match, or when the last character of the pattern is a `?` wildcard. In these cases, we move back in both the text and the pattern. If, on the other hand, the last character of the pattern is a `*` wildcard, we consider two possibilities: either the `*` wildcard matches the last character of the text, in which case we move back in the text, or the `*` wildcard matches an empty sequence, in which case we move back in the pattern. The function returns true if any of these constraints are met, and false otherwise.  
+A special recursive case of the function occurs when the text is empty but the pattern is not, in which case the function keeps moving back in the pattern and returns true iff the remaining characters of the pattern are found to be all `*` wildcards.
+
+The other recursive cases of the function occur when the last characters of the text and the pattern match, or when the last character of the pattern is a `?` wildcard. In these cases, we move back in both the text and the pattern. If, on the other hand, the last character of the pattern is a `*` wildcard, we consider two possibilities: either the `*` wildcard matches the last character of the text, in which case we move back in the text, or the `*` wildcard matches an empty sequence, in which case we move back in the pattern. The function returns true if any of these constraints are met, and false otherwise.  
 
 <br />
 

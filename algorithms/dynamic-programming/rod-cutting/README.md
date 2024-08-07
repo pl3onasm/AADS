@@ -4,21 +4,20 @@ ${\color{Cadetblue}\text{\huge Rod cutting}}$
 
 ${\color{rosybrown}\text{\Large Problem}}$
 
-Given a rod of length $n$ inches and a table of prices $p_i$ for rod lengths $i = 1, 2, ..., m$, where $m \geq n$, determine the maximum revenue $r_n$ obtainable by cutting up the rod and selling the pieces. Note that if the price $p_n$ for a rod of length $n$ is large enough, an optimal solution may require no cutting at all.
+Given a rod of length $n$ inches and a table $P$ of prices for rod lengths from $0$ to $m$ meters, where $m \geq n$, determine the maximum revenue obtainable by cutting up the rod and selling the pieces. Note that if the price $P[n]$ for a rod of length $n$ is large enough, an optimal solution may require no cutting at all.
 
 <br/>
 
 ${\color{darkseagreen}\text{\Large The key idea}}$
 
-The idea is to cut the rod into two pieces, and then solve the problem for each of the two pieces. The optimal solution for the original rod is then the sum of the optimal solutions for the two pieces.
-In other words, the optimal solution for a rod of length $n$ is the maximum of the following two values:
+The idea is to cut the rod into two pieces, and then solve the problem for each of the two pieces. The optimal solution for the original rod is then the sum of the optimal solutions for the two pieces. In other words, the optimal solution for a rod of length $n$ is the maximum of the following two values:
 
-1. The price $p_n$ for a rod of length $n$  
-2. The sum of the optimal solutions (maximum revenues) for the two pieces of lengths $i$ and $n - i$ obtained by cutting the rod into two pieces at each possible position $1 \leq i \leq n-1$  
+1. The price $P[n]$ for a rod of length $n$  
+2. The sum of the optimal solutions (maximum revenues) for the two pieces of lengths $i$ and $n - i$ obtained by cutting or not cutting the rod into two pieces at each possible position $1 \leq i \leq n-1$  
 
-A slightly different and easier way of approaching the problem is to think of each subproblem as the combination of an uncut piece of length $i$ and the optimal solution for the remaining piece of length $n-i$, a ${\color{peru}\text{suffix}}$ of the original rod, which becomes our new subproblem, the new rod to be cut. The optimal solution (maximum revenue) for the original rod is then the maximum of all these combinations.
+A slightly different and easier way of approaching the problem is to think of each subproblem as the combination of an uncut piece of length $i$ and the optimal solution for the remaining piece of length $n-i$, a ${\color{peru}\text{suffix}}$ of the original rod, which becomes our new subproblem, the new rod to be cut. The optimal solution (maximum revenue) for the original rod is then the maximum sum of all optimal solutions for the subproblems of lengths $1, 2, ..., n-1$.
 
-Clearly, the subproblems are ${\color{peru}\text{overlapping}}$, since the same subproblem of finding the optimal cuts for a particular rod length is sure to be encountered multiple times during the recursive calls. They also show an ${\color{peru}\text{optimal substructure}}$, since the optimal solution for the original rod can be constructed from the optimal solutions for the subproblems: the optimal solution for a rod of length $n$ is the maximum of the optimal solutions for the subproblems of lengths $1, 2, ..., n-1$.
+Clearly, the subproblems are ${\color{peru}\text{overlapping}}$, since the same subproblem of finding the optimal cuts for a particular rod length is sure to be encountered multiple times during the recursive calls. They also show an ${\color{peru}\text{optimal substructure}}$, since the optimal solution for the original rod can be constructed from the optimal solutions for the subproblems: the optimal solution for a rod of length $n$ is the maximum sum of the optimal solutions for the subproblems of lengths $1, 2, ..., n-1$.
 
 Thus, we can define a function $r(n)$ that yields the maximum revenue obtainable from a rod of length $n$ as follows:
 
@@ -26,14 +25,14 @@ $$
 \color{darkslateblue}\huge\boxed{\color{rosybrown}\normalsize \space
 r(n) = \begin{cases}
  0 & \scriptsize \text{if } n = 0 \\
- \max \lbrace p_i + r(n-i) :  & \scriptsize \text{otherwise}\\
-\quad  1 \leq i \leq n \rbrace
+ \max \lbrace P[i] + r(n-i)  & \scriptsize \text{otherwise}\\
+\qquad \space : 1 \leq i \leq n \rbrace
 \end{cases}\space}
 $$
 
 <br/>
 
-where $p_i$ is the price for an uncut piece of length $i$, readily available from the table of prices, and $r(n-i)$ represents the recursive call to the function, which yields the maximum revenue obtainable from a rod of length $n-i$. The base case occurs when the rod length is $0$, in which case the revenue is $0$, since the maximum revenue obtainable from a rod of length $0$ is $0$.
+where $P[i]$ is the price for an uncut piece of length $i$, readily available from the table of prices, and $r(n-i)$ represents the recursive call to the function, which yields the maximum revenue obtainable from a rod of length $n-i$. The base case occurs when the rod length is $0$, in which case the revenue is $0$, since the maximum revenue obtainable from a rod of length $0$ is $0$.
 
 <br/>
 

@@ -5,7 +5,7 @@ ${\color{Cadetblue}\text{\huge Multiplication (MCM)}}$
 
 ${\color{rosybrown}\text{\Large Problem}}$
 
-Given a sequence (chain) of matrices, which are not necessarily square, find the most efficient way to multiply these matrices together. The aim is not to actually perform the matrix multiplications, but rather to determine in which order to perform them so as to minimize the total number of scalar multiplications and thus minimize the total cost of the operation.  
+Given a sequence (chain) of (not necessarily square) matrices $A_1, A_2, \dots, A_n$, by means of a table $D$ holding their dimensions such that the $i$-th matrix $A_i$ has dimensions $D[i-1] \times D[i]$, find the most efficient way to multiply these matrices together. The aim is not to actually perform the matrix multiplications, but rather to determine in which order to perform them so as to minimize the total number of scalar multiplications and thus minimize the total cost of the operation.  
 
 In other words, the task is to find the ${\color{peru}\text{optimal}}$ ${\color{peru}\text{parenthesization}}$ of the matrix product. A matrix product is associative, so the order in which the products are performed does not affect the final result. However, the chosen order may dramatically affect the total number of scalar multiplications required to obtain that result and thus affect the overall cost of the entire operation on the chain of matrices.
 
@@ -26,17 +26,18 @@ Thus, for a subchain of matrices $A_i \dots A_j$, the cost of parenthesizing it 
 
 $$
 \color{darkslateblue}\huge\boxed{\color{rosybrown}\small \space
-m[i,j] =
+m(i,j) =
 \begin{cases}
 0 & \scriptsize \text{if } i = j  \\
-\min \lbrace m[i,k] + m[k+1,j] \\
-  \space \space  +\space p_{i-1} \cdot p_k \cdot p_j : i \leq k < j\rbrace& \scriptsize \text{if } i < j  \\
+\min \lbrace m(i,k) + m(k+1,j) \\
+  \qquad  +\space D[i-1] \cdot D[k] \cdot D[j] \\
+  \qquad \space : i \leq k < j\rbrace& \scriptsize \text{if } i < j  \\
 \end{cases}\space}
 $$
 
 <br />
 
-where $m[i,j]$ is the minimum number of scalar multiplications needed to compute the product of the matrices $A_i \dots A_j$, and $p_i$ is the column dimension of the $i$-th matrix in the chain, i.e. $A_i$ is a $p_{i-1} \times p_i$ matrix, with $p_0$ being the row dimension of the first matrix $A_1$ in the chain, and $p_n$ being the column dimension of the last matrix $A_n$ in the chain.
+where $m[i,j]$ is the minimum number of scalar multiplications needed to compute the product of the matrices $A_i \dots A_j$, and $D[i]$ is the column dimension of the $i$-th matrix in the chain, i.e. $A_i$ is a $D[i-1] \times D[i]$ matrix, with $D[0]$ being the row dimension of the first matrix $A_1$ in the chain, and $D[n]$ being the column dimension of the last matrix $A_n$ in the chain.
 
 The base case occurs when the chain consists of only one matrix, in which case the cost is zero. From the recurrence, it is also clear that the subproblems actually correspond to all possible ${\color{peru}\text{substrings}}$ of the original chain: in order to compute the optimal solution for a chain of matrices $A_i \dots A_j$, we need to compute the optimal solutions for all subchains $A_i \dots A_k$ and $A_{k+1} \dots A_j$ for all possible values of $k$ between $i$ and $j$. In the end, the solution to the original problem is then the solution to the subproblem $m[1,n]$, which is the optimal cost to compute the product of the entire chain $A_1 \dots A_n$.  
 
