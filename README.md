@@ -1,9 +1,9 @@
-${\color{cadetblue}\text{\huge CLRS: Data Structures}}$  
-${\color{cadetblue}\text{\huge and Algorithms}}$
+${\huge\color{cadetblue}\text{ CLRS: Data Structures}}$  
+${\huge\color{cadetblue}\text{ and Algorithms}}$
 
 <br/>
 
-${\color{peru}\text{\Large Algorithms}}$
+${\Large\color{peru}\text{Algorithms}}$
 
 * [Divide and conquer](algorithms/divide-and-conquer)
 * [Dynamic programming](algorithms/dynamic-programming)
@@ -14,10 +14,10 @@ ${\color{peru}\text{\Large Algorithms}}$
 
 <br/>
 
-${\color{peru}\text{\Large Data structures}}$
+${\Large \color{peru}\text{Data structures}}$
 
 * Stacks
-* [Queues](datastructures/queues)
+* [Queues](datastructures/queues) 
 * [Lists](datastructures/lists)
 * [Trees](datastructures/trees)
 * [Hash tables](datastructures/htables)
@@ -30,7 +30,7 @@ ${\color{peru}\text{\Large Data structures}}$
 
 --------------------------------
 
-${\color{darkseagreen}\text{\Large Notes}}$
+${\Large \color{darkseagreen}\text{Notes}}$
 
 The aim is to implement all the algorithms and data structures discussed in the textbook *Introduction to Algorithms* by Thomas H. Cormen, et al. We will be working with both the third and fourth edition. Folders usually contain several versions of the same algorithm or data structure, in accordance with the different pseudocode and explanations in the textbook.
 
@@ -42,7 +42,7 @@ Please note that this is very much a work in progress. It simply takes time to d
 
 --------------------------------
 
-${\color{darkseagreen}\text{\Large Recommended}}$
+${\Large\color{darkseagreen}\text{Recommended}}$
 
 * [MIT Introduction to Algorithms](https://www.youtube.com/playlist?list=PLUl4u3cNGP61Oq3tWYp6V_F-5jb5L2iHb)
 * [MIT Design and Analysis of Algorithms](https://www.youtube.com/playlist?list=PLUl4u3cNGP6317WaSNfmCvGym2ucw3oGp)
@@ -50,7 +50,7 @@ ${\color{darkseagreen}\text{\Large Recommended}}$
   
 --------------------------------
 
-${\color{darkseagreen}\text{\Large References}}$
+${\Large \color{darkseagreen}\text{References}}$
 
 CLRS³: Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. (2009). [Introduction to algorithms](https://mitpress.mit.edu/9780262533058/introduction-to-algorithms/). MIT press.  
 CLRS⁴: Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. (2022). [Introduction to algorithms](http://mitpress.mit.edu/9780262046305/introduction-to-algorithms/). MIT press.  

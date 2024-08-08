@@ -39,7 +39,7 @@ To obtain the answer to the original problem, we call $M(n, m)$. The base cases 
 
 A special recursive case of the function occurs when the text is empty but the pattern is not, in which case the function keeps moving back in the pattern and returns true iff the remaining characters of the pattern are found to be all `*` wildcards.
 
-The other recursive cases of the function occur when the last characters of the text and the pattern match, or when the last character of the pattern is a `?` wildcard. In these cases, we move back in both the text and the pattern. If, on the other hand, the last character of the pattern is a `*` wildcard, we consider two possibilities: either the `*` wildcard matches the last character of the text, in which case we move back in the text, or the `*` wildcard matches an empty sequence, in which case we move back in the pattern. The function returns true if any of these constraints are met, and false otherwise.  
+The other recursive cases of the function occur when the last characters of the text and the pattern match, or when the last character of the pattern is a `?` wildcard. In these cases, we move back in both the text and the pattern. If, on the other hand, the last character of the pattern is a `*` wildcard, we consider two possibilities: either the `*` wildcard matches the last character of the text, in which case we move back in the text, or the `*` wildcard matches an empty sequence, in which case we move back in the pattern. If none of these cases apply, the function returns false by default.
 
 <br />
 
