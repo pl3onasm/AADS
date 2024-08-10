@@ -31,19 +31,19 @@ So, for $n = 3$, we have $C_3 = 5$ possible binary search trees. In our example,
 <br/>
 
 <p align="center" width="85%">
-<img src="obsts-1.png"
+<img src="images/obsts-1.png"
      alt="obsts1"
      style="float: left;" />
 </p>
 
 <p align="center" width="85%">
-<img src="obsts-2.png"
+<img src="images/obsts-2.png"
      alt="obsts2"
      style="float: left;" />
 </p>
 
 <p align="center" width="85%">
-<img src="obsts-3.png"
+<img src="images/obsts-3.png"
      alt="obsts3"
      style="float: left; padding-bottom: 40px;" />
 </p>
@@ -61,7 +61,7 @@ While this strategy may work in some cases, it does not guarantee that the resul
 <br/>
 
 <p align="center" width="50%">
-<img src="obsts-greedyvsoptimal.png"
+<img src="images/obsts-greedyvsoptimal.png"
      alt="obsts3"
      style="float: left; padding-bottom: 10px;" />
 </p><br clear="left">  
@@ -113,7 +113,7 @@ ${\color{peru}\text{Reconstruction}}$ of an optimal BST is also possible. This i
 
 Implementation: [OBST - Reconstruction](https://github.com/pl3onasm/CLRS/tree/main/algorithms/dynamic-programming/opt-bsts/obst-4.c)
 
-The reconstructed tree is presented in a very compact form, where the keys are printed in an inorder traversal of the tree, and the depth of each key is also printed. The depth of the root is 0, and the depth of any other key is 1 plus the depth of its parent. This image will help you interpret and visualize the reconstructed tree: [Test case 3](https://github.com/pl3onasm/CLRS/tree/main/algorithms/dynamic-programming/opt-bsts/obsttest3.png)
+The reconstructed tree is presented in a very compact form, where the keys are printed in an inorder traversal of the tree, and the depth of each key is also printed. The depth of the root is 0, and the depth of any other key is 1 plus the depth of its parent. This image will help you interpret and visualize the reconstructed tree: [Test case 3](https://github.com/pl3onasm/CLRS/tree/main/algorithms/dynamic-programming/opt-bsts/images/obsttest3.png)
 
 <br />
 
