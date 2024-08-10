@@ -16,7 +16,7 @@
 // Computes the expected search cost of an optimal binary search tree
 // and stores the optimal roots of the subtrees
 void computeOBST (size_t nProbs, double *probs, double **costs, 
-                    size_t **roots) {
+                  size_t **roots) {
 
   for (size_t i = 0; i < nProbs; ++i) {
     costs[i][i] = probs[i];
@@ -55,7 +55,6 @@ void constructOBST (size_t i, size_t j, size_t level,
     printf(level ? "| K%zu\n" : "K%zu\n", roots[i][j]);
     constructOBST(roots[i][j] + 1, j, level + 1, roots);
   }
-
 }
 
 //===================================================================

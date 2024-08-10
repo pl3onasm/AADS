@@ -46,9 +46,9 @@ So, for $n = 3$, we have $C_3 = 5$ possible binary search trees. In our example,
 <img src="images/obsts-3.png"
      alt="obsts3"
      style="float: left; padding-bottom: 40px;" />
-</p><br clear="left"> 
+</p><br clear="left">
 
-Each of these $14$ trees comes with its own expected search cost. From left to right, and top to bottom, the expected search costs, using the formula above, are: $2.7$, $2.2$, $2.5$, $2.2$, $2.1$, $2.3$, $2.1$, $1.9$, $2.1$, $2.1$, $2.1$, $2.0$, $2.1$, and $2.3$. So, out of the $14$ possible binary search trees, the ${\color{peru}\text{optimal}}$ binary search tree is the one with the minimum expected search cost, which is $1.9$.
+Each of these $14$ trees provides a different way of organizing the keys, while maintaining the BST property, and each comes with its own expected search cost. From left to right, and top to bottom, the expected search costs, using the formula above, are: $2.7$, $2.2$, $2.5$, $2.2$, $2.1$, $2.3$, $2.1$, $1.9$, $2.1$, $2.1$, $2.1$, $2.0$, $2.1$, and $2.3$. So, out of the $14$ possible binary search trees, the ${\color{peru}\text{optimal}}$ binary search tree is the one with the minimum expected search cost, which is $1.9$.
 
 <br />
 
@@ -74,16 +74,16 @@ Thus, the expected search cost of the subtree rooted at $k_r$ can be computed re
 
 $$\color{darkslateblue}\boxed{\color{rosybrown}\space
 e(i, j) = \begin{cases}
-w_i & \text{if } i = j \\
+0 & \text{if } j = i - 1 \\
 \min \lbrace e(i, r-1) + e(r+1, j) & \\
-\qquad + \space w(i, j) : i \leq r \leq j \rbrace & \text{if } i < j
+\qquad + \space w(i, j) : i \leq r \leq j \rbrace & \text{if } i \leq j
 \end{cases}}$$
 
 <br/>
 
-where $e(i, j)$ is the expected search cost of the subtree rooted at $k_r$, and $w(i, j)$ is the sum of the probabilities of the keys from $k_i$ to $k_j$. The base case is when $i = j$, in which case the expected search cost is simply the probability of the key $k_i$. This is because the subtree rooted at $k_i$ is a leaf node, and the expected search cost is the depth of the leaf node, which is 0, plus 1, weighted by the probability of searching for $k_i$. The recursive case is when $i < j$, in which case we consider all possible roots $k_r$ in the range $i \leq r \leq j$, and choose the one that minimizes the expected search cost of the subtree. The expected search cost of the OBST is then given by $e(0, n-1)$, where $n$ is the number of keys in the sequence.
+where $e(i, j)$ is the expected search cost of the subtree rooted at $k_r$, and $w(i, j)$ is the sum of the probabilities of the keys from $k_i$ to $k_j$. The base case occurs when $j = i - 1$, in which case the subtree is empty and the expected search cost is 0. The recursive case happens when $i \leq j$, in which case we consider all possible roots $k_r$ in the range $i \leq r \leq j$, and choose the one that minimizes the expected search cost of the subtree. The expected search cost of the orignal problem is then given by $e(0, n-1)$, where $n$ is the number of keys in the input sequence.
 
-Note the strong similarity with the [matrix-chain multiplication algorithm](https://github.com/pl3onasm/CLRS/tree/main/algorithms/dynamic-programming/matrix-chain-mult), where we also consider all possible ways of multiplying the matrices, and aim to minimize the cost of the product by choosing the optimal split point. In the case of OBSTs, we want to minimize the expected search cost of the tree by choosing the optimal root of the (sub)tree. The similarity of the two algorithms is also reflected in their recurrence relations, which are almost identical.  
+Note the strong similarity with the [matrix-chain multiplication algorithm](https://github.com/pl3onasm/CLRS/tree/main/algorithms/dynamic-programming/matrix-chain-mult), where we consider all possible ways of multiplying matrices in a similar way, and aim to minimize the cost of the product by choosing the optimal split point. In the case of OBSTs, we want to minimize the expected search cost of the tree by choosing the optimal root of the (sub)tree. The similarity of the two algorithms is also reflected in their recurrence relations, which are almost identical.  
 
 <br />
 
