@@ -46,7 +46,7 @@ So, for $n = 3$, we have $C_3 = 5$ possible binary search trees. In our example,
 <img src="images/obsts-3.png"
      alt="obsts3"
      style="float: left; padding-bottom: 40px;" />
-</p>
+</p><br clear="left"> 
 
 Each of these $14$ trees comes with its own expected search cost. From left to right, and top to bottom, the expected search costs, using the formula above, are: $2.7$, $2.2$, $2.5$, $2.2$, $2.1$, $2.3$, $2.1$, $1.9$, $2.1$, $2.1$, $2.1$, $2.0$, $2.1$, and $2.3$. So, out of the $14$ possible binary search trees, the ${\color{peru}\text{optimal}}$ binary search tree is the one with the minimum expected search cost, which is $1.9$.
 
