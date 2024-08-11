@@ -17,7 +17,7 @@
 // using a bottom-up dynamic programming approach
 double computeOBST (size_t nProbs, double *probs, double **costs) {
 
-  for (size_t i = 0; i < nProbs; ++i)
+  for (size_t i = 1; i < nProbs; ++i)
     costs[i][i] = probs[i];
 
   for (size_t l = 2; l <= nProbs; ++l) {
@@ -26,9 +26,9 @@ double computeOBST (size_t nProbs, double *probs, double **costs) {
       double sum = 0;
       for (size_t r = i; r <= j; ++r) {
         sum += probs[r];
-        double cost = (r > i ? costs[i][r - 1] : 0) +
-                      (r < j ? costs[r + 1][j] : 0);
-        costs[i][j] = MIN(costs[i][j], cost);
+        double leftCost = r == i ? 0 : costs[i][r - 1];
+        double rightCost = r == j ? 0 : costs[r + 1][j];
+        costs[i][j] = MIN(costs[i][j], leftCost + rightCost);
       }
       costs[i][j] += sum;
     }

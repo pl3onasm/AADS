@@ -1,12 +1,12 @@
 /* 
-  file: obst-4.c
+  file: obst-5.c
   author: David De Potter
   email: pl3onasm@gmail.com
   license: MIT, see LICENSE file in repository root folder
   description: optimal binary search tree problem,
-    bottom-up dynamic programming approach with reconstruction
-    of the tree structure
-  time complexity: O(n^3)
+    bottom-up dynamic programming approach with Knuth's
+    optimization to reduce time complexity to O(n^2)
+  time complexity: O(n^2)
 */
 
 #include "../../../lib/clib/clib.h"
@@ -15,8 +15,9 @@
 //===================================================================
 // Computes the expected search cost of an optimal binary search tree
 // and stores the optimal roots of the subtrees
+// Knuth's optimization reduces time complexity from O(n^3) to O(n^2)
 void computeOBST (size_t nProbs, double *probs, double **costs, 
-                  size_t **roots) {
+                  size_t **roots, double **sums) {
 
   for (size_t i = 0; i < nProbs; ++i) {
     costs[i][i] = probs[i];
@@ -26,17 +27,15 @@ void computeOBST (size_t nProbs, double *probs, double **costs,
   for (size_t l = 2; l <= nProbs; ++l) {
     for (size_t i = 0; i <= nProbs - l; ++i) {
       size_t j = i + l - 1;
-      double sum = 0;
-      for (size_t r = i; r <= j; ++r) {
-        sum += probs[r];
+      for (size_t r = roots[i][j - 1]; r <= roots[i + 1][j]; ++r) {
         double leftCost = r == i ? 0 : costs[i][r - 1];
         double rightCost = r == j ? 0 : costs[r + 1][j];
-        if (leftCost + rightCost < costs[i][j]) {
-          costs[i][j] = leftCost + rightCost;
+        double minCost = leftCost + rightCost + sums[i][j];
+        if (minCost < costs[i][j]) {
+          costs[i][j] = minCost;
           roots[i][j] = r;
         }
       }
-      costs[i][j] += sum;
     }
   }
 }
@@ -58,6 +57,19 @@ void constructOBST (size_t i, size_t j, size_t level,
 }
 
 //===================================================================
+// Precomputes the sums of the probabilities of the keys over each
+// possible range of keys
+void computeSums (size_t nProbs, double *probs, double **sums) {
+
+  for (size_t i = 0; i < nProbs; ++i) {
+    sums[i][i] = probs[i];
+    for (size_t j = i + 1; j < nProbs; ++j) {
+      sums[i][j] = sums[i][j - 1] + probs[j];
+    }
+  }
+}
+
+//===================================================================
 
 int main () {
   
@@ -67,13 +79,18 @@ int main () {
 
   CREATE_MATRIX(size_t, roots, nProbs, nProbs, 0);
 
-  computeOBST(nProbs, probs, costs, roots);
+  CREATE_MATRIX(double, sums, nProbs + 1, nProbs, 0);
+
+  computeSums(nProbs, probs, sums);
+
+  computeOBST(nProbs, probs, costs, roots, sums);
   
   printf("OBST cost: %.2lf\n\n"
          "OBST structure:\n\n", costs[0][nProbs - 1]);
 
   constructOBST(0, nProbs - 1, 0, roots);
 
+  FREE_MATRIX(sums, nProbs + 1);
   FREE_MATRIX(costs, nProbs + 1);
   FREE_MATRIX(roots, nProbs);
   free(probs);

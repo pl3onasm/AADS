@@ -11,8 +11,8 @@ Now, the expected search cost of a binary search tree is the sum of the costs of
 
 Thus, the ${\color{peru}\text{expected search cost}}$ for a BST $T$ is given by the following formula:
 
-$$\color{darkslateblue}\boxed{\color{peru}\space 
-e(T) = \sum_{i=0}^{n-1} p_i \cdot (d_i + 1)}$$
+$$\color{darkslateblue}\boxed{\color{peru}\space
+e(T) = \sum_{i=0}^{n-1} p_i \cdot (d_i + 1)\space}$$
 
 where $d_i$ is the depth of the key $k_i$ in the BST.
 
@@ -77,7 +77,7 @@ e(i, j) = \begin{cases}
 0 & \text{if } j = i - 1 \\
 \min \lbrace e(i, r-1) + e(r+1, j) & \\
 \qquad + \space w(i, j) : i \leq r \leq j \rbrace & \text{if } i \leq j
-\end{cases}}$$
+\end{cases}\space}$$
 
 <br/>
 
@@ -114,6 +114,20 @@ ${\color{peru}\text{Reconstruction}}$ of an optimal BST is also possible. This i
 Implementation: [OBST - Reconstruction](https://github.com/pl3onasm/CLRS/tree/main/algorithms/dynamic-programming/opt-bsts/obst-4.c)
 
 The reconstructed tree is presented in a very compact form, where the keys are printed in an inorder traversal of the tree, and the depth of each key is also printed. The depth of the root is 0, and the depth of any other key is 1 plus the depth of its parent. This image will help you interpret and visualize the reconstructed tree: [Test case 3](https://github.com/pl3onasm/CLRS/tree/main/algorithms/dynamic-programming/opt-bsts/images/obsttest3.png)
+
+<br />
+
+${\Large\color{darkseagreen}\text{Knuth's optimization}}$
+${\Large\color{darkseagreen}\text{Ex 15/14.5-4}}$
+
+The DP approach can be optimized by using Knuth's optimization, which reduces the time complexity to $\Theta(n^2)$. The idea is to exploit the fact that the subproblems are computed in a specific order, and that the optimal root of the subtree lies in a certain range. The range of the optimal root is given by the following formula:
+
+$$\color{darkslateblue}\boxed{\color{rosybrown}\space
+r(i,j - 1) \leq r(i,j) \leq r(i + 1,j)\space}$$
+
+where $r(i,j)$ is the optimal root of the subtree rooted at $k_r$. So, instead of considering all possible roots $k_r$ in the range $i \leq r \leq j$, we only consider the roots in the range $r(i,j - 1) \leq r \leq r(i + 1,j)$. Exploiting this property, the time complexity of the DP solution can be reduced to $\Theta(n^2)$. For this to work, we do need to precompute the sums of the probabilities of the keys over all ranges, which can be done in $\Theta(n^2)$ time.
+
+Implementation: [OBST - optimized](https://github.com/pl3onasm/CLRS/tree/main/algorithms/dynamic-programming/opt-bsts/obst-5.c)
 
 <br />
 
