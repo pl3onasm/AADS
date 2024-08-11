@@ -63,9 +63,8 @@ void computeSums (size_t nProbs, double *probs, double **sums) {
 
   for (size_t i = 0; i < nProbs; ++i) {
     sums[i][i] = probs[i];
-    for (size_t j = i + 1; j < nProbs; ++j) {
+    for (size_t j = i + 1; j < nProbs; ++j) 
       sums[i][j] = sums[i][j - 1] + probs[j];
-    }
   }
 }
 
