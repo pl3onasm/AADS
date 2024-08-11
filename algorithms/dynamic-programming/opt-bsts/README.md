@@ -118,7 +118,7 @@ The reconstructed tree is presented in a very compact form, where the keys are p
 <br />
 
 ${\Large\color{darkseagreen}\text{Knuth's optimization}}$
-${\Large\color{darkseagreen}\text{Ex 15/14.5-4}}$
+${\Large\color{darkseagreen}\text{(Ex 15/14.5-4)}}$
 
 The DP approach can be optimized by using Knuth's optimization, which reduces the time complexity to $\Theta(n^2)$. The idea is to exploit the fact that the subproblems are computed in a specific order, and that the optimal root of the subtree lies in a certain range. The range of the optimal root is given by the following formula:
 
