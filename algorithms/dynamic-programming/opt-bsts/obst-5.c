@@ -41,7 +41,8 @@ void computeOBST (size_t nProbs, double *probs, double **costs,
 }
 
 //===================================================================
-// Reconstructs the optimal binary search tree structure
+// Reconstructs the optimal binary search tree structure from the
+// roots of the subtrees
 void constructOBST (size_t i, size_t j, size_t level,
                     size_t **roots) {
 
@@ -51,7 +52,8 @@ void constructOBST (size_t i, size_t j, size_t level,
     constructOBST(i, roots[i][j] - 1, level + 1, roots);
     for (size_t k = 0; k < level; ++k)
       printf("-");
-    printf(level ? "| K%zu\n" : "K%zu\n", roots[i][j]);
+    printf(level ? "| K%zu (%zu)\n" : "K%zu (%zu)\n", 
+           roots[i][j], level);
     constructOBST(roots[i][j] + 1, j, level + 1, roots);
   }
 }

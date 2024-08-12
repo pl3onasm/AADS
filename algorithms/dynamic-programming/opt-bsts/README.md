@@ -113,7 +113,7 @@ ${\color{peru}\text{Reconstruction}}$ of an optimal BST is also possible. This i
 
 Implementation: [OBST - Reconstruction](https://github.com/pl3onasm/CLRS/tree/main/algorithms/dynamic-programming/opt-bsts/obst-4.c)
 
-The reconstructed tree is presented in a very compact form, where the keys are printed in an inorder traversal of the tree, and the depth of each key is also printed. The depth of the root is 0, and the depth of any other key is 1 plus the depth of its parent. This image will help you interpret and visualize the reconstructed tree: [Test case 3](https://github.com/pl3onasm/CLRS/tree/main/algorithms/dynamic-programming/opt-bsts/images/obsttest3.png)
+The reconstructed tree is presented in a very compact form, where the keys are printed in an inorder traversal of the tree, and the depth of each key is also printed. The depth of the root is 0, and the depth of any other key is 1 plus the depth of its parent. In order to help you interpret and visualize the reconstructed tree from the output, a visual representation of the tree has been provided for a few test cases: [test case 2](https://github.com/pl3onasm/CLRS/tree/main/algorithms/dynamic-programming/opt-bsts/images/obsts-test2.png), [test case 3](https://github.com/pl3onasm/CLRS/tree/main/algorithms/dynamic-programming/opt-bsts/images/obsts-test3.png), [test case 5](https://github.com/pl3onasm/CLRS/tree/main/algorithms/dynamic-programming/opt-bsts/images/obsts-test5.png). Test case 1 is the same as the example presented above.
 
 <br />
 
