@@ -21,9 +21,9 @@ typedef struct {
 
 //===================================================================
 // Shows the id, weight and unit value of an item
-void showItem(Item *item) {
-  printf("  item %d: %.2lf kg, %.2lf €/kg\n", 
-         item->id, item->weight, item->unitValue);
+void showItem(Item item) {
+  printf("  item %d: %.2lf kg, € %.2lf / kg\n", 
+         item.id, item.weight, item.unitValue);
 }
 
 //===================================================================
@@ -45,7 +45,7 @@ void fillKnapsack(Item *items, size_t len, double W) {
   while (totalWeight + items[idx].weight <= W) {
     totalWeight += items[idx].weight; 
     totalValue += items[idx].value;
-    showItem(&items[idx++]);
+    showItem(items[idx++]);
   }
 
   if (idx == 0) printf("  None\n");
@@ -54,19 +54,19 @@ void fillKnapsack(Item *items, size_t len, double W) {
     double rem = W - totalWeight;
     printf("\nSelected for %.2lf %%: \n", 
            100 * rem / items[idx].weight);  
-    showItem(&items[idx]);
+    showItem(items[idx]);
     totalValue += rem * items[idx].unitValue;
     totalWeight += rem;
   }
   
-  printf("\nTotal weight: %.2lf\nTotal value: %.2lf\n", 
+  printf("\nTotal weight: %.2lf kg\nTotal value: € %.2lf\n",
           totalWeight, totalValue);
 
     // show remaining items
   printf("\nRemaining items:\n");
   if (idx >= len - 1) printf("  None\n");
   for (size_t i = idx + 1; i < len; i++) 
-    showItem(&items[i]);
+    showItem(items[i]);
 }
 
 //===================================================================
@@ -110,7 +110,7 @@ int main () {
       totalValue += items[i].value;
       totalWeight += items[i].weight;
     }
-    printf("Total weight: %.2lf\nTotal value: %.2lf\n", 
+    printf("Total weight: %.2lf kg\nTotal value: € %.2lf\n",
             totalWeight, totalValue);
   
   } else fillKnapsack(items, nItems, W);
