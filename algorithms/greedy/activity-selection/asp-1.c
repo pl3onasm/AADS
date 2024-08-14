@@ -28,7 +28,7 @@ Act *readActs(size_t *len) {
   Act *acts = safeCalloc(cap, sizeof(Act));
 
     // start with a sentinel activity
-  acts[(*len)++] = (Act){0, 0};      
+  acts[(*len)++] = (Act){0, 0, 0};
 
   while (scanf(" [ %zu , %zu ) , ", &acts[*len].start, 
                                     &acts[*len].finish) == 2) {
@@ -40,15 +40,14 @@ Act *readActs(size_t *len) {
     }
   }
     // end with a sentinel activity
-  acts[(*len)++] = (Act){SIZE_MAX, SIZE_MAX};
+  acts[(*len)++] = (Act){SIZE_MAX, SIZE_MAX, *len};
 
-  acts = safeRealloc(acts, *len * sizeof(Act));
   return acts;
 }
 
 //===================================================================
 // Comparison function for qsort
-int cmpAct(const void *a, const void *b) {
+int cmpAct(void const *a, void const *b) {
   return ((Act *)a)->finish < ((Act *)b)->finish ? -1 : 1;
 }
 

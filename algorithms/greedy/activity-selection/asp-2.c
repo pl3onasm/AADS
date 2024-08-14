@@ -39,13 +39,12 @@ Act *readActs(size_t *len) {
     }
   }
 
-  acts = safeRealloc(acts, *len * sizeof(Act));
   return acts;
 }
 
 //===================================================================
 // Comparison function for qsort
-int cmpAct(const void *a, const void *b) {
+int cmpAct(void const *a, void const *b) {
   return ((Act *)a)->finish < ((Act *)b)->finish ? -1 : 1;
 }
 
@@ -60,7 +59,7 @@ void printActs(Act *acts, size_t nActs) {
 
 //===================================================================
 // Selects the maximum number of mutually compatible activities that
-// can be performed
+// can be performed; returns the number of activities selected
 size_t selectActs(Act *acts, size_t i, size_t n) {
 
     // find index k of the first activity aₖ
