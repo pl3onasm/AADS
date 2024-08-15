@@ -21,7 +21,7 @@ size_t maxArray (size_t *arr, size_t len) {
 }
 
 //===================================================================
-// Computes the optimal change for all amounts up to max
+// Computes the optimal change for all amounts up to given amount
 // Returns an array where the i-th element contains the denomination
 // of a coin used as a last step in an optimal solution to the
 // (sub)problem of making change for amount i

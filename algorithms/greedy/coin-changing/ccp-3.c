@@ -25,13 +25,12 @@ size_t maxArray (size_t *arr, size_t len) {
 void grdMakeChange(size_t *coins, size_t nCoins, size_t amount, 
                    size_t *minCoins) {
 
-  while (amount > 0) {
-    size_t coin = coins[0];
-    for (size_t i = nCoins; i--;)
-      if (coins[i] <= amount) coin = coins[i];
-    minCoins[amount] = coin;
-    --amount;
-  }
+  size_t idx = 0;
+
+  while (amount > 0) 
+    minCoins[amount--] = amount >= coins[idx] ? 
+                         coins[idx] : (idx < nCoins - 1 ?
+                         coins[++idx] : 0); 
 }
 
 //===================================================================
@@ -68,6 +67,9 @@ bool checkCanonical(size_t *coins, size_t nCoins) {
 
   grdMakeChange(coins, nCoins, n, grdChanges);
   dpMakeChange(coins, nCoins, n, dpChanges);
+
+  PRINT_ARRAY(grdChanges, "%zu", n + 1);
+  PRINT_ARRAY(dpChanges, "%zu", n + 1);
 
     // see if there is a counterexample to the canonicality
   for (size_t i = 0; i <= n; i++) 
