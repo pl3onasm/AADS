@@ -84,7 +84,7 @@ binheap *readInput () {
 // the Huffman tree and printing the path from the root to the leaf
 void showCodes(node *n, short *code, size_t level) {
   if (!n->left && !n->right) {
-    printf("%4c %9ld       ", n->ch, n->freq);
+    printf("%4c %9zu       ", n->ch, n->freq);
     for (size_t i = 0; i < level; ++i)
       printf("%hd", code[i]);
     printf("\n");
@@ -108,7 +108,7 @@ void showTree(node *n, short *code, size_t level) {
     for (size_t i = 0; i < level; ++i)
       printf("-%hd", code[i]);
     if (! n->left && ! n->right)
-      printf(" '%c' (%ld)\n", n->ch, n->freq);
+      printf(" '%c' (%zu)\n", n->ch, n->freq);
     else printf("\n");
   } else printf("root\n");
 
