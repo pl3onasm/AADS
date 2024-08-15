@@ -68,9 +68,6 @@ bool checkCanonical(size_t *coins, size_t nCoins) {
   grdMakeChange(coins, nCoins, n, grdChanges);
   dpMakeChange(coins, nCoins, n, dpChanges);
 
-  PRINT_ARRAY(grdChanges, "%zu", n + 1);
-  PRINT_ARRAY(dpChanges, "%zu", n + 1);
-
     // see if there is a counterexample to the canonicality
   for (size_t i = 0; i <= n; i++) 
     if (grdChanges[i] != dpChanges[i]) {
