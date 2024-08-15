@@ -1,5 +1,5 @@
-${\huge\color{Cadetblue}\text{Coin changing}}$  
-${\huge\color{Cadetblue}\text{Problem (OBST)}}$
+${\huge\color{Cadetblue}\text{Coin Changing}}$  
+${\huge\color{Cadetblue}\text{Problem (CCP)}}$
 
 <br />
 
