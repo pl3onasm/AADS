@@ -1,0 +1,11 @@
+Canonical coin system
+... using greedy approach
+
+47 = 20 x 2 + 5 + 2
+66 = 20 x 3 + 5 + 1
+40 = 20 x 2
+23 = 20 + 2 + 1
+75 = 20 x 3 + 10 + 5
+41 = 20 x 2 + 1
+22 = 20 + 2
+54 = 20 x 2 + 10 + 2 x 2

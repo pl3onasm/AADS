@@ -51,10 +51,15 @@ size_t *dpMakeChange(size_t *coins, size_t nCoins, size_t amount) {
 // Prints the optimal change for a given amount
 void showChange(size_t *minChanges, size_t amount) {
 
-  size_t coin = minChanges[amount], nCoins = 0;
   printf("%zu = ", amount);
 
-  while (amount > 0) {
+  if (amount == 0) {
+    printf("0\n");
+    return;
+  }
+
+  size_t coin = minChanges[amount], nCoins = 0;
+  while (amount && coin) {
     while (minChanges[amount] == coin) {
       amount -= coin;
       nCoins++;
@@ -62,7 +67,7 @@ void showChange(size_t *minChanges, size_t amount) {
     printf(nCoins > 1 ? "%zu x %zu" : "%zu", coin, nCoins);
     coin = minChanges[amount];
     nCoins = 0;
-    printf(amount > 0 ? " + " : "\n");
+    printf(amount && coin ? " + " : "\n");
   }
 }
 

@@ -26,8 +26,7 @@ void grdMakeChange(size_t *coins, size_t nCoins, size_t amount,
                    size_t *minCoins) {
 
   size_t idx = 0;
-
-  while (amount > 0) 
+  while (amount) 
     minCoins[amount--] = amount >= coins[idx] ? 
                          coins[idx] : (idx < nCoins - 1 ?
                          coins[++idx] : 0); 
@@ -85,10 +84,15 @@ bool checkCanonical(size_t *coins, size_t nCoins) {
 // Prints the optimal change for a given amount
 void showChange(size_t *minChanges, size_t amount) {
 
-  size_t coin = minChanges[amount], nCoins = 0;
   printf("%zu = ", amount);
 
-  while (amount > 0) {
+  if (amount == 0) {
+    printf("0\n");
+    return;
+  }
+
+  size_t coin = minChanges[amount], nCoins = 0;
+  while (amount && coin) {
     while (minChanges[amount] == coin) {
       amount -= coin;
       nCoins++;
@@ -96,7 +100,7 @@ void showChange(size_t *minChanges, size_t amount) {
     printf(nCoins > 1 ? "%zu x %zu" : "%zu", coin, nCoins);
     coin = minChanges[amount];
     nCoins = 0;
-    printf(amount > 0 ? " + " : "\n");
+    printf(amount && coin ? " + " : "\n");
   }
 }
 
@@ -129,7 +133,7 @@ int main() {
 
     // show optimal solutions for all requested amounts
   for (int i = 0; i < nAmounts; i++)
-    showChange(minChanges, amounts[i]);     
+    showChange(minChanges, amounts[i]);
     
   free(minChanges);
   free(coins);

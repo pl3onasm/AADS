@@ -17,10 +17,21 @@ void makeChange(size_t *coins, size_t nCoins, size_t amount) {
   size_t j = 0, coin = coins[j];
   size_t remAmount = amount;
 
-  while (remAmount > 0 && j < nCoins) {
+  if (amount == 0) {
+    printf("0\n");
+    return;
+  }
+
+  while (remAmount > 0) {
       // if amount is smaller than current coin, take next coin
-    if (remAmount < coin) coin = coins[++j]; 
-    else {
+    if (remAmount < coin) {
+      if (j < nCoins - 1) 
+        coin = coins[++j];
+      else {
+        remAmount = 0;
+        printf("0\n");
+      }
+    } else {
         // compute number of coins of current value 
         // and update remaining amount
       size_t q = remAmount / coin;

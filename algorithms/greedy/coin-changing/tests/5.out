@@ -1,0 +1,10 @@
+Non-canonical coin system
+... using DP approach
+
+70 = 25 x 2 + 10 x 2
+33 = 25 + 2 x 4
+89 = 25 x 3 + 10 + 2 x 2
+73 = 25 x 2 + 10 x 2 + 2 + 1
+42 = 10 x 4 + 2
+24 = 10 x 2 + 2 x 2
+11 = 10 + 1
