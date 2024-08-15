@@ -28,11 +28,9 @@ typedef struct node {
 } node;
 
 //===================================================================
-
+// Creates a new node
 node *newNode () {
-  /* creates a new node */
   node *n = safeCalloc(1, sizeof(node));
-  n->ch = 0;
   return n;
 }
 
@@ -62,7 +60,7 @@ size_t getHeight (node *n) {
 // Reads the input text and counts the frequencies of the characters
 // Creates a node for each character with non-zero frequency and
 // inserts it into a min binary heap
-binheap *readInput (void) {
+binheap *readInput () {
   size_t freqs[LENGTH] = {0};
   unsigned char ch;
   while (scanf("%c", &ch) != EOF)
@@ -84,7 +82,7 @@ binheap *readInput (void) {
 //===================================================================
 // Shows the code for each character of the alphabet by traversing
 // the Huffman tree and printing the path from the root to the leaf
-void showCodes(node *n, short *code, int level) {
+void showCodes(node *n, short *code, size_t level) {
   if (!n->left && !n->right) {
     printf("%4c %9ld       ", n->ch, n->freq);
     for (size_t i = 0; i < level; ++i)
@@ -100,14 +98,14 @@ void showCodes(node *n, short *code, int level) {
 
 //===================================================================
 // Shows the Huffman tree by an in-order traversal
-void showTree(node *n, short *code, int level) {
+void showTree(node *n, short *code, size_t level) {
   if (!n) return;
 
   code[level] = 0;
   showTree(n->left, code, level + 1);
 
   if (level) {
-    for (int i = 0; i < level; ++i)
+    for (size_t i = 0; i < level; ++i)
       printf("-%hd", code[i]);
     if (! n->left && ! n->right)
       printf(" '%c' (%ld)\n", n->ch, n->freq);
