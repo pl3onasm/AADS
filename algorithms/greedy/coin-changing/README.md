@@ -31,7 +31,7 @@ ${\Large\color{darkseagreen}\text{DP approach}}$
 
 Given the fact that the greedy approach doesn't yield the optimal solution for all coin systems, there's always the option to resort to dynamic programming. Of course, the downside of dynamic programming is that it requires more space and time than the greedy approach. So if the given coin system is canonical, the greedy approach is definitely preferred.
 
-It should be an easy exercise to implement a top-down approach with memoization. We will limit ourselves to the bottom-up approach. Let $D = \lbrace d_1, d_2, \ldots, d_n \rbrace$ be the set of coins in the coin system, and let $A$ be the amount for which we want to make a change. We define $C(A)$ to be a function that returns the minimum number of coins needed to make a change for $A$ using the coins in $D$, where $C(0) = 0$. The recurrence relation for $C(A)$ is then as follows:
+Let $D = \lbrace d_1, d_2, \ldots, d_n \rbrace$ be the set of coins in the coin system, and let $A$ be the amount for which we want to make a change. We define $C(A)$ to be a function that returns the minimum number of coins needed to make a change for $A$ using the coins in $D$, where $C(0) = 0$. The recurrence relation for $C(A)$ is then as follows:
 
 $$\color{darkslateblue}\boxed{\color{rosybrown}\space
 C(A) = \begin{cases}
@@ -43,10 +43,18 @@ $$
 
 <br/>
 
-The recurrence is easy to implement in a bottom-up fashion. We just need to go through the amounts ranging from 1 to $A$, and then for each of these amounts, we iterate through the coins in $D$ to find the minimum number of coins needed to make a change for that amount, based on the optimal solutions that were already computed for the smaller amounts. The algorithm terminates when the amount $A$ is reached.
+The recurrence is easy to implement in a bottom-up fashion. We simply go through the amounts ranging from 1 to $A$, and then for each of these amounts, we iterate through the coins in $D$ to find the minimum number of coins needed to make a change for that amount, based on the optimal solutions that were already computed for the smaller amounts. The algorithm terminates when the amount $A$ is reached.
 
 Time complexity: $\mathcal{O}(nA)$, where $n$ is the number of coins in the coin system, and $A$ is the amount for which we want to make a change.
 
 For the sake of illustration, and to show that the dynamic programming approach works for non-canonical coin systems as well, we simply add a coin of 20 cents to the previous example of the American coin system to make it non-canonical: $D = \lbrace 25, 20, 10, 5, 1 \rbrace$. To see that this system is non-canonical, observe that for the amount of 40 cents, the greedy approach yields 3 coins (25 + 10 + 5), while the optimal solution is 2 coins (20 + 20). The DP approach yields this optimal solution.
 
 Implementation: [CCP - Bottom-up DP](https://github.com/pl3onasm/AADS/blob/main/algorithms/greedy/coin-changing/ccp-2.c)
+
+<br/>
+
+${\Large\color{darkseagreen}\text{Combining greedy and DP}}$
+
+It is possible to combine the greedy and dynamic programming approaches and let the program decide which approach to use based on the coin system. For this, we use the fact that if a coin system is non-canonical, then there exists at least one counterexample, i.e. at least one amount for which the greedy approach does not yield the optimal solution, just like in the examples given above. Of course, it would be inefficient to keep checking for counterexamples until we find one. Luckily, we do have an upper bound (thanks to Dexter Kozen and Shmuel Zaks): the smallest counterexample is always less than the sum of the two largest coins in the coin system. So we can simply do a one-time check for the smallest counterexample, and if it is found, we use the dynamic programming approach, otherwise we use the greedy approach for the entire coin system.
+
+Implementation: [CCP - Greedy/DP](https://github.com/pl3onasm/AADS/blob/main/algorithms/greedy/coin-changing/ccp-3.c)
