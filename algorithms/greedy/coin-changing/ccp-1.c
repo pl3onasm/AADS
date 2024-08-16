@@ -5,7 +5,8 @@
   license: MIT, see LICENSE file in repository root folder
   description: coin changing problem (CCP)
               using a greedy approach 
-  time complexity: O(n), where n is the number of coins in the coin system
+  time complexity: O(n), where n is the number of coins 
+                   in the coin system
 */ 
 
 #include "../../../lib/clib/clib.h"
@@ -22,24 +23,22 @@ void makeChange(size_t *coins, size_t nCoins, size_t amount) {
     return;
   }
 
-  while (remAmount > 0) {
+  while (remAmount) {
       // if amount is smaller than current coin, take next coin
     if (remAmount < coin) {
       if (j < nCoins - 1) 
         coin = coins[++j];
-      else {
-        remAmount = 0;
-        printf("0\n");
-      }
+      else break;
     } else {
         // compute number of coins of current value 
         // and update remaining amount
+      printf(remAmount == amount ? "" : " + ");
       size_t q = remAmount / coin;
       remAmount %= coin; 
       printf(q > 1 ? "%zu x %zu" : "%zu", coin, q);
-      printf(remAmount > 0 ? " + " : "\n");
     }
   }
+  printf("\n");
 }
 
 //===================================================================

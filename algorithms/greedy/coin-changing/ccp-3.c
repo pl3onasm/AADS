@@ -58,7 +58,7 @@ void dpMakeChange(size_t *coins, size_t nCoins, size_t amount,
 
 //===================================================================
 // Checks whether a coin system is canonical or not
-bool checkCanonical(size_t *coins, size_t nCoins) {
+bool isCanonical(size_t *coins, size_t nCoins) {
 
   size_t n = coins[0] + coins[1];
   CREATE_ARRAY(size_t, grdChanges, n + 1, 0);
@@ -111,9 +111,6 @@ int main() {
     // read coin system
   READ_UNTIL(size_t, coins, "%zu", '.', nCoins);
 
-    // check whether the coin system is canonical or not
-  bool canonical = checkCanonical(coins, nCoins);
-
     // read amounts to be changed
   READ_UNTIL(size_t, amounts, "%zu", '.', nAmounts);
 
@@ -123,7 +120,7 @@ int main() {
     // compute optimal solutions for all amounts up to max
   CREATE_ARRAY(size_t, minChanges, max + 1, 0);
 
-  if (canonical) {
+  if (isCanonical(coins, nCoins)) {
     printf("Canonical coin system\n... using greedy approach\n\n");
     grdMakeChange(coins, nCoins, max, minChanges);
   } else { 
