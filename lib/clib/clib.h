@@ -45,7 +45,7 @@
   //            READ_ARRAY(myString, "%c", 10);
 #define READ_ARRAY(arr, format, len) \
   for (size_t arr##i = 0; arr##i < len; ++arr##i) \
-    (void)! scanf(format, &arr[arr##i]);
+    (void)! scanf(format, &arr[arr##i])
 
   // macro for reading input into a 2D matrix of given dimensions
   // Examples:  READ_MATRIX(myInts, "%d", 10, 5);
@@ -54,15 +54,15 @@
 #define READ_MATRIX(matrix, format, rows, cols) \
   for (size_t arr##i = 0; arr##i < rows; ++arr##i) \
     for (size_t arr##j = 0; arr##j < cols; ++arr##j) \
-      (void)! scanf(format, &matrix[arr##i][arr##j]);
+      (void)! scanf(format, &matrix[arr##i][arr##j])
 
   // macro for reading input from stdin as long as it lasts
   // creates a new array of the given type and format, and
   // a new variable size with the number of elements read
   // and sets the last element to '\0'
-  // Examples:  READ(int, "%d", myInts, size);
-  //            READ(double, "%lf", myDbls, size);
-  //            READ(char, "%c", myChrs, size);
+  // Examples:  READ(int, "%d", myInts, myIntsLen);
+  //            READ(double, "%lf", myDbls, myDblsLen);
+  //            READ(char, "%c", myChrs, myChrsLen);
 #define READ(type, arr, format, size) \
   type *arr = safeCalloc(100, sizeof(type)); \
   size_t size = 0; type arr##var; \
@@ -73,18 +73,19 @@
       memset(arr + size, 0, 100); \
     } \
   } \
-  arr[size] = '\0';
+  arr[size] = '\0'
 
   // macro for reading input from stdin until a given 
-  // delimiter is encountered 
-  // returns a new array of the given type and creates a
+  // delimiter is encountered. The delimiter should not
+  // be able to be read by the format string.
+  // Returns a new array of the given type and creates a
   // new variable size with the number of elements read
-  // Examples:  READ_UNTIL(char, myString, "%c", '\n', size);
-  //            READ_UNTIL(int, myInts, "%d", '.', size);
+  // Examples:  READ_UNTIL(double, myDbls, "%lf", '\n', dblLen);
+  //            READ_UNTIL(int, myInts, "%d", '.', intLen);
 #define READ_UNTIL(type, arr, format, delim, size) \
   type *arr = safeCalloc(100, sizeof(type)); \
   size_t size = 0; type arr##var; \
-  while (scanf(format, &arr##var) == 1 && arr##var != delim) { \
+  while (scanf(format, &arr##var) == 1) { \
     arr[size++] = arr##var; \
     if (size% 100 == 0) { \
       arr = safeRealloc(arr, (size + 100) * sizeof(type)); \
@@ -92,7 +93,7 @@
     } \
   } \
   arr[size] = '\0';\
-  (void) ! scanf("%*c");
+  (void) ! scanf("%*c ")
     
 //::::::::::::::::::::::: MEMORY MANAGEMENT :::::::::::::::::::::://
 
@@ -190,7 +191,7 @@ typedef struct {
       memset(arr->data + arr##size##Len, 0, arr->cap / 2); \
     } \
   } \
-  arr->size = arr##size##Len;\
+  arr->size = arr##size##Len
 
   // creates a new string with a given capacity 
 static inline string *newString(size_t cap) {
