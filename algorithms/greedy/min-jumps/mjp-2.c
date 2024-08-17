@@ -12,7 +12,10 @@
 #include <stdint.h>
 
 //===================================================================
-
+// Returns the minimum number of jumps needed to reach the
+// destination, or SIZE_MAX if the destination is unreachable.
+// The moves array is filled with the indices from which the
+// maximum jumps were taken
 size_t jump(size_t *jumps, size_t n, size_t *moves) {
     
   CREATE_ARRAY(size_t, dp, n, SIZE_MAX);
@@ -42,7 +45,8 @@ size_t jump(size_t *jumps, size_t n, size_t *moves) {
 }
 
 //===================================================================
-// Reconstructs the path to the destination
+// Reconstructs the path to the destination by following the indices
+// in the moves array
 void recPath(size_t *moves, size_t idx, size_t dest) {
 
     // base case: reached the first index
@@ -57,8 +61,7 @@ void recPath(size_t *moves, size_t idx, size_t dest) {
 
 //===================================================================
 // Shows the minimum number of jumps and the path to the destination
-// by following the indices in the moves array if the destination
-// is reachable
+// if the destination is reachable
 void showJumps(size_t *moves, size_t n, size_t minJumps) {
   
   if (minJumps == SIZE_MAX) {
@@ -75,6 +78,12 @@ void showJumps(size_t *moves, size_t n, size_t minJumps) {
 int main() {
 
   READ(size_t, jumps, "%zu", n);
+
+  if (n == 1 || n == 0) {
+    printf("Min jumps: 0\n");
+    free(jumps);
+    return 0;
+  }
 
   CREATE_ARRAY(size_t, moves, n, 0);
 

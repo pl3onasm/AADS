@@ -14,7 +14,8 @@
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 
 //===================================================================
-
+// Returns the minimum number of jumps needed to reach the
+// destination, or SIZE_MAX if the destination is unreachable
 size_t jump(size_t *jumps, size_t idx, size_t dest) {
     
     // base case: destination reached
