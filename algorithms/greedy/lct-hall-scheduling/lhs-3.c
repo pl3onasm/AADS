@@ -4,18 +4,21 @@
   email: pl3onasm@gmail.com
   license: MIT, see LICENSE file in repository root folder
   description: lecture hall scheduling (LHS) 
-               using greedy algorithm
+               using greedy algorithm and a binary heap
   time complexity: O(n log n) where n is the number of activities
+  note: this version uses a binary heap to keep track of occupied
+        halls, which will schedule activities differently than the
+        lhs-2.c version, which uses a stack, but the schedules are,
+        of course, still optimal
 */ 
 
 #include "../../../lib/clib/clib.h"
 #include "../../../datastructures/heaps/binheaps/binheap.h"
-#include <stdint.h>
 
 //===================================================================
 // Defines an activity
 typedef struct {
-  size_t id;               // activity id
+  size_t id;               // activity id based on input order
   size_t start;            // start time
   size_t end;              // end time
 } activity;
@@ -35,7 +38,8 @@ int cmpActivities(void const *a, void const *b) {
 }
 
 //===================================================================
-// Compares two halls by the end time of their last activity
+// Compares two halls by the end time of the last activity in their
+// schedules
 int cmpHalls(void const *a, void const *b) {
   hall *h1 = (hall *)a;
   hall *h2 = (hall *)b;
@@ -69,11 +73,11 @@ activity *readActivities(size_t *nActs) {
 
 //===================================================================
 // Creates a new lecture hall
-hall *newHall(size_t id, activity *act, size_t schSize) {
+hall *newHall(size_t id, activity act, size_t schSize) {
   hall *h = safeCalloc(1, sizeof(hall));
   h->sch = safeCalloc(schSize, sizeof(activity));
   h->id = id;
-  h->sch[h->schSize++] = *act;
+  h->sch[h->schSize++] = act;
   return h;
 }
 
@@ -89,8 +93,8 @@ size_t scheduleActivities(activity *acts, size_t nActs,
   qsort(acts, nActs, sizeof(activity), cmpActivities);
 
     // create a binary heap for keeping track of occupied halls;
-    // the heap is ordered by the end time of the last activity
-    // in each hall's schedule
+    // the min heap is ordered by the end time of the last 
+    // activity in each hall's schedule
   binheap *occupied = bhpNew(nActs, MIN, cmpHalls);
   hall *h; size_t nHalls = 0;
 
@@ -103,7 +107,7 @@ size_t scheduleActivities(activity *acts, size_t nActs,
       bhpHeapify(occupied, 0);
     } else {
         // assign activity to a new hall
-      halls[nHalls] = newHall(nHalls + 1, &acts[i], nActs);
+      halls[nHalls] = newHall(nHalls + 1, acts[i], nActs);
       bhpPush(occupied, halls[nHalls++]);
     }
   }
