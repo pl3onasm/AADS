@@ -80,11 +80,11 @@ static void checkCapacity(queue *Q) {
 //===================================================================
 // Enqueues an item in the queue
 void enqueue (queue *Q, void *item) {
-  checkCapacity(Q);
   if (Q->copy) 
     item = Q->copy(item);
   Q->buffer[Q->tail] = item;
   Q->tail = (Q->tail + 1) % Q->capacity;
+  checkCapacity(Q);
   Q->size++;
 }
 

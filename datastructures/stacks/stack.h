@@ -18,7 +18,6 @@ typedef struct {
   void** buffer;        // Array of void pointers
   size_t capacity;      // Capacity of the stack
   size_t size;          // Number of elements in the stack
-  size_t top;           // Index of the top of the stack
   showStackItem show;   // Function to show an item
   freeStackItem free;   // Function to free an item
   copyStackItem copy;   // Function to copy an item
