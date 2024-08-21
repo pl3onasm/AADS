@@ -67,13 +67,13 @@ static int cmpStrCI(void const *str1, void const *str2) {
 
 //===================================================================
 // shows the key or value
-static void showStr(void *str) {
+static void showStr(void const *str) {
   printf("%s", (char *)str);
 }
 
 //===================================================================
 // Copy function for key or value
-static void *copyStr(void *str) {
+static void *copyStr(void const *str) {
   char *newKey = safeMalloc(strlen((char *)str) + 1);
   strcpy(newKey, (char *)str);
   return newKey;

@@ -16,8 +16,8 @@ ${\Large\color{peru}\text{Algorithms}}$
 
 ${\Large\color{peru}\text{Data structures}}$
 
-* Stacks
-* [Queues](datastructures/queues) 
+* [Stacks](datastructures/stacks)
+* [Queues](datastructures/queues)
 * [Lists](datastructures/lists)
 * [Trees](datastructures/trees)
 * [Hash tables](datastructures/htables)
