@@ -34,7 +34,7 @@ stack* newStack(size_t capacity);
   // what is still in the stack when it is destroyed
 void setStackOwner(stack* S, freeStackItem free);
 
-  // Sets the function to copy an item
+  // Sets the stack to operate on copies of the data
 void setStackCopy(stack* S, copyStackItem copy, 
                   size_t elSize, freeStackItem free);
 

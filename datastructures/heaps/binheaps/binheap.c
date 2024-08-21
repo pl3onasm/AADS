@@ -26,9 +26,29 @@ binheap *bhpNew(size_t capacity, bhpType hpType,
 }
 
 //===================================================================
+// Sets the heap to own the input data, deallocating
+// what is still in the heap when it is destroyed
+void bhpSetOwner(binheap *H, bhpFreeData free) {
+  H->free = free;
+}
+
+//===================================================================
+// Sets the heap to operate on copies of the data
+void bhpSetCopy(binheap *H, bhpCopyData copy, size_t elSize,
+                bhpFreeData free) {
+  H->copy = copy;
+  H->elSize = elSize;
+  H->free = free;
+}
+
+//===================================================================
 // Deallocates the binary heap
 void bhpFree(binheap *H) {
   if (!H) return;
+  if (H->free) {
+    for (size_t i = 0; i < H->size; i++) 
+      H->free(H->arr[i]);
+  }
   free(H->arr);
   free(H);
 }
@@ -77,6 +97,8 @@ void bhpPush(binheap *H, void *node) {
     H->arr = safeRealloc(H->arr, H->capacity * sizeof(void *));
   }
   size_t idx = H->size;
+  if (H->copy) 
+    node = H->copy(node);
   H->arr[idx] = node;
     // bubble up the new node until
     // the heap property is restored
@@ -138,8 +160,12 @@ binheap *bhpBuild(void *arr, size_t len, size_t elemSize,
   binheap *H = bhpNew(len, hpType, cmp);
 
     // copy the array into the heap 
-  for (size_t i = 0; i < len; i++) 
-    H->arr[i] = (char *)arr + i * elemSize;
+  for (size_t i = 0; i < len; i++) {
+    void *node = (char *)arr + i * elemSize;
+    if (H->copy) 
+      node = H->copy(node);
+    H->arr[i] = node;
+  }
  
     // heapify the heap, 
     // starting from the last non-leaf node

@@ -72,7 +72,7 @@ int main() {
 
     // checks if the edges are in the graph
   printf("\nChecking if some edges are in the graph:\n");
-  printf("\n\nEdge %s-%s is in the graph: %s\n", "cat", "bird", 
+  printf("\nEdge %s-%s is in the graph: %s\n", "cat", "bird", 
          hasEdgeL(G, "cat", "bird") ? "true" : "false");
   printf("Edge %s-%s is in the graph: %s\n", "mouse", "chicken",
           hasEdgeL(G, "mouse", "chicken") ? "true" : "false");
@@ -94,6 +94,11 @@ int main() {
   vertex *src;
   for (edge *e = firstE(G, &src); e; e = nextE(G, &src))
     printf("%zu: Edge %s-%s\n", ++n, src->label, e->to->label);
+
+    // tests getting the neighbors of a vertex
+  dll *neighbors = getNeighbors(G, getVertex(G, "mouse"));
+  printf("\nNeighbors of %s:\n", "mouse");
+  dllShow(neighbors);
 
     // tests the transpose of the graph
   graph *GT = transposeGraph(G);

@@ -14,6 +14,8 @@
 // function pointer types
 typedef int (*bhpCompData)(void const *a, void const *b);
 typedef void (*bhpShowData)(void const *data);
+typedef void (*bhpFreeData)(void *data);
+typedef void *(*bhpCopyData)(void const *data);
 
 // binary heap type
 typedef enum { MIN, MAX } bhpType;
@@ -26,6 +28,10 @@ typedef struct {
   bhpCompData cmp;         // comparison function
   bhpShowData show;        // show function
   bhpType hpType;          // type of heap (min or max)
+  bhpCopyData copy;        // copy function
+  bhpFreeData free;        // free function
+  size_t elSize;           // size of heap elements, only
+                           // used when copy is set
   char *label;             // label for the heap
                            // default is "BINARY HEAP"
   char *delim;             // string delimter for show
@@ -47,6 +53,14 @@ void bhpSetLabel(binheap *H, char *label);
 
   // sets the delimiter for the show function
 void bhpSetDelim(binheap *H, char *delim);
+
+  // sets the heap to own the input data, deallocating
+  // what is still in the heap when it is destroyed
+void bhpSetOwner(binheap *H, bhpFreeData free);
+
+  // sets the queue to operate on copies of the data
+void bhpSetCopy(binheap *H, bhpCopyData copy,
+                size_t elSize, bhpFreeData free);
 
   // deallocates the binary heap
 void bhpFree(binheap *H);
