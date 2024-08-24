@@ -1,22 +1,23 @@
-${\color{Cadetblue}\text{\huge Knuth Morris Pratt}}$ ${\color{Cadetblue}\text{\huge Algorithm (KMP)}}$
+$\huge{\color{Cadetblue}\text{Knuth Morris Pratt}}$  
+$\huge{\color{Cadetblue}\text{Algorithm (KMP)}}$
 
 <br/>
 
-${\color{Rosybrown}\text{\Large Problem}}$
+$\Large{\color{Rosybrown}\text{Problem}}$
 
 Given a pattern $P[0:m-1]$ and a text $T[0:n-1]$, find all occurrences of $P$ in $T$. It is assumed that $n \geq m$. The result should consist of the indices indicating where each occurrence of $P$ in $T$ starts, i.e. the valid shifts for $P$ in $T$.
 
 <br/>
 
-${\color{darkseagreen}\text{\Large The KMP algorithm}}$
+$\Large{\color{darkseagreen}\text{The KMP algorithm}}$
 
 If we look at the [string-matching automaton](https://github.com/pl3onasm/CLRS/tree/main/algorithms/string-matching/finite-automata), it is clear that the preprocessing step to compute $\delta$ is the most expensive part of the algorithm. In fact, it does way too much work, since it computes transitions for every possible character in the alphabet $\Sigma$ (resulting in a table containing $|\Sigma| \cdot m$ entries, most of which are simply zero), even though we only need to know the next state for the characters in $P$. Furthermore, it does not take into account the structure of the pattern $P$ itself, but only the fact that it is a fixed string of length $m$.
 
-This is where the KMP algorithm comes in: it does not compute an exhaustive transition function $\delta$ in advance, but instead computes the transitions on the fly during the matching process, by using a ${\color{peru}\text{precomputed}}$ ${\color{peru}\text{prefix function }\pi}$ $: \lbrace 0, 1, \dots, m \rbrace \rightarrow \lbrace 0, 1, \dots, m \rbrace$, which maps a state $q$ to the length of the longest prefix of $P$ that is also a ${\color{cornflowerblue}\text{proper}}$ suffix of $P_q$. In other words, it tells us how the pattern matches against shifts of itself, thus effectively using information on the structure of the pattern $P$ itself to guide the overall matching process by indicating the next shift to try in case of a mismatch. This prefix function is defined as follows:
+This is where the KMP algorithm comes in: it does not compute an exhaustive transition function $\delta$ in advance, but instead computes the transitions on the fly during the matching process, by using a precomputed ${\color{peru}\text{prefix function }\pi}$ $: \lbrace 0, 1, \dots, m \rbrace \rightarrow \lbrace 0, 1, \dots, m \rbrace$, which maps a state $q$ to the length of the longest prefix of $P$ that is also a ${\color{cornflowerblue}\text{proper}}$ suffix of $P_q$. In other words, it tells us how the pattern matches against shifts of itself, thus effectively using information on the structure of the pattern $P$ itself to guide the overall matching process by indicating the next shift to try in case of a mismatch. This prefix function is defined as follows:
 <br/>
 
 $$
-\color{maroon}\huge\boxed{\color{peru}\large \space \pi(q) = \color{darkgoldenrod}\max \lbrace k : k < q \land P_k \sqsupset P_q \rbrace \space}\\
+\color{maroon}\boxed{\color{peru}\space \pi(q) = \color{darkgoldenrod}\text{max} \lbrace k : k < q \land P_k \sqsupset P_q \rbrace \space}\\
 $$
 
 <br/>
@@ -37,9 +38,9 @@ where $q'$ is the next state to try in case of a mismatch or when the pattern ha
 
 $$
 {\color{peru}q' = }\begin{cases}
- \max \lbrace k: k \in {\color{darkkhaki}\pi^\ast(q)} \land P[k] = a \rbrace \\
+\text{max} \lbrace k: k \in {\color{darkkhaki}\pi^\ast(q)} \land P[k] = a \rbrace \\
 \qquad \scriptsize \text{if } \exists k \in {\color{darkkhaki}\pi^\ast(q)} : a = P[k]  \\
- 0 \quad\space\space \scriptsize \text{otherwise}
+0 \quad\space\space \scriptsize \text{otherwise}
 \end{cases}
 $$
 

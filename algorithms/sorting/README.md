@@ -1,8 +1,8 @@
-${\color{Cadetblue}\text{\huge Sorting Algorithms}}$
+$\huge{\color{Cadetblue}\text{Sorting Algorithms}}$
 
 <br/>
 
-${\color{Rosybrown}\text{\Large Overview}}$
+$\Large{\color{Rosybrown}\text{Overview}}$
 
 | ${\color{peru}\text{Complexity}}$ | ${\color{peru}\text{CLRS}}$ | ${\color{peru}\text{Topic}}$ |
 |:---|:---:|:---|
@@ -21,13 +21,13 @@ ${\color{Rosybrown}\text{\Large Overview}}$
 
 <br/>
 
-${\color{Rosybrown}\text{\Large Sorting Problem}}$
+$\Large{\color{Rosybrown}\text{Sorting Problem}}$
 
 The task of sorting is to rearrange a given sequence of elements into a particular order given by a comparison function, denoted by $\leq$, which is defined on the elements of the sequence and is assumed to be total, antisymmetric and transitive. In other words, given a sequence $A = \langle a_1, a_2, \dots, a_n \rangle$, the sorted output should be the permutation $A' = \langle a'_1, a'_2, \dots, a'_n \rangle$ satisfying the condition $a'_1 \leq a'_2 \leq \dots \leq a'_n$.
 
 <br/>
 
-${\color{darkseagreen}\text{\Large Comparison Sorts}}$
+$\Large{\color{darkseagreen}\text{Comparison Sorts}}$
 
 Most sorting algorithms are comparison sorts: they determine the new order of a sequence by comparing the input elements with one another. Suppose that the input consists of $3$ elements $a, b, c$. Then there are $3! = 6$ possible orderings of these elements. A comparison sort algorithm examines the ordering of each pair of these elements and makes decisions based on the made comparisons.
 
@@ -45,14 +45,14 @@ Let $l$ be the number of leaves in the decision tree. Since a decision tree is a
 
 $$
 \begin{align*}
-{\color{olive}\log(n!)} &=  \sum_{i=1}^n \log(i)\\
+{\bm{\color{olive}\log(n!)}} &=  \sum_{i=1}^n \log(i)\\
 &= \sum_{i=1}^{\lfloor n/2 \rfloor} \log(i) + \sum_{i= \lfloor n/2 \rfloor +1}^n \log(i)\\
-& {\color{olive} \boldsymbol{>}} \sum_{i=1}^{\lfloor n/2 \rfloor} 1 + \sum_{i=\lfloor n/2 \rfloor +1}^n \log(n/2)\\
+& {\bm{\color{olive} \boldsymbol{>}}} \sum_{i=1}^{\lfloor n/2 \rfloor} 1 + \sum_{i=\lfloor n/2 \rfloor +1}^n \log(n/2)\\
 & = \lfloor n/2 \rfloor + \lfloor n/2 \rfloor \log(n/2)\\
 &= \lfloor n/2 \rfloor + \lfloor n/2 \rfloor \log(n) - \lfloor n/2 \rfloor \log(2)\\
 &= \lfloor n/2 \rfloor \log(n) + \lfloor n/2 \rfloor - \lfloor n/2 \rfloor\\
 &= \lfloor n/2 \rfloor \log(n)\\
-&= {\color{olive}\Theta(n\log n)}
+&= {\bm{\color{olive}\Theta(n\log n)}}
 \end{align*}
 $$
 
@@ -60,7 +60,7 @@ As a result, $h = \Omega(\log(n!)) = \Omega(n\log n)$. Since the height of the d
 
 <br/>
 
-${\color{darkseagreen}\text{\Large Linear-time Sorts}}$
+$\Large{\color{darkseagreen}\text{Linear-time Sorts}}$
 
 The only way to escape the $\Omega(n\log n)$ lower bound for comparison sorts is to exploit special properties of the input elements, such as the range of possible values. This is exactly what linear-time sorts do. The most well-known non-comparison sorts are counting sort, radix sort and bucket sort. For example, counting sort assumes that the input elements are integers in the range $0$ to $k$, for some integer $k = \mathcal{O}(n)$. Radix sort assumes that the input elements are integers represented in a fixed number of digits in some base $b$. And bucket sort assumes that the input elements are uniformly distributed in the interval $[0, 1)$.
 

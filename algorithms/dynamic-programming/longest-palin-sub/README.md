@@ -3,7 +3,7 @@ ${\color{Cadetblue}\text{\huge subsequence (LPS)}}$
 
 <br />
 
-${\color{rosybrown}\text{\Large Problem}}$
+$\Large{\color{rosybrown}\text{Problem}}$
 
 Given a sequence $X = \langle x_0, x_1, \ldots, x_{n-1} \rangle \space$, we want to find the longest palindromic subsequence of $X$. A ${\color{peru}\text{subsequence}}$ is derived from a given sequence by deleting some or no elements from it without changing the order of the remaining elements. Such a sequence is ${\color{peru}\text{palindromic}}$ if it reads the same forwards and backwards.
 
@@ -11,7 +11,7 @@ For example, the sequence $X = \langle C, A, D, B, D, C, B, E, A, B \rangle$ has
 
 <br />
 
-${\color{darkseagreen}\text{\Large The key idea}}$
+$\Large{\color{darkseagreen}\text{The key idea}}$
 
 The idea is to think of each subproblem in terms of a ${\color{peru}\text{substring}}$ with indices $i$ and $j$ of the sequence $X$. The subproblem is then to find the LPS of the substring $X[i \ldots j]$. We start with the substring $X[0 \ldots n-1]$, the input sequence itself, and work our way down to the base cases, which are substrings of length $1$ or $0$.
 
@@ -23,12 +23,12 @@ Thus, a recursive solution to the problem can be found by defining a function $L
 <br />
 
 $$
-\color{darkslateblue}\huge\boxed{\color{rosybrown}\normalsize \space
-\normalsize L(i,j) = \begin{cases} 1 & \scriptsize \text{if } i = j \\
-\normalsize 0 & \scriptsize \text{if } i > j \\
-\normalsize 2 + L(i+1,j-1) &\scriptsize \text{if } X[i] = X[j] \\
-\normalsize \text{max}\lbrace L(i+1,j), & \scriptsize \text{otherwise} \\
-\normalsize \qquad \space L(i,j-1) \rbrace  \\
+\color{darkslateblue}\boxed{\color{rosybrown}\space
+L(i,j) = \begin{cases} 1 & \scriptsize \text{if } i = j \\
+0 & \scriptsize \text{if } i > j \\
+2 + L(i+1,j-1) &\scriptsize \text{if } X[i] = X[j] \\
+\text{max}\lbrace L(i+1,j), & \scriptsize \text{otherwise} \\
+\qquad \space L(i,j-1) \rbrace  \\
 \end{cases}\space}
 $$
 
@@ -38,7 +38,7 @@ The solution to the original problem is then obtained by calling $L(0,n-1)$. The
 
 <br />
 
-${\color{darkseagreen}\text{\Large Brute force}}$
+$\Large{\color{darkseagreen}\text{Brute force}}$
 
 The brute force solution implements the recursive function $L(i,j)$ as described above without any optimization. It ignores the fact that the subproblems overlap and recomputes the length of the LPS of the same substrings multiple times. The time complexity of the brute force solution is therefore exponential.
 
@@ -46,9 +46,9 @@ Implementation: [LPS - brute force](https://github.com/pl3onasm/Algorithms/tree/
 
 <br />
 
-${\color{darkseagreen}\text{\Large Top-down}}$
+$\Large{\color{darkseagreen}\text{Top-down}}$
 
-The top-down DP solution implements the same recursive function $L(i,j)$ but uses a ${\color{peru}\text{memoization}}$ ${\color{peru}\text{table}}$ to store the length of the LPS of each substring once it is computed. After initializing this table with a special value that indicates the subproblem has not been computed yet (e.g. $0$), the program is modified to check at each recursive step if the length of the LPS of the substring has already been computed. If it has, the stored length is returned. Otherwise, the length is computed as before and stored in the table. As each subproblem is thus guaranteed to be computed only once, the time complexity of the top-down solution is reduced to $\mathcal{O}(n^2)$.
+The top-down DP solution implements the same recursive function $L(i,j)$ but uses a ${\color{peru}\text{memoization table}}$ to store the length of the LPS of each substring once it is computed. After initializing this table with a special value that indicates the subproblem has not been computed yet (e.g. $0$), the program is modified to check at each recursive step if the length of the LPS of the substring has already been computed. If it has, the stored length is returned. Otherwise, the length is computed as before and stored in the table. As each subproblem is thus guaranteed to be computed only once, the time complexity of the top-down solution is reduced to $\mathcal{O}(n^2)$.
 
 ${\color{peru}\text{Reconstruction}}$ of an optimal solution from the memoization table $T$ is possible by starting from the cell $T[0][n-1]$ and moving to the left or down if the value of the current cell is equal to the value of the cell to the left or the cell below, respectively. Otherwise, we add the first and last characters of the substring to the solution and move diagonally to the cell $T[i+1][j-1]$. This process is repeated until we reach the base case where $i \geq j$.
 
@@ -56,7 +56,7 @@ Implementation: [LPS - top-down DP](https://github.com/pl3onasm/Algorithms/tree/
 
 <br />
 
-${\color{darkseagreen}\text{\Large Bottom-up}}$
+$\Large{\color{darkseagreen}\text{Bottom-up}}$
 
 In the bottom-up DP approach, we start by setting the base cases of the memoization table $T$ and then fill the table in a bottom-up manner, starting from the smallest substrings and working our way up to the original problem by gradually increasing the length of the substrings we consider. The time complexity of the bottom-up solution is $\mathcal{O}(n^2)$, the same as the top-down solution. Reconstruction of an optimal solution is done in the same way as in the top-down solution.
 

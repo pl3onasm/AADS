@@ -1,4 +1,4 @@
-${\color{cadetblue} \text{\huge Insertion sort}}$
+$\huge{\color{cadetblue} \text{Insertion sort}}$
 
 <br/>
 

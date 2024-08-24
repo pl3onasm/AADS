@@ -1,9 +1,9 @@
-${\color{Cadetblue}\text{\huge Minimum Edit}}$  
-${\color{Cadetblue}\text{\huge Distance (MED)}}$
+$\huge{\color{Cadetblue}\text{Minimum Edit}}$  
+$\huge{\color{Cadetblue}\text{Distance (MED)}}$
 
 <br />
 
-${\color{rosybrown}\text{\Large Problem}}$
+$\Large{\color{rosybrown}\text{Problem}}$
 
 Given are two strings $S$ and $T$ of lengths $m$ and $n$ respectively, and a set of operations each with an associated cost. Our task is to transform the source string $S$ to the target string $T$, by applying a sequence of operations on $S$, such that the total cost of the transformation is minimized.
 
@@ -38,7 +38,7 @@ The total cost of this transformation is the same as before: $2 + 2 +$ $2 + 6$ $
 
 <br />
 
-${\color{darkseagreen}\text{\Large The key idea}}$
+$\Large{\color{darkseagreen}\text{The key idea}}$
 
 The idea is to think of the subproblems in terms of ${\color{peru}\text{prefixes}}$ of the two given strings. Let $S_i$ and $T_j$ be the prefixes of lengths $i$ and $j$ respectively. By solving the subproblems for smaller and smaller prefixes, we can build up the solution for the entire input strings, as the minimum edit distance can be expressed in terms of the minimum edit distances of the prefixes by considering at each step all the possible options for the last operation and eventually choosing the one that minimizes the total cost.
 
@@ -49,16 +49,16 @@ Clearly, the subproblems are ${\color{peru}\text{overlapping}}$, and also exhibi
 As a consequence, we can define a recursive function $D(i, j)$ that returns the minimum edit distance of non-empty prefixes $S_i$ and $T_j$ as follows:
 
 $$
-\color{darkslateblue}\huge\boxed{\color{rosybrown}\normalsize \space
-D(i,j) = \min \begin{cases}
-\small D(i-1, j-1) + {\color{orchid}c_r} & \scriptsize \text{if } S[i-1] \neq T[j-1] \\
-\small D(i-1, j-1) + {\color{orchid}c_c} & \scriptsize \text{if } S[i-1] = T[j-1] \\
-\small D(i-1, j) + {\color{orchid}c_d} \\
-\small D(i, j-1) + {\color{orchid}c_i} \\
-\small D(i-2, j-2) + {\color{orchid}c_s} & \scriptsize \text{if } S[i-1] = T[j-2] \\
+\color{darkslateblue}\boxed{\color{rosybrown}\space
+D(i,j) = \text{min} \begin{cases}
+D(i-1, j-1) + {\color{orchid}c_r} & \scriptsize \text{if } S[i-1] \neq T[j-1] \\
+D(i-1, j-1) + {\color{orchid}c_c} & \scriptsize \text{if } S[i-1] = T[j-1] \\
+D(i-1, j) + {\color{orchid}c_d} \\
+D(i, j-1) + {\color{orchid}c_i} \\
+D(i-2, j-2) + {\color{orchid}c_s} & \scriptsize \text{if } S[i-1] = T[j-2] \\
 & \space \scriptsize \land \space S[i-2] = T[j-1] \\
-\small \min \lbrace D(k, n) + {\color{orchid}c_k}   \\
-\qquad \small : 0 \leq k < m \rbrace  & \scriptsize \text{if } i = m \land j = n
+\text{min} \lbrace D(k, n) + {\color{orchid}c_k}   \\
+\qquad : 0 \leq k < m \rbrace  & \scriptsize \text{if } i = m \land j = n
 \end{cases}\space}
 $$
 
@@ -70,7 +70,7 @@ The recursive case is when the last operation is a copy, delete, insert, replace
 
 <br />
 
-${\color{darkseagreen}\text{\Large Brute force}}$
+$\Large{\color{darkseagreen}\text{Brute force}}$
 
 Solving the minimum edit distance problem by brute force is straightforward: we implement the recurrence relation above without any optimization. The time complexity of this approach is $\mathcal{O}(6^{m+n})$, since there are $6$ possible operations at each step, and the total number of steps is $m + n$. No need to say that this approach is impractical for large strings. 
 
@@ -78,7 +78,7 @@ Implementation: [MED - Brute Force](https://github.com/pl3onasm/CLRS/blob/main/a
 
 <br />
 
-${\color{darkseagreen}\text{\Large Top-down}}$
+$\Large{\color{darkseagreen}\text{Top-down}}$
 
 The top-down approach is essentially a quick fix to the brute force solution, where we cache the results of the subproblems in a table to avoid redundant computations, ensuring that each subproblem is solved only once. The time complexity of this approach is $\mathcal{O}(m \cdot n)$, since there are $m \cdot n$ unique subproblems that need to be solved.  
 
@@ -92,7 +92,7 @@ Implementation: [MED - Top-down with Reconstruction](https://github.com/pl3onasm
 
 <br />
 
-${\color{darkseagreen}\text{\Large Bottom-up}}$
+$\Large{\color{darkseagreen}\text{Bottom-up}}$
 
 The bottom-up approach is a more efficient way to solve the MED problem, as it avoids the overhead of recursive calls. The idea here is to build up the final solution by solving the subproblems in a ${\color{peru}\text{topological order}}$ determined by the lengths of the prefixes, starting with the smallest prefixes and working our way up to the entire input strings. The time complexity of this approach is the same as that of the top-down approach, $\mathcal{O}(m \cdot n)$.
 
@@ -100,6 +100,6 @@ Implementation: [MED - Bottom-up](https://github.com/pl3onasm/CLRS/blob/main/alg
 
 <br />
 
-${\color{darkseagreen}\text{\Large Notes}}$
+$\Large{\color{darkseagreen}\text{Notes}}$
 
 The MED problem is related to the ${\color{peru}\text{Levenshtein distance}}$, which is a metric used to measure the dissimilarity between two strings: it is the minimum number of single-character edits (insertions, deletions, or substitutions) required to change one string into another, each operation having a cost of $1$, while a copy is considered as a substitution with cost $0$. The [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) is thus a special case of the MED problem: it can be computed by running the above algorithm with $c_c = 0$, $c_i = c_d = c_r = 1\space$ and $c_s = c_k = \infty$.  

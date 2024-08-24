@@ -1,9 +1,9 @@
-${\huge\color{Cadetblue}\text{\Huge Optimal Binary}}$  
-${\huge\color{Cadetblue}\text{\Huge Search Trees (OBST)}}$
+$\huge{\color{Cadetblue}\text{Optimal Binary}}$  
+$\huge{\color{Cadetblue}\text{Search Trees (OBST)}}$
 
 <br />
 
-${\Large\color{rosybrown}\text{Problem}}$
+$\Large{\color{rosybrown}\text{Problem}}$
 
 Given a sorted sequence of $n$ distinct keys $K = \langle k_0, k_1, \ldots, k_{n-1} \rangle$ in increasing order, and a sequence of $n$ search probabilities $P = \langle p_0, p_1, \ldots, p_{n-1} \rangle$ that sum to 1, the task is to build an optimal binary search tree (OBST) for $K$. The probability $p_i$ represents the probability that a search will be for key $k_i$, and an OBST is a binary search tree for which the average search time is minimized, that is, the expected search cost is minimized.
 
@@ -18,7 +18,7 @@ where $d_i$ is the depth of the key $k_i$ in the BST.
 
 <br/>
 
-${\Large\color{rosybrown}\text{Example}}$
+$\Large{\color{rosybrown}\text{Example}}$
 
 Consider the example where we have some natural numbers as keys, and their corresponding search probabilities. The keys are $K = \langle 1, 2, 3, 4 \rangle$, and the search probabilities are $P = \langle 0.3, 0.1, 0.2, 0.4 \rangle$. The task is to build an OBST for the keys in $K$. 
 
@@ -52,7 +52,7 @@ Each of these $14$ trees provides a different way of organizing the keys, while 
 
 <br />
 
-${\Large\color{darkseagreen}\text{The key idea}}$
+$\Large{\color{darkseagreen}\text{The key idea}}$
 
 The question then is how to build an OBST from a sorted sequence of keys and their corresponding search probabilities in an efficient manner. At first glance, it seems that we could build such a tree by using a [greedy strategy](https://github.com/pl3onasm/CLRS/tree/main/algorithms/greedy), where we always choose the key with the maximum search probability as the root of the (sub)tree, and then recursively build the left and right subtrees.
 
@@ -68,15 +68,15 @@ While this strategy may work in some cases, it does not guarantee that the resul
 
 Thus, we need to resort to a more systematic approach to building an OBST. The idea here is to build the OBST by considering all possible subtrees of the keys, and then choosing the one that minimizes the expected search cost. In other words, we think of the subproblems in terms of ${\color{peru}\text{substrings}}$ of the key sequence, and build the solution for the subproblem by considering each key in the substring as the root of the subtree. By doing so, we can then build the OBST recursively, starting with the smallest substring and building up to the full sequence of keys.
 
-At each step, we consider the keys $k_i, k_{i+1}, \ldots, k_j$ and build the subtree rooted at $k_r$, where $i \leq r \leq j$. The expected search cost of the subtree rooted at $k_r$ is then the sum of the expected search costs of the left and right subtrees, plus the cost of searching for $k_r$. Eventually, we choose the root $k_r$ that minimizes the expected search cost of the subtree. 
+At each step, we consider the keys $k_i, k_{i+1}, \ldots, k_j$ and build the subtree rooted at $k_r$, where $i \leq r \leq j$. The expected search cost of the subtree rooted at $k_r$ is then the sum of the expected search costs of the left and right subtrees, plus the cost of searching for $k_r$. Eventually, we choose the root $k_r$ that minimizes the expected search cost of the subtree.  
 
 Thus, the expected search cost of the subtree rooted at $k_r$ can be computed recursively, as follows:
 
 $$\color{darkslateblue}\boxed{\color{rosybrown}\space
 e(i, j) = \begin{cases}
-0 & \text{if } j = i - 1 \\
-\min \lbrace e(i, r-1) + e(r+1, j) & \\
-\qquad + \space w(i, j) : i \leq r \leq j \rbrace & \text{if } i \leq j
+0 & \scriptsize \text{if } j = i - 1 \\
+\text{min} \lbrace e(i, r-1) + e(r+1, j) & \\
+\qquad + \space w(i, j) : i \leq r \leq j \rbrace & \scriptsize \text{if } i \leq j
 \end{cases}\space}$$
 
 <br/>
@@ -87,7 +87,7 @@ Note the strong similarity with the [matrix-chain multiplication algorithm](http
 
 <br />
 
-${\Large\color{darkseagreen}\text{Brute force}}$
+$\Large{\color{darkseagreen}\text{Brute force}}$
 
 The brute force approach simply impements the recursive formula as is, without any optimization. This results in an exponential time complexity, which is clearly not practical for large values of $n$. The brute force approach is solely presented here for illustrative purposes, in order to show the recursive nature of the problem and how the dynamic programming solution improves upon it.
 
@@ -95,7 +95,7 @@ Implementation: [OBST - Brute Force](https://github.com/pl3onasm/CLRS/tree/main/
 
 <br />
 
-${\Large\color{darkseagreen}\text{Top-down}}$
+$\Large{\color{darkseagreen}\text{Top-down}}$
 
 The top-down approach optimizes the brute force solution by storing the results of the subproblems in a table, so that they need not be recomputed. This is done by using a 2D array $dp$, where $dp[i][j]$ stores the expected search cost of the optimal BST for the keys $k_i, k_{i+1}, \ldots, k_j$. By ${\color{peru}\text{memoizing}}$ the results of the subproblems in this way, each subproblem is solved only once, and the results are reused when needed. This results in a time complexity of $\mathcal{O}(n^3)$, which is much more efficient than the brute force approach.
 
@@ -103,7 +103,7 @@ Implementation: [OBST - Top-down](https://github.com/pl3onasm/CLRS/tree/main/alg
 
 <br />
 
-${\Large\color{darkseagreen}\text{Bottom-up}}$
+$\Large{\color{darkseagreen}\text{Bottom-up}}$
 
 The bottom-up approach is an iterative version of the top-down approach, where the subproblems are solved in a bottom-up manner, starting with the smallest subproblems and building up to the full sequence of keys. This is done by filling the table $dp$ in a bottom-up fashion, starting with the base cases and then computing the results of the subproblems in increasing order of size. The time complexity of the bottom-up approach is also in $\mathcal{O}(n^3)$.
 
@@ -117,8 +117,8 @@ The reconstructed tree is presented in a very compact form, where the keys are p
 
 <br />
 
-${\Large\color{darkseagreen}\text{Knuth's optimization}}$
-${\Large\color{darkseagreen}\text{(Ex 15/14.5-4)}}$
+$\Large{\color{darkseagreen}\text{Knuth's optimization}}$
+$\Large{\color{darkseagreen}\text{(Ex 15/14.5-4)}}$
 
 The DP approach can be optimized by using Knuth's optimization, which reduces the time complexity to $\Theta(n^2)$. The idea is to exploit the fact that the subproblems are computed in a specific order, and that the optimal root of the subtree lies in a certain range. The range of the optimal root is given by the following formula:
 
@@ -131,7 +131,7 @@ Implementation: [OBST - optimized](https://github.com/pl3onasm/CLRS/tree/main/al
 
 <br />
 
-${\Large\color{darkseagreen}\text{Note}}$
+$\Large{\color{darkseagreen}\text{Note}}$
 
 The book CLRS presents the algorithm in a slightly different way, by not only considering the probabilities of successful searches, but also the probabilities of failed searches, which are represented by dummy keys. The idea is to build a complete binary search tree, where each key $k_i$ is the root of a subtree, and the dummy keys are the leaves of the tree, with the probabilities of the dummy keys being those search probabilities that are associated with the keys that are not in the sequence.  
 Obviously, this is only practical if the ordered key sequence is incomplete, and we need to add dummy keys to make it complete. If the key sequence is already complete, then there is no need to add dummy keys. For the sake of simplicity, the dummy keys have been left out of the discussion and the implementation.  

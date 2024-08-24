@@ -31,13 +31,13 @@ ${\Large\color{darkseagreen}\text{DP approach}}$
 
 Given the fact that the greedy approach doesn't yield the optimal solution for all coin systems, there's always the option to resort to dynamic programming. Of course, the downside of dynamic programming is that it requires more space and time than the greedy approach. So if the given coin system is canonical, the greedy approach is definitely preferred.
 
-Let $D = \lbrace d_1, d_2, \ldots, d_n \rbrace$ be the set of coins in the coin system, and let $A$ be the amount for which we want to make a change. We define $C(A)$ to be a function that returns the minimum number of coins needed to make a change for $A$ using the coins in $D$, where $C(0) = 0$. The recurrence relation for $C(A)$ is then as follows:
+Let $D = \lbrace d_0, d_1, \ldots, d_{n-1} \rbrace$ be the set of $n$ coins in the coin system, and let $A$ be the amount for which we want to make a change. We define $C(A)$ to be a function that returns the minimum number of coins needed to make a change for $A$ using the coins in $D$, where $C(0) = 0$. The recurrence relation for $C(A)$ is then as follows:
 
 $$\color{darkslateblue}\boxed{\color{rosybrown}\space
 C(A) = \begin{cases}
 0 & \scriptsize \text{if } A = 0 \\
 1 + \min \lbrace C(A - d_i) \\
-\qquad \qquad : 1 \leq i \leq n \rbrace & \scriptsize \text{if } A > 0
+\qquad \qquad : 0 \leq i < n \rbrace & \scriptsize \text{if } A > 0
 \end{cases}\space}
 $$
 

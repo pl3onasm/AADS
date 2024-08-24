@@ -1,8 +1,8 @@
-${\color{Cadetblue}\text{\huge Graph Algorithms}}$
+$\huge{\color{Cadetblue}\text{Graph Algorithms}}$
 
 <br/>
 
-${\color{Rosybrown}\text{\Large Overview}}$
+$\Large{\color{Rosybrown}\text{Overview}}$
 
 | ${\color{peru}\text{CLRS (3/4), ...}}$ | ${\color{peru}\text{Topic}}$ |
 |:---|:---|

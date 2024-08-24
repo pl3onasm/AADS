@@ -1,8 +1,8 @@
-${\color{Cadetblue}\text{\huge Divide-and-Conquer}}$ ${\color{Cadetblue}\text{\huge Algorithms}}$
+$\huge{\color{Cadetblue}\text{Divide-and-Conquer}}$ 
 
 <br/>
 
-${\color{Rosybrown}\text{\Large Overview}}$
+$\Large{\color{Rosybrown}\text{Overview}}$
 
 | ${\color{peru}\text{CLRS}}$ | ${\color{peru}\text{Topic}}$ |
 |:---|:---|
@@ -18,7 +18,7 @@ ${\color{Rosybrown}\text{\Large Overview}}$
 
 <br/>
 
-${\color{Rosybrown}\text{\Large The D-and-C Approach}}$
+$\Large{\color{Rosybrown}\text{The D-and-C Approach}}$
 
 When a problem is too difficult to solve directly, it is often possible to attack the problem by dividing it into subproblems that are themselves smaller instances of the same problem and then solving these subproblems ${\color{peru}\text{recursively}}$. Such an approach is known as *divide and conquer*, and it is typically described by a ${\color{peru}\text{recurrence relation}}$, which expresses the solution to a problem in terms of solutions to smaller instances of the same problem.
 

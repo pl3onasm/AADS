@@ -2,13 +2,13 @@ ${\color{Cadetblue}\text{\huge Matrix Multiplication}}$
 
 <br/>
 
-${\color{rosybrown}\text{\Large Problem}}$
+${\color{rosybrown}\text{Problem}}$
 
 Given two square matrices $A$ and $B$ of size $n \times n$, we want to compute their product $C = A \cdot B$. The result should be a square matrix of size $n \times n$.
 
 <br/>
 
-${\color{darkseagreen}\text{\Large Standard Matrix}}$ ${\color{darkseagreen}\text{\Large Multiplication}}$
+$\Large{\color{darkseagreen}\text{Standard Matrix Multiplication}}$
 
 If we want to multiply two $n \times n$ matrices $A$ and $B$, we can do so by taking the ${\color{peru}\text{dot product}}$ of each row of $A$ with each column of $B$. This is the naive approach, which is shown in the following pseudocode:
 
@@ -66,11 +66,11 @@ Implementation: [Matrix Multiplication - D&C](https://github.com/pl3onasm/AADS/b
 
 <br/>
 
-${\color{darkseagreen}\text{\Large Strassen's Matrix}}$ ${\color{darkseagreen}\text{\Large Multiplication}}$
+$\Large{\color{darkseagreen}\text{Strassen's Matrix}}$ ${\color{darkseagreen}\text{Multiplication}}$
 
 The idea behind Strassen's algorithm is to reduce the number of (quadratic time) multiplications performed at each dividing step from 8 to 7 by substituting one of the multiplications with a number of (linear time) additions and subtractions. This way, it is possible to reduce the time complexity of the matrix multiplication algorithm to below $\Theta(n^3)$.
 
-The ${\color{peru}\text{reduction}}$ ${\color{peru}\text{of the number}}$ ${\color{peru}\text{of multiplications}}$ at each recursive step is achieved by first computing the following 10 sums of matrices of size $n/2 \times n/2$:
+The reduction of the number of multiplications at each recursive step is achieved by first computing the following 10 sums of matrices of size $n/2 \times n/2$:
 
 $$
 \begin{align*}

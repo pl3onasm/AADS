@@ -1,9 +1,9 @@
-${\color{Cadetblue}\text{\huge Minimal Palindromic}}$  
-${\color{Cadetblue}\text{\huge Partitioning (MPP)}}$
+$\huge{\color{Cadetblue}\text{Minimal Palindromic}}$  
+$\huge{\color{Cadetblue}\text{Partitioning (MPP)}}$
 
 <br />
 
-${\color{rosybrown}\text{\Large Problem}}$
+$\Large{\color{rosybrown}\text{Problem}}$
 
 Given a string $S$ of length $n$, find the minimum number of cuts required to partition the string into palindromic substrings. A palindromic substring is a substring that reads the same forwards and backwards. Thus, a single character is a palindrome, as is any substring of length $2$ that consists of two identical characters.
 
@@ -11,7 +11,7 @@ For example, for the string `minimum` the minimum number of cuts required is $2$
 
 <br />
 
-${\color{darkseagreen}\text{\Large The key idea}}$
+$\Large{\color{darkseagreen}\text{The key idea}}$
 
 Let $P(i, j)$ be a function that returns ${\color{cornflowerblue}\text{true}}$ if the substring $S[i:j]$ is a palindrome and ${\color{orchid}\text{false}}$ otherwise. This function can be precomputed in $\mathcal{O}(n^2)$ time, using the following recurrence relation:
 
@@ -37,11 +37,11 @@ Clearly, the subproblems are ${\color{peru}\text{overlapping}}$: the same subpro
 Now, let $C(i)$ be the minimum number of cuts required to partition the prefix $S[0:i]$ into palindromic substrings. The recurrence relation for the MPP problem can then be expressed as follows:
 
 $$
-\color{darkslateblue}\huge\boxed{\color{rosybrown}\normalsize \space
+\color{darkslateblue}\boxed{\color{rosybrown}\space
 C(i) = \begin{cases}
-\small 0 & \scriptsize \text{if } P(0, i) \\
-\small \min \lbrace C(j) + 1 :  & \scriptsize \text{otherwise}\\
-\quad \small 0 \leq j < i \land P(j+1, i) \rbrace
+0 & \scriptsize \text{if } P(0, i) \\
+\text{min} \lbrace C(j) + 1 :  & \scriptsize \text{otherwise}\\
+\quad 0 \leq j < i \land P(j+1, i) \rbrace
 \end{cases}\space}
 $$
 
@@ -51,7 +51,7 @@ The base case is when the prefix $S[0:i]$ is already a palindrome, in which case
 
 <br />
 
-${\color{darkseagreen}\text{\Large Brute force}}$
+$\Large{\color{darkseagreen}\text{Brute force}}$
 
 Solving the MPP problem by brute force is simply a matter of implementing the recurrence relation above, without any optimization. The time complexity of this approach is $\mathcal{O}(2^n)$, since there are $n - 1$ points between each pair of characters in the string $S$ where a cut can be made, and at each of these points we are faced with a Shakespearean dilemma: to cut or not to cut. This results in a total of $2^{n-1}$ possible combinations of cuts, which is the number of leaves in the recursion tree.
 
@@ -59,7 +59,7 @@ Implementation: [MPP - Brute Force](https://github.com/pl3onasm/CLRS/blob/main/a
 
 <br />
 
-${\color{darkseagreen}\text{\Large Top-down}}$
+$\Large{\color{darkseagreen}\text{Top-down}}$
 
 The brute force approach can be optimized by using ${\color{peru}\text{memoization}}$ to store the results of subproblems that have already been solved. This way, we avoid recomputing the same subproblem multiple times. As a result, the time complexity of the top-down approach is $\mathcal{O}(n^2)$, since there are $n^2$ ${\color{peru}\text{unique}}$ subproblems that need to be solved: $n$ recursive calls, each with $n$ possible subproblems, where each subproblem is uniquely identified by its combination of indices $i$ and $j$.
 
@@ -67,7 +67,7 @@ Implementation: [MPP - Top-down](https://github.com/pl3onasm/CLRS/blob/main/algo
 
 <br />
 
-${\color{darkseagreen}\text{\Large Bottom-up}}$
+$\Large{\color{darkseagreen}\text{Bottom-up}}$
 
 The bottom-up approach is a more natural way to solve the MPP problem. It is based on the observation that the subproblems can be solved in a ${\color{peru}\text{topological order}}$ that is determined by the lengths of the prefixes. That is, we first solve the subproblems for prefixes of length $1$, then for prefixes of length $2$, and so on, until we reach the prefix of length $n$. This way, we can ensure that the results of all subproblems that are needed to solve a particular subproblem have already been computed when we get to that subproblem. This is in contrast to the top-down approach, where the order in which the subproblems are solved is determined by the order in which they are encountered during the recursion. The time complexity, however, remains the same, and is in $\mathcal{O}(n^2)$.
 

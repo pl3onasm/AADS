@@ -1,8 +1,8 @@
-${\color{Cadetblue}\text{\huge Dynamic}}$ ${\color{Cadetblue}\text{\huge Programming}}$
+$\huge{\color{Cadetblue}\text{Dynamic Programming}}$  
 
 <br/>
 
-${\color{Rosybrown}\text{\Large Overview}}$
+$\Large{\color{Rosybrown}\text{Overview}}$
 
 | ${\color{peru}\text{CLRS (3/4)}}$ | ${\color{peru}\text{Topic}}$ |
 |:---|:---|
@@ -20,7 +20,7 @@ ${\color{Rosybrown}\text{\Large Overview}}$
 
 <br/>
 
-${\color{Rosybrown}\text{\Large The DP approach}}$
+$\Large{\color{Rosybrown}\text{The DP approach}}$
 
 Dynamic programming is most suited for optimization problems: this is clear from the type of problems in the list above, which all involve finding a solution that is optimal in some sense, most often the maximum or minimum of some function. Such problems should have two main properties in order to justify the use of dynamic programming:
 

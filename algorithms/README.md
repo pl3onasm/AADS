@@ -1,4 +1,4 @@
-${\color{Cadetblue}\text{\huge Algorithms}}$
+$\huge{\color{Cadetblue}\text{Algorithms}}$
 
 <br/>
 

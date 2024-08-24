@@ -1,4 +1,4 @@
-${\color{cadetblue} \text{\huge Selec} \text{\huge tion sort}}$
+$\huge{\color{cadetblue} \text{Selec} \text{tion sort}}$
 
 <br/>
 

@@ -1,4 +1,4 @@
-${\color{cadetblue} \text{\huge Bucket sort}}$
+$\huge{\color{cadetblue} \text{Bucket sort}}$
 
 <br/>
 

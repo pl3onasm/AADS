@@ -1,8 +1,8 @@
-${\color{Cadetblue}\text{\huge String-matching}}$
+$\huge{\color{Cadetblue}\text{String-matching}}$
 
 <br/>
 
-${\color{Rosybrown}\text{\Large Overview}}$
+$\Large{\color{Rosybrown}\text{Overview}}$
 
 | ${\color{peru}\text{CLRS}}$ | ${\color{peru}\text{Topic}}$ |
 |:---|:---|
@@ -14,7 +14,7 @@ ${\color{Rosybrown}\text{\Large Overview}}$
 
 <br/>
 
-${\color{Rosybrown}\text{\Large String-matching Problem}}$
+$\Large{\color{Rosybrown}\text{String-matching Problem}}$
 
 String matching is the problem of finding all occurrences of a string pattern $P$ of length $m$ in a text $T$ of lenght $n$, where $m \leq n$. The characters in the pattern and the text come from a finite set $\Sigma$ called the $\color{orchid}{\text{alphabet}}$.
 
@@ -24,7 +24,7 @@ In other words, the string-matching problem is to find all valid shifts for $P$ 
 
 <br/>
 
-${\color{Rosybrown}\text{\Large Terminology and properties}}$
+$\Large{\color{Rosybrown}\text{Terminology and properties}}$
 
 - $\Sigma^*$: the set of all finite-length strings over $\Sigma$
 - $\epsilon$: the empty string, i.e. the string of length $0$

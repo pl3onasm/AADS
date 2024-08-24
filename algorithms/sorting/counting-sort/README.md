@@ -1,4 +1,4 @@
-${\color{cadetblue} \text{\huge Counting sort}}$
+$\huge{\color{cadetblue} \text{Counting sort}}$
 
 <br/>
 
@@ -12,7 +12,7 @@ Implementation: [Counting Sort](https://github.com/pl3onasm/CLRS/blob/main/algor
 
 <br/>
 
-${\color{rosybrown} \text{\Large Adaptation}}$
+$\Large{\color{rosybrown} \text{Adaptation}}$
 
 An adaptation can be made in cases where the array $A$ contains negative integers or has a minimum element that is much larger than 0. This is done by ${\color{darkseagreen} \text{shifting}}$ the elements in the array to the right or left by a constant equal to the minimum element in the array. If the minimum element is negative, then the array is shifted to the right by the absolute value of the minimum element. If the minimum element is positive, then the array is shifted to the left by the value of the minimum element. Either way, the minimum element is shifted to the first position in the output array $B$.  
 The algorithm then works as before, except that the size of the auxiliary array $C$ is now $k+1$, where $k$ is the absolute value of the difference between the maximum and minimum elements in the array.

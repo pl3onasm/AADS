@@ -1,14 +1,14 @@
-${\color{Cadetblue}\text{\huge Integer multiplication}}$
+$\huge{\color{Cadetblue}\text{Integer multiplication}}$
 
 <br/>
 
-${\color{rosybrown}\text{\Large Problem}}$
+${\color{rosybrown}\text{Problem}}$
 
 Given two numbers $x$ and $y$ of $m$ and $n$ digits, respectively, and where $m$ and $n$ may become arbitrarily large, we want to compute their product $z = x \cdot y$.
 
 <br/>
 
-${\color{darkseagreen}\text{\Large Long multiplication}}$
+$\Large{\color{darkseagreen}\text{Long multiplication}}$
 
 The most straightforward way to solve this problem is to use the elementary school algorithm for multiplication, also known as the long multiplication algorithm. This algorithm is based on the distributive property of multiplication over addition.
 
@@ -38,7 +38,7 @@ Implementation: [Long multiplication](imp-1.c)
 
 <br/>
 
-${\color{darkseagreen}\text{\Large Karatsuba multiplication}}$
+$\Large{\color{darkseagreen}\text{Karatsuba multiplication}}$
 
 The Karatsuba algorithm is a divide-and-conquer algorithm and was the first multiplication algorithm to break the $\mathcal{O}{(n^2)}$ barrier. The idea is, just like in most divide-and-conquer algorithms, to reduce the original problem into subproblems of half the size, and then combine the results of the subproblems to obtain the final result. Splitting the digit strings into two halves, we have:
 

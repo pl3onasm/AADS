@@ -1,4 +1,4 @@
-${\color{cadetblue} \text{\huge Merge sort}}$
+$\huge{\color{cadetblue} \text{Merge sort}}$
 
 <br/>
 
@@ -20,7 +20,7 @@ A generic implementation: [Generic Merge Sort](https://github.com/pl3onasm/CLRS/
 
 <br/>
 
-${\color{cadetblue} \text{\huge WHAM sort}}$
+$\huge{\color{cadetblue} \text{WHAM sort}}$
 
 <br/>
 

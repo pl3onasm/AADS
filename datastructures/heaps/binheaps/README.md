@@ -6,3 +6,4 @@
 - [Heapsort](../../../algorithms/sorting/heap-sort/heapsort.c)
 - [Kruskal's algorithm](../../../algorithms/graphs/MST-kruskal/kruskal.c)
 - [Priority queues](../../../datastructures/pqueues/bpqueue.h)
+- [Lecture hall scheduling](../../../algorithms/greedy/lct-hall-scheduling/lhs-3.c)

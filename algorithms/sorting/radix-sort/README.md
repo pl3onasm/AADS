@@ -1,4 +1,4 @@
-${\color{cadetblue} \text{\huge Radix sort}}$
+$\huge{\color{cadetblue} \text{Radix sort}}$
 
 <br/>
 

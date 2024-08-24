@@ -1,19 +1,19 @@
-${\color{Cadetblue}\text{\huge Matrix Chain}}$  
-${\color{Cadetblue}\text{\huge Multiplication (MCM)}}$
+$\huge{\color{Cadetblue}\text{Matrix Chain}}$  
+$\huge{\color{Cadetblue}\text{Multiplication (MCM)}}$
 
 <br />
 
-${\color{rosybrown}\text{\Large Problem}}$
+$\Large{\color{rosybrown}\text{Problem}}$
 
 Given a sequence (chain) of (not necessarily square) matrices $A_1, A_2, \dots, A_n$, by means of a table $D$ holding their dimensions such that the $i$-th matrix $A_i$ has dimensions $D[i-1] \times D[i]$, find the most efficient way to multiply these matrices together. The aim is not to actually perform the matrix multiplications, but rather to determine in which order to perform them so as to minimize the total number of scalar multiplications and thus minimize the total cost of the operation.  
 
-In other words, the task is to find the ${\color{peru}\text{optimal}}$ ${\color{peru}\text{parenthesization}}$ of the matrix product. A matrix product is associative, so the order in which the products are performed does not affect the final result. However, the chosen order may dramatically affect the total number of scalar multiplications required to obtain that result and thus affect the overall cost of the entire operation on the chain of matrices.
+In other words, the task is to find the ${\color{peru}\text{optimal parenthesization}}$ of the matrix product. A matrix product is associative, so the order in which the products are performed does not affect the final result. However, the chosen order may dramatically affect the total number of scalar multiplications required to obtain that result and thus affect the overall cost of the entire operation on the chain of matrices.
 
-As an example, consider the chain of matrices $A_1, A_2, A_3$ with dimensions $D = [10, 100, 5, 50]$. The number of scalar multiplications needed to compute the product $(A_1 A_2) A_3$ is $10 \times 100 \times 5 + 10 \times 5 \times 50 = 7500$. However, if we parenthesize the product as $A_1 (A_2 A_3)$, the number of scalar multiplications needed is $10 \times 100 \times 50 + 100 \times 5 \times 50 = 75000$, which is ten times as many as in the first case. So, the goal we are trying to achieve in every given chain of matrices is to find the parenthesization that ${\color{peru}\text{minimizes}}$ ${\color{peru}\text{the cost}}$ of the operation, i.e. minimizes the total number of scalar multiplications required to compute the product of the entire chain.
+As an example, consider the chain of matrices $A_1, A_2, A_3$ with dimensions $D = [10, 100, 5, 50]$. The number of scalar multiplications needed to compute the product $(A_1 A_2) A_3$ is $10 \times 100 \times 5 + 10 \times 5 \times 50 = 7500$. However, if we parenthesize the product as $A_1 (A_2 A_3)$, the number of scalar multiplications needed is $10 \times 100 \times 50 + 100 \times 5 \times 50 = 75000$, which is ten times as many as in the first case. So, the goal we are trying to achieve in every given chain of matrices is to find the parenthesization that ${\color{peru}\text{minimizes the cost}}$ of the operation, i.e. minimizes the total number of scalar multiplications required to compute the product of the entire chain.
 
 <br />
 
-${\color{darkseagreen}\text{\Large The key idea}}$
+$\Large{\color{darkseagreen}\text{The key idea}}$
 
 The problem has some similarities with the [rod cutting problem](https://github.com/pl3onasm/CLRS/tree/main/algorithms/dynamic-programming/rod-cutting): while in that problem we tried to find the optimal cuts for a rod of length $n$ in order to maximize the total revenue, here we try to find the optimal points $k$ to split the matrix chain $A_1 \dots A_n$ into subchains (marked by parentheses) so as to minimize the overall cost to compute the product of the entire chain.  
 
@@ -25,13 +25,13 @@ Thus, for a subchain of matrices $A_i \dots A_j$, the cost of parenthesizing it 
 <br />
 
 $$
-\color{darkslateblue}\huge\boxed{\color{rosybrown}\small \space
+\color{darkslateblue}\boxed{\color{rosybrown}\space
 m(i,j) =
 \begin{cases}
 0 & \scriptsize \text{if } i = j  \\
-\min \lbrace m(i,k) + m(k+1,j) \\
-  \qquad  +\space D[i-1] \cdot D[k] \cdot D[j] \\
-  \qquad \space : i \leq k < j\rbrace& \scriptsize \text{if } i < j  \\
+\text{min} \lbrace m(i,k) + m(k+1,j) \\
+\qquad  +\space D[i-1] \cdot D[k] \cdot D[j] \\
+\qquad \space : i \leq k < j\rbrace& \scriptsize \text{if } i < j  \\
 \end{cases}\space}
 $$
 
@@ -45,7 +45,7 @@ In contrast to the rod cutting problem, subproblems may vary at both ends of the
 
 <br />
 
-${\color{darkseagreen}\text{\Large Brute force}}$
+$\Large{\color{darkseagreen}\text{Brute force}}$
 
 The brute force solution tackles the problem by implementing the above recurrence directly without any optimization. It just tries all possible split points at each step, and recursively applies the same strategy to each of the two resulting subchains, whilst ignoring the fact that identical subproblems are encountered multiple times during the recursive calls. This leads to an exponential running time, as the same subproblems are recomputed over and over again. The brute force solution is therefore not practical for large instances of the problem, as it is extremely slow.
 
@@ -53,18 +53,17 @@ Implementation: [MCM - Brute Force](https://github.com/pl3onasm/Algorithms/tree/
 
 <br />
  
-${\color{darkseagreen}\text{\Large Top-down}}$
+$\Large{\color{darkseagreen}\text{Top-down}}$
 
-This approach seeks to preserve the top-down strategy of the ${\color{peru}\text{recursive}}$ brute force solution, but also to avoid recomputing the same subproblems over and over again. It does this by storing the solutions to the subproblems in a table as soon as they are computed, and checking this table to see if the solution is already available before computing anything. This strategy is called ${\color{peru}\text{memoization}}$: we keep a memo of each solution to a subproblem, and use this memo instead of recomputing the solution again when we encounter the same subproblem. Using this approach, the running time of the algorithm drops to $\mathcal{O}(n^3)$. 
-
+This approach seeks to preserve the top-down strategy of the ${\color{peru}\text{recursive}}$ brute force solution, but also to avoid recomputing the same subproblems over and over again. It does this by storing the solutions to the subproblems in a table as soon as they are computed, and checking this table to see if the solution is already available before computing anything. This strategy is called ${\color{peru}\text{memoization}}$: we keep a memo of each solution to a subproblem, and use this memo instead of recomputing the solution again when we encounter the same subproblem. Using this approach, the running time of the algorithm drops to $\mathcal{O}(n^3)$.  
 
 Implementation: [MCM - Top-down DP](https://github.com/pl3onasm/Algorithms/tree/main/algorithms/dynamic-programming/matrix-chain-mult/mcm-2.c)
 
 <br />
 
-${\color{darkseagreen}\text{\Large Bottom-up}}$
+$\Large{\color{darkseagreen}\text{Bottom-up}}$
 
-The bottom-up approach is similar to the top-down approach, but does not use recursion, and works the other way around: it does not start with the original problem and recursively breaks it down into smaller subproblems until it reaches the base case, but it actually starts from the base cases and gradually builds up from there to the original problem. The subproblems are thus solved in order of ${\color{peru}\text{increasing}}$ ${\color{peru}\text{subchain length}}$, so that at each step all subsolutions needed to solve the current subproblem are readily availabe. This is achieved by maintaining a table, where the solution to each subproblem—its minimal cost in terms of scalar multiplications—is stored in a bottom-up fashion. The solution to the original problem is then the solution to the last subproblem in the table. The running time of this approach is also in $\mathcal{O}(n^3)$.
+The bottom-up approach is similar to the top-down approach, but does not use recursion, and works the other way around: it does not start with the original problem and recursively breaks it down into smaller subproblems until it reaches the base case, but it actually starts from the base cases and gradually builds up from there to the original problem. The subproblems are thus solved in order of ${\color{peru}\text{increasing subchain length}}$, so that at each step all subsolutions needed to solve the current subproblem are readily availabe. This is achieved by maintaining a table, where the solution to each subproblem—its minimal cost in terms of scalar multiplications—is stored in a bottom-up fashion. The solution to the original problem is then the solution to the last subproblem in the table. The running time of this approach is also in $\mathcal{O}(n^3)$.
 
 If we also want to return an optimal parenthesization, and not only the minimal cost, we need to keep track of the optimal split point for each subproblem. We can do this by maintaining an extra table for each choice of an optimal split point $k$, which is then used to reconstruct the optimal parenthesization after the minimal cost has been computed. Note that such an optimal parenthesization is not necessarily unique, but the total cost of the chain multiplication will be the same for all optimal parenthesizations.
 

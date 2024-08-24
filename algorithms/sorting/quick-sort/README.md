@@ -1,4 +1,4 @@
-${\color{cadetblue} \text{\huge Quicksort}}$
+$\huge{\color{cadetblue} \text{Quicksort}}$
 
 <br/>
 

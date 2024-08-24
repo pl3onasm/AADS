@@ -1,4 +1,4 @@
-${\color{cadetblue} \text{\huge Bubble sort}}$
+$\huge{\color{cadetblue}\text{Bubble sort}}$
 
 <br/>
 

@@ -1,4 +1,4 @@
-${\color{Cadetblue}\text{\huge Heapsort}}$
+$\huge{\color{Cadetblue}\text{Heapsort}}$
 
 <br/>
 
