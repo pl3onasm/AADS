@@ -1,18 +1,19 @@
 /* 
-  file: lhs-2.c
+  file: lhs-1.c
   author: David De Potter
   email: pl3onasm@gmail.com
   license: MIT, see LICENSE file in repository root folder
   description: lecture hall scheduling (LHS) 
-    using brute force by counting the maximum number of overlapping
-    activities at any given time 
-  time complexity: O(n^2)
+    using brute force by counting conflicts at each point in time
+    and taking the maximum number of conflicts as the number of halls
+  time complexity: O((max - min) * n) 
     where n is the number of activities
 */ 
 
 #include "../../../lib/clib/clib.h"
 #include <stdint.h>
 
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 
 //===================================================================
@@ -26,7 +27,7 @@ typedef struct {
 //===================================================================
 // Reads activities from stdin and determines the minimum start time
 // and maximum end time
-activity *readActivities(size_t *nActs) {
+activity *readActivities(size_t *nActs, size_t *min, size_t *max) {
 
   size_t cap = 50, n = 0;
   activity *acts = safeCalloc(cap, sizeof(activity));
@@ -35,6 +36,8 @@ activity *readActivities(size_t *nActs) {
          &acts[n].start, &acts[n].end) == 2) {
     
     acts[n].id = n + 1;
+    *min = MIN(*min, acts[n].start);
+    *max = MAX(*max, acts[n].end);
 
     if (++n == cap) {
       cap *= 2;
@@ -51,15 +54,15 @@ activity *readActivities(size_t *nActs) {
 // activities without any overlap by counting the maximum number of
 // conflicting (overlapping) activities at any given time between
 // the minimum start time and maximum end time
-size_t minHalls(activity *acts, size_t nActs) {
+size_t minHalls(activity *acts, size_t nActs, size_t min, 
+                size_t max) {
 
   size_t nHalls = 0;
 
-  for (size_t i = 0; i < nActs; i++) {
+  for (size_t t = min; t < max; t++) {
     size_t nConflicts = 0;
-    for (size_t j = 0; j < nActs; j++) 
-      if (acts[j].start <= acts[i].start 
-          && acts[j].end > acts[i].start)
+    for (size_t i = 0; i < nActs; i++) 
+      if (acts[i].start <= t && acts[i].end > t)
         nConflicts++;
     nHalls = MAX(nHalls, nConflicts);
   }
@@ -71,10 +74,10 @@ size_t minHalls(activity *acts, size_t nActs) {
 
 int main() {
 
-  size_t nActs = 0;
-  activity *acts = readActivities(&nActs);
+  size_t nActs = 0, min = SIZE_MAX, max = 0;
+  activity *acts = readActivities(&nActs, &min, &max);
 
-  size_t nHalls = minHalls(acts, nActs);
+  size_t nHalls = minHalls(acts, nActs, min, max);
 
   printf("Number of halls: %zu\n", nHalls);
   
@@ -82,8 +85,3 @@ int main() {
 
   return 0;
 }
-
-
-
-
-
