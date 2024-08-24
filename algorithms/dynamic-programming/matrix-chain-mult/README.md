@@ -31,7 +31,7 @@ m(i,j) =
 0 & \scriptsize \text{if } i = j  \\
 \text{min} \lbrace m(i,k) + m(k+1,j) \\
 \qquad  +\space D[i-1] \cdot D[k] \cdot D[j] \\
-\qquad \space : i \leq k < j\rbrace& \scriptsize \text{if } i < j  \\
+\qquad \space : \space i \leq k < j\rbrace& \scriptsize \text{if } i < j  \\
 \end{cases}\space}
 $$
 
