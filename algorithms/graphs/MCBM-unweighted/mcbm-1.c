@@ -17,16 +17,14 @@
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 
 //===================================================================
-// Returns true if the graph is bipartite (two-colorable), i.e. if it 
-// is possible to partition the vertices into two sets such that no 
-// two adjacent vertices belong to the same set. This is done using a 
-// BFS traversal and assigning a type to each vertex (LEFT or RIGHT)
-bool isBipartite(network *N) {
-  vertex *v = firstE(N)->from;
+// Returns true if the component of the graph starting at vertex v is
+// bipartite.
+bool isBipartiteComponent(network *N, vertex *v) {
+  
   v->type = LEFT;
   queue *q = newQueue(nVertices(N)); 
   enqueue(q, v);                     
-
+  
   while (!isEmptyQueue(q)) {
     vertex *u = dequeue(q);
     dll *edges = getNeighbors(N, u); 
@@ -42,6 +40,21 @@ bool isBipartite(network *N) {
   }
   freeQueue(q);
   return true; 
+}
+
+//===================================================================
+// Returns true if the graph is bipartite (two-colorable), i.e. if it
+// is possible to partition the vertices into two sets such that no
+// two adjacent vertices belong to the same set. This is done using a
+// BFS traversal and assigning a type to each vertex (LEFT or RIGHT)
+// As the graph may be disconnected, the function iterates over all
+// vertices to ensure that all connected components are bipartite
+bool isBipartiteNetwork(network *N) {
+  for (vertex *v = firstV(N); v; v = nextV(N)) {
+    if (v->type == NIL && !isBipartiteComponent(N, v))
+      return false;
+  }
+  return true;
 }
 
 //===================================================================
@@ -166,7 +179,7 @@ int main () {
   setNLabel(N, "Input Network N");
   showNetwork(N);
   
-  if (!isBipartite(N)) {
+  if (!isBipartiteNetwork(N)) {
     printf("The network is not bipartite.\n");
     freeNetwork(N);
     return 0;

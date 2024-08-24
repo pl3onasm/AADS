@@ -21,31 +21,43 @@
 #include "../../../lib/clib/clib.h"
 
 //===================================================================
-// Returns true if the graph is bipartite (two-colorable), i.e. if it 
-// is possible to partition the vertices into two sets such that no 
-// two adjacent vertices belong to the same set. This is done using a 
-// BFS traversal and assigning a type to each vertex (LEFT or RIGHT)
-bool isBipartite(graph *G) {
-  vertex *v = firstV(G);
+// Returns true if the component of the graph starting at vertex v is
+// bipartite.
+bool isBipartiteComponent(graph *G, vertex *v) {
+  
   v->type = LEFT;
-  queue *Q = newQueue(nVertices(G)); 
-  enqueue(Q, v); 
+  queue *q = newQueue(nVertices(G)); 
+  enqueue(q, v); 
 
-  while (!isEmptyQueue(Q)) {
-    vertex *u = dequeue(Q);
+  while (!isEmptyQueue(q)) {
+    vertex *u = dequeue(q);
     dll *edges = getNeighbors(G, u); 
-
     for (edge *e = dllFirst(edges); e; e = dllNext(edges)) {
       if (e->to->type == NIL) {
         e->to->type = u->type == LEFT ? RIGHT : LEFT;
-        enqueue(Q, e->to);            
+        enqueue(q, e->to);            
       } else if (e->to->type == u->type) {
-        freeQueue(Q);
+        freeQueue(q);
         return false;                
       }
     }
   }
-  freeQueue(Q);
+  freeQueue(q);
+  return true; 
+}
+
+//===================================================================
+// Returns true if the graph is bipartite (two-colorable), i.e. if it 
+// is possible to partition the vertices into two sets such that no 
+// two adjacent vertices belong to the same set. This is done using a 
+// BFS traversal and assigning a type to each vertex (LEFT or RIGHT)
+// As the graph may be disconnected, the function iterates over all
+// vertices to ensure that all connected components are bipartite
+bool isBipartiteGraph(graph *G) {
+  for (vertex *v = firstV(G); v; v = nextV(G)) {
+    if (v->type == NIL && !isBipartiteComponent(G, v))
+      return false;
+  }
   return true;
 }
 
@@ -159,7 +171,7 @@ int main () {
   readInput(G);
   showGraph(G);
 
-  if (! isBipartite(G)) {
+  if (! isBipartiteGraph(G)) {
     printf("The graph is not bipartite\n");
     freeGraph(G);
     return 0;
