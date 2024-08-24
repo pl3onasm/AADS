@@ -45,14 +45,14 @@ Let $l$ be the number of leaves in the decision tree. Since a decision tree is a
 
 $$
 \begin{align*}
-{\bm{\color{olive}\log(n!)}} &=  \sum_{i=1}^n \log(i)\\
+{\color{olive}\log(n!)} &=  \sum_{i=1}^n \log(i)\\
 &= \sum_{i=1}^{\lfloor n/2 \rfloor} \log(i) + \sum_{i= \lfloor n/2 \rfloor +1}^n \log(i)\\
-& {\bm{\color{olive} \boldsymbol{>}}} \sum_{i=1}^{\lfloor n/2 \rfloor} 1 + \sum_{i=\lfloor n/2 \rfloor +1}^n \log(n/2)\\
+& {\color{olive} \boldsymbol{>}} \sum_{i=1}^{\lfloor n/2 \rfloor} 1 + \sum_{i=\lfloor n/2 \rfloor +1}^n \log(n/2)\\
 & = \lfloor n/2 \rfloor + \lfloor n/2 \rfloor \log(n/2)\\
 &= \lfloor n/2 \rfloor + \lfloor n/2 \rfloor \log(n) - \lfloor n/2 \rfloor \log(2)\\
 &= \lfloor n/2 \rfloor \log(n) + \lfloor n/2 \rfloor - \lfloor n/2 \rfloor\\
 &= \lfloor n/2 \rfloor \log(n)\\
-&= {\bm{\color{olive}\Theta(n\log n)}}
+&= {\color{olive}\Theta(n\log n)}
 \end{align*}
 $$
 
