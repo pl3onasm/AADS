@@ -1,8 +1,8 @@
-${\color{Cadetblue}\text{\huge Matrix Multiplication}}$
+$\huge{\color{Cadetblue}\text{Matrix Multiplication}}$
 
 <br/>
 
-${\color{rosybrown}\text{Problem}}$
+$\Large{\color{rosybrown}\text{Problem}}$
 
 Given two square matrices $A$ and $B$ of size $n \times n$, we want to compute their product $C = A \cdot B$. The result should be a square matrix of size $n \times n$.
 

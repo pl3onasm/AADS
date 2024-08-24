@@ -1,4 +1,4 @@
-${\color{Cadetblue}\text{\huge Maximum Subarray}}$
+$\huge{\color{Cadetblue}\text{Maximum Subarray}}$
 
 <br/>
 

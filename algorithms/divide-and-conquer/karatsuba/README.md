@@ -2,7 +2,7 @@ $\huge{\color{Cadetblue}\text{Integer multiplication}}$
 
 <br/>
 
-${\color{rosybrown}\text{Problem}}$
+$\Large{\color{rosybrown}\text{Problem}}$
 
 Given two numbers $x$ and $y$ of $m$ and $n$ digits, respectively, and where $m$ and $n$ may become arbitrarily large, we want to compute their product $z = x \cdot y$.
 
