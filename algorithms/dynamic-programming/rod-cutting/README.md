@@ -26,7 +26,7 @@ $$
 r(n) = \begin{cases}
 0 & \scriptsize \text{if } n = 0 \\
 \text{max} \lbrace P[i] + r(n-i)  & \scriptsize \text{otherwise}\\
-\qquad \space : 1 \leq i \leq n \rbrace
+\qquad \space : \space 1 \leq i \leq n \rbrace
 \end{cases}\space}
 $$
 

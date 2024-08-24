@@ -40,8 +40,8 @@ $$
 \color{darkslateblue}\boxed{\color{rosybrown}\space
 C(i) = \begin{cases}
 0 & \scriptsize \text{if } P(0, i) \\
-\text{min} \lbrace C(j) + 1 :  & \scriptsize \text{otherwise}\\
-\quad 0 \leq j < i \land P(j+1, i) \rbrace
+\text{min} \lbrace C(j) + 1 \space :  & \scriptsize \text{otherwise}\\
+\quad 0 \leq j < i \space \land \space P(j+1, i) \rbrace
 \end{cases}\space}
 $$
 

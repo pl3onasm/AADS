@@ -58,7 +58,7 @@ D(i, j-1) + {\color{orchid}c_i} \\
 D(i-2, j-2) + {\color{orchid}c_s} & \scriptsize \text{if } S[i-1] = T[j-2] \\
 & \space \scriptsize \land \space S[i-2] = T[j-1] \\
 \text{min} \lbrace D(k, n) + {\color{orchid}c_k}   \\
-\qquad : 0 \leq k < m \rbrace  & \scriptsize \text{if } i = m \land j = n
+\qquad : \space 0 \leq k < m \rbrace  & \scriptsize \text{if } i = m \land j = n
 \end{cases}\space}
 $$
 

@@ -36,8 +36,8 @@ Let $D = \lbrace d_0, d_1, \ldots, d_{n-1} \rbrace$ be the set of $n$ coins in t
 $$\color{darkslateblue}\boxed{\color{rosybrown}\space
 C(A) = \begin{cases}
 0 & \scriptsize \text{if } A = 0 \\
-1 + \min \lbrace C(A - d_i) \\
-\qquad \qquad : 0 \leq i < n \rbrace & \scriptsize \text{if } A > 0
+1 + \text{min} \lbrace C(A - d_i) \\
+\qquad \qquad : \space 0 \leq i < n \rbrace & \scriptsize \text{if } A > 0
 \end{cases}\space}
 $$
 

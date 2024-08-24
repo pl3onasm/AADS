@@ -76,7 +76,7 @@ $$\color{darkslateblue}\boxed{\color{rosybrown}\space
 e(i, j) = \begin{cases}
 0 & \scriptsize \text{if } j = i - 1 \\
 \text{min} \lbrace e(i, r-1) + e(r+1, j) & \\
-\qquad + \space w(i, j) : i \leq r \leq j \rbrace & \scriptsize \text{if } i \leq j
+\qquad + \space w(i, j) \space : \space i \leq r \leq j \rbrace & \scriptsize \text{if } i \leq j
 \end{cases}\space}$$
 
 <br/>
