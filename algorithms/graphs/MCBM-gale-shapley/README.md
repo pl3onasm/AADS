@@ -1,18 +1,21 @@
-_______________________________________________
-*Maximum cardinality bipartite matching (MCBM)*
-_______________________________________________
-
-${\color{Cadetblue}\text{\huge Unweighted}}$ ${\color{Cadetblue}\text{\huge preferred MCBM}}$
+_____________________________________
+$\Large{\color{darkkhaki}\text{\it Maximum cardinality}}$  
+$\Large{\color{darkkhaki}\text{\it bipartite matching (MCBM)}}$  
+_____________________________________
 
 <br/>
 
-${\color{rosybrown}\text{\Large Problem}}$
+$\huge{\color{Cadetblue}\text{Unweighted preferred MCBM}}$ 
+
+<br/>
+
+$\Large{\color{rosybrown}\text{Problem}}$
 
 Given a bipartite graph $G = (R \cup L, E)$, find a maximum cardinality matching $M$. A bipartite graph is a graph whose vertices can be divided into two disjoint vertex sets $R$ and $L$ such that every edge connects a vertex in $R$ to one in $L$. A matching then is a subset of edges $M \subseteq E$ in which no two edges share a common vertex and a maximum cardinality matching is simply a matching that consists of a maximum subset $M$ of edges in $E$.
 
 <br/>
 
-${\color{darkseagreen}\text{\Large Gale-Shapley algorithm}}$
+$\Large{\color{darkseagreen}\text{Gale-Shapley algorithm}}$
 
 In this version of the MCBM problem, also known as the stable-marriage problem, we are given an unweighted $\color{orchid}{\text{complete}}$ bipartite graph $G = (R \cup L, E)$, meaning that there is an edge with unit weight from every vertex in $L$ to every vertex in $R$ and vice versa. We are also given a $\color{orchid}{\text{preference list}}$ for each vertex $u$ in $L \cup R$ which specifies the order in which the vertices in the other vertex set, different from the one $u$ itself belongs to, are preferred by $u$. The goal then is to find a maximum cardinality matching $M \subseteq E$ in which the preference list of each vertex in $L$ and $R$ is optimally satisfied.  
 
@@ -26,6 +29,6 @@ Implementation: [MCBM - Gale-Shapley](https://github.com/pl3onasm/AADS/blob/main
 
 <br/>
 
-${\color{darkseagreen}\text{\large Video}}$
+$\Large{\color{darkseagreen}\text{Video}}$
 
 [![Problem](https://img.youtube.com/vi/RLOWSkL-V8M/0.jpg)](https://www.youtube.com/watch?v=RLOWSkL-V8M)

@@ -1,12 +1,17 @@
-# Strongly connected components (SCC)
+$\huge{\color{Cadetblue}\text{Strongly connected}}$  
+$\huge{\color{Cadetblue}\text{components (SCC)}}$  
 
-## Problem
+<br />
+
+$\Large{\color{rosybrown}\text{Problem}}$
 
 Given a directed graph, find the strongly connected components of the graph. A strongly connected component of a graph $G = (V,E)$ is a maximal set of vertices $C \subseteq V$ such that every vertex in the set $C$ is reachable from every other vertex in the set.
 
-## Solution
+<br />
 
-The algorithm to find the strongly connected components of a graph uses its transpose, which is the graph $G^T = (V, E^T)$, where $E^T = \lbrace (u, v) : (v, u) \in E \rbrace $. In other words, the transpose of a graph is the same graph with all its edges reversed.  
+$\Large{\color{darkseagreen}\text{Solution}}$
+
+The algorithm to find the strongly connected components of a graph uses its ${\color{peru}\text{transpose}}$, which is the graph $G^T = (V, E^T)$, where $E^T = \lbrace (u, v) : (v, u) \in E \rbrace $. In other words, the transpose of a graph is the same graph with all its edges reversed.  
 
 The algorithm consists of two steps. First, we run a [DFS](https://github.com/pl3onasm/CLRS-in-C/tree/main/algorithms/graphs/dfs) on the graph $G$ and compute the finish times of each vertex. Then, we run a DFS on the transpose of $G$ in decreasing order of the finish times computed in the first step. Each depth-first tree discovered in this second step forms a strongly connected component of the graph.
 
@@ -22,6 +27,8 @@ Implementation: [SCC](https://github.com/pl3onasm/AADS/blob/main/algorithms/grap
 
 [^1]: Given the fact that connecting edges between any two components can only go in one particular direction (see corrolary 20.15 in CLRS⁴), the reverse of these edges will only go in the opposite direction.
 
-Video:
+<br />
+
+$\Large{\color{darkseagreen}\text{Video}}$
 
 [![Problem](https://img.youtube.com/vi/wUgWX0nc4NY/0.jpg)](https://www.youtube.com/watch?v=wUgWX0nc4NY)
