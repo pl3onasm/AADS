@@ -21,7 +21,7 @@ We can obtain the transitive closure of a graph by running the [Floyd-Warshall a
 
 Time complexity: $\mathcal{O}(V^3)$
 
-Implementation: [Transitive Closure - FW](https://github.com/pl3onasm/AADS/blob/main/algorithms/graphs/APSP-tr-closure/trc-1.c)
+Implementation: [Transitive Closure - FW](https://github.com/pl3onasm/CLRS/blob/main/algorithms/graphs/APSP-transitive-closure/trc-1.c)
 
 </br>
 
@@ -31,7 +31,7 @@ If we are merely interested in the existence of a path from $i$ to $j$, the prev
 
 Time complexity: $\mathcal{O}(V^3)$
 
-Implementation: [Transitive Closure - Optimized](https://github.com/pl3onasm/AADS/blob/main/algorithms/graphs/APSP-tr-closure/trc-2.c)
+Implementation: [Transitive Closure - Optimized](https://github.com/pl3onasm/CLRS/blob/main/algorithms/graphs/APSP-transitive-closure/trc-2.c)
 
 </br>
 

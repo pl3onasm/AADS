@@ -29,7 +29,7 @@ The resulting procedure for computing the final ${\color{peru}\text{distance mat
 
 If additionally we want to know the actual vertices lying on the shortest paths between any two vertices $i$ and $j$, we also need to keep track of the consecutive choices for the vertex $k$ in order to be able to reconstruct those paths. This means we need to compute an extra ${\color{peru}\text{predecessor matrix } P}$, where $p_{ij}$ equals vertex number $k$ such that $i \leadsto k \to j$ is the shortest path between $i$ and $j$.
 
-Implementation: [APSP - Bottom-Up DP](https://github.com/pl3onasm/AADS/blob/main/algorithms/graphs/APSP-matrixmp/apsp-1.c)
+Implementation: [APSP - Bottom-Up DP](https://github.com/pl3onasm/CLRS/blob/main/algorithms/graphs/APSP-matrix-mult/apsp-1.c)
 
 **Note:** The pseudocode in CLRS is needlessly cumbersome, since by inserting a simple if statement in the path extension procedure (to check if the relevant edges are actually in the graph), we can keep using the same matrix $D$ for each iteration and update it in place.
 
@@ -42,4 +42,4 @@ We can optimize the above solution, which tries to extend paths by one edge at a
 
 Note that this is correct as the final distance matrix $\Delta$ will not change anymore after $n-1$ iterations (because any shortest path consists of at most $n-1$ edges), so that we can stop after *any arbitrary* $r \geq n-1$ and get the same matrix $\Delta$, meaning we can also conveniently stop after $r = 2^{\lceil \log_2 (n-1) \rceil}$ iterations, and get the same result. The predecessor matrix can be computed in the same $\Theta(n^3 \log n)$ time. We just need to initialize $P$ differently, so that it corresponds to the initial distance matrix $D^0$ = $W$, and then we can also repeatedly square it, until we get the final predecessor matrix $\Pi = P^{n-1}$.
 
-Implementation: [APSP - Optimized Bottom-Up DP](https://github.com/pl3onasm/AADS/blob/main/algorithms/graphs/APSP-matrixmp/apsp-2.c)
+Implementation: [APSP - Optimized Bottom-Up DP](https://github.com/pl3onasm/CLRS/blob/main/algorithms/graphs/APSP-matrix-mult/apsp-2.c)

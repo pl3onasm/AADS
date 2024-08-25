@@ -13,7 +13,7 @@ Given a weighted graph $G=(V,E)$ with $n = |V|$ vertices and a weight function $
 
 $\Large{\color{darkseagreen}\text{Johnson's Algorithm}}$
 
-The [Floyd-Warshall algorithm](https://github.com/pl3onasm/AADS/tree/main/algorithms/graphs/APSP-floyd) works well for dense graphs, but it is not the best solution for sparse graphs. In this case, we can use Johnson's algorithm, which uses both [Bellman-Ford](https://github.com/pl3onasm/AADS/tree/main/algorithms/graphs/SSSP-bellman) and [Dijkstra](https://github.com/pl3onasm/AADS/tree/main/algorithms/graphs/SSSP-dijkstra)'s algorithms to find the shortest paths between all pairs of vertices in a graph.
+The [Floyd-Warshall algorithm](https://github.com/pl3onasm/AADS/tree/main/algorithms/graphs/APSP-floyd) works well for dense graphs, but it is not the best solution for sparse graphs. In this case, we can use Johnson's algorithm, which uses both [Bellman-Ford](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/SSSP-bellman-ford) and [Dijkstra](https://github.com/pl3onasm/AADS/tree/main/algorithms/graphs/SSSP-dijkstra)'s algorithms to find the shortest paths between all pairs of vertices in a graph.
 
 The key idea is to transform the original graph $G$ into a new graph $G'$, and reweight it so that all edge weights turn non-negative and we are able to use Dijkstra's algorithm from each vertex in $G'$ as a subroutine to find the shortest paths between all pairs of vertices in $G$.
 
