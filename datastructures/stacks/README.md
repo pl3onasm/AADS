@@ -6,4 +6,4 @@ $\Large{\color{darkseagreen}\text{Example applications}}$
 
 <br/>
 
-- [Lecture hall scheduling](../../../algorithms/greedy/lct-hall-scheduling/lhs-3.c)
+- [Lecture hall scheduling](../../algorithms/greedy/lct-hall-scheduling/lhs-3.c)
