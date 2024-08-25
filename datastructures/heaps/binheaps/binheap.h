@@ -30,9 +30,6 @@ typedef struct {
   bhpType hpType;          // type of heap (min or max)
   bhpCopyData copy;        // copy function
   bhpFreeData free;        // free function
-  size_t elSize;           // size of heap elements, only
-                           // used when copy is set
-  char *label;             // label for the heap
                            // default is "BINARY HEAP"
   char *delim;             // string delimter for show
                            // default is ", "
@@ -60,7 +57,7 @@ void bhpSetOwner(binheap *H, bhpFreeData free);
 
   // sets the queue to operate on copies of the data
 void bhpSetCopy(binheap *H, bhpCopyData copy,
-                size_t elSize, bhpFreeData free);
+                bhpFreeData free);
 
   // deallocates the binary heap
 void bhpFree(binheap *H);

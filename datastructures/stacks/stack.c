@@ -27,11 +27,10 @@ void setStackOwner(stack *S, freeStackItem free) {
 
 //===================================================================
 // Makes the stack operate on copies of the input data
-void setStackCopy(stack *S, copyStackItem copy, size_t elSize,
+void setStackCopy(stack *S, copyStackItem copy,
                   freeStackItem free) {
   S->copy = copy;
   S->free = free;
-  S->elSize = elSize;
 }
 
 //===================================================================

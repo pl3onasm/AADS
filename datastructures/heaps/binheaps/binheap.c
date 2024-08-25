@@ -34,10 +34,9 @@ void bhpSetOwner(binheap *H, bhpFreeData free) {
 
 //===================================================================
 // Sets the heap to operate on copies of the data
-void bhpSetCopy(binheap *H, bhpCopyData copy, size_t elSize,
+void bhpSetCopy(binheap *H, bhpCopyData copy, 
                 bhpFreeData free) {
   H->copy = copy;
-  H->elSize = elSize;
   H->free = free;
 }
 

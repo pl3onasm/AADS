@@ -21,7 +21,6 @@ typedef struct {
   showStackItem show;   // Function to show an item
   freeStackItem free;   // Function to free an item
   copyStackItem copy;   // Function to copy an item
-  size_t elSize;        // Size of an element, only for copying
   char *delim;          // Delimiter for showing items 
                         // (default: ", ")
 } stack;
@@ -36,7 +35,7 @@ void setStackOwner(stack* S, freeStackItem free);
 
   // Sets the stack to operate on copies of the data
 void setStackCopy(stack* S, copyStackItem copy, 
-                  size_t elSize, freeStackItem free);
+                  freeStackItem free);
 
   // Sets the function to show an item
 void setStackShow(stack* S, showStackItem show);

@@ -23,7 +23,6 @@ typedef struct {
   showQueueItem show;   // Function to show an item
   freeQueueItem free;   // Function to free an item
   copyQueueItem copy;   // Function to copy an item
-  size_t elSize;        // Size of an element, only for copying
   char *delim;          // Delimiter for showing items 
                         // (default: ", ")
 } queue;
@@ -38,7 +37,7 @@ void setQueueOwner(queue *Q, freeQueueItem free);
 
   // Sets queue to operate on copies of the input data
 void setQueueCopy(queue *Q, copyQueueItem copy, 
-                  size_t elSize, freeQueueItem free);
+                  freeQueueItem free);
 
   // Sets the function to show an item
 void setQueueShow(queue *Q, showQueueItem show);

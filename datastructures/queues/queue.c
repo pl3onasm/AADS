@@ -28,11 +28,10 @@ void setQueueOwner(queue *Q, freeQueueItem free) {
 
 //===================================================================
 // Makes the queue operate on copies of the input data
-void setQueueCopy(queue *Q, copyQueueItem copy, size_t elSize,
+void setQueueCopy(queue *Q, copyQueueItem copy,
                   freeQueueItem free) {
   Q->copy = copy;
   Q->free = free;
-  Q->elSize = elSize;
 }
 
 //===================================================================
