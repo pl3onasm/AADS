@@ -4,7 +4,7 @@ $\huge{\color{Cadetblue}\text{Activity-sel} \text{{ection problem}}}$
 
 $\Large{\color{rosybrown}\text{Problem}}$
 
-Given is a set of $n$ competing activities $A = \lbrace a_1, a_2, \dots, a_n \rbrace$, where each activity $a_i$ is defined by a pair of integers $(s_i, f_i)$, where $s_i$ is the start time and $f_i$ is the finish time. Our task is to select a maximum-size subset of mutually compatible activities. Two activities $a_i$ and $a_j$ are ${\color{peru}\text{compatible}}$ if the intervals $[s_i, f_i)$ and $[s_j, f_j)$ don't overlap, i.e. $s_j \geq f_i$ or $s_i \geq f_j$. We assume that the activities are already sorted by monotonically increasing finish time $f_i$.
+Given is a set of $n$ competing activities $A = \lbrace a_1, a_2, \dots, a_n \rbrace$, where each activity $a_i$ is defined by a half-open interval $[s_i, f_i)$, where $s_i$ is the start time and $f_i$ is the finish time. Our task is to select a maximum-size subset of mutually compatible activities. Two activities $a_i$ and $a_j$ are ${\color{peru}\text{compatible}}$ if the intervals $[s_i, f_i)$ and $[s_j, f_j)$ don't overlap, i.e. $s_j \geq f_i$ or $s_i \geq f_j$. We assume that the activities are already sorted by monotonically increasing finish time $f_i$.
 
 <br/>
 
@@ -24,9 +24,9 @@ Thus, we can define a function $s(i,j)$ that returns the maximum size of the sub
 $$\color{darkslateblue}\boxed{\color{rosybrown}\space
 s(i,j) =  
 \begin{cases}
-0 & \scriptsize \text{if } A_{ij} = \emptyset \\
+0 & \scriptsize \text{if } S_{ij} = \emptyset \\
 \text{max} \lbrace s(i,k) + s(k,j) + 1 \space\\
-\qquad \space : \space i < k < j \rbrace & \scriptsize \text{if } A_{ij} \neq \emptyset
+\qquad \space : \space i < k < j \rbrace & \scriptsize \text{if } S_{ij} \neq \emptyset
 \end{cases}\space}
 $$
 
@@ -44,9 +44,11 @@ Implementation: [ASP - Bottom-up DP](https://github.com/pl3onasm/AADS/blob/main/
 
 $\Large{\color{darkseagreen}\text{Greedy approach}}$
 
-Though the activity-selection problem exhibits optimal substructure, it also has the property that the greedy choice is optimal. The ${\color{peru}\text{greedy choice}}$ here is not to try all possible values of $k$ in order to find the optimal solution, but to select whichever activity finishes first, and then continue to solve the subproblem of selecting a maximum-size subset of mutually compatible activities from the set of activities that start after the selected activity finishes. This approach has the advantage of leading to a linear-time solution, since we only need to scan each activity once, thanks to the fact that the activities are ordered by monotonically increasing finish time.
+While the activity-selection problem exhibits optimal substructure, it also has the property that the greedy choice is optimal. The ${\color{peru}\text{greedy choice}}$ here is not to try all possible values of $k$ in order to find the optimal solution, but to select whichever activity finishes first, and then continue to solve the subproblem of selecting a maximum-size subset of mutually compatible activities from the set of activities that start after the selected activity finishes.  
 
-Since the activities are sorted by finish time, we can just select the first activity, and then continue to select the next activity that finishes first from the remaining set of activities that start after the selected activity finishes. This kind of ${\color{peru}\text{top-down design}}$ is typical for greedy algorithms: we just make the greedy choice, the one that seems optimal locally, and then go on to solve the remaining subproblem to ultimately come to a global optimal solution. This is in contrast to the bottom-up approach used for DP, where we start by solving the smallest subproblems, so we can make an optimal choice based on the optimal solutions to the subproblems, and thus build our way up to an optimal solution for the entire problem.
+Since the activities are sorted by finish time, we can just start by selecting the first activity, and then continue down the list, selecting each activity that starts after the previously selected activity has finished. This way, we can be sure that the selected activities are mutually compatible, and that we get a maximum-size subset of mutually compatible activities. A linear scan of the sorted list of activities is sufficient to find the optimal solution, and so the time complexity is $\mathcal{O}(n)$.
+
+This kind of ${\color{peru}\text{top-down design}}$ is typical for greedy algorithms: we just make the greedy choice, the one that seems locally optimal, and then go on to solve the remaining subproblem to ultimately come to a global optimal solution. This is in contrast to the bottom-up approach used for DP, where we start by solving the smallest subproblems, so we can make an optimal choice based on the optimal solutions to the subproblems, and thus build our way up to an optimal solution for the entire problem.
 
 There are two ways to implement this top-down greedy approach: recursively and iteratively. For the recursive version, we still need one sentinel activity, with start time $0$ and finish time $0$, so we can avoid having to check for the base case. For the iterative version, we don't need any sentinel activities.
 
