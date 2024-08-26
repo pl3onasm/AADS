@@ -1,4 +1,4 @@
-$\huge{\color{Cadetblue}\text{Activity-selection Problem}}$
+${\huge\color{Cadetblue}\text{Activity-selection problem}}$  
 
 <br/>
 
@@ -38,7 +38,7 @@ Implementing this recursive formula by means of a bottom-up DP approach is strai
 
 In order to simplify the implementation, we can make use of ${\color{peru}\text{sentinel activities}}$, one with start time $0$ and finish time $0$, and another one with start time $\infty$ and finish time $\infty$. This way, we can avoid having to check for the base case in the recursive formula, and we can just start the iteration from the first activity, and end it with the last activity.
 
-Implementation using bottom-up DP: [ASP - Bottom-up DP](https://github.com/pl3onasm/AADS/blob/main/algorithms/greedy/activity-selection/asp-1.c)
+Implementation: [ASP - Bottom-up DP](https://github.com/pl3onasm/AADS/blob/main/algorithms/greedy/activity-selection/asp-1.c)
 
 <br/>
 
