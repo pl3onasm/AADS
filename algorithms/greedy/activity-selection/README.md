@@ -1,4 +1,4 @@
-${\huge\color{Cadetblue}\text{Activity-selection problem}}$  
+$\huge{\color{Cadetblue}\text{Activity-sel} \text{{ection problem}}}$  
 
 <br/>
 
