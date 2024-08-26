@@ -64,3 +64,5 @@ The problem can be solved using a greedy approach, by first splitting up the act
 Implementation: [LHS - Greedy 1](https://github.com/pl3onasm/CLRS/blob/main/algorithms/greedy/lct-hall-scheduling/lhs-3.c)
 
 An alternative approach is to use a binary min-heap to keep track of the lecture halls that are currently in use. This heap is ordered by the finish time of the last activity in each lecture hall, so that we can easily find the earliest available lecture hall. After sorting the activities by start time, we process them one by one, and for each activity, we then check if there is an available lecture hall. If there is, we assign the activity to that lecture hall, and update the min-heap with the new finish time. If there isn't, we add a new lecture hall to the heap. The time complexity of this approach is the same as the previous one, $\mathcal{O}(n \log n)$.
+
+Implementation: [LHS - Greedy 2](https://github.com/pl3onasm/CLRS/blob/main/algorithms/greedy/lct-hall-scheduling/lhs-4.c)
