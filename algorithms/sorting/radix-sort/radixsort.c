@@ -9,9 +9,7 @@
     n is the number of dates and k is the range of the date fields.
 */
 
-#include "../../../lib/clib/clib.h"
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
-#define MIN(a, b) ((a) < (b) ? (a) : (b))
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Counting sort to sort the dates on a specific date field

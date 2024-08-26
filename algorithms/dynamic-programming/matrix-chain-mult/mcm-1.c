@@ -18,9 +18,7 @@
   using this code.
 */
 
-#include "../../../lib/clib/clib.h"
-#include <stdint.h>
-#define MIN(a,b) ((a) < (b) ? (a) : (b))
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Computes the minimum cost of multiplying a chain of 

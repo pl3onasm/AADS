@@ -8,10 +8,8 @@
     of digits of the maximum of the two input numbers
 */
 
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 #include "nat.h"
-
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
 
 //===================================================================
 // Computes the product x * y using Karatsuba's algorithm

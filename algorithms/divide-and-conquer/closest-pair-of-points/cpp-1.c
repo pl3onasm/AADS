@@ -9,7 +9,7 @@
 
 #include <math.h>
 #include <float.h>
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Defines a point and a pair of points

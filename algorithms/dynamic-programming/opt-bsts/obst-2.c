@@ -8,10 +8,8 @@
   time complexity: O(n^3)
 */
 
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 #include <float.h>
-#include <stdint.h>
-#define MIN(a,b) ((a) < (b) ? (a) : (b))
 
 //===================================================================
 // Computes the expected search cost of an optimal binary search tree

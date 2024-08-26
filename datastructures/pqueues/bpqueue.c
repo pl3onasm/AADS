@@ -9,7 +9,7 @@
 */
 
 #include "bpqueue.h"
-#include "../../lib/clib/clib.h"
+#include "../../lib/clib.h"
 
 #define RIGHT(i) (2 * i + 2)
 #define LEFT(i) (2 * i + 1)

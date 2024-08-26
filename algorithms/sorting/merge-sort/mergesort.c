@@ -7,7 +7,7 @@
   time complexity: O(nlogn) 
 */
 
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Merges two sorted subarrays into one sorted array

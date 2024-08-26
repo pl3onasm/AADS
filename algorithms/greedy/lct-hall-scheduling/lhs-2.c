@@ -10,10 +10,7 @@
     where n is the number of activities
 */ 
 
-#include "../../../lib/clib/clib.h"
-#include <stdint.h>
-
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Defines an activity
@@ -48,9 +45,9 @@ activity *readActivities(size_t *nActs) {
 
 //===================================================================
 // Finds the minimum number of halls needed to schedule all 
-// activities without any overlap by counting the maximum number of
-// conflicting (overlapping) activities at any given time between
-// the minimum start time and maximum end time
+// activities without any overlap by counting for each activity 
+// the number of overlapping activities, and taking the maximum as
+// the number of halls needed
 size_t minHalls(activity *acts, size_t nActs) {
 
   size_t nHalls = 0;

@@ -7,7 +7,7 @@
   time complexity: O(nlogn), where n is the number of items
 */ 
 
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 #include <time.h>
 
 //===================================================================

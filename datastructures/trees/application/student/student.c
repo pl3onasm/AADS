@@ -1,5 +1,5 @@
 #include "student.h"
-#include "../../../../lib/clib/clib.h"
+#include "../../../../lib/clib.h"
 
 //::::::::::::::::::::::::: validation functions :::::::::::::::::::://
 

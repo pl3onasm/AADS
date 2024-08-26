@@ -6,7 +6,7 @@
   description: string matching, naive approach
 */
 
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Determines all valid shifts of pattern in text and prints them

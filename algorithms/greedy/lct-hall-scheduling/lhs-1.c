@@ -10,11 +10,7 @@
     where n is the number of activities
 */ 
 
-#include "../../../lib/clib/clib.h"
-#include <stdint.h>
-
-#define MIN(a, b) ((a) < (b) ? (a) : (b))
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Defines an activity

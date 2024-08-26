@@ -9,7 +9,7 @@
   assumption: Σ is the extended ASCII alphabet (256 characters)
 */
 
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 
 typedef struct {
   size_t index;       // index of suffix in text

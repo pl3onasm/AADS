@@ -14,9 +14,8 @@
 */
 
 #include "../../../datastructures/graphs/amatrix/graph.h"
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 #include <float.h>
-#define ABS(x) ((x) < 0 ? -(x) : (x))
 
 //===================================================================
 // Initializes the distance matrix D

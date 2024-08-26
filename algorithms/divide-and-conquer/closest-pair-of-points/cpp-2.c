@@ -12,7 +12,7 @@
 
 #include <math.h>
 #include <float.h>
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 #define MIN(a,b) ((a) < (b) ? (a) : (b))
 
 //===================================================================

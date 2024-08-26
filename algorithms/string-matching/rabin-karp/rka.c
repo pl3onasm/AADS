@@ -8,7 +8,7 @@
 */
 
 #include <limits.h>
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 
 #define d 256       // number of characters in the alphabet, d = |Σ|
 #define p ULONG_MAX // a large prime number

@@ -7,7 +7,7 @@
 
 #include <time.h>
 #include "map.h"
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 
 //=================================================================
 // Creates a new map

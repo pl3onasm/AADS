@@ -17,7 +17,7 @@
 */
 
 #include "../../../datastructures/graphs/graph/graph.h"
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Makes a copy of an edge; used to make the dll store copies of the

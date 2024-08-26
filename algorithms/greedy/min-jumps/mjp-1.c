@@ -8,10 +8,7 @@
   caution: may explode for large inputs    
 */ 
 
-#include "../../../lib/clib/clib.h"
-#include <stdint.h>
-
-#define MIN(a, b) ((a) < (b) ? (a) : (b))
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Returns the minimum number of jumps needed to reach the

@@ -7,7 +7,7 @@
   time complexity: Θ(n²)
 */
 
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 #include <limits.h>
 
 //===================================================================

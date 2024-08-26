@@ -8,9 +8,8 @@
 */
 
 #include "../../../datastructures/graphs/amatrix/graph.h"
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 #include <float.h>
-#include <stdbool.h>
 
 //===================================================================
 // Initializes the reachability matrix T

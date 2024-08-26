@@ -7,8 +7,7 @@
   Time complexity: O(n²)
 */ 
 
-#include "../../../lib/clib/clib.h"
-#define MAX(a,b) ((a) > (b) ? (a) : (b))
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Returns the maximum revenue for a rod of length n given a price

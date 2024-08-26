@@ -5,7 +5,7 @@
 */
 
 #include "network.h"
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 #include <ctype.h>
 #include <string.h>
 #include <assert.h> 

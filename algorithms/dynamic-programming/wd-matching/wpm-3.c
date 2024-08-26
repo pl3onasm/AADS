@@ -9,7 +9,7 @@
   space complexity: O(n*m)
 */
 
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Bottom-up DP approach to determine if a source string matches

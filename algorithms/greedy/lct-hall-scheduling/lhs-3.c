@@ -7,12 +7,12 @@
                using greedy algorithm and a stack
   time complexity: O(n log n) where n is the number of activities
   note: this version uses a stack to keep track of available halls,
-        which will schedule activities differently than the lhs-3.c
+        which will schedule activities differently than the lhs-4.c
         version, which uses a binary heap, but the schedules are, 
         of course, still optimal, using the minimum number of halls
 */ 
 
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 #include "../../../datastructures/stacks/stack.h"
 
 //===================================================================

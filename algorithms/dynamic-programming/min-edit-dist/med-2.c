@@ -8,9 +8,7 @@
   time complexity: O(n*m)
 */
 
-#include "../../../lib/clib/clib.h"
-#include <stdint.h>
-#define MIN(a,b) ((a) < (b) ? (a) : (b))
+#include "../../../lib/clib.h"
 typedef enum { COPY, INSERT, DELETE, REPLACE, SWAP, KILL } op;
 
 //===================================================================

@@ -8,9 +8,7 @@
   time complexity: O(n^2)
 */ 
 
-#include "../../../lib/clib/clib.h"
-#include <stdint.h>
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Returns the length of the longest palindromic subsequence of X

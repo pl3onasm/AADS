@@ -6,7 +6,7 @@
 #include <string.h>
 
 #include "dll.h" 
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 
 // person structure
 typedef struct {

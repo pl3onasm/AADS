@@ -8,8 +8,7 @@
   time complexity: O(n*m)
 */
 
-#include "../../../lib/clib/clib.h"
-#include <stdint.h>
+#include "../../../lib/clib.h"
 typedef enum { COPY, INSERT, DELETE, REPLACE, SWAP, KILL } op;
 
 //===================================================================

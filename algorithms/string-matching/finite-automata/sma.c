@@ -10,10 +10,9 @@
   assumption: length of the alphabet is 256 (ASCII)
 */
 
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 
 #define d 256  // number of characters in the alphabet, d = |Σ|
-#define MIN(a, b) ((a) < (b) ? (a) : (b))
 
 //===================================================================
 // Determines whether the pattern prefix of length k is also a  

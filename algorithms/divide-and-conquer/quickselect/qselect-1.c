@@ -10,7 +10,7 @@
   time complexity: expected O(n), worst case O(n^2)
 */
 
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 #include <time.h>
 
 //===================================================================

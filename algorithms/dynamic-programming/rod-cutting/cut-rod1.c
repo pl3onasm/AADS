@@ -15,8 +15,7 @@
   using this code.
 */ 
 
-#include "../../../lib/clib/clib.h"
-#define MAX(a,b) ((a) > (b) ? (a) : (b))
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Returns the maximum revenue that can be obtained by cutting 

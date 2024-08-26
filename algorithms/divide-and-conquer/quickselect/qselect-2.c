@@ -11,7 +11,7 @@
   time complexity: O(n)
 */
 
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 #include <math.h>
 
 //===================================================================

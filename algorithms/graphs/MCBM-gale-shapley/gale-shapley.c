@@ -18,7 +18,7 @@
 
 #include "../../../datastructures/graphs/graph/graph.h"
 #include "../../../datastructures/queues/queue.h"
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Returns true if the component of the graph starting at vertex v is

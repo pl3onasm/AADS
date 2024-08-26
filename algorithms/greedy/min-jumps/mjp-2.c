@@ -8,8 +8,7 @@
   time complexity: O(n^2)
 */ 
 
-#include "../../../lib/clib/clib.h"
-#include <stdint.h>
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Returns the minimum number of jumps needed to reach the

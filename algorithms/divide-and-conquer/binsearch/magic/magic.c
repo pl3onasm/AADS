@@ -12,7 +12,7 @@
     O(log(n * min(a, b)))
 */
 
-#include "../../../../lib/clib/clib.h"
+#include "../../../../lib/clib.h"
 typedef unsigned long long ull;
 
 //===================================================================

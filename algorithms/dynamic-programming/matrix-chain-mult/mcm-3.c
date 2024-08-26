@@ -13,8 +13,7 @@
   Time complexity: O(n³)
 */
 
-#include "../../../lib/clib/clib.h"
-#include <stdint.h>
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Computes the minimum costs and optimal split points for all

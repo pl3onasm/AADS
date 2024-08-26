@@ -11,7 +11,7 @@
     O(n log(n))
 */
 
-#include "../../../../lib/clib/clib.h"
+#include "../../../../lib/clib.h"
 
 //===================================================================
 // Comparison function for qsort

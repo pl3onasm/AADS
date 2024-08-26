@@ -8,8 +8,7 @@
   time complexity: O(n^2.8074)
 */
 
-#include "../../../lib/clib/clib.h"
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Computes the product of two p x p matrices A and B and stores

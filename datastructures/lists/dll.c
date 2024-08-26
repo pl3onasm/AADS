@@ -4,7 +4,7 @@
   LICENSE: MIT, see LICENSE file in repository root folder
 */
 
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 #include "dll.h"
 
 //=================================================================

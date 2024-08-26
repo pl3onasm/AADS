@@ -12,7 +12,7 @@
     the latter.
 */
 
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Top-down DP approach to determine if a source string matches

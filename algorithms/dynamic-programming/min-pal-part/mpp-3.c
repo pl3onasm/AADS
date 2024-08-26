@@ -8,8 +8,7 @@
   time complexity: O(n^2)
 */ 
 
-#include "../../../lib/clib/clib.h"
-#include <stdint.h>
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Reconstructs an optimal palindromic partitioning of a given string

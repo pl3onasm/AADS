@@ -10,7 +10,7 @@
     or patterns with many wildcards
 */
 
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Naive recursive approach to determine if a source string matches

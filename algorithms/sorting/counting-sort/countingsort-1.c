@@ -9,8 +9,7 @@
   time complexity: O(n) provided that k = O(n)
 */
 
-#include "../../../lib/clib/clib.h"
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Sorts an array of non-negative integers in ascending order 

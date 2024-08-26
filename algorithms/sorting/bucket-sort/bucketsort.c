@@ -9,8 +9,8 @@
     uniformly distributed over the interval [0, 1)
 */
 
-#include "../../../datastructures/lists/dllist/dll.h"
-#include "../../../lib/clib/clib.h"
+#include "../../../datastructures/lists/dll.h"
+#include "../../../lib/clib.h"
 #include <math.h>
 
 //===================================================================

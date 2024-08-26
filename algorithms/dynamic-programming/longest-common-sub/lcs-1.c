@@ -11,8 +11,7 @@
   Don't try this code at home!
 */ 
 
-#include "../../../lib/clib/clib.h"
-#define MAX(a,b) ((a) > (b) ? (a) : (b))
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Returns the length of the longest common subsequence of X and Y

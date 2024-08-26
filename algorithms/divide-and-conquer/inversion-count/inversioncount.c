@@ -10,7 +10,7 @@
     solution in O(nlogn), since it's just mergesort with a counter.
 */
 
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Merges two sorted subarrays into one sorted array while counting

@@ -5,7 +5,7 @@
 */
 
 #include "bst.h"
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Creates a new node with the given data

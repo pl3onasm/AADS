@@ -11,8 +11,7 @@
         may differ from the other ASP implementations
 */ 
 
-#include "../../../lib/clib/clib.h"
-#include <stdint.h>
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Definition of an activity, having a start and finish time and an

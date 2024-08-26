@@ -8,8 +8,7 @@
   time complexity: O(n^2)
 */ 
 
-#include "../../../lib/clib/clib.h"
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Populates the memoization table and returns the length of the LIS

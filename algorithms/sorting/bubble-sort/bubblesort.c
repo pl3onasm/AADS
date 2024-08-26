@@ -7,7 +7,7 @@
   time complexity: O(n^2)
 */
 
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Sorts an array of integers in ascending order in place 

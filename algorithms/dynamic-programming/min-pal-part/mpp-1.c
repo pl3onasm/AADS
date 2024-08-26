@@ -9,8 +9,7 @@
   caution: may explode for n > 20
 */ 
 
-#include "../../../lib/clib/clib.h"
-#define MIN(a, b) ((a) < (b) ? (a) : (b))
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Precomputes a function returning a boolean value indicating

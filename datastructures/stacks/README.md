@@ -1,4 +1,4 @@
-$\huge{\color{Cadetblue}\text{Queues}}$
+$\huge{\color{Cadetblue}\text{Stacks}}$
 
 <br/>
 

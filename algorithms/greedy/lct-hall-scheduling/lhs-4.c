@@ -8,11 +8,11 @@
   time complexity: O(n log n) where n is the number of activities
   note: this version uses a binary heap to keep track of occupied
         halls, which will schedule activities differently than the
-        lhs-2.c version, which uses a stack, but the schedules are,
+        lhs-3.c version, which uses a stack, but the schedules are,
         of course, still optimal, using the minimum number of halls
 */ 
 
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 #include "../../../datastructures/heaps/binheaps/binheap.h"
 
 //===================================================================

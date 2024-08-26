@@ -8,7 +8,7 @@
   time complexity: O(n), where n is the number of coins in the coin system
 */ 
 
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Returns the maximum element in an array

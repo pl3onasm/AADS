@@ -13,9 +13,8 @@
 
 #include "../../../datastructures/pqueues/bpqueue.h"
 #include "../../../datastructures/graphs/graph/graph.h"
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 #include <float.h>
-#include <assert.h>
 
 //===================================================================
 // Copies the key (priority) of a node in the priority queue

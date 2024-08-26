@@ -7,7 +7,7 @@
     solution in linearithmic time
 */ 
 
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Populates the memoization table and returns the length of the LIS

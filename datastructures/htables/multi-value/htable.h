@@ -15,7 +15,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdint.h>   // uint64_t
-#include "../../lists/dllist/dll.h"
+#include "../../lists/dll.h"
 
   // function pointer types
 typedef uint64_t (*htHash)(void *hashKey, uint64_t seed);

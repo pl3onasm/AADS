@@ -8,9 +8,8 @@
 */
 
 #include "../../../datastructures/graphs/amatrix/graph.h"
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 #include <float.h>
-#define MIN(x, y) ((x) < (y) ? (x) : (y))
 
 //===================================================================
 // Initializes the distance matrix D

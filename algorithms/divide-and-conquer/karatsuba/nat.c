@@ -6,11 +6,9 @@
   description: arbitrary precision arithmetic for natural numbers
 */
 
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 #include "nat.h"
 #include <ctype.h>
-
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
 
 //===================================================================
 // Creates a new natural number with given capacity

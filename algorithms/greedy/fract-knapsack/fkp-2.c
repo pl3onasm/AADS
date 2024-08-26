@@ -1,5 +1,5 @@
 /* 
-  file: fpk-2.c
+  file: fkp-2.c
   author: David De Potter
   email: pl3onasm@gmail.com
   license: MIT, see LICENSE file in repository root folder
@@ -7,7 +7,7 @@
   time complexity: O(n), where n is the number of items
 */
 
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 #include <time.h>
 
 //===================================================================

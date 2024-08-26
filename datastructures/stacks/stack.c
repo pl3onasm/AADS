@@ -5,7 +5,7 @@
 */
 
 #include "stack.h"
-#include "../../lib/clib/clib.h"
+#include "../../lib/clib.h"
 
 //===================================================================
 // Creates a new stack with given capacity

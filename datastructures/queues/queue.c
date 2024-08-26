@@ -6,7 +6,7 @@
 
 #include <stdio.h>
 #include "queue.h"
-#include "../../lib/clib/clib.h"
+#include "../../lib/clib.h"
 
 //===================================================================
 // Creates a new queue with given capacity

@@ -22,6 +22,8 @@ Along with the suffix array, we also want to compute the ${\color{mediumorchid}\
 
 $\Large{\color{darkseagreen}\text{Applications}}$
 
+<br/>
+
 
 $\Large{\color{rosybrown}\text{1. String matching}}$
 
@@ -29,9 +31,14 @@ After constructing the suffix array, we can find all occurrences of a pattern $P
 
 [^1]: The book mentions O(mlogn + km) time, but as shown in the implementation, this can be easily reduced to O(mlogn) time by using the precomputed LCP array to find the first and last occurrences of P in T.
 
+<br/>
+
+
 $\Large{\color{rosybrown}\text{2. Longest repeated substring}}$
 
 We can also find the longest repeated substring(s) in a text by finding the maximum value in the LCP array and then going through the LCP array again to find all the indices where the LCP array has this maximum value. If this maximum value appears at index $i$, then the longest repeated substring is the substring starting at index $SA[i]$ with length $LCP[i]$. In the example above, we find the maximum value in the $LCP$ array to be 3. Thus, the longest repeated substring starts at $SA[2] = 1$ and has length $LCP[2] = 3$, and is the substring `ana`.
+
+<br/>
 
 $\Large{\color{rosybrown}\text{3. Number of substrings}}$
 
@@ -40,6 +47,8 @@ Another thing we can easily compute is the cardinality of the set containing all
 $${\color{cornflowerblue}\frac{n (n + 1)}{2}  - \sum_{i=0}^{n-1} LCP[i]}$$
 
 In the example above, the number of substrings is $\frac{6 \cdot 7}{2} - (0 + 1 + 3 + 0 + 0 + 2) = 15$. This is indeed the cardinality of the set: {`b`, `a`, `n`, `ba`, `an`, `na`, `ban`, `ana`, `nan`, `bana`, `anan`, `nana`, `banan`, `anana`, `banana`}.  
+
+<br/>
 
 $\Large{\color{rosybrown}\text{4. Longest palindromic substring}}$
 

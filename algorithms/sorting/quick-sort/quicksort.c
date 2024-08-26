@@ -7,7 +7,7 @@
   time complexity: worst case O(n^2), average case O(nlogn)
 */
 
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Partitions an array around a pivot element (last element) and

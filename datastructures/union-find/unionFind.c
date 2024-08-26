@@ -1,5 +1,5 @@
 #include "unionFind.h"
-#include "../../lib/clib/clib.h"
+#include "../../lib/clib.h"
 
 //===================================================================
 // Creates a new union-find data structure with n elements

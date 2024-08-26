@@ -9,7 +9,7 @@
   in the coin system and k is the amount to be changed
 */ 
 
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Returns the maximum element in an array

@@ -17,7 +17,7 @@
 */
 
 #include "../bstrees/bst.h"
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 #include "student/student.h"
 
 int main (int argc, char *argv[]) {

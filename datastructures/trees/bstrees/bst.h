@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdio.h>
-#include "../../lists/dllist/dll.h"
+#include "../../lists/dll.h"
 
 // function pointer types
 typedef int (*bstCmpData)(void const *a, void const *b);

@@ -30,6 +30,7 @@ typedef struct {
   bhpType hpType;          // type of heap (min or max)
   bhpCopyData copy;        // copy function
   bhpFreeData free;        // free function
+  char *label;             // label for the heap
                            // default is "BINARY HEAP"
   char *delim;             // string delimter for show
                            // default is ", "

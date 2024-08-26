@@ -8,7 +8,7 @@
 */
 
 #include "../../../datastructures/heaps/binheaps/binheap.h"
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Print function for integers

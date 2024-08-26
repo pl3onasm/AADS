@@ -9,7 +9,7 @@
   time complexity: O(n^2)
 */
 
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 #include <float.h>
 
 //===================================================================

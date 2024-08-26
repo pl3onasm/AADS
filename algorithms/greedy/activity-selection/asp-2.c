@@ -9,7 +9,7 @@
                    O(n log n) for sorting
 */ 
 
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Definition of an activity, having a start and finish time, an id

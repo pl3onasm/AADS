@@ -9,7 +9,7 @@
                    in the coin system
 */ 
 
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Makes change for a given amount using a greedy approach

@@ -17,7 +17,7 @@
 */
 
 #include "../../../datastructures/graphs/graph/graph.h"
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Hierholzer's algorithm for finding an Eulerian tour in a graph

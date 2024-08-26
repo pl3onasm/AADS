@@ -7,8 +7,7 @@
   time complexity: O(nlogn) 
 */
 
-#include "../../../lib/clib/clib.h"
-#define MIN(a,b) ((a) < (b) ? (a) : (b)); 
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Merges two sorted subarrays into one sorted array

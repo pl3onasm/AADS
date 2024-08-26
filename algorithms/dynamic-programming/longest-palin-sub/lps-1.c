@@ -9,8 +9,7 @@
   Use at your own risk for n > 20
 */
 
-#include "../../../lib/clib/clib.h"
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
+#include "../../../lib/clib.h"
 
 //===================================================================
 // Returns the length of the longest palindromic subsequence of X

@@ -13,7 +13,7 @@
 */ 
 
 #include "../../../datastructures/heaps/binheaps/binheap.h"
-#include "../../../lib/clib/clib.h"
+#include "../../../lib/clib.h"
 
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 #define LENGTH  256
