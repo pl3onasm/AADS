@@ -22,6 +22,8 @@ The running time of the algorithm is $\mathcal{O}(n\log{n})$, where $n = \mid \s
 
 The implementation outputs the codewords and frequencies for each character in the text, as well as a representation of the constructed Huffman tree. The tree is displayed in a compact form by printing the nodes in an inorder traversal, along with the edges and their directions ($0$ for left and $1$ for right) leading to them. For instance, test case 2 corresponds to the example given in the book, and produces the below output.
 
+<br />
+
 ```
 CODEWORD TABLE
 
@@ -49,6 +51,8 @@ root [100]
 -1-1-1 [16] 'd'
 
 ```
+
+<br />
 
 A visual interpretation of this output is shown in the figure below.
 
