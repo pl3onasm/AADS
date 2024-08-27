@@ -19,11 +19,11 @@ We can express this approach in the form of a recursive function $M(i)$, which r
 
 $$\color{darkslateblue}\boxed{\color{rosybrown}\space
 \text{M}(i) = \begin{cases}
-0 & \text{if } i \geq n - 1 \\
-\infty & \text{if } A[i] = 0 \\
- & \space \land \space i < n - 1 \\
-1 + \text{min} \lbrace \text{M}(i + j) & \text{otherwise}\\
-\qquad \qquad : 1 \leq j \leq A[i] \rbrace
+0 & \scriptsize \text{if } i \geq n - 1 \\
+\infty & \scriptsize \text{if } A[i] = 0 \\
+ & \scriptsize \space \land \space i < n - 1 \\
+1 + \text{min} \lbrace \text{M}(i + j) & \scriptsize  \text{otherwise}\\
+\qquad \qquad \scriptsize  : 1 \leq j \leq A[i] \rbrace
 \end{cases}\space}
 $$
 
