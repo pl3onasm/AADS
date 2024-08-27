@@ -20,7 +20,7 @@ At each step the algorithm makes the ${\color{peru}\text{greedy choice}}$ of gra
 
 The running time of the algorithm is $\mathcal{O}(n\log{n})$, where $n = \mid \sigma \mid$, the number of distinct characters in the text. This is because the algorithm performs $n-1$ iterations, in order to generate a binary tree with $n-1$ internal nodes. Each of these iterations takes $\mathcal{O}(\log{n})$ time as it involves two extract-min operations and one insert operation, all of which take $\mathcal{O}(\log{n})$ time for a min-priority queue of size $n$ implemented as a binary min-heap.
 
-The implementation outputs the codewords and frequencies for each character in the text, as well as a representation of the constructed Huffman tree. The tree is displayed in a compact form by printing the nodes in an inorder traversal, along with the edges and their directions ($0$ for left and $1$ for right) leading to them. For instance, test case 2 corresponds to the example given in the book, and produces the following output:
+The implementation outputs the codewords and frequencies for each character in the text, as well as a representation of the constructed Huffman tree. The tree is displayed in a compact form by printing the nodes in an inorder traversal, along with the edges and their directions ($0$ for left and $1$ for right) leading to them. For instance, test case 2 corresponds to the example given in the book, and produces the below output.
 
 ```
 CODEWORD TABLE
