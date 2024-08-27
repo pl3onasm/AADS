@@ -41,7 +41,7 @@ ${\Large\color{darkseagreen}\text{DP approach}}$
 
 We can improve the time complexity of the above approach by using dynamic programming. Opting for a bottom-up approach, we start from the base cases by initializing a memoization table of size $n$ with its first element set to 0 and the rest of the elements set to $\infty$. We then iterate over the array from left to right, updating the cells as we go along using the recursive formula defined above. The final answer is then given by the last element of the memoization table.
 
-Running time complexity of this approach is $O(n^2)$, where $n$ is the length of the array. If we also want to reconstruct the path, we can keep track of the indices that led to the minimum number of jumps at each position.
+Running time complexity of this approach is $O(n^2)$, where $n$ is the length of the array. If we also want to reconstruct the path, we can keep track of the indices that led to the minimum number of jumps at each position by storing those indices in a separate array and then reconstruct the path by backtracking from the last position to the first position.
 
 Implementation: [Min Jumps - DP](https://github.com/pl3onasm/CLRS/tree/main/algorithms/greedy/min-jumps/mjp-2.c)
 
