@@ -108,9 +108,9 @@ void showTree(node *n, short *code, size_t level) {
     for (size_t i = 0; i < level; ++i)
       printf("-%hd", code[i]);
     if (! n->left && ! n->right)
-      printf(" '%c' (%zu)\n", n->ch, n->freq);
-    else printf("\n");
-  } else printf("root\n");
+      printf(" [%zu] '%c'\n", n->freq, n->ch);
+    else printf(" [%zu]\n", n->freq);
+  } else printf("root [%zu]\n", n->freq);
 
   code[level] = 1;
   showTree(n->right, code, level + 1);
