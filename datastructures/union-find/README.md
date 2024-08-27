@@ -6,4 +6,4 @@ $\Large{\color{darkseagreen}\text{Example applications}}$
 
 <br/>
 
-- [Kruskal's algorithm](../../../algorithms/graphs/MST-kruskal/kruskal.c)
+- [Kruskal's algorithm](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/MST-kruskal)

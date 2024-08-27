@@ -23,7 +23,8 @@ size_t jump(size_t *jumps, size_t n, size_t *moves) {
     // by the last jump until we reach the destination
   for (size_t idx = 0; idx < n; idx++) {
 
-      // update the maximum range we can reach
+      // update the maximum range we can reach from the
+      // current index
     if (idx + jumps[idx] > newRange) {
       newRange = idx + jumps[idx];
       lastJump = idx;
