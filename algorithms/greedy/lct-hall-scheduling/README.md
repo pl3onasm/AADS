@@ -41,7 +41,9 @@ The task then is to partition this set into a minimum number of partitions of mu
      style="float: left; padding-bottom: 40px;" />
 </p><br clear="left">
 
-At first glance, the problem seems similar to the [activity-selection problem](https://github.com/pl3onasm/CLRS/tree/main/algorithms/greedy/activity-selection), and we might be tempted to use this approach repeatedly to tackle the current problem as well, by filling up a lecture hall with the maximum number of mutually compatible activities selected in order of increasing finish time, and then moving on to the next lecture hall and repeating the process on the remaining activities until all activities have been scheduled. However, this approach is not optimal, as can be seen when applied to the example above: it would result in a total number of four lecture halls, while the optimal solution is three.
+At first glance, the problem seems similar to the [activity-selection problem](https://github.com/pl3onasm/CLRS/tree/main/algorithms/greedy/activity-selection), and we might be tempted to use this approach repeatedly to tackle the current problem as well, by filling up a lecture hall with the maximum number of mutually compatible activities selected in order of increasing finish time, and then moving on to the next lecture hall and repeating the process on the remaining activities until all activities have been scheduled. However, this approach is not optimal, as can be seen when applied to the example above: it would result in a total number of four lecture halls[^1], while the optimal solution is three.
+
+[^1]: Using the activity-selection approach, the activities would be scheduled as follows: H1 = {a9, a7, a4, a3}, H = {a2, a8}, H3 = {a6, a5}, H4 = {a1}.
 
 <br/>
 
