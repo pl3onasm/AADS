@@ -478,7 +478,8 @@ void htShowEntry(htable *H, void *key) {
 }
 
 //=================================================================
-// merges two hash tables
+// merges two hash tables: the first hash table contains the 
+// merged hash table, while the second hash table is destroyed
 void htMerge(htable *H1, htable *H2) {
   for (htEntry *e = htFirst(H2); e; e = htNext(H2)) 
     for (dllNode *v = dllFirst(e->values); v; 

@@ -237,11 +237,15 @@ bool mapDelKey(map *M, void *key) {
   for (mapEntry *e = dllFirst(bucket); e; e = dllNext(bucket)) {
     if (! M->cmpKey(key, e->key)) {
         // free key if a free function is provided
-      if (M->freeKey)
-        M->freeKey(e->key);    
+      if (M->freeKey) {
+        M->freeKey(e->key);
+        printf("free key\n");
+      }    
         // free value if a free function is provided
-      if (M->freeValue)
+      if (M->freeValue) {
         M->freeValue(e->value);
+        printf("free value\n");
+      }
         // free the entry itself
       free(e);
         // remove the entry from the bucket
@@ -373,5 +377,15 @@ void mapShowEntry(map *M, void *key) {
   printf(": ");
   M->showValue(value);
   printf("\n");
+}
+
+//=================================================================
+// Merges the keys and values of map M2 into map M1
+// if a key exists in both maps, the value in M1 is updated
+// M2 is destroyed
+void mapMerge(map *M1, map *M2) {
+  for (mapEntry *e = mapFirst(M2); e; e = mapNext(M2)) 
+    mapAddKey(M1, e->key, e->value);
+ mapFree(M2);
 }
 

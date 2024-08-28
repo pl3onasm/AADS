@@ -43,6 +43,8 @@ void sstMapShowEntry(sstMap *M, char *key);
 
 void sstMapStats(sstMap *M);
 
+void sstMapMerge(sstMap *M1, sstMap *M2);
+
 size_t sstMapSize(sstMap *M);
 
 bool sstMapIsEmpty(sstMap *M);

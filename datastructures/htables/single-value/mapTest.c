@@ -62,6 +62,29 @@ int main (){
 
   sstMapStats(map);
 
+    // make a second map
+  sstMap *map2 = sstMapNew(CASE_INSENSITIVE, 40);
+  sstMapSetLabel(map2, "Second map");
+
+    // add some key-value pairs
+  for (size_t i = 100; i < 150; i++) {
+    char *key = calloc(10, sizeof(char));
+    sprintf(key, "key%zu", i);
+    sstMapAddKey(map2, key, i);
+  }
+
+  printf("\n\nSecond map\n");
+  sstMapShow(map2);
+
+    // merge the two maps
+  printf("\n\n... merging maps\n");
+  sstMapMerge(map, map2);
+  
+  sstMapSetLabel(map, "Merged map");
+  sstMapShow(map);
+
+  sstMapStats(map);
+
   sstMapFree(map);
   return 0;
 }
