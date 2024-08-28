@@ -74,7 +74,7 @@ void selectItems(Item *items, size_t left, size_t right, double W) {
       // too heavy, take no items and recurse on the left part (SG)
     selectItems(items, left, pvtIdx, W);
   else if (wGr + wEq < W) 
-      // too light, take all items from the left part (SL), the pivot
+      // too light, take all items from the left part (SG), the pivot
       // and all equal value items (SE) and recurse on the part with
       // items of lesser value (SL)
     selectItems(items, pvtIdx + nEq + 1, right, W - wGr - wEq);
