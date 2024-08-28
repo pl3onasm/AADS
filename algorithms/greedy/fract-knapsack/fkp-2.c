@@ -52,8 +52,9 @@ size_t partition (Item *items, size_t left, size_t right,
       SWAP(items[l++], items[j]);
     }
   }
-    // put pivot and elements with equal unit value 
-    // in their final positions
+    // put pivot and elements with equal unit value in
+    // their final positions to obtain the partitioning
+    // SG | pivot | SE | SL
   for (size_t j = 0; j <= *nEq; j++) 
     SWAP(items[l + j], items[right - j - 1]);
   
@@ -70,11 +71,12 @@ void selectItems(Item *items, size_t left, size_t right, double W) {
   size_t pvtIdx = partition(items, left, right, &nEq, &wGr, &wEq);
 
   if (wGr > W) 
-      // too heavy, take no items and recurse on the left part
+      // too heavy, take no items and recurse on the left part (SG)
     selectItems(items, left, pvtIdx, W);
   else if (wGr + wEq < W) 
-      // too light, take all items from the left part and all
-      // equal value items and recurse on the right part
+      // too light, take all items from the left part (SL), the pivot
+      // and all equal value items (SE) and recurse on the part with
+      // items of lesser value (SL)
     selectItems(items, pvtIdx + nEq + 1, right, W - wGr - wEq);
 }
 
