@@ -38,8 +38,9 @@ size_t partition (Item *items, size_t left, size_t right,
   *wEq = items[right - 1].weight;
 
     // keep swapping elements with greater unit value than 
-    // the pivot to the left of the array, and elements with 
-    // equal unit value to the right of the pivot
+    // the pivot to the left side of the array, and elements  
+    // with equal unit value to the right side of the array 
+    // (to the left of the pivot)
   for (size_t j = left; j < right - 1 - *nEq; j++) {
     if (items[j].unitValue == items[right - 1].unitValue) {
       ++*nEq;
@@ -72,8 +73,8 @@ void selectItems(Item *items, size_t left, size_t right, double W) {
       // too heavy, take no items and recurse on the left part
     selectItems(items, left, pvtIdx, W);
   else if (wGr + wEq < W) 
-      // too light, take all items from the left part 
-      // and recurse on the right part
+      // too light, take all items from the left part and all
+      // equal value items and recurse on the right part
     selectItems(items, pvtIdx + nEq + 1, right, W - wGr - wEq);
 }
 

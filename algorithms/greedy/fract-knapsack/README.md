@@ -24,7 +24,8 @@ ${\Large\color{darkseagreen}\text{Linear greedy (CLRS Ex 16/15.2-6)}}$
 
 The greedy approach described above works fine, but can be improved upon. The bottleneck of the algorithm is the sorting step, which runs in $\mathcal{O}(n\log n)$ time and dominates the overall time complexity. This storting step, however, is not necessary.  
 
-The idea here is based on the [quickselect algorithm](https://github.com/pl3onasm/CLRS/tree/main/algorithms/divide-and-conquer/quickselect), but instead of searching for the $i$-th smallest element in the array, we are now searching for an optimal pivot item that meets two conditions:
+The idea here is based on the [quickselect algorithm](https://github.com/pl3onasm/CLRS/tree/main/algorithms/divide-and-conquer/quickselect), but instead of searching for the $k$-th smallest element in the array, we are now searching for an optimal pivot item that meets two conditions:
+
 - the items to its left are the most valuable items in the list, and the items to its immediate right are the items with equal value, followed by the items with lower value 
 - the knapsack can be filled to capacity with the items to the left of the pivot, plus as much of the items with equal value to its immediate right as needed to complete the knapsack
 
