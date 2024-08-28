@@ -477,3 +477,13 @@ void htShowEntry(htable *H, void *key) {
   dllShow(values);
 }
 
+//=================================================================
+// merges two hash tables
+void htMerge(htable *H1, htable *H2) {
+  for (htEntry *e = htFirst(H2); e; e = htNext(H2)) 
+    for (dllNode *v = dllFirst(e->values); v; 
+         v = dllNext(e->values))
+      htAddKeyVal(H1, e->key, v);
+  htFree(H2);
+}
+

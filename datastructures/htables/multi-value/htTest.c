@@ -116,6 +116,36 @@ int main (){
   sshtShow(ht);
   sshtStats(ht);
 
+    // make a second hash table
+  sshtable *ht2 = sshtNew(CASE_INSENSITIVE, 10);
+  sshtAddKeyVal(ht2, "fifty", "cinquanta");
+  sshtAddKeyVal(ht2, "fifty", "cincuenta");
+  sshtAddKeyVal(ht2, "sixty", "sessanta");
+  sshtAddKeyVal(ht2, "seventy", "settanta");
+  sshtAddKeyVal(ht2, "eighty", "ottanta");
+  sshtAddKeyVal(ht2, "ninety", "novanta");
+  sshtAddKeyVal(ht2, "hundred", "cento");
+  sshtAddKeyVal(ht2, "thousand", "mille");
+  sshtAddKeyVal(ht2, "million", "milione");
+
+    // add some identical keys from the first hash table
+  sshtAddKeyVal(ht2, "twenty", "venti");
+  sshtAddKeyVal(ht2, "one", "uno");
+
+    // identical keys with different values
+  sshtAddKeyVal(ht2, "twenty", "veinte");
+  sshtAddKeyVal(ht2, "two", "dos");
+
+  printf("\nA second hash table:\n\n");
+
+  sshtShow(ht2);
+
+    // merge the second hash table into the first
+  sshtMerge(ht, ht2);
+
+  printf("\nMerged hash table:\n\n");
+  sshtShow(ht);
+
   sshtFree(ht);  
 
   return 0;
