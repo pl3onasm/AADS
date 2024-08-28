@@ -237,15 +237,11 @@ bool mapDelKey(map *M, void *key) {
   for (mapEntry *e = dllFirst(bucket); e; e = dllNext(bucket)) {
     if (! M->cmpKey(key, e->key)) {
         // free key if a free function is provided
-      if (M->freeKey) {
+      if (M->freeKey) 
         M->freeKey(e->key);
-        printf("free key\n");
-      }    
         // free value if a free function is provided
-      if (M->freeValue) {
+      if (M->freeValue) 
         M->freeValue(e->value);
-        printf("free value\n");
-      }
         // free the entry itself
       free(e);
         // remove the entry from the bucket
