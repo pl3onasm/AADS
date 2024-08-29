@@ -25,7 +25,7 @@ $\Large{\color{Rosybrown}\text{Overview}}$
 | 26.4-5/– | [Maximum flow - Push-relabel](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/MF-push-relabel) |
 | –/24.3 | [MCBM - unweighted - Dinitz](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/MCBM-dinitz) |
 | –/24.3 | [MCBM - unweighted - Hopcroft-Karp](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/MCBM-hopcroft-karp) |
-| –/25.2 | [MCBM - Gale-Shapley](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/MCBM-gale-shapley) |
+| –/25.2 | [MCBM - preferred - Gale-Shapley](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/MCBM-gale-shapley) |
 | –/–, CP9.25 | [MCBM - weighted - mcmf](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/MCBM-weighted-mcmf) |
 | –/25.3 | [MCBM - weighted - hungarian](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/MCBM-weighted-hungarian) |
 | –/– | [ETP - Fleury](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/ETP-fleury) |
