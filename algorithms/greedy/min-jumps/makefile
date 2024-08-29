@@ -2,7 +2,7 @@
 # Date: 2024-08-29
 
 CC = gcc
-CFLAGS = -O2 -Wall -Werror -pedantic -std=c99
+CFLAGS = -O2 -Wall -pedantic -std=c99
 CLIBDIR = ../../../lib
 SRCS := $(wildcard *.c)
 BINS = $(patsubst %.c, %.out, $(SRCS))

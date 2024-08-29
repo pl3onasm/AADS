@@ -5,7 +5,9 @@
   license: MIT, see LICENSE file in repository root folder
   description: counting sort
     This version can only be used to sort arrays
-    containing non-negative integers.
+    containing non-negative integers. You will get a
+    segmentation fault if you try to sort an array
+    containing negative integers. 
   time complexity: O(n) provided that k = O(n)
 */
 

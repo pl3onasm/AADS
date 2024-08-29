@@ -5,7 +5,7 @@
 
 #include <string.h>
 
-#include "dll.h" 
+#include "../dll.h" 
 #include "../../../lib/clib.h"
 
 // person structure

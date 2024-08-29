@@ -12,7 +12,7 @@ OBJS = $(patsubst %.c, %.o, $(SRCS))
 
 all: $(BINS)
 	@echo "Completed.\n\nTo run on test input tests/<num>.in:"
-	@echo "$$ ./$< < tests/<num>.in"
+	@echo "$$ ./$(word 2, $(BINS)) < tests/<num>.in"
 	@chmod +x $(BINS)
 
 $(BINS): %.out: %.o $(CLIBDIR)/clib.o
