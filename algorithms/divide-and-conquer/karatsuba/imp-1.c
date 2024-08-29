@@ -9,7 +9,7 @@
 */
 
 #include "../../../lib/clib.h"
-#include "nat.h"
+#include "natlib/nat.h"
 
 //===================================================================
 // Returns the product of x and y using standard long multiplication

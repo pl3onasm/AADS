@@ -9,7 +9,7 @@
 */
 
 #include "../../../lib/clib.h"
-#include "nat.h"
+#include "natlib/nat.h"
 
 //===================================================================
 // Computes the product x * y using Karatsuba's algorithm

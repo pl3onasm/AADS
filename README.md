@@ -32,13 +32,13 @@ ${\Large\color{peru}\text{Data structures}}$
 
 ${\Large\color{darkseagreen}\text{Notes}}$
 
-The aim is to implement all the algorithms and data structures discussed in the textbook *Introduction to Algorithms* by Thomas H. Cormen, et al. We will be working with both the third and fourth edition. Folders usually contain several versions of the same algorithm or data structure, in accordance with the different pseudocode and explanations in the textbook.
+The aim is to implement all the algorithms and data structures discussed in the textbook *Introduction to Algorithms* by Thomas H. Cormen, et al. We will be working with both the third and fourth edition. Folders usually contain several versions of the same algorithm or data structure, in accordance with the different pseudocode and explanations in the textbook, or to show different implementations.
 
 In addition, you will also find other algorithms and data structures that are not discussed or merely referenced in the book. All implementations will be in C, and will follow the pseudocode—if available—in the textbook as closely as possible, unless this results in a less efficient or unnecessarily complex implementation. I strive to make the code as transparent and economical as possible, and have it reflect the underlying reasoning. Brief explanations and summaries of the algorithms and data structures will be added as well. Contrary to the textbook, I will always use zero-based indexing. I will also link to helpful videos that explain the concepts in a more visual way when available.
 
 Please refer to the license if you wish to use any of the code in this repository. Any images were created using Photoshop. If you find any errors or have any suggestions, please let me know.
 
-Please note that this is very much a work in progress. It simply takes time to develop and test all the code and write the explanations. Some of the code took me days to think through and implement. Currently, I am in the process of revising and improving everything. Updates will be made regularly. I will also add makefiles in the near future.
+Kindly note that this is very much a work in progress. It simply takes time to develop and test all the code and write the explanations. Updates will be made regularly.
 
 --------------------------------
 
