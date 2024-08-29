@@ -2,11 +2,9 @@
 # Date: 2024-08-29
 
 CC = gcc
-CFLAGS = -O2 -Wall -pedantic -std=c99 -D VERTEX_TYPE2 -D EDGE_TYPE2
-LIBDIRS = ../../../lib ../../../datastructures/graphs/graph \
-	../../../datastructures/lists ../../../datastructures/htables/multi-value \
-	../../../datastructures/union-find ../../../datastructures/htables/single-value \
-	../../../datastructures/heaps/binheaps
+CFLAGS = -O2 -Wall -pedantic -std=c99
+LIBDIRS = ../../../lib ../../../datastructures/graphs/amatrix \
+	../../../datastructures/lists ../../../datastructures/htables/single-value 
 LIBOBJS = $(foreach dir, $(LIBDIRS), $(wildcard $(dir)/*.c))
 LIBOBJS := $(patsubst %.c, %.o, $(LIBOBJS))
 SRCS := $(wildcard *.c)
@@ -42,4 +40,4 @@ allclean: clean
 
 cleangraph:
 	@echo "Cleaning up graph object file ..."
-	@rm -f ../../../datastructures/graphs/graph/*.o
+	@rm -f ../../../datastructures/graphs/amatrix/*.o

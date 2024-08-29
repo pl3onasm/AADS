@@ -4,7 +4,7 @@
   Author: David De Potter
 */
 
-#include "graph.h"
+#include "../graph.h"
 
 int main() {
   graph *G = newGraph(20, UNWEIGHTED);
