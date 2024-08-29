@@ -8,19 +8,19 @@ SRCS := $(wildcard *.c)
 BINS = $(patsubst %.c, %.out, $(SRCS))
 OBJS = $(patsubst %.c, %.o, $(SRCS))
 
-.PHONY: all clean
+.PHONY: all clean allclean
 
 all: $(BINS)
-	@echo "Completed.\n\nTo run on test input tests/<num>.in:"
-	@echo "$$ ./$(word 2, $(BINS)) < tests/<num>.in"
+	@echo "Completed.\n\nTo run on test input:"
+	@echo "$$ ./$(firstword $(BINS)) < tests/<num>.in"
 	@chmod +x $(BINS)
 
 $(BINS): %.out: %.o $(CLIBDIR)/clib.o
-	@echo "Building $@..."
+	@echo "Building $@ ..."
 	@ $(CC) $(CFLAGS) -o $@ $^
 
 $(OBJS): %.o: %.c
-	@echo "Compiling $@..."
+	@echo "Compiling $@ ..."
 	@ $(CC) $(CFLAGS) -c $^
 
 $(CLIBDIR)/clib.o: $(CLIBDIR)/clib.c
@@ -28,5 +28,9 @@ $(CLIBDIR)/clib.o: $(CLIBDIR)/clib.c
 	@ (cd $(CLIBDIR) && $(CC) $(CFLAGS) -c clib.c)
 	
 clean:
-	@echo "Cleaning up ..."
+	@echo "Cleaning up working directory ..."
 	@rm -f $(BINS) $(OBJS)
+
+allclean: clean
+	@echo "Cleaning up lib objects ..."
+	@rm -f $(LIBOBJS)

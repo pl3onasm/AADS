@@ -13,16 +13,16 @@ OBJS = $(patsubst %.c, %.o, $(SRCS))
 .PHONY: all clean allclean
 
 all: $(BINS)
-	@echo "Completed.\n\nTo run on test input tests/<num>.in:"
-	@echo "$$ ./$< < tests/<num>.in"
+	@echo "Completed.\n\nTo run on test input:"
+	@echo "$$ ./$(firstword $(BINS)) < tests/<num>.in"
 	@chmod +x $(BINS)
 
 $(BINS): %.out: %.o $(LIBOBJS)
-	@echo "Building $@..."
+	@echo "Building $@ ..."
 	@ $(CC) $(CFLAGS) -o $@ $^
 
 $(OBJS): %.o: %.c
-	@echo "Compiling $@..."
+	@echo "Compiling $@ ..."
 	@ $(CC) $(CFLAGS) -c $^
 
 $(LIBOBJS): %.o: %.c

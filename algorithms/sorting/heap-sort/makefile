@@ -13,8 +13,8 @@ OBJS = $(patsubst %.c, %.o, $(SRCS))
 .PHONY: all clean allclean
 
 all: $(BINS)
-	@echo "Completed.\n\nTo run on test input tests/<num>.in:"
-	@echo "$$ ./$< < tests/<num>.in"
+	@echo "Completed.\n\nTo run on test input:"
+	@echo "$$ ./$(firstword $(BINS)) < tests/<num>.in"
 	@chmod +x $(BINS)
 
 $(BINS): %.out: %.o $(LIBOBJS)

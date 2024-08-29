@@ -3,7 +3,7 @@
   Author: David De Potter
 */
 
-#include "sstMap.h" // use the string-size_t map
+#include "../sstMap.h" // use the string-size_t map
 
 int main (){
   
