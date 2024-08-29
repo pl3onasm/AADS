@@ -1,5 +1,8 @@
+# Author: David De Potter
+# Date: 2024-08-29
+
 CC = gcc
-CFLAGS = -O2 -Wall -Werror -pedantic -std=c99
+CFLAGS = -O2 -Wall -pedantic -std=c99
 CLIBDIR = ../../../../lib
 SRCS := $(wildcard *.c)
 BINS = $(patsubst %.c, %.out, $(SRCS))
@@ -10,7 +13,7 @@ OBJS = $(patsubst %.c, %.o, $(SRCS))
 all: $(BINS)
 	@echo "Completed.\n\nTo run on test input tests/<num>.in:"
 	@echo "$$ ./$< < tests/<num>.in"
-	@chmod +x $<
+	@chmod +x $(BINS)
 
 $(BINS): %.out: %.o $(CLIBDIR)/clib.o
 	@echo "Building $@..."

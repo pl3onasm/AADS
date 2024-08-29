@@ -86,7 +86,6 @@ int main() {
 
   size_t minJumps = jump(jumps, n, moves);
 
-  PRINT_ARRAY(moves, "%zu", n);
   showJumps(moves, n, minJumps);
 
   free(jumps);
