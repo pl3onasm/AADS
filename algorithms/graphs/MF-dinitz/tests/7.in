@@ -1,0 +1,16 @@
+s t
+
+s A 7
+s B 5
+B C 1
+B A 3
+A D 5
+A C 4
+B E 3
+D A 2
+D C 1
+E C 3
+E t 2
+E D 10
+D t 8
+C t 2

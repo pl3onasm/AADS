@@ -1,0 +1,12 @@
+s t 
+
+s a 10 
+a s 12 
+a c 14
+s b 8
+b s 7
+s d 3
+b c 6
+d c 6
+c t 3
+d t 2
