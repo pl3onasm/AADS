@@ -22,7 +22,7 @@ ${\color{mediumorchid}\text{Warning}}$: this greedy approach works for the fract
 
 ${\Large\color{darkseagreen}\text{Linear greedy (CLRS Ex 16/15.2-6)}}$  
 
-The greedy approach described above works fine, but can be improved upon. The bottleneck of the algorithm is the sorting step, which runs in $\mathcal{O}(n\log n)$ time and dominates the overall time complexity. This storting step, however, is not necessary.  
+The greedy approach described above works fine, but can be improved upon. The bottleneck of the algorithm is the sorting step, which runs in $\mathcal{O}(n\log n)$ time and dominates the overall time complexity. This sorting step, however, is not necessary.  
 
 The idea here is based on the [quickselect algorithm](https://github.com/pl3onasm/CLRS/tree/main/algorithms/divide-and-conquer/quickselect), but instead of searching for the $k$-th smallest element in the array, we are now searching for an optimal pivot item that meets two conditions:
 
@@ -33,6 +33,6 @@ To achieve this, we first ${\color{peru}\text{partition}}$ the items list around
 
 We then proceed to compare the found set weights with the remaining capacity of the knapsack. If $W_G > W$, we have chosen more high-value items than can fit in the knapsack, so we discard the items in $S_L$ and recurse on the set $S_G$. If, on the other hand, $W_G + W_E < W$, we have not chosen enough high-value items to fill the knapsack, so we take all items in $S_G$ and $S_E$ and recurse on the set $S_L$ with a knapsack capacity reduced by $W_G + W_E$. Finally, if $W_G \leq W \leq W_G + W_E$, we take all items in $S_G$ and as much of the items in $S_E$ as needed to fill the knapsack to capacity, and we are done.
 
-Just like the quickselect algorithm, the complexity of this algorithm is expected to be $\mathcal{O}(n)$ on average. It can, however, be made to run in worst-case linear time by modifying the partitioning process and choose the pivot item in a deterministic way as described under the quickselect algorithm.
+Just like the quickselect algorithm, the complexity of this algorithm is expected to be $\mathcal{O}(n)$ on average. It can, however, be made to run in worst-case linear time by modifying the partitioning process to choose the pivot item in a deterministic way as described under the quickselect algorithm.
 
 Implementation: [FKP - Linear Greedy](https://github.com/pl3onasm/AADS/tree/main/algorithms/greedy/fract-knapsack/fkp-2.c)  
