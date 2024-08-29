@@ -8,9 +8,9 @@ OBJS = $(patsubst %.c, %.o, $(SRCS))
 .PHONY: all clean
 
 all: $(BINS)
-	   @echo "Completed.\n\nTo run on test input tests/<num>.in:"
-		 @echo "$$ ./$< < tests/<num>.in"
-		 @chmod +x $<
+	@echo "Completed.\n\nTo run on test input tests/<num>.in:"
+	@echo "$$ ./$< < tests/<num>.in"
+	@chmod +x $<
 
 $(BINS): %.out: %.o $(CLIBDIR)/clib.o
 	@echo "Building $@..."
