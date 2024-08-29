@@ -10,7 +10,7 @@ SRCS := $(wildcard *.c)
 BINS = $(patsubst %.c, %.out, $(SRCS))
 OBJS = $(patsubst %.c, %.o, $(SRCS))
 
-.PHONY: all clean
+.PHONY: all clean allclean
 
 all: $(BINS)
 	@echo "Completed.\n\nTo run on test input tests/<num>.in:"
@@ -18,11 +18,11 @@ all: $(BINS)
 	@chmod +x $(BINS)
 
 $(BINS): %.out: %.o $(LIBOBJS)
-	@echo "Building $@..."
+	@echo "Building $@ ..."
 	@ $(CC) $(CFLAGS) -o $@ $^
 
 $(OBJS): %.o: %.c
-	@echo "Compiling $@..."
+	@echo "Compiling $@ ..."
 	@ $(CC) $(CFLAGS) -c $^
 
 $(LIBOBJS): %.o: %.c
@@ -30,5 +30,9 @@ $(LIBOBJS): %.o: %.c
 	@ (cd $(dir $@) && $(CC) $(CFLAGS) -c $(notdir $^))
 	
 clean:
-	@echo "Cleaning up ..."
+	@echo "Cleaning up working directory ..."
 	@rm -f $(BINS) $(OBJS)
+
+allclean: clean
+	@echo "Cleaning up lib objects ..."
+	@rm -f $(LIBOBJS)

@@ -3,7 +3,7 @@
   Author: David De Potter
 */
 
-#include "sshtable.h" // use the string-string hash table
+#include "../sshtable.h" // use the string-string hash table
 
 int main (){
   
