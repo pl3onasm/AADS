@@ -32,7 +32,7 @@ $$
 
 By case 2 of the master theorem, we then get a much better total running time of $\mathcal{O}(n \log n)$. Since preprocessing the points also takes $\mathcal{O}(n \log n)$ time, the running time of the entire algorithm is then $\mathcal{O}(n \log n)$.
 
-Implementation: [closest pair of points (divide and conquer)](https://github.com/pl3onasm/AADS/blob/main/algorithms/divide-and-conquer/closest-pair-of-points/closestpair.c)
+Implementation: [closest pair of points (divide and conquer)](cpp-2.c)
 
 <br/>
 

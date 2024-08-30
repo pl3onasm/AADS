@@ -23,7 +23,7 @@
 int main (int argc, char *argv[]) {
   FILE *fp; rbnode *n;
   char buffer[500];
-  short option, count = 0;
+  short option;
 
   if (argc != 2) {
     printf("Usage: %s <student records file>\n", argv[0]);
@@ -124,7 +124,6 @@ int main (int argc, char *argv[]) {
       case 4:
         // print all student records in tree in order
         rbtShow(T, T->ROOT);
-        count = 0;
         break;
       case 5:
         printf("Are you sure you want to exit without saving? (y/n): ");

@@ -9,6 +9,8 @@
 #include "../../../../lib/clib.h"
 #include "nat.h"
 #include <ctype.h>
+#pragma GCC diagnostic ignored "-Wsequence-point"
+  void splitNat(Nat *n, size_t exp, Nat **x, Nat **y);
 
 //===================================================================
 // Creates a new natural number with given capacity
