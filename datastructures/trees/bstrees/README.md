@@ -1,5 +1,9 @@
-# Binary search trees
+$\huge{\color{Cadetblue}\text{Binary Search Trees}}$
 
-## Example applications
+<br/>
 
-- [student database](../application/bststudents.c)
+$\Large{\color{darkseagreen}\text{Example applications}}$
+
+<br/>
+
+- [student database](application/students.c)

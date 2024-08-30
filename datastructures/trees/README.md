@@ -1,6 +1,10 @@
-# Trees
+$\huge{\color{Cadetblue}\text{Trees}}$
 
-| **CLRS³** | **CLRS⁴** | **Link** |
-|:---:|:---:|:---|
-| Chap 12 | Chap 12 | [Binary Search Trees](https://github.com/pl3onasm/AADS/tree/main/datastructures/trees/bstrees)
-| Chap 13 | Chap 13 | [Red-Black Trees](https://github.com/pl3onasm/AADS/tree/main/datastructures/trees/rbtrees)
+<br/>
+
+| ${\color{peru}\text{CLRS}}$ | ${\color{peru}\text{Topic}}$ |
+|:---|:---|
+| 12 | [Binary Search Trees](https://github.com/pl3onasm/CLRS/tree/main/datastructures/trees/bstrees) |
+| 13 | [Red-black Trees](https://github.com/pl3onasm/CLRS/tree/main/datastructures/trees/rbtrees) |
+
+<br/>

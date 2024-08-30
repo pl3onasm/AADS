@@ -1,5 +1,9 @@
-# Red-black trees
+$\huge{\color{Cadetblue}\text{Red-black Trees}}$
 
-## Example applications
+<br/>
 
-- [student database](../application/rbtstudents.c)
+$\Large{\color{darkseagreen}\text{Example applications}}$
+
+<br/>
+
+- [student database](application/students.c)
