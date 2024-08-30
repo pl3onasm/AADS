@@ -12,6 +12,6 @@ $\Large{\color{darkseagreen}\text{Ford-Fulkerson method}}$
 
 $\Large{\color{darkseagreen}\text{Dinic's algorithm}}$  
 
-Implementation: [Max-flow - Dinic](https://github.com/pl3onasm/AADS/blob/main/algorithms/graphs/MF-ford-fulkerson/dinitz.c)
+Implementation: [Max-flow - Dinic](https://github.com/pl3onasm/AADS/blob/main/algorithms/graphs/MF-dinitz/dinitz.c)
 
 [![Problem](https://img.youtube.com/vi/M6cm8UeeziI/0.jpg)](https://www.youtube.com/watch?v=M6cm8UeeziI)

@@ -12,6 +12,6 @@ $\Large{\color{darkseagreen}\text{Ford-Fulkerson method}}$
 
 $\Large{\color{darkseagreen}\text{Capacity scaling and DFS}}$  
 
-Implementation: [Max-flow - DFS](https://github.com/pl3onasm/AADS/blob/main/algorithms/graphs/MF-ford-fulkerson/scaling.c)
+Implementation: [Max-flow - DFS](https://github.com/pl3onasm/AADS/blob/main/algorithms/graphs/MF-cap-scaling/scaling.c)
 
 [![Problem](https://img.youtube.com/vi/1ewLrXUz4kk/0.jpg)](https://www.youtube.com/watch?v=1ewLrXUz4kk)

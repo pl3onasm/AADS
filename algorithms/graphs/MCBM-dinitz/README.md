@@ -19,7 +19,7 @@ $\Large{\color{darkseagreen}\text{Adapted Maximum Flow}}$
 
 We can solve the problem by adapting the maximum flow algorithm. For this, we need to build a flow network from the given bipartite graph so that the edges are directed from $L$ to $R$ and the graph gets extended with a $\color{mediumorchid}{\text{super source }s}$ and a $\color{mediumorchid}{\text{super sink }t}$ with edges from $s$ to every vertex in $L$ and edges from every vertex in $R$ to $t$. The capacity of all the edges in the network is set to 1. We then proceed by running [Dinic's algorithm](../MF-ford-fulkerson/ffm-3.c) on this network: the resulting maximum flow is the cardinality of the maximum matching, and the edges with flow are the edges that are part of this matching. The algorithm runs in $\mathcal{O}(E \sqrt{V})$ time, thanks to the fact that the graph is unweighted (i.e. all edges have unit capacity) and bipartite, which speeds up the network flow computations.
 
-Implementation: [MCBM - Maxflow](https://github.com/pl3onasm/AADS/blob/main/algorithms/graphs/MCBM-unweighted/dinitz.c)
+Implementation: [MCBM - Maxflow](https://github.com/pl3onasm/AADS/blob/main/algorithms/graphs/MCBM-dinitz/dinitz.c)
 
 <br/>
 

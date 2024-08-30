@@ -24,4 +24,5 @@ The resulting maximum flow is then the cardinality of the maximum matching, and 
 
 The algorithm runs in $\mathcal{O}(V^2 E^2)$ time, since the Bellman-Ford algorithm runs in $\mathcal{O}(VE)$ time and the DFS that updates the matching runs in $\mathcal{O}(VE)$ time as well, thanks to the speedup by remembering the adjacency lists indices which allows to prune the search space of each DFS.
 
-Implementation: [MCBM - Min/max-cost max-flow](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/MCBM-weighted-mcmf)
+Implementation: [MCBM - Min/max-cost max-flow](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/MCBM-mcmf/mcmf.c)
+
