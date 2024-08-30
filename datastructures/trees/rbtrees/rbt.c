@@ -351,14 +351,14 @@ void rbtDelete (rbtree *T, rbnode *z) {
 
 //===================================================================
 // Shows the data in the tree in order, 20 items at a time
-static void rbtShowAll (rbtree *T, rbnode *x, short *count) {
+static void rbtShowAllData (rbtree *T, rbnode *x, short *count) {
   if (! T->show) {
     fprintf(stderr, "Error: show function not set\n");
     return;
   }
   char buffer[100], ch;
   if (x != T->NIL) {
-    rbtShowAll(T, x->left, count);
+    rbtShowAllData(T, x->left, count);
     if (*count < 20){
       T->show(x->data);
       *count += 1;
@@ -371,7 +371,7 @@ static void rbtShowAll (rbtree *T, rbnode *x, short *count) {
         *count = 0;
       clearStdin(buffer);
     }
-    rbtShowAll(T, x->right, count);
+    rbtShowAllData(T, x->right, count);
   }
 }
 
@@ -379,7 +379,7 @@ static void rbtShowAll (rbtree *T, rbnode *x, short *count) {
 // Shows the data in the tree in order
 void rbtShow (rbtree *T, rbnode *x) {
   short count = 0;
-  rbtShowAll(T, x, &count);
+  rbtShowAllData(T, x, &count);
   printf("\n");
 }
 
@@ -394,14 +394,13 @@ void rbtShowNode (rbtree *T, rbnode *n) {
 }
 
 //===================================================================
-// Shows all levels of the tree
+// Shows all levels of the tree structure by in-order traversal
 static void rbtShowLevels (rbtree *T, rbnode *x, size_t level) {
   if (x == T->NIL) return;
-  if (! level) {
-    printf("ROOT\n");
-    rbtShowNode(T, x);
-    printf("\n");
-  } else {
+
+  rbtShowLevels(T, x->left, level + 1);
+
+  if (level) {
     for (size_t i = 0; i < level; i++)
       printf("-");
     if (x->parent->left == x)
@@ -411,8 +410,12 @@ static void rbtShowLevels (rbtree *T, rbnode *x, size_t level) {
     rbtShowNode(T, x);
     printf("\n");
 
+  } else {
+    printf("ROOT: ");
+    rbtShowNode(T, x);
+    printf("\n");
   }
-  rbtShowLevels(T, x->left, level + 1);
+  
   rbtShowLevels(T, x->right, level + 1);
 }
 

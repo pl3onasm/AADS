@@ -203,14 +203,14 @@ bsnode *bstPredecessor (bstree *T, bsnode *x) {
 
 //===================================================================
 // Shows the data in the tree in order, 20 items at a time
-static void bstShowAll (bstree *T, bsnode *x, short *count) {
+static void bstShowAllData (bstree *T, bsnode *x, short *count) {
   if (! T->show) {
     fprintf(stderr, "Error: show function not set\n");
     return;
   }
   char buffer[100], ch;
   if (x != T->NIL) {
-    bstShowAll(T, x->left, count);
+    bstShowAllData(T, x->left, count);
     if (*count < 20){
       T->show(x->data);
       *count += 1;
@@ -223,7 +223,7 @@ static void bstShowAll (bstree *T, bsnode *x, short *count) {
         *count = 0;
       clearStdin(buffer);
     }
-    bstShowAll(T, x->right, count);
+    bstShowAllData(T, x->right, count);
   }
 }
 
@@ -231,7 +231,7 @@ static void bstShowAll (bstree *T, bsnode *x, short *count) {
 // Shows the data in the tree in order
 void bstShow (bstree *T, bsnode *x) {
   short count = 0;
-  bstShowAll(T, x, &count);
+  bstShowAllData(T, x, &count);
   printf("\n");
 }
 
@@ -239,11 +239,10 @@ void bstShow (bstree *T, bsnode *x) {
 // Shows all levels of the tree
 static void bstShowLevels (bstree *T, bsnode *x, size_t level) {
   if (x == T->NIL) return;
-  if (! level) {
-    printf("ROOT\n");
-    bstShowNode(T, x);
-    printf("\n");
-  } else {
+  
+  bstShowLevels(T, x->left, level + 1);
+
+  if (level) {
     for (size_t i = 0; i < level; i++)
       printf("-");
     if (x->parent->left == x)
@@ -253,8 +252,12 @@ static void bstShowLevels (bstree *T, bsnode *x, size_t level) {
     bstShowNode(T, x);
     printf("\n");
 
+  } else {
+    printf("ROOT: ");
+    bstShowNode(T, x);
+    printf("\n");
   }
-  bstShowLevels(T, x->left, level + 1);
+  
   bstShowLevels(T, x->right, level + 1);
 }
 
