@@ -19,10 +19,10 @@ $\Large{\color{Rosybrown}\text{Overview}}$
 | 25/23.2 | [APSP - Floyd-Warshall](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/APSP-floyd) |
 | 25/23.2 | [APSP - Transitive closure](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/APSP-transitive-closure) |
 | 25/23.3 | [APSP - Johnson](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/APSP-johnson) |
-| 26/24.2 | [Maximum flow - Ford-Fulkerson - Edmonds-Karp](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/MF-Edmonds-Karp) |
-| Prob 26/24-5 | [Maximum flow - Ford-Fulkerson - Capacity Scaling](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/MF-cap-scaling) |
-| –/– | [Maximum flow - Ford-Fulkerson - Dinitz](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/MF-dinitz) |
-| 26.4-5/– | [Maximum flow - Push-relabel](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/MF-push-relabel) |
+| 26/24.2 | [MF - Ford-Fulkerson - Edmonds-Karp](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/MF-Edmonds-Karp) |
+| Prob 26/24-5 | [MF - Ford-Fulkerson - Capacity Scaling](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/MF-cap-scaling) |
+| –/– | [MF - Ford-Fulkerson - Dinitz](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/MF-dinitz) |
+| 26.4-5/– | [MF - Push-relabel](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/MF-push-relabel) |
 | –/24.3 | [MCBM - unweighted - Dinitz](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/MCBM-dinitz) |
 | –/24.3 | [MCBM - unweighted - Hopcroft-Karp](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/MCBM-hopcroft-karp) |
 | –/25.2 | [MCBM - preferred - Gale-Shapley](https://github.com/pl3onasm/CLRS/tree/main/algorithms/graphs/MCBM-gale-shapley) |

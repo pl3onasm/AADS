@@ -5,10 +5,10 @@
   Author: David De Potter
 */
 
-#include "bpqueue.h"  
+#include "../bpqueue.h"  
 #include <string.h>
 #include <time.h>
-#include "../../lib/clib.h"
+#include "../../../lib/clib.h"
 
 typedef struct {
   char *name;

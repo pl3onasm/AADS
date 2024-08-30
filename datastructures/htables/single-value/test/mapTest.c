@@ -77,7 +77,7 @@ int main (){
   sstMapShow(map2);
 
     // merge the two maps
-  printf("\n\n... merging maps\n");
+  printf("\n\nmerging maps ...\n");
   sstMapMerge(map, map2);
   
   sstMapSetLabel(map, "Merged map");

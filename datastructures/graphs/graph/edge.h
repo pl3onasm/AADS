@@ -66,6 +66,7 @@
 #else                          
 
   typedef struct edge {         
+    vertex *from;               // pointer to the source vertex 
     vertex *to;                 // pointer to the destination vertex
     double weight;              // weight of the edge
   } edge;
