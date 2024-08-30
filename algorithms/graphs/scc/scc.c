@@ -60,7 +60,7 @@ dll *dfsGt(graph *Gt, dll *Gs) {
 // Decomposes the graph into strongly connected components
 // using the topological sort Gs on G to guide the DFS on Gᵀ
 void decompose(graph *Gt, dll *Gs) {
-  printf("\n\nStrongly connected components\n"
+  printf("\nStrongly connected components\n"
           "-----------------------------\n");
   dll *scc = dfsGt(Gt, Gs);
   size_t i = 0;
@@ -71,6 +71,7 @@ void decompose(graph *Gt, dll *Gs) {
     dllFree(comp);
   }
   dllFree(scc);
+  printf("-----------------------------\n\n");
 }
 
 //===================================================================
