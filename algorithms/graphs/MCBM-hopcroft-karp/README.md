@@ -13,6 +13,8 @@ $\Large{\color{rosybrown}\text{Problem}}$
 
 Given a bipartite graph $G = (R \cup L, E)$, find a maximum cardinality matching $M$. A bipartite graph is a graph whose vertices can be divided into two disjoint vertex sets $R$ and $L$ such that every edge connects a vertex in $R$ to one in $L$. A matching then is a subset of edges $M \subseteq E$ in which no two edges share a common vertex and a maximum cardinality matching is simply a matching that consists of a maximum subset $M$ of edges in $E$.
 
+<br/>
+
 $\Large{\color{darkseagreen}\text{Hopcroft-Karp}}$
 
 This algorithm actually does the same thing as the previous one, but is presented in a different way. It is based on the idea of finding M-alternating paths to repeatedly increment the cardinality of the matching $M$ until no more such paths can be found. The algorithm is named after John Hopcroft and Richard Karp, who introduced it in 1973.  
