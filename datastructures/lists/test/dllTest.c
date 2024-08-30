@@ -15,42 +15,42 @@ typedef struct {
 } person;
 
 // copy functions
-static void *copyStr(void *data) {
+static void *copyStr(void const *data) {
   char *new = safeCalloc(strlen((char *)data) + 1, sizeof(char));
   strcpy(new, (char *)data);
   return new;
 }
 
-static void *copyInt(void *data) {
+static void *copyInt(void const *data) {
   int *new = safeCalloc(1, sizeof(int));
   *new = *(int *)data;
   return new;
 }
 
 // show functions
-static void showStr(void *data) {
+static void showStr(void const *data) {
   printf("%s", (char *)data);
 }
 
-static void showInt(void *data) {
+static void showInt(void const *data) {
   printf("%d", *(int *)data);
 }
 
-static void showPerson(void *data) {
+static void showPerson(void const *data) {
   person *p = (person *)data;
   printf("%s (%d)", p->name, p->age);
 }
 
 // comparison functions
-static int cmpStr(void *a, void *b) {
+static int cmpStr(void const *a, void const *b) {
   return strcmp((char *)a, (char *)b);
 }
 
-static int cmpInt(void *a, void *b) {
+static int cmpInt(void const *a, void const *b) {
   return *(int *)a - *(int *)b;
 }
 
-static int cmpPerson(void *a, void *b) {
+static int cmpPerson(void const *a, void const *b) {
   return strcmp(((person *)a)->name, ((person *)b)->name);
 }
 

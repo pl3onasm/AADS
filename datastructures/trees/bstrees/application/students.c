@@ -16,8 +16,8 @@
     this is O(n) in the worst case.
 */
 
-#include "../bstrees/bst.h"
-#include "../../../lib/clib.h"
+#include "../bst.h"
+#include "../../../../lib/clib.h"
 #include "student/student.h"
 
 int main (int argc, char *argv[]) {

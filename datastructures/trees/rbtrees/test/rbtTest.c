@@ -1,5 +1,5 @@
-#include "rbt.h"
-#include "../../../lib/clib.h"
+#include "../rbt.h"
+#include "../../../../lib/clib.h"
 #include <stdio.h>
 #include <time.h>
 
