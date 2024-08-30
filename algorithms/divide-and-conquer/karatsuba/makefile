@@ -3,35 +3,36 @@
 
 CC = gcc
 CFLAGS = -O2 -Wall -pedantic -std=c99
-CLIBDIR = ../../../lib
-NATDIR = natlib
+LIBDIRS = ../../../lib natlib
+LIBOBJS = $(foreach dir, $(LIBDIRS), $(wildcard $(dir)/*.c))
+LIBOBJS := $(patsubst %.c, %.o, $(LIBOBJS))
 SRCS := $(wildcard *.c)
 BINS = $(patsubst %.c, %.out, $(SRCS))
 OBJS = $(patsubst %.c, %.o, $(SRCS))
 
-.PHONY: all clean
+.PHONY: all clean allclean
 
 all: $(BINS)
-	@echo "Completed.\n\nTo run on test input tests/<num>.in:"
-	@echo "$$ ./$< < tests/<num>.in"
+	@echo "Completed.\n\nTo run on test input:"
+	@echo "$$ ./$(lastword $(BINS)) < tests/<num>.in"
 	@chmod +x $(BINS)
 
-$(BINS): %.out: %.o $(CLIBDIR)/clib.o $(NATDIR)/nat.o
-	@echo "Building $@..."
+$(BINS): %.out: %.o $(LIBOBJS)
+	@echo "Building $@ ..."
 	@ $(CC) $(CFLAGS) -o $@ $^
 
 $(OBJS): %.o: %.c
-	@echo "Compiling $@..."
+	@echo "Compiling $@ ..."
 	@ $(CC) $(CFLAGS) -c $^
 
-$(CLIBDIR)/clib.o: $(CLIBDIR)/clib.c
-	@echo "Compiling clib.o, and storing it in $(CLIBDIR) ..."
-	@ (cd $(CLIBDIR) && $(CC) $(CFLAGS) -c clib.c)
-
-$(NATDIR)/nat.o: $(NATDIR)/nat.c
-	@echo "Compiling nat.o, and storing it in $(NATDIR) ..."
-	@ (cd $(NATDIR) && $(CC) $(CFLAGS) -c nat.c)
+$(LIBOBJS): %.o: %.c
+	@echo "Compiling $@ ..."
+	@ (cd $(dir $@) && $(CC) $(CFLAGS) -c $(notdir $^))
 	
 clean:
-	@echo "Cleaning up..."
-	@ rm -f $(BINS) $(OBJS) $(NATDIR)/nat.o
+	@echo "Cleaning up working directory ..."
+	@rm -f $(BINS) $(OBJS) 
+
+allclean: clean
+	@echo "Cleaning up all remaining lib objects ..."
+	@rm -f $(LIBOBJS)

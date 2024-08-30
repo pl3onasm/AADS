@@ -3,7 +3,9 @@
 
 CC = gcc
 CFLAGS = -O2 -Wall -pedantic -std=c99
-CLIBDIR = ../../../lib
+LIBDIRS = ../../../lib
+LIBOBJS = $(foreach dir, $(LIBDIRS), $(wildcard $(dir)/*.c))
+LIBOBJS := $(patsubst %.c, %.o, $(LIBOBJS))
 SRCS := $(wildcard *.c)
 BINS = $(patsubst %.c, %.out, $(SRCS))
 OBJS = $(patsubst %.c, %.o, $(SRCS))
@@ -11,11 +13,11 @@ OBJS = $(patsubst %.c, %.o, $(SRCS))
 .PHONY: all clean allclean
 
 all: $(BINS)
-	@echo "Completed.\n\nTo run on test input:
-	@echo "$$ ./$(firstword $(BINS)) < tests/<num>.in"
+	@echo "Completed.\n\nTo run on test input:"
+	@echo "$$ ./$(lastword $(BINS)) < tests/<num>.in"
 	@chmod +x $(BINS)
 
-$(BINS): %.out: %.o $(CLIBDIR)/clib.o
+$(BINS): %.out: %.o $(LIBOBJS)
 	@echo "Building $@ ..."
 	@ $(CC) $(CFLAGS) -o $@ $^
 
@@ -23,10 +25,10 @@ $(OBJS): %.o: %.c
 	@echo "Compiling $@ ..."
 	@ $(CC) $(CFLAGS) -c $^
 
-$(CLIBDIR)/clib.o: $(CLIBDIR)/clib.c
-	@echo "Compiling clib.o, and storing it in $(CLIBDIR) ..."
-	@ (cd $(CLIBDIR) && $(CC) $(CFLAGS) -c clib.c)
-	
+$(LIBOBJS): %.o: %.c
+	@echo "Compiling $@ ..."
+	@ (cd $(dir $@) && $(CC) $(CFLAGS) -c $(notdir $^))
+
 clean:
 	@echo "Cleaning up working directory ..."
 	@rm -f $(BINS) $(OBJS)

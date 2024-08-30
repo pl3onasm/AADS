@@ -12,11 +12,11 @@ SRCS := $(wildcard *.c)
 BINS = $(patsubst %.c, %.out, $(SRCS))
 OBJS = $(patsubst %.c, %.o, $(SRCS))
 
-.PHONY: all clean allclean cleangraph
+.PHONY: all clean allclean cleannetwork
 
-all: cleangraph $(BINS)
+all: cleannetwork $(BINS)
 	@echo "Completed.\n\nTo run on test input:"
-	@echo "$$ ./$(firstword $(BINS)) < tests/<num>.in"
+	@echo "$$ ./$(lastword $(BINS)) < tests/<num>.in"
 	@chmod +x $(BINS)
 
 $(BINS): %.out: %.o $(LIBOBJS)
@@ -39,6 +39,6 @@ allclean: clean
 	@echo "Cleaning up all remaining lib objects ..."
 	@rm -f $(LIBOBJS)
 
-cleangraph:
-	@echo "Cleaning up graph object file ..."
-	@rm -f ../../../datastructures/graphs/graph/*.o
+cleannetwork:
+	@echo "Cleaning up network object file ..."
+	@rm -f ../../../datastructures/graphs/network/*.o

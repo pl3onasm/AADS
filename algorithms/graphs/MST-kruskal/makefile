@@ -17,7 +17,7 @@ OBJS = $(patsubst %.c, %.o, $(SRCS))
 
 all: cleangraph $(BINS)
 	@echo "Completed.\n\nTo run on test input:"
-	@echo "$$ ./$(firstword $(BINS)) < tests/<num>.in"
+	@echo "$$ ./$(lastword $(BINS)) < tests/<num>.in"
 	@chmod +x $(BINS)
 
 $(BINS): %.out: %.o $(LIBOBJS)

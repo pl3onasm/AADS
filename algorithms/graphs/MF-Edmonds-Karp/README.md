@@ -12,6 +12,6 @@ $\Large{\color{darkseagreen}\text{Ford-Fulkerson method}}$
 
 $\Large{\color{darkseagreen}\text{Edmonds-Karp algorithm}}$  
 
-Implementation: [Max-flow - Edmonds-Karp](https://github.com/pl3onasm/AADS/blob/main/algorithms/graphs/MF-ford-fulkerson/ffm-1.c)
+Implementation: [Max-flow - Edmonds-Karp](https://github.com/pl3onasm/AADS/blob/main/algorithms/graphs/MF-ford-fulkerson/emk.c)
 
 [![Problem](https://img.youtube.com/vi/RppuJYwlcI8/0.jpg)](https://www.youtube.com/watch?v=RppuJYwlcI8)
