@@ -7,5 +7,5 @@ $\Large{\color{darkseagreen}\text{Example applications}}$
 
 <br/>
 
-- [Dijkstra's algorithm](../../../algorithms/graphs/SSSP-dijkstra/dijkstra.c)
-- [Prim's algorithm](../../../algorithms/graphs/MST-prim/prim.c)
+- [Dijkstra's algorithm](../../../algorithms/graphs/SSSP-dijkstra/dijkstra-1.c)
+- [Prim's algorithm](../../../algorithms/graphs/MST-prim/prim-1.c)
