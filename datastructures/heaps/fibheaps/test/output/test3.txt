@@ -1,0 +1,1250 @@
+TESTING MIN FIBONACCI HEAP
+
+Creating 47 tasks for the MIN Fibonacci heap...
+
+  Created Task 0 with duration 29.28 min
+  Created Task 1 with duration 2.38 min
+  Created Task 2 with duration 49.26 min
+  Created Task 3 with duration 45.00 min
+  Created Task 4 with duration 19.41 min
+  Created Task 5 with duration 52.17 min
+  Created Task 6 with duration 51.44 min
+  Created Task 7 with duration 20.02 min
+  Created Task 8 with duration 56.03 min
+  Created Task 9 with duration 13.56 min
+  Created Task 10 with duration 34.35 min
+  Created Task 11 with duration 26.40 min
+  Created Task 12 with duration 16.09 min
+  Created Task 13 with duration 56.55 min
+  Created Task 14 with duration 49.08 min
+  Created Task 15 with duration 52.10 min
+  Created Task 16 with duration 28.47 min
+  Created Task 17 with duration 40.18 min
+  Created Task 18 with duration 13.25 min
+  Created Task 19 with duration 10.32 min
+  Created Task 20 with duration 59.54 min
+  Created Task 21 with duration 42.50 min
+  Created Task 22 with duration 31.54 min
+  Created Task 23 with duration 52.19 min
+  Created Task 24 with duration 57.57 min
+  Created Task 25 with duration 7.31 min
+  Created Task 26 with duration 33.34 min
+  Created Task 27 with duration 3.49 min
+  Created Task 28 with duration 35.59 min
+  Created Task 29 with duration 37.16 min
+  Created Task 30 with duration 59.21 min
+  Created Task 31 with duration 27.28 min
+  Created Task 32 with duration 8.07 min
+  Created Task 33 with duration 38.14 min
+  Created Task 34 with duration 25.40 min
+  Created Task 35 with duration 38.24 min
+  Created Task 36 with duration 26.12 min
+  Created Task 37 with duration 14.57 min
+  Created Task 38 with duration 6.59 min
+  Created Task 39 with duration 8.55 min
+  Created Task 40 with duration 56.16 min
+  Created Task 41 with duration 18.21 min
+  Created Task 42 with duration 42.21 min
+  Created Task 43 with duration 11.17 min
+  Created Task 44 with duration 20.40 min
+  Created Task 45 with duration 34.20 min
+  Created Task 46 with duration 1.53 min
+
+Pushing the tasks with random priorities...
+
+  Pushed Task 0 with priority 15
+  Pushed Task 1 with priority 32
+  Pushed Task 2 with priority 17
+  Pushed Task 3 with priority 3
+  Pushed Task 4 with priority 34
+  Pushed Task 5 with priority 0
+  Pushed Task 6 with priority 41
+  Pushed Task 7 with priority 16
+  Pushed Task 8 with priority 35
+  Pushed Task 9 with priority 36
+  Pushed Task 10 with priority 8
+  Pushed Task 11 with priority 20
+  Pushed Task 12 with priority 23
+  Pushed Task 13 with priority 26
+  Pushed Task 14 with priority 17
+  Pushed Task 15 with priority 35
+  Pushed Task 16 with priority 37
+  Pushed Task 17 with priority 28
+  Pushed Task 18 with priority 38
+  Pushed Task 19 with priority 42
+  Pushed Task 20 with priority 15
+  Pushed Task 21 with priority 34
+  Pushed Task 22 with priority 28
+  Pushed Task 23 with priority 5
+  Pushed Task 24 with priority 45
+  Pushed Task 25 with priority 45
+  Pushed Task 26 with priority 11
+  Pushed Task 27 with priority 20
+  Pushed Task 28 with priority 38
+  Pushed Task 29 with priority 13
+  Pushed Task 30 with priority 15
+  Pushed Task 31 with priority 6
+  Pushed Task 32 with priority 24
+  Pushed Task 33 with priority 11
+  Pushed Task 34 with priority 35
+  Pushed Task 35 with priority 11
+  Pushed Task 36 with priority 38
+  Pushed Task 37 with priority 29
+  Pushed Task 38 with priority 7
+  Pushed Task 39 with priority 5
+  Pushed Task 40 with priority 19
+  Pushed Task 41 with priority 15
+  Pushed Task 42 with priority 25
+  Pushed Task 43 with priority 21
+  Pushed Task 44 with priority 20
+  Pushed Task 45 with priority 21
+  Pushed Task 46 with priority 9
+
+After pushing all tasks, we have a single root list
+in which all 47 nodes have the same degree 0
+
+Task queue [size: 47]
+ |-> Task 5 - 52.17 min (key: 0)
+ |-> Task 3 - 45.00 min (key: 3)
+ |-> Task 0 - 29.28 min (key: 15)
+ |-> Task 1 - 2.38 min (key: 32)
+ |-> Task 2 - 49.26 min (key: 17)
+ |-> Task 4 - 19.41 min (key: 34)
+ |-> Task 6 - 51.44 min (key: 41)
+ |-> Task 7 - 20.02 min (key: 16)
+ |-> Task 8 - 56.03 min (key: 35)
+ |-> Task 9 - 13.56 min (key: 36)
+ |-> Task 10 - 34.35 min (key: 8)
+ |-> Task 11 - 26.40 min (key: 20)
+ |-> Task 12 - 16.09 min (key: 23)
+ |-> Task 13 - 56.55 min (key: 26)
+ |-> Task 14 - 49.08 min (key: 17)
+ |-> Task 15 - 52.10 min (key: 35)
+ |-> Task 16 - 28.47 min (key: 37)
+ |-> Task 17 - 40.18 min (key: 28)
+ |-> Task 18 - 13.25 min (key: 38)
+ |-> Task 19 - 10.32 min (key: 42)
+ |-> Task 20 - 59.54 min (key: 15)
+ |-> Task 21 - 42.50 min (key: 34)
+ |-> Task 22 - 31.54 min (key: 28)
+ |-> Task 23 - 52.19 min (key: 5)
+ |-> Task 24 - 57.57 min (key: 45)
+ |-> Task 25 - 7.31 min (key: 45)
+ |-> Task 26 - 33.34 min (key: 11)
+ |-> Task 27 - 3.49 min (key: 20)
+ |-> Task 28 - 35.59 min (key: 38)
+ |-> Task 29 - 37.16 min (key: 13)
+ |-> Task 30 - 59.21 min (key: 15)
+ |-> Task 31 - 27.28 min (key: 6)
+ |-> Task 32 - 8.07 min (key: 24)
+ |-> Task 33 - 38.14 min (key: 11)
+ |-> Task 34 - 25.40 min (key: 35)
+ |-> Task 35 - 38.24 min (key: 11)
+ |-> Task 36 - 26.12 min (key: 38)
+ |-> Task 37 - 14.57 min (key: 29)
+ |-> Task 38 - 6.59 min (key: 7)
+ |-> Task 39 - 8.55 min (key: 5)
+ |-> Task 40 - 56.16 min (key: 19)
+ |-> Task 41 - 18.21 min (key: 15)
+ |-> Task 42 - 42.21 min (key: 25)
+ |-> Task 43 - 11.17 min (key: 21)
+ |-> Task 44 - 20.40 min (key: 20)
+ |-> Task 45 - 34.20 min (key: 21)
+ |-> Task 46 - 1.53 min (key: 9)
+
+Deleting 7 tasks ...
+
+  Deleted task 10
+  Deleted task 29
+  Deleted task 27
+  Deleted task 32
+  Deleted task 23
+  Deleted task 14
+  Deleted task 13
+
+After popping 5 tasks, the necessary housekeeping has been done:
+the root list has been rebuilt and nodes have been linked
+
+Task queue [size: 40]
+ |-> Task 5 - 52.17 min (key: 0)
+    |-> Task 3 - 45.00 min (key: 3)
+    |-> Task 0 - 29.28 min (key: 15)
+       |-> Task 1 - 2.38 min (key: 32)
+    |-> Task 46 - 1.53 min (key: 9)
+       |-> Task 45 - 34.20 min (key: 21)
+       |-> Task 44 - 20.40 min (key: 20)
+          |-> Task 43 - 11.17 min (key: 21)
+    |-> Task 7 - 20.02 min (key: 16)
+       |-> Task 6 - 51.44 min (key: 41)
+       |-> Task 2 - 49.26 min (key: 17)
+          |-> Task 4 - 19.41 min (key: 34)
+    |-> Task 39 - 8.55 min (key: 5)
+       |-> Task 40 - 56.16 min (key: 19)
+       |-> Task 41 - 18.21 min (key: 15)
+          |-> Task 42 - 42.21 min (key: 25)
+       |-> Task 38 - 6.59 min (key: 7)
+          |-> Task 37 - 14.57 min (key: 29)
+          |-> Task 35 - 38.24 min (key: 11)
+             |-> Task 36 - 26.12 min (key: 38)
+ |-> Task 31 - 27.28 min (key: 6)
+    |-> Task 33 - 38.14 min (key: 11)
+       |-> Task 34 - 25.40 min (key: 35)
+    |-> Task 26 - 33.34 min (key: 11)
+       |-> Task 25 - 7.31 min (key: 45)
+    |-> Task 30 - 59.21 min (key: 15)
+       |-> Task 28 - 35.59 min (key: 38)
+       |-> Task 8 - 56.03 min (key: 35)
+          |-> Task 9 - 13.56 min (key: 36)
+    |-> Task 20 - 59.54 min (key: 15)
+       |-> Task 19 - 10.32 min (key: 42)
+       |-> Task 22 - 31.54 min (key: 28)
+          |-> Task 21 - 42.50 min (key: 34)
+       |-> Task 11 - 26.40 min (key: 20)
+          |-> Task 12 - 16.09 min (key: 23)
+ |-> Task 17 - 40.18 min (key: 28)
+    |-> Task 18 - 13.25 min (key: 38)
+    |-> Task 15 - 52.10 min (key: 35)
+       |-> Task 16 - 28.47 min (key: 37)
+ |-> Task 24 - 57.57 min (key: 45)
+
+
+Randomly updating 10 priorities ...
+
+  Updated priority of task 28 from 38 to 6
+  Updated priority of task 11 from 20 to 1
+  Updated priority of task 43 from 21 to 5
+  Updated priority of task 20 from 15 to 8
+  Updated priority of task 18 from 38 to 8
+  Updated priority of task 21 from 34 to 1
+  Updated priority of task 4 from 34 to 9
+  Updated priority of task 44 from 20 to 5
+  Updated priority of task 31 from 6 to 5
+  Updated priority of task 20 from 8 to 1
+
+The restructured MIN heap after updating 10 priorities
+shows the new priorities and the new root list
+
+Task queue [size: 40]
+ |-> Task 5 - 52.17 min (key: 0)
+    |-> Task 3 - 45.00 min (key: 3)
+    |-> Task 0 - 29.28 min (key: 15)
+       |-> Task 1 - 2.38 min (key: 32)
+    |-> Task 46 - 1.53 min (key: 9)
+       |-> Task 45 - 34.20 min (key: 21)
+    |-> Task 7 - 20.02 min (key: 16)
+       |-> Task 6 - 51.44 min (key: 41)
+       |-> Task 2 - 49.26 min (key: 17)
+    |-> Task 39 - 8.55 min (key: 5)
+       |-> Task 40 - 56.16 min (key: 19)
+       |-> Task 41 - 18.21 min (key: 15)
+          |-> Task 42 - 42.21 min (key: 25)
+       |-> Task 38 - 6.59 min (key: 7)
+          |-> Task 37 - 14.57 min (key: 29)
+          |-> Task 35 - 38.24 min (key: 11)
+             |-> Task 36 - 26.12 min (key: 38)
+ |-> Task 31 - 27.28 min (key: 5)
+    |-> Task 33 - 38.14 min (key: 11)
+       |-> Task 34 - 25.40 min (key: 35)
+    |-> Task 26 - 33.34 min (key: 11)
+       |-> Task 25 - 7.31 min (key: 45)
+    |-> Task 30 - 59.21 min (key: 15)
+       |-> Task 8 - 56.03 min (key: 35)
+          |-> Task 9 - 13.56 min (key: 36)
+ |-> Task 17 - 40.18 min (key: 28)
+    |-> Task 15 - 52.10 min (key: 35)
+       |-> Task 16 - 28.47 min (key: 37)
+ |-> Task 24 - 57.57 min (key: 45)
+ |-> Task 28 - 35.59 min (key: 6)
+ |-> Task 11 - 26.40 min (key: 1)
+    |-> Task 12 - 16.09 min (key: 23)
+ |-> Task 43 - 11.17 min (key: 5)
+ |-> Task 18 - 13.25 min (key: 8)
+ |-> Task 21 - 42.50 min (key: 1)
+ |-> Task 4 - 19.41 min (key: 9)
+ |-> Task 44 - 20.40 min (key: 5)
+ |-> Task 20 - 59.54 min (key: 1)
+    |-> Task 19 - 10.32 min (key: 42)
+    |-> Task 22 - 31.54 min (key: 28)
+
+
+Popping all tasks..
+
+* Popping Task 5 with priority 0 *
+ 
+Task queue [size: 39]
+ |-> Task 21 - 42.50 min (key: 1)
+    |-> Task 4 - 19.41 min (key: 9)
+    |-> Task 3 - 45.00 min (key: 3)
+       |-> Task 44 - 20.40 min (key: 5)
+    |-> Task 20 - 59.54 min (key: 1)
+       |-> Task 19 - 10.32 min (key: 42)
+       |-> Task 22 - 31.54 min (key: 28)
+    |-> Task 46 - 1.53 min (key: 9)
+       |-> Task 45 - 34.20 min (key: 21)
+       |-> Task 0 - 29.28 min (key: 15)
+          |-> Task 1 - 2.38 min (key: 32)
+       |-> Task 7 - 20.02 min (key: 16)
+          |-> Task 6 - 51.44 min (key: 41)
+          |-> Task 2 - 49.26 min (key: 17)
+    |-> Task 11 - 26.40 min (key: 1)
+       |-> Task 12 - 16.09 min (key: 23)
+       |-> Task 43 - 11.17 min (key: 5)
+          |-> Task 18 - 13.25 min (key: 8)
+       |-> Task 28 - 35.59 min (key: 6)
+          |-> Task 24 - 57.57 min (key: 45)
+          |-> Task 17 - 40.18 min (key: 28)
+             |-> Task 15 - 52.10 min (key: 35)
+                |-> Task 16 - 28.47 min (key: 37)
+       |-> Task 31 - 27.28 min (key: 5)
+          |-> Task 33 - 38.14 min (key: 11)
+             |-> Task 34 - 25.40 min (key: 35)
+          |-> Task 26 - 33.34 min (key: 11)
+             |-> Task 25 - 7.31 min (key: 45)
+          |-> Task 30 - 59.21 min (key: 15)
+             |-> Task 8 - 56.03 min (key: 35)
+                |-> Task 9 - 13.56 min (key: 36)
+ |-> Task 39 - 8.55 min (key: 5)
+    |-> Task 40 - 56.16 min (key: 19)
+    |-> Task 41 - 18.21 min (key: 15)
+       |-> Task 42 - 42.21 min (key: 25)
+    |-> Task 38 - 6.59 min (key: 7)
+       |-> Task 37 - 14.57 min (key: 29)
+       |-> Task 35 - 38.24 min (key: 11)
+          |-> Task 36 - 26.12 min (key: 38)
+
+
+* Popping Task 21 with priority 1 *
+ 
+Task queue [size: 38]
+ |-> Task 20 - 59.54 min (key: 1)
+    |-> Task 19 - 10.32 min (key: 42)
+    |-> Task 22 - 31.54 min (key: 28)
+ |-> Task 3 - 45.00 min (key: 3)
+    |-> Task 44 - 20.40 min (key: 5)
+ |-> Task 4 - 19.41 min (key: 9)
+ |-> Task 11 - 26.40 min (key: 1)
+    |-> Task 12 - 16.09 min (key: 23)
+    |-> Task 43 - 11.17 min (key: 5)
+       |-> Task 18 - 13.25 min (key: 8)
+    |-> Task 28 - 35.59 min (key: 6)
+       |-> Task 24 - 57.57 min (key: 45)
+       |-> Task 17 - 40.18 min (key: 28)
+          |-> Task 15 - 52.10 min (key: 35)
+             |-> Task 16 - 28.47 min (key: 37)
+    |-> Task 31 - 27.28 min (key: 5)
+       |-> Task 33 - 38.14 min (key: 11)
+          |-> Task 34 - 25.40 min (key: 35)
+       |-> Task 26 - 33.34 min (key: 11)
+          |-> Task 25 - 7.31 min (key: 45)
+       |-> Task 30 - 59.21 min (key: 15)
+          |-> Task 8 - 56.03 min (key: 35)
+             |-> Task 9 - 13.56 min (key: 36)
+    |-> Task 39 - 8.55 min (key: 5)
+       |-> Task 40 - 56.16 min (key: 19)
+       |-> Task 41 - 18.21 min (key: 15)
+          |-> Task 42 - 42.21 min (key: 25)
+       |-> Task 38 - 6.59 min (key: 7)
+          |-> Task 37 - 14.57 min (key: 29)
+          |-> Task 35 - 38.24 min (key: 11)
+             |-> Task 36 - 26.12 min (key: 38)
+       |-> Task 46 - 1.53 min (key: 9)
+          |-> Task 45 - 34.20 min (key: 21)
+          |-> Task 0 - 29.28 min (key: 15)
+             |-> Task 1 - 2.38 min (key: 32)
+          |-> Task 7 - 20.02 min (key: 16)
+             |-> Task 6 - 51.44 min (key: 41)
+             |-> Task 2 - 49.26 min (key: 17)
+
+
+* Popping Task 20 with priority 1 *
+ 
+Task queue [size: 37]
+ |-> Task 11 - 26.40 min (key: 1)
+    |-> Task 12 - 16.09 min (key: 23)
+    |-> Task 43 - 11.17 min (key: 5)
+       |-> Task 18 - 13.25 min (key: 8)
+    |-> Task 28 - 35.59 min (key: 6)
+       |-> Task 24 - 57.57 min (key: 45)
+       |-> Task 17 - 40.18 min (key: 28)
+          |-> Task 15 - 52.10 min (key: 35)
+             |-> Task 16 - 28.47 min (key: 37)
+    |-> Task 31 - 27.28 min (key: 5)
+       |-> Task 33 - 38.14 min (key: 11)
+          |-> Task 34 - 25.40 min (key: 35)
+       |-> Task 26 - 33.34 min (key: 11)
+          |-> Task 25 - 7.31 min (key: 45)
+       |-> Task 30 - 59.21 min (key: 15)
+          |-> Task 8 - 56.03 min (key: 35)
+             |-> Task 9 - 13.56 min (key: 36)
+    |-> Task 39 - 8.55 min (key: 5)
+       |-> Task 40 - 56.16 min (key: 19)
+       |-> Task 41 - 18.21 min (key: 15)
+          |-> Task 42 - 42.21 min (key: 25)
+       |-> Task 38 - 6.59 min (key: 7)
+          |-> Task 37 - 14.57 min (key: 29)
+          |-> Task 35 - 38.24 min (key: 11)
+             |-> Task 36 - 26.12 min (key: 38)
+       |-> Task 46 - 1.53 min (key: 9)
+          |-> Task 45 - 34.20 min (key: 21)
+          |-> Task 0 - 29.28 min (key: 15)
+             |-> Task 1 - 2.38 min (key: 32)
+          |-> Task 7 - 20.02 min (key: 16)
+             |-> Task 6 - 51.44 min (key: 41)
+             |-> Task 2 - 49.26 min (key: 17)
+ |-> Task 3 - 45.00 min (key: 3)
+    |-> Task 44 - 20.40 min (key: 5)
+    |-> Task 4 - 19.41 min (key: 9)
+       |-> Task 19 - 10.32 min (key: 42)
+ |-> Task 22 - 31.54 min (key: 28)
+
+
+* Popping Task 11 with priority 1 *
+ 
+Task queue [size: 36]
+ |-> Task 3 - 45.00 min (key: 3)
+    |-> Task 44 - 20.40 min (key: 5)
+    |-> Task 4 - 19.41 min (key: 9)
+       |-> Task 19 - 10.32 min (key: 42)
+    |-> Task 43 - 11.17 min (key: 5)
+       |-> Task 18 - 13.25 min (key: 8)
+       |-> Task 12 - 16.09 min (key: 23)
+          |-> Task 22 - 31.54 min (key: 28)
+    |-> Task 31 - 27.28 min (key: 5)
+       |-> Task 33 - 38.14 min (key: 11)
+          |-> Task 34 - 25.40 min (key: 35)
+       |-> Task 26 - 33.34 min (key: 11)
+          |-> Task 25 - 7.31 min (key: 45)
+       |-> Task 30 - 59.21 min (key: 15)
+          |-> Task 8 - 56.03 min (key: 35)
+             |-> Task 9 - 13.56 min (key: 36)
+    |-> Task 39 - 8.55 min (key: 5)
+       |-> Task 40 - 56.16 min (key: 19)
+       |-> Task 41 - 18.21 min (key: 15)
+          |-> Task 42 - 42.21 min (key: 25)
+       |-> Task 38 - 6.59 min (key: 7)
+          |-> Task 37 - 14.57 min (key: 29)
+          |-> Task 35 - 38.24 min (key: 11)
+             |-> Task 36 - 26.12 min (key: 38)
+       |-> Task 46 - 1.53 min (key: 9)
+          |-> Task 45 - 34.20 min (key: 21)
+          |-> Task 0 - 29.28 min (key: 15)
+             |-> Task 1 - 2.38 min (key: 32)
+          |-> Task 7 - 20.02 min (key: 16)
+             |-> Task 6 - 51.44 min (key: 41)
+             |-> Task 2 - 49.26 min (key: 17)
+ |-> Task 28 - 35.59 min (key: 6)
+    |-> Task 24 - 57.57 min (key: 45)
+    |-> Task 17 - 40.18 min (key: 28)
+       |-> Task 15 - 52.10 min (key: 35)
+          |-> Task 16 - 28.47 min (key: 37)
+
+
+* Popping Task 3 with priority 3 *
+ 
+Task queue [size: 35]
+ |-> Task 44 - 20.40 min (key: 5)
+ |-> Task 4 - 19.41 min (key: 9)
+    |-> Task 19 - 10.32 min (key: 42)
+ |-> Task 39 - 8.55 min (key: 5)
+    |-> Task 40 - 56.16 min (key: 19)
+    |-> Task 41 - 18.21 min (key: 15)
+       |-> Task 42 - 42.21 min (key: 25)
+    |-> Task 38 - 6.59 min (key: 7)
+       |-> Task 37 - 14.57 min (key: 29)
+       |-> Task 35 - 38.24 min (key: 11)
+          |-> Task 36 - 26.12 min (key: 38)
+    |-> Task 46 - 1.53 min (key: 9)
+       |-> Task 45 - 34.20 min (key: 21)
+       |-> Task 0 - 29.28 min (key: 15)
+          |-> Task 1 - 2.38 min (key: 32)
+       |-> Task 7 - 20.02 min (key: 16)
+          |-> Task 6 - 51.44 min (key: 41)
+          |-> Task 2 - 49.26 min (key: 17)
+    |-> Task 31 - 27.28 min (key: 5)
+       |-> Task 33 - 38.14 min (key: 11)
+          |-> Task 34 - 25.40 min (key: 35)
+       |-> Task 26 - 33.34 min (key: 11)
+          |-> Task 25 - 7.31 min (key: 45)
+       |-> Task 30 - 59.21 min (key: 15)
+          |-> Task 8 - 56.03 min (key: 35)
+             |-> Task 9 - 13.56 min (key: 36)
+       |-> Task 43 - 11.17 min (key: 5)
+          |-> Task 18 - 13.25 min (key: 8)
+          |-> Task 12 - 16.09 min (key: 23)
+             |-> Task 22 - 31.54 min (key: 28)
+          |-> Task 28 - 35.59 min (key: 6)
+             |-> Task 24 - 57.57 min (key: 45)
+             |-> Task 17 - 40.18 min (key: 28)
+                |-> Task 15 - 52.10 min (key: 35)
+                   |-> Task 16 - 28.47 min (key: 37)
+
+
+* Popping Task 44 with priority 5 *
+ 
+Task queue [size: 34]
+ |-> Task 39 - 8.55 min (key: 5)
+    |-> Task 40 - 56.16 min (key: 19)
+    |-> Task 41 - 18.21 min (key: 15)
+       |-> Task 42 - 42.21 min (key: 25)
+    |-> Task 38 - 6.59 min (key: 7)
+       |-> Task 37 - 14.57 min (key: 29)
+       |-> Task 35 - 38.24 min (key: 11)
+          |-> Task 36 - 26.12 min (key: 38)
+    |-> Task 46 - 1.53 min (key: 9)
+       |-> Task 45 - 34.20 min (key: 21)
+       |-> Task 0 - 29.28 min (key: 15)
+          |-> Task 1 - 2.38 min (key: 32)
+       |-> Task 7 - 20.02 min (key: 16)
+          |-> Task 6 - 51.44 min (key: 41)
+          |-> Task 2 - 49.26 min (key: 17)
+    |-> Task 31 - 27.28 min (key: 5)
+       |-> Task 33 - 38.14 min (key: 11)
+          |-> Task 34 - 25.40 min (key: 35)
+       |-> Task 26 - 33.34 min (key: 11)
+          |-> Task 25 - 7.31 min (key: 45)
+       |-> Task 30 - 59.21 min (key: 15)
+          |-> Task 8 - 56.03 min (key: 35)
+             |-> Task 9 - 13.56 min (key: 36)
+       |-> Task 43 - 11.17 min (key: 5)
+          |-> Task 18 - 13.25 min (key: 8)
+          |-> Task 12 - 16.09 min (key: 23)
+             |-> Task 22 - 31.54 min (key: 28)
+          |-> Task 28 - 35.59 min (key: 6)
+             |-> Task 24 - 57.57 min (key: 45)
+             |-> Task 17 - 40.18 min (key: 28)
+                |-> Task 15 - 52.10 min (key: 35)
+                   |-> Task 16 - 28.47 min (key: 37)
+ |-> Task 4 - 19.41 min (key: 9)
+    |-> Task 19 - 10.32 min (key: 42)
+
+
+* Popping Task 39 with priority 5 *
+ 
+Task queue [size: 33]
+ |-> Task 31 - 27.28 min (key: 5)
+    |-> Task 33 - 38.14 min (key: 11)
+       |-> Task 34 - 25.40 min (key: 35)
+    |-> Task 26 - 33.34 min (key: 11)
+       |-> Task 25 - 7.31 min (key: 45)
+    |-> Task 30 - 59.21 min (key: 15)
+       |-> Task 8 - 56.03 min (key: 35)
+          |-> Task 9 - 13.56 min (key: 36)
+    |-> Task 43 - 11.17 min (key: 5)
+       |-> Task 18 - 13.25 min (key: 8)
+       |-> Task 12 - 16.09 min (key: 23)
+          |-> Task 22 - 31.54 min (key: 28)
+       |-> Task 28 - 35.59 min (key: 6)
+          |-> Task 24 - 57.57 min (key: 45)
+          |-> Task 17 - 40.18 min (key: 28)
+             |-> Task 15 - 52.10 min (key: 35)
+                |-> Task 16 - 28.47 min (key: 37)
+    |-> Task 38 - 6.59 min (key: 7)
+       |-> Task 37 - 14.57 min (key: 29)
+       |-> Task 35 - 38.24 min (key: 11)
+          |-> Task 36 - 26.12 min (key: 38)
+       |-> Task 4 - 19.41 min (key: 9)
+          |-> Task 19 - 10.32 min (key: 42)
+          |-> Task 41 - 18.21 min (key: 15)
+             |-> Task 42 - 42.21 min (key: 25)
+       |-> Task 46 - 1.53 min (key: 9)
+          |-> Task 45 - 34.20 min (key: 21)
+          |-> Task 0 - 29.28 min (key: 15)
+             |-> Task 1 - 2.38 min (key: 32)
+          |-> Task 7 - 20.02 min (key: 16)
+             |-> Task 6 - 51.44 min (key: 41)
+             |-> Task 2 - 49.26 min (key: 17)
+ |-> Task 40 - 56.16 min (key: 19)
+
+
+* Popping Task 31 with priority 5 *
+ 
+Task queue [size: 32]
+ |-> Task 43 - 11.17 min (key: 5)
+    |-> Task 18 - 13.25 min (key: 8)
+    |-> Task 12 - 16.09 min (key: 23)
+       |-> Task 22 - 31.54 min (key: 28)
+    |-> Task 28 - 35.59 min (key: 6)
+       |-> Task 24 - 57.57 min (key: 45)
+       |-> Task 17 - 40.18 min (key: 28)
+          |-> Task 15 - 52.10 min (key: 35)
+             |-> Task 16 - 28.47 min (key: 37)
+ |-> Task 26 - 33.34 min (key: 11)
+    |-> Task 25 - 7.31 min (key: 45)
+    |-> Task 33 - 38.14 min (key: 11)
+       |-> Task 34 - 25.40 min (key: 35)
+ |-> Task 30 - 59.21 min (key: 15)
+    |-> Task 8 - 56.03 min (key: 35)
+       |-> Task 9 - 13.56 min (key: 36)
+ |-> Task 40 - 56.16 min (key: 19)
+ |-> Task 38 - 6.59 min (key: 7)
+    |-> Task 37 - 14.57 min (key: 29)
+    |-> Task 35 - 38.24 min (key: 11)
+       |-> Task 36 - 26.12 min (key: 38)
+    |-> Task 4 - 19.41 min (key: 9)
+       |-> Task 19 - 10.32 min (key: 42)
+       |-> Task 41 - 18.21 min (key: 15)
+          |-> Task 42 - 42.21 min (key: 25)
+    |-> Task 46 - 1.53 min (key: 9)
+       |-> Task 45 - 34.20 min (key: 21)
+       |-> Task 0 - 29.28 min (key: 15)
+          |-> Task 1 - 2.38 min (key: 32)
+       |-> Task 7 - 20.02 min (key: 16)
+          |-> Task 6 - 51.44 min (key: 41)
+          |-> Task 2 - 49.26 min (key: 17)
+
+
+* Popping Task 43 with priority 5 *
+ 
+Task queue [size: 31]
+ |-> Task 28 - 35.59 min (key: 6)
+    |-> Task 24 - 57.57 min (key: 45)
+    |-> Task 17 - 40.18 min (key: 28)
+       |-> Task 15 - 52.10 min (key: 35)
+          |-> Task 16 - 28.47 min (key: 37)
+ |-> Task 12 - 16.09 min (key: 23)
+    |-> Task 22 - 31.54 min (key: 28)
+ |-> Task 18 - 13.25 min (key: 8)
+    |-> Task 40 - 56.16 min (key: 19)
+    |-> Task 30 - 59.21 min (key: 15)
+       |-> Task 8 - 56.03 min (key: 35)
+          |-> Task 9 - 13.56 min (key: 36)
+    |-> Task 26 - 33.34 min (key: 11)
+       |-> Task 25 - 7.31 min (key: 45)
+       |-> Task 33 - 38.14 min (key: 11)
+          |-> Task 34 - 25.40 min (key: 35)
+ |-> Task 38 - 6.59 min (key: 7)
+    |-> Task 37 - 14.57 min (key: 29)
+    |-> Task 35 - 38.24 min (key: 11)
+       |-> Task 36 - 26.12 min (key: 38)
+    |-> Task 4 - 19.41 min (key: 9)
+       |-> Task 19 - 10.32 min (key: 42)
+       |-> Task 41 - 18.21 min (key: 15)
+          |-> Task 42 - 42.21 min (key: 25)
+    |-> Task 46 - 1.53 min (key: 9)
+       |-> Task 45 - 34.20 min (key: 21)
+       |-> Task 0 - 29.28 min (key: 15)
+          |-> Task 1 - 2.38 min (key: 32)
+       |-> Task 7 - 20.02 min (key: 16)
+          |-> Task 6 - 51.44 min (key: 41)
+          |-> Task 2 - 49.26 min (key: 17)
+
+
+* Popping Task 28 with priority 6 *
+ 
+Task queue [size: 30]
+ |-> Task 38 - 6.59 min (key: 7)
+    |-> Task 37 - 14.57 min (key: 29)
+    |-> Task 35 - 38.24 min (key: 11)
+       |-> Task 36 - 26.12 min (key: 38)
+    |-> Task 4 - 19.41 min (key: 9)
+       |-> Task 19 - 10.32 min (key: 42)
+       |-> Task 41 - 18.21 min (key: 15)
+          |-> Task 42 - 42.21 min (key: 25)
+    |-> Task 46 - 1.53 min (key: 9)
+       |-> Task 45 - 34.20 min (key: 21)
+       |-> Task 0 - 29.28 min (key: 15)
+          |-> Task 1 - 2.38 min (key: 32)
+       |-> Task 7 - 20.02 min (key: 16)
+          |-> Task 6 - 51.44 min (key: 41)
+          |-> Task 2 - 49.26 min (key: 17)
+ |-> Task 18 - 13.25 min (key: 8)
+    |-> Task 40 - 56.16 min (key: 19)
+    |-> Task 30 - 59.21 min (key: 15)
+       |-> Task 8 - 56.03 min (key: 35)
+          |-> Task 9 - 13.56 min (key: 36)
+    |-> Task 26 - 33.34 min (key: 11)
+       |-> Task 25 - 7.31 min (key: 45)
+       |-> Task 33 - 38.14 min (key: 11)
+          |-> Task 34 - 25.40 min (key: 35)
+ |-> Task 12 - 16.09 min (key: 23)
+    |-> Task 22 - 31.54 min (key: 28)
+    |-> Task 17 - 40.18 min (key: 28)
+       |-> Task 15 - 52.10 min (key: 35)
+          |-> Task 16 - 28.47 min (key: 37)
+ |-> Task 24 - 57.57 min (key: 45)
+
+
+* Popping Task 38 with priority 7 *
+ 
+Task queue [size: 29]
+ |-> Task 18 - 13.25 min (key: 8)
+    |-> Task 40 - 56.16 min (key: 19)
+    |-> Task 30 - 59.21 min (key: 15)
+       |-> Task 8 - 56.03 min (key: 35)
+          |-> Task 9 - 13.56 min (key: 36)
+    |-> Task 26 - 33.34 min (key: 11)
+       |-> Task 25 - 7.31 min (key: 45)
+       |-> Task 33 - 38.14 min (key: 11)
+          |-> Task 34 - 25.40 min (key: 35)
+    |-> Task 35 - 38.24 min (key: 11)
+       |-> Task 36 - 26.12 min (key: 38)
+       |-> Task 37 - 14.57 min (key: 29)
+          |-> Task 24 - 57.57 min (key: 45)
+       |-> Task 12 - 16.09 min (key: 23)
+          |-> Task 22 - 31.54 min (key: 28)
+          |-> Task 17 - 40.18 min (key: 28)
+             |-> Task 15 - 52.10 min (key: 35)
+                |-> Task 16 - 28.47 min (key: 37)
+ |-> Task 4 - 19.41 min (key: 9)
+    |-> Task 19 - 10.32 min (key: 42)
+    |-> Task 41 - 18.21 min (key: 15)
+       |-> Task 42 - 42.21 min (key: 25)
+ |-> Task 46 - 1.53 min (key: 9)
+    |-> Task 45 - 34.20 min (key: 21)
+    |-> Task 0 - 29.28 min (key: 15)
+       |-> Task 1 - 2.38 min (key: 32)
+    |-> Task 7 - 20.02 min (key: 16)
+       |-> Task 6 - 51.44 min (key: 41)
+       |-> Task 2 - 49.26 min (key: 17)
+
+
+* Popping Task 18 with priority 8 *
+ 
+Task queue [size: 28]
+ |-> Task 4 - 19.41 min (key: 9)
+    |-> Task 19 - 10.32 min (key: 42)
+    |-> Task 41 - 18.21 min (key: 15)
+       |-> Task 42 - 42.21 min (key: 25)
+    |-> Task 26 - 33.34 min (key: 11)
+       |-> Task 25 - 7.31 min (key: 45)
+       |-> Task 33 - 38.14 min (key: 11)
+          |-> Task 34 - 25.40 min (key: 35)
+    |-> Task 46 - 1.53 min (key: 9)
+       |-> Task 45 - 34.20 min (key: 21)
+       |-> Task 0 - 29.28 min (key: 15)
+          |-> Task 1 - 2.38 min (key: 32)
+       |-> Task 7 - 20.02 min (key: 16)
+          |-> Task 6 - 51.44 min (key: 41)
+          |-> Task 2 - 49.26 min (key: 17)
+ |-> Task 35 - 38.24 min (key: 11)
+    |-> Task 36 - 26.12 min (key: 38)
+    |-> Task 37 - 14.57 min (key: 29)
+       |-> Task 24 - 57.57 min (key: 45)
+    |-> Task 12 - 16.09 min (key: 23)
+       |-> Task 22 - 31.54 min (key: 28)
+       |-> Task 17 - 40.18 min (key: 28)
+          |-> Task 15 - 52.10 min (key: 35)
+             |-> Task 16 - 28.47 min (key: 37)
+ |-> Task 30 - 59.21 min (key: 15)
+    |-> Task 8 - 56.03 min (key: 35)
+       |-> Task 9 - 13.56 min (key: 36)
+ |-> Task 40 - 56.16 min (key: 19)
+
+
+* Popping Task 4 with priority 9 *
+ 
+Task queue [size: 27]
+ |-> Task 46 - 1.53 min (key: 9)
+    |-> Task 45 - 34.20 min (key: 21)
+    |-> Task 0 - 29.28 min (key: 15)
+       |-> Task 1 - 2.38 min (key: 32)
+    |-> Task 7 - 20.02 min (key: 16)
+       |-> Task 6 - 51.44 min (key: 41)
+       |-> Task 2 - 49.26 min (key: 17)
+ |-> Task 41 - 18.21 min (key: 15)
+    |-> Task 42 - 42.21 min (key: 25)
+ |-> Task 26 - 33.34 min (key: 11)
+    |-> Task 25 - 7.31 min (key: 45)
+    |-> Task 33 - 38.14 min (key: 11)
+       |-> Task 34 - 25.40 min (key: 35)
+    |-> Task 30 - 59.21 min (key: 15)
+       |-> Task 8 - 56.03 min (key: 35)
+          |-> Task 9 - 13.56 min (key: 36)
+       |-> Task 40 - 56.16 min (key: 19)
+          |-> Task 19 - 10.32 min (key: 42)
+    |-> Task 35 - 38.24 min (key: 11)
+       |-> Task 36 - 26.12 min (key: 38)
+       |-> Task 37 - 14.57 min (key: 29)
+          |-> Task 24 - 57.57 min (key: 45)
+       |-> Task 12 - 16.09 min (key: 23)
+          |-> Task 22 - 31.54 min (key: 28)
+          |-> Task 17 - 40.18 min (key: 28)
+             |-> Task 15 - 52.10 min (key: 35)
+                |-> Task 16 - 28.47 min (key: 37)
+
+
+* Popping Task 46 with priority 9 *
+ 
+Task queue [size: 26]
+ |-> Task 26 - 33.34 min (key: 11)
+    |-> Task 25 - 7.31 min (key: 45)
+    |-> Task 33 - 38.14 min (key: 11)
+       |-> Task 34 - 25.40 min (key: 35)
+    |-> Task 30 - 59.21 min (key: 15)
+       |-> Task 8 - 56.03 min (key: 35)
+          |-> Task 9 - 13.56 min (key: 36)
+       |-> Task 40 - 56.16 min (key: 19)
+          |-> Task 19 - 10.32 min (key: 42)
+    |-> Task 35 - 38.24 min (key: 11)
+       |-> Task 36 - 26.12 min (key: 38)
+       |-> Task 37 - 14.57 min (key: 29)
+          |-> Task 24 - 57.57 min (key: 45)
+       |-> Task 12 - 16.09 min (key: 23)
+          |-> Task 22 - 31.54 min (key: 28)
+          |-> Task 17 - 40.18 min (key: 28)
+             |-> Task 15 - 52.10 min (key: 35)
+                |-> Task 16 - 28.47 min (key: 37)
+ |-> Task 0 - 29.28 min (key: 15)
+    |-> Task 1 - 2.38 min (key: 32)
+    |-> Task 41 - 18.21 min (key: 15)
+       |-> Task 42 - 42.21 min (key: 25)
+    |-> Task 7 - 20.02 min (key: 16)
+       |-> Task 6 - 51.44 min (key: 41)
+       |-> Task 2 - 49.26 min (key: 17)
+ |-> Task 45 - 34.20 min (key: 21)
+
+
+* Popping Task 26 with priority 11 *
+ 
+Task queue [size: 25]
+ |-> Task 35 - 38.24 min (key: 11)
+    |-> Task 36 - 26.12 min (key: 38)
+    |-> Task 37 - 14.57 min (key: 29)
+       |-> Task 24 - 57.57 min (key: 45)
+    |-> Task 12 - 16.09 min (key: 23)
+       |-> Task 22 - 31.54 min (key: 28)
+       |-> Task 17 - 40.18 min (key: 28)
+          |-> Task 15 - 52.10 min (key: 35)
+             |-> Task 16 - 28.47 min (key: 37)
+ |-> Task 33 - 38.14 min (key: 11)
+    |-> Task 34 - 25.40 min (key: 35)
+    |-> Task 45 - 34.20 min (key: 21)
+       |-> Task 25 - 7.31 min (key: 45)
+    |-> Task 30 - 59.21 min (key: 15)
+       |-> Task 8 - 56.03 min (key: 35)
+          |-> Task 9 - 13.56 min (key: 36)
+       |-> Task 40 - 56.16 min (key: 19)
+          |-> Task 19 - 10.32 min (key: 42)
+    |-> Task 0 - 29.28 min (key: 15)
+       |-> Task 1 - 2.38 min (key: 32)
+       |-> Task 41 - 18.21 min (key: 15)
+          |-> Task 42 - 42.21 min (key: 25)
+       |-> Task 7 - 20.02 min (key: 16)
+          |-> Task 6 - 51.44 min (key: 41)
+          |-> Task 2 - 49.26 min (key: 17)
+
+
+* Popping Task 35 with priority 11 *
+ 
+Task queue [size: 24]
+ |-> Task 33 - 38.14 min (key: 11)
+    |-> Task 34 - 25.40 min (key: 35)
+    |-> Task 45 - 34.20 min (key: 21)
+       |-> Task 25 - 7.31 min (key: 45)
+    |-> Task 30 - 59.21 min (key: 15)
+       |-> Task 8 - 56.03 min (key: 35)
+          |-> Task 9 - 13.56 min (key: 36)
+       |-> Task 40 - 56.16 min (key: 19)
+          |-> Task 19 - 10.32 min (key: 42)
+    |-> Task 0 - 29.28 min (key: 15)
+       |-> Task 1 - 2.38 min (key: 32)
+       |-> Task 41 - 18.21 min (key: 15)
+          |-> Task 42 - 42.21 min (key: 25)
+       |-> Task 7 - 20.02 min (key: 16)
+          |-> Task 6 - 51.44 min (key: 41)
+          |-> Task 2 - 49.26 min (key: 17)
+ |-> Task 12 - 16.09 min (key: 23)
+    |-> Task 22 - 31.54 min (key: 28)
+    |-> Task 17 - 40.18 min (key: 28)
+       |-> Task 15 - 52.10 min (key: 35)
+          |-> Task 16 - 28.47 min (key: 37)
+ |-> Task 37 - 14.57 min (key: 29)
+    |-> Task 24 - 57.57 min (key: 45)
+ |-> Task 36 - 26.12 min (key: 38)
+
+
+* Popping Task 33 with priority 11 *
+ 
+Task queue [size: 23]
+ |-> Task 30 - 59.21 min (key: 15)
+    |-> Task 8 - 56.03 min (key: 35)
+       |-> Task 9 - 13.56 min (key: 36)
+    |-> Task 40 - 56.16 min (key: 19)
+       |-> Task 19 - 10.32 min (key: 42)
+ |-> Task 45 - 34.20 min (key: 21)
+    |-> Task 25 - 7.31 min (key: 45)
+ |-> Task 0 - 29.28 min (key: 15)
+    |-> Task 1 - 2.38 min (key: 32)
+    |-> Task 41 - 18.21 min (key: 15)
+       |-> Task 42 - 42.21 min (key: 25)
+    |-> Task 7 - 20.02 min (key: 16)
+       |-> Task 6 - 51.44 min (key: 41)
+       |-> Task 2 - 49.26 min (key: 17)
+    |-> Task 12 - 16.09 min (key: 23)
+       |-> Task 22 - 31.54 min (key: 28)
+       |-> Task 17 - 40.18 min (key: 28)
+          |-> Task 15 - 52.10 min (key: 35)
+             |-> Task 16 - 28.47 min (key: 37)
+       |-> Task 37 - 14.57 min (key: 29)
+          |-> Task 24 - 57.57 min (key: 45)
+          |-> Task 34 - 25.40 min (key: 35)
+             |-> Task 36 - 26.12 min (key: 38)
+
+
+* Popping Task 30 with priority 15 *
+ 
+Task queue [size: 22]
+ |-> Task 0 - 29.28 min (key: 15)
+    |-> Task 1 - 2.38 min (key: 32)
+    |-> Task 41 - 18.21 min (key: 15)
+       |-> Task 42 - 42.21 min (key: 25)
+    |-> Task 7 - 20.02 min (key: 16)
+       |-> Task 6 - 51.44 min (key: 41)
+       |-> Task 2 - 49.26 min (key: 17)
+    |-> Task 12 - 16.09 min (key: 23)
+       |-> Task 22 - 31.54 min (key: 28)
+       |-> Task 17 - 40.18 min (key: 28)
+          |-> Task 15 - 52.10 min (key: 35)
+             |-> Task 16 - 28.47 min (key: 37)
+       |-> Task 37 - 14.57 min (key: 29)
+          |-> Task 24 - 57.57 min (key: 45)
+          |-> Task 34 - 25.40 min (key: 35)
+             |-> Task 36 - 26.12 min (key: 38)
+ |-> Task 40 - 56.16 min (key: 19)
+    |-> Task 19 - 10.32 min (key: 42)
+ |-> Task 45 - 34.20 min (key: 21)
+    |-> Task 25 - 7.31 min (key: 45)
+    |-> Task 8 - 56.03 min (key: 35)
+       |-> Task 9 - 13.56 min (key: 36)
+
+
+* Popping Task 0 with priority 15 *
+ 
+Task queue [size: 21]
+ |-> Task 41 - 18.21 min (key: 15)
+    |-> Task 42 - 42.21 min (key: 25)
+    |-> Task 40 - 56.16 min (key: 19)
+       |-> Task 19 - 10.32 min (key: 42)
+    |-> Task 45 - 34.20 min (key: 21)
+       |-> Task 25 - 7.31 min (key: 45)
+       |-> Task 8 - 56.03 min (key: 35)
+          |-> Task 9 - 13.56 min (key: 36)
+    |-> Task 12 - 16.09 min (key: 23)
+       |-> Task 22 - 31.54 min (key: 28)
+       |-> Task 17 - 40.18 min (key: 28)
+          |-> Task 15 - 52.10 min (key: 35)
+             |-> Task 16 - 28.47 min (key: 37)
+       |-> Task 37 - 14.57 min (key: 29)
+          |-> Task 24 - 57.57 min (key: 45)
+          |-> Task 34 - 25.40 min (key: 35)
+             |-> Task 36 - 26.12 min (key: 38)
+ |-> Task 7 - 20.02 min (key: 16)
+    |-> Task 6 - 51.44 min (key: 41)
+    |-> Task 2 - 49.26 min (key: 17)
+ |-> Task 1 - 2.38 min (key: 32)
+
+
+* Popping Task 41 with priority 15 *
+ 
+Task queue [size: 20]
+ |-> Task 7 - 20.02 min (key: 16)
+    |-> Task 6 - 51.44 min (key: 41)
+    |-> Task 2 - 49.26 min (key: 17)
+    |-> Task 40 - 56.16 min (key: 19)
+       |-> Task 19 - 10.32 min (key: 42)
+       |-> Task 42 - 42.21 min (key: 25)
+          |-> Task 1 - 2.38 min (key: 32)
+    |-> Task 12 - 16.09 min (key: 23)
+       |-> Task 22 - 31.54 min (key: 28)
+       |-> Task 17 - 40.18 min (key: 28)
+          |-> Task 15 - 52.10 min (key: 35)
+             |-> Task 16 - 28.47 min (key: 37)
+       |-> Task 37 - 14.57 min (key: 29)
+          |-> Task 24 - 57.57 min (key: 45)
+          |-> Task 34 - 25.40 min (key: 35)
+             |-> Task 36 - 26.12 min (key: 38)
+ |-> Task 45 - 34.20 min (key: 21)
+    |-> Task 25 - 7.31 min (key: 45)
+    |-> Task 8 - 56.03 min (key: 35)
+       |-> Task 9 - 13.56 min (key: 36)
+
+
+* Popping Task 7 with priority 16 *
+ 
+Task queue [size: 19]
+ |-> Task 2 - 49.26 min (key: 17)
+    |-> Task 6 - 51.44 min (key: 41)
+ |-> Task 40 - 56.16 min (key: 19)
+    |-> Task 19 - 10.32 min (key: 42)
+    |-> Task 42 - 42.21 min (key: 25)
+       |-> Task 1 - 2.38 min (key: 32)
+    |-> Task 45 - 34.20 min (key: 21)
+       |-> Task 25 - 7.31 min (key: 45)
+       |-> Task 8 - 56.03 min (key: 35)
+          |-> Task 9 - 13.56 min (key: 36)
+    |-> Task 12 - 16.09 min (key: 23)
+       |-> Task 22 - 31.54 min (key: 28)
+       |-> Task 17 - 40.18 min (key: 28)
+          |-> Task 15 - 52.10 min (key: 35)
+             |-> Task 16 - 28.47 min (key: 37)
+       |-> Task 37 - 14.57 min (key: 29)
+          |-> Task 24 - 57.57 min (key: 45)
+          |-> Task 34 - 25.40 min (key: 35)
+             |-> Task 36 - 26.12 min (key: 38)
+
+
+* Popping Task 2 with priority 17 *
+ 
+Task queue [size: 18]
+ |-> Task 40 - 56.16 min (key: 19)
+    |-> Task 19 - 10.32 min (key: 42)
+    |-> Task 42 - 42.21 min (key: 25)
+       |-> Task 1 - 2.38 min (key: 32)
+    |-> Task 45 - 34.20 min (key: 21)
+       |-> Task 25 - 7.31 min (key: 45)
+       |-> Task 8 - 56.03 min (key: 35)
+          |-> Task 9 - 13.56 min (key: 36)
+    |-> Task 12 - 16.09 min (key: 23)
+       |-> Task 22 - 31.54 min (key: 28)
+       |-> Task 17 - 40.18 min (key: 28)
+          |-> Task 15 - 52.10 min (key: 35)
+             |-> Task 16 - 28.47 min (key: 37)
+       |-> Task 37 - 14.57 min (key: 29)
+          |-> Task 24 - 57.57 min (key: 45)
+          |-> Task 34 - 25.40 min (key: 35)
+             |-> Task 36 - 26.12 min (key: 38)
+ |-> Task 6 - 51.44 min (key: 41)
+
+
+* Popping Task 40 with priority 19 *
+ 
+Task queue [size: 17]
+ |-> Task 45 - 34.20 min (key: 21)
+    |-> Task 25 - 7.31 min (key: 45)
+    |-> Task 8 - 56.03 min (key: 35)
+       |-> Task 9 - 13.56 min (key: 36)
+    |-> Task 42 - 42.21 min (key: 25)
+       |-> Task 1 - 2.38 min (key: 32)
+       |-> Task 6 - 51.44 min (key: 41)
+          |-> Task 19 - 10.32 min (key: 42)
+    |-> Task 12 - 16.09 min (key: 23)
+       |-> Task 22 - 31.54 min (key: 28)
+       |-> Task 17 - 40.18 min (key: 28)
+          |-> Task 15 - 52.10 min (key: 35)
+             |-> Task 16 - 28.47 min (key: 37)
+       |-> Task 37 - 14.57 min (key: 29)
+          |-> Task 24 - 57.57 min (key: 45)
+          |-> Task 34 - 25.40 min (key: 35)
+             |-> Task 36 - 26.12 min (key: 38)
+
+
+* Popping Task 45 with priority 21 *
+ 
+Task queue [size: 16]
+ |-> Task 12 - 16.09 min (key: 23)
+    |-> Task 22 - 31.54 min (key: 28)
+    |-> Task 17 - 40.18 min (key: 28)
+       |-> Task 15 - 52.10 min (key: 35)
+          |-> Task 16 - 28.47 min (key: 37)
+    |-> Task 37 - 14.57 min (key: 29)
+       |-> Task 24 - 57.57 min (key: 45)
+       |-> Task 34 - 25.40 min (key: 35)
+          |-> Task 36 - 26.12 min (key: 38)
+ |-> Task 42 - 42.21 min (key: 25)
+    |-> Task 1 - 2.38 min (key: 32)
+    |-> Task 6 - 51.44 min (key: 41)
+       |-> Task 19 - 10.32 min (key: 42)
+ |-> Task 8 - 56.03 min (key: 35)
+    |-> Task 9 - 13.56 min (key: 36)
+ |-> Task 25 - 7.31 min (key: 45)
+
+
+* Popping Task 12 with priority 23 *
+ 
+Task queue [size: 15]
+ |-> Task 42 - 42.21 min (key: 25)
+    |-> Task 1 - 2.38 min (key: 32)
+    |-> Task 6 - 51.44 min (key: 41)
+       |-> Task 19 - 10.32 min (key: 42)
+    |-> Task 22 - 31.54 min (key: 28)
+       |-> Task 25 - 7.31 min (key: 45)
+       |-> Task 8 - 56.03 min (key: 35)
+          |-> Task 9 - 13.56 min (key: 36)
+ |-> Task 17 - 40.18 min (key: 28)
+    |-> Task 15 - 52.10 min (key: 35)
+       |-> Task 16 - 28.47 min (key: 37)
+ |-> Task 37 - 14.57 min (key: 29)
+    |-> Task 24 - 57.57 min (key: 45)
+    |-> Task 34 - 25.40 min (key: 35)
+       |-> Task 36 - 26.12 min (key: 38)
+
+
+* Popping Task 42 with priority 25 *
+ 
+Task queue [size: 14]
+ |-> Task 22 - 31.54 min (key: 28)
+    |-> Task 25 - 7.31 min (key: 45)
+    |-> Task 8 - 56.03 min (key: 35)
+       |-> Task 9 - 13.56 min (key: 36)
+ |-> Task 1 - 2.38 min (key: 32)
+ |-> Task 17 - 40.18 min (key: 28)
+    |-> Task 15 - 52.10 min (key: 35)
+       |-> Task 16 - 28.47 min (key: 37)
+    |-> Task 6 - 51.44 min (key: 41)
+       |-> Task 19 - 10.32 min (key: 42)
+    |-> Task 37 - 14.57 min (key: 29)
+       |-> Task 24 - 57.57 min (key: 45)
+       |-> Task 34 - 25.40 min (key: 35)
+          |-> Task 36 - 26.12 min (key: 38)
+
+
+* Popping Task 22 with priority 28 *
+ 
+Task queue [size: 13]
+ |-> Task 17 - 40.18 min (key: 28)
+    |-> Task 15 - 52.10 min (key: 35)
+       |-> Task 16 - 28.47 min (key: 37)
+    |-> Task 6 - 51.44 min (key: 41)
+       |-> Task 19 - 10.32 min (key: 42)
+    |-> Task 37 - 14.57 min (key: 29)
+       |-> Task 24 - 57.57 min (key: 45)
+       |-> Task 34 - 25.40 min (key: 35)
+          |-> Task 36 - 26.12 min (key: 38)
+ |-> Task 1 - 2.38 min (key: 32)
+    |-> Task 25 - 7.31 min (key: 45)
+    |-> Task 8 - 56.03 min (key: 35)
+       |-> Task 9 - 13.56 min (key: 36)
+
+
+* Popping Task 17 with priority 28 *
+ 
+Task queue [size: 12]
+ |-> Task 37 - 14.57 min (key: 29)
+    |-> Task 24 - 57.57 min (key: 45)
+    |-> Task 34 - 25.40 min (key: 35)
+       |-> Task 36 - 26.12 min (key: 38)
+ |-> Task 1 - 2.38 min (key: 32)
+    |-> Task 25 - 7.31 min (key: 45)
+    |-> Task 8 - 56.03 min (key: 35)
+       |-> Task 9 - 13.56 min (key: 36)
+    |-> Task 15 - 52.10 min (key: 35)
+       |-> Task 16 - 28.47 min (key: 37)
+       |-> Task 6 - 51.44 min (key: 41)
+          |-> Task 19 - 10.32 min (key: 42)
+
+
+* Popping Task 37 with priority 29 *
+ 
+Task queue [size: 11]
+ |-> Task 1 - 2.38 min (key: 32)
+    |-> Task 25 - 7.31 min (key: 45)
+    |-> Task 8 - 56.03 min (key: 35)
+       |-> Task 9 - 13.56 min (key: 36)
+    |-> Task 15 - 52.10 min (key: 35)
+       |-> Task 16 - 28.47 min (key: 37)
+       |-> Task 6 - 51.44 min (key: 41)
+          |-> Task 19 - 10.32 min (key: 42)
+ |-> Task 34 - 25.40 min (key: 35)
+    |-> Task 36 - 26.12 min (key: 38)
+ |-> Task 24 - 57.57 min (key: 45)
+
+
+* Popping Task 1 with priority 32 *
+ 
+Task queue [size: 10]
+ |-> Task 8 - 56.03 min (key: 35)
+    |-> Task 9 - 13.56 min (key: 36)
+ |-> Task 15 - 52.10 min (key: 35)
+    |-> Task 16 - 28.47 min (key: 37)
+    |-> Task 6 - 51.44 min (key: 41)
+       |-> Task 19 - 10.32 min (key: 42)
+    |-> Task 34 - 25.40 min (key: 35)
+       |-> Task 36 - 26.12 min (key: 38)
+       |-> Task 25 - 7.31 min (key: 45)
+          |-> Task 24 - 57.57 min (key: 45)
+
+
+* Popping Task 8 with priority 35 *
+ 
+Task queue [size: 9]
+ |-> Task 15 - 52.10 min (key: 35)
+    |-> Task 16 - 28.47 min (key: 37)
+    |-> Task 6 - 51.44 min (key: 41)
+       |-> Task 19 - 10.32 min (key: 42)
+    |-> Task 34 - 25.40 min (key: 35)
+       |-> Task 36 - 26.12 min (key: 38)
+       |-> Task 25 - 7.31 min (key: 45)
+          |-> Task 24 - 57.57 min (key: 45)
+ |-> Task 9 - 13.56 min (key: 36)
+
+
+* Popping Task 15 with priority 35 *
+ 
+Task queue [size: 8]
+ |-> Task 34 - 25.40 min (key: 35)
+    |-> Task 36 - 26.12 min (key: 38)
+    |-> Task 25 - 7.31 min (key: 45)
+       |-> Task 24 - 57.57 min (key: 45)
+    |-> Task 9 - 13.56 min (key: 36)
+       |-> Task 16 - 28.47 min (key: 37)
+       |-> Task 6 - 51.44 min (key: 41)
+          |-> Task 19 - 10.32 min (key: 42)
+
+
+* Popping Task 34 with priority 35 *
+ 
+Task queue [size: 7]
+ |-> Task 9 - 13.56 min (key: 36)
+    |-> Task 16 - 28.47 min (key: 37)
+    |-> Task 6 - 51.44 min (key: 41)
+       |-> Task 19 - 10.32 min (key: 42)
+ |-> Task 36 - 26.12 min (key: 38)
+ |-> Task 25 - 7.31 min (key: 45)
+    |-> Task 24 - 57.57 min (key: 45)
+
+
+* Popping Task 9 with priority 36 *
+ 
+Task queue [size: 6]
+ |-> Task 16 - 28.47 min (key: 37)
+    |-> Task 36 - 26.12 min (key: 38)
+    |-> Task 25 - 7.31 min (key: 45)
+       |-> Task 24 - 57.57 min (key: 45)
+ |-> Task 6 - 51.44 min (key: 41)
+    |-> Task 19 - 10.32 min (key: 42)
+
+
+* Popping Task 16 with priority 37 *
+ 
+Task queue [size: 5]
+ |-> Task 36 - 26.12 min (key: 38)
+ |-> Task 6 - 51.44 min (key: 41)
+    |-> Task 19 - 10.32 min (key: 42)
+    |-> Task 25 - 7.31 min (key: 45)
+       |-> Task 24 - 57.57 min (key: 45)
+
+
+* Popping Task 36 with priority 38 *
+ 
+Task queue [size: 4]
+ |-> Task 6 - 51.44 min (key: 41)
+    |-> Task 19 - 10.32 min (key: 42)
+    |-> Task 25 - 7.31 min (key: 45)
+       |-> Task 24 - 57.57 min (key: 45)
+
+
+* Popping Task 6 with priority 41 *
+ 
+Task queue [size: 3]
+ |-> Task 19 - 10.32 min (key: 42)
+ |-> Task 25 - 7.31 min (key: 45)
+    |-> Task 24 - 57.57 min (key: 45)
+
+
+* Popping Task 19 with priority 42 *
+ 
+Task queue [size: 2]
+ |-> Task 25 - 7.31 min (key: 45)
+    |-> Task 24 - 57.57 min (key: 45)
+
+
+* Popping Task 25 with priority 45 *
+ 
+Task queue [size: 1]
+ |-> Task 24 - 57.57 min (key: 45)
+
+
+* Popping Task 24 with priority 45 *
+ 
+Task queue [size: 0]
+< Empty >

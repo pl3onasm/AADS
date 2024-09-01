@@ -1,19 +1,18 @@
 /* 
-  file: prim.c
+  file: prim-1.c
   author: David De Potter
   email: pl3onasm@gmail.com
   license: MIT, see LICENSE file in repository root folder
   description: implements Prim's algorithm to compute the minimum
-    spanning tree of a graph. For this, we use a min priority queue 
+    spanning tree of a graph. For this, we use a MIN priority queue 
     to keep track of the edges with the smallest weight. 
-  complexity: O(E log V) using a binary heap. Using a Fibonacci heap
-    reduces the complexity to O(E + V log V)
+  complexity: O(E log V) using a binary heap. 
   note: make sure to use VERTEX_TYPE2 in the vertex.h file
     by defining it from the command line using
     $ gcc -D VERTEX_TYPE2 ...
 */
 
-#include "../../../datastructures/pqueues/bpqueue.h"
+#include "../../../datastructures/heaps/bpqueues/bpqueue.h"
 #include "../../../datastructures/graphs/graph/graph.h"
 #include "../../../lib/clib.h"
 #include <float.h>

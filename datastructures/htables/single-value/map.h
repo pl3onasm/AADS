@@ -16,12 +16,12 @@
   // function pointer types
 typedef uint64_t (*mapHash)(void *hashKey, uint64_t seed);
 typedef int (*mapCompKey)(void const *key1, void const *key2);
-typedef void (*mapShowKey)(void *key);
-typedef void (*mapShowValue)(void *value);
+typedef void (*mapShowKey)(void const *key);
+typedef void (*mapShowValue)(void const *value);
 typedef void (*mapFreeKey)(void *key);
 typedef void (*mapFreeValue)(void *val);
-typedef void *(*mapCopyKey)(void *key);
-typedef void *(*mapCopyValue)(void *val);
+typedef void *(*mapCopyKey)(void const *key);
+typedef void *(*mapCopyValue)(void const *val);
 
   // hash map structure
 typedef struct {

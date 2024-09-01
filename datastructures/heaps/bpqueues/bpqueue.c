@@ -9,7 +9,7 @@
 */
 
 #include "bpqueue.h"
-#include "../../lib/clib.h"
+#include "../../../lib/clib.h"
 
 #define RIGHT(i) (2 * i + 2)
 #define LEFT(i) (2 * i + 1)
@@ -108,9 +108,7 @@ void *bpqPeek(bpqueue *pq) {
 //===================================================================
 // Swaps two nodes in the priority queue
 static void swapNodes(bpqueue *pq, size_t i, size_t j) {
-  bpqNode *tmp = pq->arr[i];
-  pq->arr[i] = pq->arr[j];
-  pq->arr[j] = tmp;
+  SWAP(pq->arr[i], pq->arr[j]);
     // update the map with the new indices
   sstMapAddKey(pq->map, pq->toString(pq->arr[i]->data), i);
   sstMapAddKey(pq->map, pq->toString(pq->arr[j]->data), j);

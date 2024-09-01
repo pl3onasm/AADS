@@ -104,6 +104,8 @@ bool mapHasKeyVal(map *M, void *key, void **value) {
 //=================================================================
 // Returns true if the key exists
 bool mapHasKey(map *M, void *key) {
+  if (! M->buckets[getIndex(M, key)])
+    return false;
   void *value = NULL;
   return mapHasKeyVal(M, key, &value);
 }

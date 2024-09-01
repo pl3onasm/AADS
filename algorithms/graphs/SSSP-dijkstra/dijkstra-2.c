@@ -1,24 +1,23 @@
 /* 
-  file: dijkstra.c
+  file: dijkstra-2.c
   author: David De Potter
   email: pl3onasm@gmail.com
   license: MIT, see LICENSE file in repository root folder
   description: Dijkstra's shortest paths algorithm
-  time complexity: O(E log V) using a binary heap, 
-    O(E + V log V) using a Fibonacci heap
+  time complexity: O(E + V log V) using a Fibonacci heap
   note: make sure to use VERTEX_TYPE2 in the vertex.h file
     by defining it from the command line using
       $ gcc -D VERTEX_TYPE2 ...
 */
 
-#include "../../../datastructures/pqueues/bpqueue.h"
+#include "../../../datastructures/heaps/fibheaps/fibheap.h"
 #include "../../../datastructures/graphs/graph/graph.h"
 #include "../../../lib/clib.h"
 #include <float.h>
 
 //===================================================================
 // Copies the key (priority) of a node in the priority queue
-void *copyKey (void *key) {
+void *copyKey (void const *key) {
   double *copy = safeCalloc(1, sizeof(double));
   *copy = *(double *)key;
   return copy;
@@ -58,16 +57,16 @@ bool relax(vertex *u, vertex *v, double w) {
 // All vertices are added to the priority queue with infinite
 // distance from the source node and likewise infinite priority
 // The distance and priority of the source node is set to 0
-bpqueue *initPQ(graph *G, vertex *src) {
+fibheap *initPQ(graph *G, vertex *src) {
 
-  bpqueue *pq = bpqNew(nVertices(G), MIN, compareKeys, copyKey, 
-                       free, vertexToString);
+  fibheap *F = fibNew(MIN, compareKeys, copyKey, 
+                      free, vertexToString, NULL);
   
   for (vertex *v = firstV(G); v; v = nextV(G)) {
     v->dist = v == src ? 0 : DBL_MAX;
-    bpqPush(pq, v, &v->dist);
+    fibPush(F, v, &v->dist);
   }
-  return pq;
+  return F;
 }
 
 //===================================================================
@@ -75,19 +74,19 @@ bpqueue *initPQ(graph *G, vertex *src) {
 void dijkstra(graph *G, vertex *src) {
     
     // genereate a new priority queue and initialize it
-  bpqueue *pq = initPQ(G, src);
+  fibheap *F = initPQ(G, src);
   
-  while (! bpqIsEmpty(pq)) {
-    vertex *u = bpqPop(pq);
+  while (! fibIsEmpty(F)) {
+    vertex *u = fibPop(F);
     dll* edges = getNeighbors(G, u);
       
       // try to relax all the edges from u to its neighbors
     for (edge *e = dllFirst(edges); e; e = dllNext(edges)) 
-      if (bpqContains(pq, e->to) && relax(u, e->to, e->weight)) 
+      if (fibContains(F, e->to) && relax(u, e->to, e->weight)) 
           // update neighbor's priority in the pq if edge was relaxed
-        bpqUpdateKey(pq, e->to, &e->to->dist);
+        fibUpdateKey(F, e->to, &e->to->dist);
   } 
-  bpqFree(pq);
+  fibFree(F);
 }
 
 //===================================================================

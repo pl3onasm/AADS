@@ -1,5 +1,7 @@
 /* 
   Generic binary heap implementation
+  Does not support update-key operations. For that,
+  use a bpqueue or a fibheap
   Author: David De Potter
   LICENSE: MIT, see LICENSE file in repository root folder
 */

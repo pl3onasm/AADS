@@ -22,7 +22,6 @@ ${\Large\color{peru}\text{Data structures}}$
 * [Trees](datastructures/trees)
 * [Hash tables](datastructures/htables)
 * [Heaps](datastructures/heaps)
-* [Priority queues](datastructures/pqueues)
 * [Graphs](datastructures/graphs)
 * [Disjoint sets](datastructures/union-find)
 

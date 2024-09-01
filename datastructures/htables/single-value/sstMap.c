@@ -65,13 +65,13 @@ static int cmpStrCI(void const *str1, void const *str2) {
 
 //===================================================================
 // shows the key 
-static void showStr(void *str) {
+static void showStr(void const *str) {
   printf("%s", (char *)str);
 }
 
 //===================================================================
 // Copy function for key 
-static void *copyStr(void *str) {
+static void *copyStr(void const *str) {
   char *newKey = safeCalloc(1, strlen((char *)str) + 1);
   strcpy(newKey, (char *)str);
   return newKey;
@@ -79,7 +79,7 @@ static void *copyStr(void *str) {
 
 //===================================================================
 // shows the value
-static void showSize(void *size) {
+static void showSize(void const *size) {
   printf("%zu", *(size_t *)size);
 }
 

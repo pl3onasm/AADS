@@ -21,7 +21,9 @@ Using a binary min-heap, the running time of this algorithm is $\mathcal{O}(E \l
 
 We can also use a Fibonacci heap to implement Prim's algorithm. This will result in a faster running time, since the Fibonacci heap has a better amortized running time than the binary min-heap. For more information on Fibonacci heaps, see CLRS³, chapter 19. Unfortunately, they were omitted from CLRS⁴. The running time of this version of the algorithm is $\mathcal{O}(E + V \log V)$, which is a significant improvement over the $\mathcal{O}(E \log V)$ running time of the binary heap version in the case of dense graphs.
 
-Implementation: [MST - Prim](https://github.com/pl3onasm/AADS/blob/main/algorithms/graphs/MST-prim/prim.c)
+Implementation using a binary min-heap: [MST - Prim - binheap](https://github.com/pl3onasm/AADS/blob/main/algorithms/graphs/MST-prim/prim-1.c)
+
+Implementation using a Fibonacci heap: [MST - Prim - fibheap](https://github.com/pl3onasm/AADS/blob/main/algorithms/graphs/MST-prim/prim-2.c)
 
 <br />
 

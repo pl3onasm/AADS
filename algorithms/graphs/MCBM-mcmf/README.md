@@ -5,6 +5,10 @@ _____________________________________
 
 <br/>
 
+$\huge{\color{Cadetblue}\text{Weighted MCBM}}$ 
+
+<br/>
+
 $\Large{\color{rosybrown}\text{Problem}}$
 
 Given a bipartite graph $G = (R \cup L, E)$, find a maximum cardinality matching $M$. A bipartite graph is a graph whose vertices can be divided into two disjoint vertex sets $R$ and $L$ such that every edge connects a vertex in $R$ to one in $L$. A matching then is a subset of edges $M \subseteq E$ in which no two edges share a common vertex and a maximum cardinality matching is simply a matching that consists of a maximum subset $M$ of edges in $E$.

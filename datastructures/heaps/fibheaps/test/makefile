@@ -2,11 +2,8 @@
 # Date: 2024-08-29
 
 CC = gcc
-CFLAGS = -O2 -Wall -pedantic -std=c99 -D VERTEX_TYPE2
-LIBDIRS = ../../../lib ../../../datastructures/graphs/graph \
-	../../../datastructures/lists ../../../datastructures/htables/multi-value \
-	../../../datastructures/heaps/bpqueues ../../../datastructures/htables/single-value \
-	../../../datastructures/heaps/fibheaps 
+CFLAGS = -O2 -Wall -pedantic -std=c99 
+LIBDIRS = ../../../../lib .. ../../../htables/single-value ../../../lists
 LIBOBJS = $(foreach dir, $(LIBDIRS), $(wildcard $(dir)/*.c))
 LIBOBJS := $(patsubst %.c, %.o, $(LIBOBJS))
 SRCS := $(wildcard *.c)
@@ -16,8 +13,8 @@ OBJS = $(patsubst %.c, %.o, $(SRCS))
 .PHONY: all clean allclean cleangraph
 
 all: cleangraph $(BINS)
-	@echo "Completed.\n\nTo run on test input:"
-	@echo "$$ ./$(lastword $(BINS)) < tests/<num>.in"
+	@echo "Completed.\n\nTo run:"
+	@echo "$$ ./$(lastword $(BINS))"
 	@chmod +x $(BINS)
 
 $(BINS): %.out: %.o $(LIBOBJS)
@@ -42,4 +39,4 @@ allclean: clean
 
 cleangraph:
 	@echo "Cleaning up graph object file ..."
-	@rm -f ../../../datastructures/graphs/graph/*.o
+	@rm -f ../*.o
