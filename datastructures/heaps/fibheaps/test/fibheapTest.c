@@ -104,8 +104,6 @@ int main () {
                       free, taskToString, &bound);
   fibSetShow(F, showKey, showTask);
   fibSetLabel(F, "Task queue");
-  fibSetOwner(F, freeTask);
-  //fibSetCopy(F, copyTask, freeTask);   
   
   size_t size = rand() % 30 + 20;
 
@@ -141,7 +139,7 @@ int main () {
     size_t idx = rand() % size;
     if (fibDelete(F, tasks[idx])) {
       printf("  Deleted task %zu\n", idx);
-      //freeTask(tasks[idx]);
+      freeTask(tasks[idx]);
       tasks[idx] = NULL;
       deletions++;
     }
@@ -181,13 +179,9 @@ int main () {
     freeTask(t);
     fibShow(F);
   }
-
-  if (F->copyData != NULL)
-    for (size_t i = 0; i < size; i++) 
-      if (tasks[i]) freeTask(tasks[i]);
-
-  fibFree(F);
+  
   free(tasks);
-
+  fibFree(F);
+  
   return 0;
 }

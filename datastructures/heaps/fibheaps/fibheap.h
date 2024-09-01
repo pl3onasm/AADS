@@ -59,8 +59,6 @@ typedef struct {
   size_t size;            // number of nodes in the queue
   fibCompKey compKey;     // comparison function for the keys
   fibShowKey showKey;     // show function
-  fibFreeData freeData;   // function to free data
-  fibCopyData copyData;   // function to copy data
   fibFreeKey freeKey;     // function to free key
   fibCopyKey copyKey;     // function to copy key
   fibType type;           // type of Fibonacci heap (MIN or MAX)

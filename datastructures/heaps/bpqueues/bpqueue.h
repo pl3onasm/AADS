@@ -81,15 +81,6 @@ void bpqSetDelim(bpqueue *pq, char *delim);
   // deallocates the priority queue
 void bpqFree(bpqueue *pq);
 
-  // sets the queue to own the input data;
-  // freeing what is still stored in the queue 
-  // when the queue is freed
-void bpqOwnData(bpqueue *pq, bpqFreeData freeData);
-
-  // sets the queue to make copies of the data
-void bpqCopyData(bpqueue *pq, bpqCpyData copyData, 
-                 bpqFreeData freeData);
-
   // returns the top element of the priority  
   // queue without removing it; returns NULL
   // if the queue is empty

@@ -44,7 +44,6 @@ fibheap *fibNew(fibType type, fibCompKey compKey,
   F->type = type;
   F->fac = type == MIN ? 1 : -1;
   F->sentinel = sentinel;
-  F->copyData = NULL;
   return F;
 }
 
@@ -52,7 +51,7 @@ fibheap *fibNew(fibType type, fibCompKey compKey,
 // Creates a new Fibonnacci node with data and key
 static fibnode *newFibnode(fibheap *F, void *data, void *key) {
   fibnode *u = safeCalloc(1, sizeof(fibnode));
-  u->data = F->copyData ? F->copyData(data) : data;
+  u->data = data;
   u->key = key;
   u->mark = false;
   u->degree = 0;
@@ -73,28 +72,11 @@ static void freeFibnode(fibheap *F, fibnode *u) {
 //===================================================================
 // Deallocates the Fibonacci heap
 void fibFree(fibheap *F) {
-  while (F->size) {
-    void *data = fibPop(F);
-    if (F->freeData) F->freeData(data);
-  }
+  while (F->size) 
+    fibPop(F);
   
   mapFree(F->datamap);
   free(F);
-}
-
-//===================================================================
-// Makes the Fibonacci heap own the data, freeing what is still in
-// the heap when the heap is deallocated
-void fibSetOwner(fibheap *F, fibFreeData freeData) {
-  F->freeData = freeData;
-}
-
-//===================================================================
-// Makes the Fibonacci heap work with its own copies of the data
-void fibSetCopy(fibheap *F, fibCopyData copyData, 
-                fibFreeData freeData) {
-  F->copyData = copyData;
-  F->freeData = freeData;
 }
 
 //===================================================================
@@ -453,7 +435,6 @@ bool fibDelete(fibheap *F, void *data) {
   }
   
   fibChangeKey(F, u, F->sentinel);
-  void *popped = fibPop(F);
-  if (F->freeData) F->freeData(popped);
+  fibPop(F);
   return true;
 }
