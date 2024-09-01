@@ -57,7 +57,7 @@ bool relax(vertex *u, vertex *v, double w) {
 // All vertices are added to the priority queue with infinite
 // distance from the source node and likewise infinite priority
 // The distance and priority of the source node is set to 0
-fibheap *initPQ(graph *G, vertex *src) {
+fibheap *initFibHeap(graph *G, vertex *src) {
 
   fibheap *F = fibNew(MIN, compareKeys, copyKey, 
                       free, vertexToString, NULL);
@@ -74,7 +74,7 @@ fibheap *initPQ(graph *G, vertex *src) {
 void dijkstra(graph *G, vertex *src) {
     
     // genereate a new priority queue and initialize it
-  fibheap *F = initPQ(G, src);
+  fibheap *F = initFibHeap(G, src);
   
   while (! fibIsEmpty(F)) {
     vertex *u = fibPop(F);
