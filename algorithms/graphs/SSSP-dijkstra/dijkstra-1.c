@@ -17,7 +17,7 @@
 
 //===================================================================
 // Copies the key (priority) of a node in the priority queue
-void *copyKey (void *key) {
+void *copyKey (void const *key) {
   double *copy = safeCalloc(1, sizeof(double));
   *copy = *(double *)key;
   return copy;

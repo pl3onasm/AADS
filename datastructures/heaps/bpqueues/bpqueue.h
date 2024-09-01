@@ -22,12 +22,12 @@
 // function pointer types
 typedef int (*bpqCompKey)(void const *a, void const *b);
 typedef void (*bpqFreeKey)(void *key);
-typedef void *(*bpqCopyKey)(void *key);
+typedef void *(*bpqCopyKey)(void const *key);
 typedef void (*bpqShowKey)(void const *key);
 typedef char *(*bpqToString)(void const *data);
 typedef void (*bpqShowData)(void const *data);
 typedef void (*bpqFreeData)(void *data);
-typedef void *(*bpqCpyData)(void *data);
+typedef void *(*bpqCpyData)(void const *data);
 
 // priority queue type
 typedef enum { MIN, MAX } bpqType;
