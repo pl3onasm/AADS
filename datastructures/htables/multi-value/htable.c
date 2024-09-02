@@ -497,5 +497,6 @@ htable *htMerge(htable *H1, htable *H2) {
          v = dllNext(e->values))
       htAddKeyVal(H1, e->key, v);
   htFree(H2);
+  return H1;
 }
 

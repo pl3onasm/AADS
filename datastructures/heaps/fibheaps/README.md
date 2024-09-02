@@ -18,7 +18,7 @@ $\Large{\color{darkseagreen}\text{Complexity}}$
 
 <br/>
 
-The mentioned complexities are ${\color{peru}\text{amortized}}$, i.e. the average time taken per operation over a sequence of operations. The Fibonacci heap is a data structure that supports the above operations in amortized constant time, except for the delete and pop operations, which take $\mathcal{O}(\log {n})$ time. Since the given implementation uses maps the union operation takes more than constant time, viz. $\mathcal{O}(m)$, where $m$ is the number of elements in the heap having the smallest size.
+The mentioned complexities are ${\color{peru}\text{amortized}}$, i.e. the average time taken per operation over a sequence of operations. The Fibonacci heap is a data structure that supports the above operations in amortized constant time, except for the delete and pop operations, which take $\mathcal{O}(\log {n})$ time. Since our implementation uses maps to keep track of the nodes in the heap, the union operation takes more than constant time, as it involves merging the two maps, resulting in a time complexity of $\mathcal{O}(m)$, where $m$ is the number of nodes in the smaller-sized heap.
 
 <br/>
 
