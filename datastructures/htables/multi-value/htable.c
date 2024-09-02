@@ -478,9 +478,20 @@ void htShowEntry(htable *H, void *key) {
 }
 
 //=================================================================
-// merges two hash tables: the first hash table contains the 
-// merged hash table, while the second hash table is destroyed
-void htMerge(htable *H1, htable *H2) {
+// merges two hash tables: the smaller one is merged into the
+// larger one; the smaller table is destroyed
+htable *htMerge(htable *H1, htable *H2) {
+  if (H1->hash != H2->hash || 
+      H1->cmpKey != H2->cmpKey || 
+      H1->cmpVal != H2->cmpVal) {
+    fprintf(stderr, "htMerge: hash or "
+                    "comparison functions differ\n");
+    return NULL;
+  }
+
+  if (htSize(H1) < htSize(H2)) 
+    return htMerge(H2, H1);
+
   for (htEntry *e = htFirst(H2); e; e = htNext(H2)) 
     for (dllNode *v = dllFirst(e->values); v; 
          v = dllNext(e->values))

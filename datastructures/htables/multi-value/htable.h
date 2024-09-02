@@ -151,7 +151,7 @@ void htStats(htable *H);
   // merges two hash tables; the first hash table
   // contains the merged hash table, while
   // the second hash table is destroyed
-void htMerge(htable *H1, htable *H2);
+htable *htMerge(htable *H1, htable *H2);
 
   // returns the number of keys in the hash table
 static inline size_t htSize(htable *H) {

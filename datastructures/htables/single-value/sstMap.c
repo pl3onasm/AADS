@@ -217,7 +217,8 @@ mapEntry *sstMapNext(sstMap *M) {
 // merges the keys and values of the smaller map into the larger map
 sstMap *sstMapMerge(sstMap *M1, sstMap *M2) {
   if (sstMapSize(M1) < sstMapSize(M2)) 
-    SWAP(M1, M2);
+    return sstMapMerge(M2, M1);
+    
   for (mapEntry *e = sstMapFirst(M2); e; e = sstMapNext(M2)) {
     char *key = (char *)e->key;
     size_t value = *(size_t *)e->value;

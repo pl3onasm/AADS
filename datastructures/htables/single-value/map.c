@@ -409,7 +409,7 @@ map *mapMerge(map *M1, map *M2) {
   }
 
   if (mapSize(M1) < mapSize(M2)) 
-    SWAP(M1, M2);
+    return mapMerge(M2, M1);
 
   for (mapEntry *e = mapFirst(M2); e; e = mapNext(M2)) 
     mapAddKey(M1, e->key, e->value);

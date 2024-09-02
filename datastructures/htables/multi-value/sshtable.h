@@ -64,7 +64,7 @@ void sshtShow(sshtable *ht);
 
 size_t sshtSize(sshtable *ht);
 
-void sshtMerge(sshtable *ht1, sshtable *ht2);
+sshtable *sshtMerge(sshtable *ht1, sshtable *ht2);
 
 bool sshtIsEmpty(sshtable *ht);
 
