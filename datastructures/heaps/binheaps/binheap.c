@@ -20,34 +20,16 @@ binheap *bhpNew(size_t capacity, bhpType hpType,
   h->cmp = cmp;
   h->arr = safeCalloc(capacity, sizeof(*(h->arr)));
   h->hpType = hpType;
+  h->fac = hpType == MIN ? 1 : -1;
   h->label = "BINARY HEAP";
   h->delim = ", ";
   return h;
 }
 
 //===================================================================
-// Sets the heap to own the input data, deallocating
-// what is still in the heap when it is destroyed
-void bhpSetOwner(binheap *H, bhpFreeData free) {
-  H->free = free;
-}
-
-//===================================================================
-// Sets the heap to operate on copies of the data
-void bhpSetCopy(binheap *H, bhpCopyData copy, 
-                bhpFreeData free) {
-  H->copy = copy;
-  H->free = free;
-}
-
-//===================================================================
 // Deallocates the binary heap
 void bhpFree(binheap *H) {
   if (!H) return;
-  if (H->free) {
-    for (size_t i = 0; i < H->size; i++) 
-      H->free(H->arr[i]);
-  }
   free(H->arr);
   free(H);
 }
@@ -96,21 +78,12 @@ void bhpPush(binheap *H, void *node) {
     H->arr = safeRealloc(H->arr, H->capacity * sizeof(void *));
   }
   size_t idx = H->size;
-  if (H->copy) 
-    node = H->copy(node);
   H->arr[idx] = node;
-    // bubble up the new node until
-    // the heap property is restored
-  if (H->hpType == MIN) {     // min heap
-    while (idx > 0 && H->cmp(H->arr[idx], H->arr[PARENT(idx)]) < 0) {
-      SWAP(H->arr[idx], H->arr[PARENT(idx)]);
-      idx = PARENT(idx);
-    }
-  } else {                    // max heap
-    while (idx > 0 && H->cmp(H->arr[idx], H->arr[PARENT(idx)]) > 0) {
-      SWAP(H->arr[idx], H->arr[PARENT(idx)]);
-      idx = PARENT(idx);
-    }
+    // restore the heap property
+  while (idx > 0 && 
+        (H->fac * H->cmp(H->arr[idx], H->arr[PARENT(idx)]) < 0)) {
+    SWAP(H->arr[idx], H->arr[PARENT(idx)]);
+    idx = PARENT(idx);
   }
   H->size++;
 }
@@ -120,28 +93,15 @@ void bhpPush(binheap *H, void *node) {
 void bhpHeapify(binheap *H, size_t idx) {
   size_t l = LEFT(idx);
   size_t r = RIGHT(idx);
-    // bubble down until the 
-    // heap property is restored
-  if (H->hpType == MIN) {     // min heap 
-    size_t smallest = idx;
-    if (l < H->size && H->cmp(H->arr[l], H->arr[smallest]) < 0)
-      smallest = l;
-    if (r < H->size && H->cmp(H->arr[r], H->arr[smallest]) < 0) 
-      smallest = r;
-    if (smallest != idx) {
-      SWAP(H->arr[idx], H->arr[smallest]);
-      bhpHeapify(H, smallest);
-    }
-  } else {                    // max heap
-    size_t largest = idx;
-    if (l < H->size && H->cmp(H->arr[l], H->arr[largest]) > 0)
-      largest = l;
-    if (r < H->size && H->cmp(H->arr[r], H->arr[largest]) > 0)
-      largest = r;
-    if (largest != idx) {
-      SWAP(H->arr[idx], H->arr[largest]);
-      bhpHeapify(H, largest);
-    }
+    // find the node that is the best candidate for the top
+  size_t best = idx;
+  if (l < H->size && (H->fac * H->cmp(H->arr[l], H->arr[best]) < 0))
+    best = l;
+  if (r < H->size && (H->fac * H->cmp(H->arr[r], H->arr[best]) < 0))
+    best = r;
+  if (best != idx) {
+    SWAP(H->arr[idx], H->arr[best]);
+    bhpHeapify(H, best);
   }
 }
 
@@ -161,8 +121,6 @@ binheap *bhpBuild(void *arr, size_t len, size_t elemSize,
     // copy the array into the heap 
   for (size_t i = 0; i < len; i++) {
     void *node = (char *)arr + i * elemSize;
-    if (H->copy) 
-      node = H->copy(node);
     H->arr[i] = node;
   }
  
@@ -194,6 +152,7 @@ void bhpShow(binheap *H) {
   for (size_t i = 0; i < H->size; i++) {
     H->show(H->arr[i]);
     printf(i < H->size - 1 ? "%s" : "\n", H->delim);
+    if ((i + 1) % 10 == 0) printf("\n");
   }
 
   printf("--------------------\n\n");

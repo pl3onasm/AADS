@@ -60,7 +60,7 @@ bool relax(vertex *u, vertex *v, double w) {
 bpqueue *initPQ(graph *G, vertex *src) {
 
   bpqueue *pq = bpqNew(nVertices(G), MIN, compareKeys, copyKey, 
-                       free, vertexToString);
+                       free, vertexToString, NULL);
   
   for (vertex *v = firstV(G); v; v = nextV(G)) {
     v->dist = v == src ? 0 : DBL_MAX;

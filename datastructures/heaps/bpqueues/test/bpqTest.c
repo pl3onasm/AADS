@@ -9,109 +9,147 @@
 #include <string.h>
 #include <time.h>
 #include "../../../../lib/clib.h"
+#include <limits.h>
 
+//===================================================================
+// task structure
 typedef struct {
   char *name;
   double duration;
 } task;
 
-  // make a copy of a string
-char *copyStr(char *s) {
-  char *copy = safeCalloc(strlen(s) + 1, sizeof(char));
-  strcpy(copy, s);
+//===================================================================
+// comparison function for int keys
+int compKeys(void const *a, void const *b) {
+  int x = *(int *)a;
+  int y = *(int *)b;
+  return x < y ? -1 : x > y;
+}
+
+//===================================================================
+// make a copy of an int key
+void *copyKey(void const *key) {
+  int *copy = safeCalloc(1, sizeof(int));
+  *copy = *(int *)key;
   return copy;
 }
 
-  // comparison function for size_t keys
-int compKey(void const *a, void const *b) {
-  size_t x = *(size_t *)a;
-  size_t y = *(size_t *)b;
-  return x - y;
+//===================================================================
+// show function for a task
+void showTask(void const *data) {
+  task *t = (task *)data;
+  printf("%s - %.2f min", t->name, t->duration);
 }
 
-  // make a copy of a size_t key
-void *copyKey(void *key) {
-  size_t *copy = safeCalloc(1, sizeof(size_t));
-  *copy = *(size_t *)key;
-  return copy;
-}
-
-  // show a size_t key
+//===================================================================
+// show function for an int key
 void showKey(void const *key) {
-  printf("%zu", *(size_t *)key);
+  printf("%d", *(int *)key);
 }
 
-  // create a new task
-task *newTask(char *name, double duration) {
+//===================================================================
+// creates a new random task
+task *newTask(size_t n) {
+  char *name = safeCalloc(50, sizeof(char));
+  sprintf(name, "Task %zu", n);
+  char duration[5];
+  sprintf(duration, "%d", rand() % 60);
+  sprintf(duration + strlen(duration), ".%02d", rand() % 60);
   task *t = safeCalloc(1, sizeof(task));
   t->name = name;
-  t->duration = duration;
+  t->duration = atof(duration);
   return t;
 }
 
-  // deallocate a task
+//===================================================================
+// deallocates a task
 void freeTask(void *data) {
   task *t = (task *)data;
   free(t->name);
   free(t);
 }
-  
-    // show a task
-void showTask(void const *data) {
-  task *t = (task *)data;
-  printf("%s - %.2fmin", t->name, t->duration);
-}
 
-  // convert a task to a string
+//===================================================================
+// string representation of a task 
 char *taskToString(void const *data) {
   task *t = (task *)data;
   return t->name;
 }
 
+//===================================================================
 
 int main () {
   srand(time(NULL));
-  bpqueue *pq = bpqNew(10, MIN, compKey, copyKey, 
-                       free, taskToString);
+
+    // randomize the type of the heap
+  bpqType type = rand() % 2;
+
+  size_t size = rand() % 30 + 20;
+
+  int bound = type == MIN ? INT_MIN : INT_MAX;
+
+  bpqueue *pq = bpqNew(size, type, compKeys, copyKey, 
+                       free, taskToString, &bound);
   bpqSetShow(pq, showKey, showTask);
   bpqSetLabel(pq, "Task queue");
   bpqSetDelim(pq, " | ");
-  bpqOwnData(pq, freeTask);
 
-    // create some random tasks
-  task *tasks[20];
-  for (size_t i = 0; i < 20; i++) {
-    char *name = safeCalloc(20, sizeof(char));
-    sprintf(name, "Task %zu", i);
-    char duration[5];
-    sprintf(duration, "%d", rand() % 60);
-    sprintf(duration + strlen(duration), ".%02d", rand() % 60);
-    
-    tasks[i] = newTask(name, atof(duration));
+  printf("TESTING %s BINARY PRIORITY QUEUE\n\n", 
+         pq->type == MIN ? "MIN" : "MAX");
+  printf("Creating %zu tasks for the %s binary priority queue...\n\n",
+          size, pq->type == MIN ? "MIN" : "MAX");
+
+  task **tasks = safeCalloc(size, sizeof(task *));
+  for (size_t i = 0; i < size; i++) {
+    tasks[i] = newTask(i);
+    printf("  Created task %s with duration %.2f min\n", 
+           tasks[i]->name, tasks[i]->duration);
   }
 
-    // push the tasks with their priorities
-  for (size_t i = 0; i < 20; i++) {
-    size_t key = rand() % 20 + 10;
+  printf("\nPushing the tasks with random priorities...\n\n");
+
+  for (size_t i = 0; i < size; i++) {
+    int key = rand() % size;
     bpqPush(pq, tasks[i], &key);
+    printf("  Pushed %s with priority %d\n", tasks[i]->name, key);
   }
+
+  printf("\nAfter pushing all tasks, this is what the queue looks like\n\n");
 
   bpqShow(pq);
 
-    // show the idx map
-  sstMapSetLabel(pq->map, "Index Map");
-  sstMapShow(pq->map);
-  
-    // update the priority of some tasks
-  printf("Updating 10 priorities..\n\n");
-  size_t val = 10;
-  for (size_t i = 0; i < 20; i += 2) {
-    size_t idx = rand() % 20;
-    bpqUpdateKey(pq, tasks[idx], &val);
-    printf ("Updated priority of task %zu to %zu\n", idx, val);
-    val--;
+  printf("\nAll data is mapped to indices in the queue as shown below\n");
+
+  sstMapSetLabel(pq->datamap, "Data map");
+  sstMapShow(pq->datamap);
+
+  printf("Deleting 7 tasks ...\n\n");
+  size_t deletions = 0;
+  while (deletions < 7) {
+    size_t idx = rand() % size;
+    if (bpqDelete(pq, tasks[idx])) {
+      printf("  Deleted task %zu\n", idx);
+      freeTask(tasks[idx]);
+      tasks[idx] = NULL;
+      deletions++;
+    }
   }
-  printf("\n");
+
+  printf("\nAfter deleting some tasks, we have the below queue\n\n");
+
+  bpqShow(pq);
+  
+  printf("Randomly updating 10 priorities..\n\n");
+  size_t updates = 0;
+  while (updates < 10) {
+    size_t idx = rand() % size;
+    int val = pq->type == MIN ? rand() % 10 + 1 : rand() % 100 + 150;
+    if (bpqUpdateKey(pq, tasks[idx], &val)) {
+      printf ("Updated priority of task %zu to %d\n", idx, val);
+      updates++;
+    }
+  }
+  printf("\nAfter updating priorities, we have the following queue\n\n");
 
     // show the updated queue
   bpqShow(pq);
@@ -120,12 +158,13 @@ int main () {
   printf("Popping all tasks..\n\n");
   while (! bpqIsEmpty(pq)) {
     task *top = bpqPeek(pq);
-    size_t *prio = bpqGetKey(pq, top);
-    printf("Popped %s with priority %zu\n", top->name, *prio);
+    int *prio = bpqGetKey(pq, top);
+    printf("Popped %s with priority %d\n", top->name, *prio);
     task *t = bpqPop(pq);
     freeTask(t);
   }
   
+  free(tasks);
   bpqFree(pq);
 
   return 0;

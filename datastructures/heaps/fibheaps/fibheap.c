@@ -402,6 +402,7 @@ void fibShow(fibheap *F) {
 //===================================================================
 // Takes a peek at the top node in the Fibonacci heap
 void *fibPeek(fibheap *F) {
+  if (! F->top) return NULL;
   return F->top->data;
 }
 

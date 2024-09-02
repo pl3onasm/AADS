@@ -32,8 +32,6 @@ typedef void *(*fibCopyKey)(void const *key);
 typedef void (*fibShowKey)(void const *key);
 typedef char *(*fibToString)(void const *data);
 typedef void (*fibShowData)(void const *data);
-typedef void (*fibFreeData)(void *data);
-typedef void *(*fibCopyData)(void const *data);
 
 // Fibonacci heap type
 typedef enum { MIN, MAX } fibType;
@@ -68,7 +66,6 @@ typedef struct {
   void *sentinel;         // sentinel key for deletion:
                           // a non-inclusive upper limit for a max heap
                           // a non-inclusive lower limit for a min heap
-                          
 } fibheap;
 
 // function prototypes
@@ -78,16 +75,6 @@ typedef struct {
   // key show function, and sentinel key for deletion
 fibheap *fibNew(fibType type, fibCompKey cmp, fibCopyKey copy,
                 fibFreeKey free, fibToString toString, void *sentinel);
-
-  // makes the Fibonacci heap own what is in the heap when the heap
-  // is deallocated (freeData is called on each data item)
-void fibSetOwner(fibheap *F, fibFreeData freeData);
-
-  // makes the Fibonacci heap work with copies of the data; this means
-  // that if data is popped from the heap, you get a copy of the data,
-  // not the original data itself, meaning you need to deallocate both 
-  // the copy and the original data
-void fibSetCopy(fibheap *F, fibCopyData copyData, fibFreeData freeData);
 
   // sets the show function for the Fibonacci heap
 void fibSetShow(fibheap *F, fibShowKey showKey, fibShowData showData);

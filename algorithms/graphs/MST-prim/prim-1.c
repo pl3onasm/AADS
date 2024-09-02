@@ -51,7 +51,7 @@ char *vertexToString(void const *key) {
 bpqueue *initPQ(graph *G) {
 
   bpqueue *pq = bpqNew(nVertices(G), MIN, compareKeys, copyKey, 
-                       free, vertexToString);
+                       free, vertexToString, NULL);
   
   for (vertex *v = firstV(G); v; v = nextV(G)) {
     v->dist = DBL_MAX;

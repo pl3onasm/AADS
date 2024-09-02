@@ -35,17 +35,6 @@ void *copyKey(void const *key) {
 }
 
 //===================================================================
-// copy function for a task
-void *copyTask(void const *data) {
-  task *t = (task *)data;
-  task *copy = safeCalloc(1, sizeof(task));
-  copy->name = safeCalloc(strlen(t->name) + 1, sizeof(char));
-  strcpy(copy->name, t->name);
-  copy->duration = t->duration;
-  return copy;
-}
-
-//===================================================================
 // show function for a task
 void showTask(void const *data) {
   task *t = (task *)data;
@@ -145,7 +134,7 @@ int main () {
     }
   }
 
-  printf("\nAfter popping 5 tasks, the necessary housekeeping has been done:\n"
+  printf("\nAfter deleting some tasks, the necessary housekeeping has been done:\n"
          "the root list has been rebuilt and nodes have been linked\n");
 
   fibShow(F);
@@ -165,8 +154,8 @@ int main () {
     }
   }
   printf("\nThe restructured %s heap after updating 10 priorities\n"
-          "shows the new priorities and the new root list\n", 
-          F->type == MIN ? "MIN" : "MAX");
+         "shows the new priorities and the new root list\n", 
+         F->type == MIN ? "MIN" : "MAX");
 
   fibShow(F);
 

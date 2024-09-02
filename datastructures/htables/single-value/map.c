@@ -352,8 +352,10 @@ void mapShow(map *M) {
           "--------------------\n", 
           M->label, M->nKeys);
 
-  for (mapEntry *e = mapFirst(M); e; e = mapNext(M)) 
+  for (mapEntry *e = mapFirst(M); e; e = mapNext(M)) {
+    printf("  ");
     mapShowEntry(M, e->key);
+  }
   
   printf("--------------------\n\n");
 }

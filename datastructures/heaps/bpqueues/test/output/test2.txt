@@ -1,0 +1,213 @@
+TESTING MIN BINARY PRIORITY QUEUE
+
+Creating 34 tasks for the MIN binary priority queue...
+
+  Created task Task 0 with duration 14.22 min
+  Created task Task 1 with duration 57.03 min
+  Created task Task 2 with duration 35.11 min
+  Created task Task 3 with duration 0.47 min
+  Created task Task 4 with duration 23.27 min
+  Created task Task 5 with duration 37.40 min
+  Created task Task 6 with duration 2.18 min
+  Created task Task 7 with duration 21.02 min
+  Created task Task 8 with duration 46.59 min
+  Created task Task 9 with duration 1.52 min
+  Created task Task 10 with duration 37.56 min
+  Created task Task 11 with duration 49.10 min
+  Created task Task 12 with duration 2.06 min
+  Created task Task 13 with duration 11.42 min
+  Created task Task 14 with duration 38.19 min
+  Created task Task 15 with duration 44.52 min
+  Created task Task 16 with duration 41.34 min
+  Created task Task 17 with duration 56.08 min
+  Created task Task 18 with duration 45.48 min
+  Created task Task 19 with duration 56.01 min
+  Created task Task 20 with duration 16.33 min
+  Created task Task 21 with duration 41.18 min
+  Created task Task 22 with duration 43.03 min
+  Created task Task 23 with duration 12.21 min
+  Created task Task 24 with duration 54.05 min
+  Created task Task 25 with duration 6.32 min
+  Created task Task 26 with duration 2.55 min
+  Created task Task 27 with duration 34.56 min
+  Created task Task 28 with duration 53.38 min
+  Created task Task 29 with duration 39.31 min
+  Created task Task 30 with duration 57.15 min
+  Created task Task 31 with duration 16.30 min
+  Created task Task 32 with duration 49.04 min
+  Created task Task 33 with duration 38.35 min
+
+Pushing the tasks with random priorities...
+
+  Pushed Task 0 with priority 12
+  Pushed Task 1 with priority 10
+  Pushed Task 2 with priority 16
+  Pushed Task 3 with priority 28
+  Pushed Task 4 with priority 21
+  Pushed Task 5 with priority 31
+  Pushed Task 6 with priority 29
+  Pushed Task 7 with priority 10
+  Pushed Task 8 with priority 26
+  Pushed Task 9 with priority 3
+  Pushed Task 10 with priority 2
+  Pushed Task 11 with priority 9
+  Pushed Task 12 with priority 23
+  Pushed Task 13 with priority 20
+  Pushed Task 14 with priority 21
+  Pushed Task 15 with priority 9
+  Pushed Task 16 with priority 11
+  Pushed Task 17 with priority 31
+  Pushed Task 18 with priority 21
+  Pushed Task 19 with priority 13
+  Pushed Task 20 with priority 21
+  Pushed Task 21 with priority 0
+  Pushed Task 22 with priority 12
+  Pushed Task 23 with priority 24
+  Pushed Task 24 with priority 10
+  Pushed Task 25 with priority 14
+  Pushed Task 26 with priority 12
+  Pushed Task 27 with priority 33
+  Pushed Task 28 with priority 16
+  Pushed Task 29 with priority 21
+  Pushed Task 30 with priority 28
+  Pushed Task 31 with priority 3
+  Pushed Task 32 with priority 5
+  Pushed Task 33 with priority 18
+
+After pushing all tasks, this is what the queue looks like
+
+--------------------
+ Task queue
+ Size: 34
+--------------------
+[0]: Task 21 - 41.18 min | [2]: Task 10 - 37.56 min | [9]: Task 11 - 49.10 min | [3]: Task 31 - 16.30 min | [3]: Task 9 - 1.52 min | 
+[10]: Task 24 - 54.05 min | [16]: Task 28 - 53.38 min | [5]: Task 32 - 49.04 min | [21]: Task 18 - 45.48 min | [13]: Task 19 - 56.01 min | 
+[10]: Task 1 - 57.03 min | [16]: Task 2 - 35.11 min | [12]: Task 26 - 2.55 min | [20]: Task 13 - 11.42 min | [21]: Task 14 - 38.19 min | 
+[9]: Task 15 - 44.52 min | [12]: Task 0 - 14.22 min | [31]: Task 17 - 56.08 min | [26]: Task 8 - 46.59 min | [21]: Task 4 - 23.27 min | 
+[21]: Task 20 - 16.33 min | [10]: Task 7 - 21.02 min | [12]: Task 22 - 43.03 min | [31]: Task 5 - 37.40 min | [24]: Task 23 - 12.21 min | 
+[23]: Task 12 - 2.06 min | [14]: Task 25 - 6.32 min | [33]: Task 27 - 34.56 min | [29]: Task 6 - 2.18 min | [21]: Task 29 - 39.31 min | 
+[28]: Task 30 - 57.15 min | [28]: Task 3 - 0.47 min | [11]: Task 16 - 41.34 min | [18]: Task 33 - 38.35 min
+--------------------
+
+
+All data is mapped to indices in the queue as shown below
+
+--------------------
+  Data map [34]
+--------------------
+  Task 3: 31
+  Task 26: 12
+  Task 10: 1
+  Task 28: 6
+  Task 0: 16
+  Task 6: 28
+  Task 19: 9
+  Task 27: 27
+  Task 13: 13
+  Task 29: 29
+  Task 15: 15
+  Task 1: 10
+  Task 7: 21
+  Task 18: 8
+  Task 33: 33
+  Task 20: 20
+  Task 12: 25
+  Task 14: 14
+  Task 8: 18
+  Task 4: 19
+  Task 32: 7
+  Task 21: 0
+  Task 17: 17
+  Task 9: 4
+  Task 5: 23
+  Task 31: 3
+  Task 22: 22
+  Task 24: 5
+  Task 16: 32
+  Task 2: 11
+  Task 30: 30
+  Task 23: 24
+  Task 25: 26
+  Task 11: 2
+--------------------
+
+Deleting 7 tasks ...
+
+  Deleted task 31
+  Deleted task 27
+  Deleted task 16
+  Deleted task 0
+  Deleted task 3
+  Deleted task 12
+  Deleted task 13
+
+After deleting some tasks, we have the below queue
+
+--------------------
+ Task queue
+ Size: 27
+--------------------
+[0]: Task 21 - 41.18 min | [2]: Task 10 - 37.56 min | [9]: Task 11 - 49.10 min | [5]: Task 32 - 49.04 min | [3]: Task 9 - 1.52 min | 
+[10]: Task 24 - 54.05 min | [16]: Task 28 - 53.38 min | [9]: Task 15 - 44.52 min | [21]: Task 18 - 45.48 min | [13]: Task 19 - 56.01 min | 
+[10]: Task 1 - 57.03 min | [16]: Task 2 - 35.11 min | [12]: Task 26 - 2.55 min | [18]: Task 33 - 38.35 min | [21]: Task 14 - 38.19 min | 
+[21]: Task 29 - 39.31 min | [28]: Task 30 - 57.15 min | [31]: Task 17 - 56.08 min | [26]: Task 8 - 46.59 min | [21]: Task 4 - 23.27 min | 
+[21]: Task 20 - 16.33 min | [10]: Task 7 - 21.02 min | [12]: Task 22 - 43.03 min | [31]: Task 5 - 37.40 min | [24]: Task 23 - 12.21 min | 
+[29]: Task 6 - 2.18 min | [14]: Task 25 - 6.32 min
+--------------------
+
+Randomly updating 10 priorities..
+
+Updated priority of task 25 to 4
+Updated priority of task 33 to 1
+Updated priority of task 18 to 10
+Updated priority of task 18 to 10
+Updated priority of task 14 to 7
+Updated priority of task 4 to 1
+Updated priority of task 7 to 7
+Updated priority of task 23 to 4
+Updated priority of task 19 to 3
+Updated priority of task 26 to 3
+
+After updating priorities, we have the following queue
+
+--------------------
+ Task queue
+ Size: 27
+--------------------
+[0]: Task 21 - 41.18 min | [1]: Task 4 - 23.27 min | [1]: Task 33 - 38.35 min | [5]: Task 32 - 49.04 min | [2]: Task 10 - 37.56 min | 
+[3]: Task 26 - 2.55 min | [4]: Task 25 - 6.32 min | [9]: Task 15 - 44.52 min | [10]: Task 18 - 45.48 min | [3]: Task 9 - 1.52 min | 
+[7]: Task 7 - 21.02 min | [9]: Task 11 - 49.10 min | [4]: Task 23 - 12.21 min | [16]: Task 28 - 53.38 min | [7]: Task 14 - 38.19 min | 
+[21]: Task 29 - 39.31 min | [28]: Task 30 - 57.15 min | [31]: Task 17 - 56.08 min | [26]: Task 8 - 46.59 min | [3]: Task 19 - 56.01 min | 
+[21]: Task 20 - 16.33 min | [10]: Task 1 - 57.03 min | [12]: Task 22 - 43.03 min | [31]: Task 5 - 37.40 min | [16]: Task 2 - 35.11 min | 
+[29]: Task 6 - 2.18 min | [10]: Task 24 - 54.05 min
+--------------------
+
+Popping all tasks..
+
+Popped Task 21 with priority 0
+Popped Task 4 with priority 1
+Popped Task 33 with priority 1
+Popped Task 10 with priority 2
+Popped Task 9 with priority 3
+Popped Task 19 with priority 3
+Popped Task 26 with priority 3
+Popped Task 23 with priority 4
+Popped Task 25 with priority 4
+Popped Task 32 with priority 5
+Popped Task 7 with priority 7
+Popped Task 14 with priority 7
+Popped Task 15 with priority 9
+Popped Task 11 with priority 9
+Popped Task 18 with priority 10
+Popped Task 24 with priority 10
+Popped Task 1 with priority 10
+Popped Task 22 with priority 12
+Popped Task 2 with priority 16
+Popped Task 28 with priority 16
+Popped Task 29 with priority 21
+Popped Task 20 with priority 21
+Popped Task 8 with priority 26
+Popped Task 30 with priority 28
+Popped Task 6 with priority 29
+Popped Task 5 with priority 31
+Popped Task 17 with priority 31

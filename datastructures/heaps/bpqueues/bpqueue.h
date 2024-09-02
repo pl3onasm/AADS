@@ -26,8 +26,6 @@ typedef void *(*bpqCopyKey)(void const *key);
 typedef void (*bpqShowKey)(void const *key);
 typedef char *(*bpqToString)(void const *data);
 typedef void (*bpqShowData)(void const *data);
-typedef void (*bpqFreeData)(void *data);
-typedef void *(*bpqCpyData)(void const *data);
 
 // priority queue type
 typedef enum { MIN, MAX } bpqType;
@@ -41,18 +39,20 @@ typedef struct {
 // priority queue
 typedef struct {     
   bpqNode **arr;         // array of nodes
-  sstMap *map;           // maps input to indices in the queue
+  sstMap *datamap;       // maps input data to indices in the queue
   bpqToString toString;  // function to convert data to string
   bpqShowData showData;  // function to show data                        
   size_t size;           // number of nodes in the queue
   size_t capacity;       // capacity of the queue
   bpqCompKey compKey;    // comparison function for the keys
   bpqShowKey showKey;    // show function
-  bpqFreeData freeData;  // function to free data
-  bpqCpyData copyData;   // function to copy data
   bpqFreeKey freeKey;    // function to free key
   bpqCopyKey copyKey;    // function to copy key
   bpqType type;          // type of priority queue (MIN or MAX)
+  int fac;               // factor for comparison
+  void *sentinel;        // sentinel key for deletion:
+                         // a non-inclusive upper limit for a max heap
+                         // a non-inclusive lower limit for a min heap
   char *label;           // label for the priority queue
                          // default is "BINARY PQ"
   char *delim;           // string delimter for show
@@ -63,10 +63,12 @@ typedef struct {
 
   // creates a new priority queue, with given capacity, 
   // type (MIN / MAX), key comparison function, key copy
-  // function, key free function, and data to string function
+  // function, key free function, data to string function,
+  // and sentinel key for deletion
 bpqueue *bpqNew(size_t capacity, bpqType type, 
                 bpqCompKey cmp, bpqCopyKey copyKey,
-                bpqFreeKey freeKey, bpqToString toString);
+                bpqFreeKey freeKey, bpqToString toString,
+                void *sentinel);
 
   // sets the show function for the priority queue
 void bpqSetShow(bpqueue *pq, bpqShowKey show, 
@@ -91,10 +93,16 @@ void *bpqPeek(bpqueue *pq);
   // if the queue is empty
 void *bpqPop(bpqueue *pq);
 
+  // deletes the node containing the data from the
+  // priority queue; returns true if the deletion
+  // was successful
+bool bpqDelete(bpqueue *pq, void *data);
+
   // updates the priority of a node in the heap
   // by updating the key and reordering the heap
-  // if necessary
-void bpqUpdateKey(bpqueue *pq, void *data, 
+  // if necessary; returns true if the key was
+  // updated successfully
+bool bpqUpdateKey(bpqueue *pq, void *data, 
                   void *newKey);
 
   // adds a new node to the priority queue with
