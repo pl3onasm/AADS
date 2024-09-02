@@ -3,16 +3,16 @@
 
 CC = gcc
 CFLAGS = -O2 -Wall -pedantic -std=c99 
-LIBDIRS = ../../../../lib .. ../../../lists student
+LIBDIRS = ../../../../lib .. ../../../lists
 LIBOBJS = $(foreach dir, $(LIBDIRS), $(wildcard $(dir)/*.c))
 LIBOBJS := $(patsubst %.c, %.o, $(LIBOBJS))
 SRCS := $(wildcard *.c)
 BINS = $(patsubst %.c, %.out, $(SRCS))
 OBJS = $(patsubst %.c, %.o, $(SRCS))
 
-.PHONY: all clean allclean cleangraph
+.PHONY: all clean allclean
 
-all: cleangraph $(BINS)
+all: $(BINS)
 	@echo "Completed.\n\nTo run:"
 	@echo "$$ ./$(lastword $(BINS))"
 	@chmod +x $(BINS)
@@ -36,7 +36,3 @@ clean:
 allclean: clean
 	@echo "Cleaning up all remaining lib objects ..."
 	@rm -f $(LIBOBJS)
-
-cleangraph:
-	@echo "Cleaning up graph object file ..."
-	@rm -f ../*.o

@@ -80,3 +80,9 @@ $\Large{\color{darkseagreen}\text{Implementation}}$
 The implementation reads a text from standard input and computes the suffix array and LCP array for it. It then reads a pattern from standard input and finds all occurrences of the pattern in the text. It also finds the longest repeated substring, the number of unique substrings, and the longest palindromic substring in the text.
 
 Implementation: [Suffix array](https://github.com/pl3onasm/CLRS/blob/main/algorithms/string-matching/suffix-arrays/sa.c)
+
+<br/>
+
+$\Large{\color{darkseagreen}\text{Video}}$
+
+[![Suffix arrays](https://img.youtube.com/vi/zqKlL3ZpTqs/0.jpg)](https://www.youtube.com/watch?v=zqKlL3ZpTqs&list=PLDV1Zeh2NRsCQ_Educ7GCNs3mvzpXhHW5)
