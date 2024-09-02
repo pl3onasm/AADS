@@ -167,8 +167,8 @@ void sshtFree(sshtable *ssht) {
   htFree((htable *)ssht);
 }
 
-void sshtMerge(sshtable *ssht1, sshtable *ssht2) {
-  htMerge((htable *)ssht1, (htable *)ssht2);
+sshtable *sshtMerge(sshtable *ssht1, sshtable *ssht2) {
+  return (sshtable *)htMerge((htable *)ssht1, (htable *)ssht2);
 }
 
 size_t sshtSize(sshtable *ssht) {

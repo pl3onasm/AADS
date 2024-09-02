@@ -141,12 +141,14 @@ int main (){
   sshtShow(ht2);
 
     // merge the second hash table into the first
-  sshtMerge(ht, ht2);
+  sshtable *ht3 = sshtMerge(ht, ht2);
 
   printf("\nMerged hash table:\n\n");
-  sshtShow(ht);
+  sshtShow(ht3);
+  sshtStats(ht3);
 
-  sshtFree(ht);  
+    // free the hash tables
+  sshtFree(ht3);
 
   return 0;
 }
