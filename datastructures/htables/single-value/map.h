@@ -116,10 +116,13 @@ void mapShowEntry(map *M, void *key);
   // shows distribution statistics
 void mapStats(map *M);
 
-  // merges the keys and values of map M2 into map M1
-  // if a key exists in both maps, the value in M1 is updated
-  // M2 is destroyed
-void mapMerge(map *M1, map *M2);
+  // returns a copy of the map
+map *mapCopy(map *M);
+
+  // merges the keys of M2 into M1
+  // returns the merged map and deallocates M2
+  // returns NULL if the hash or comparison functions differ
+map *mapMerge(map *M1, map *M2);
 
   // returns the number of keys in the map
 static inline size_t mapSize(map *M) {

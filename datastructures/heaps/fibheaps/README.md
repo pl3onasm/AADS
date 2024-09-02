@@ -6,13 +6,6 @@ This data structure comes in two flavors: a ${\color{peru}\text{min-heap}}$ or a
 
 <br/>
 
-$\Large{\color{darkseagreen}\text{Example applications}}$
-
-- [Dijkstra's algorithm](../../../algorithms/graphs/SSSP-dijkstra/dijkstra-2.c)
-- [Prim's algorithm](../../../algorithms/graphs/MST-prim/prim-2.c)
-
-<br/>
-
 $\Large{\color{darkseagreen}\text{Complexity}}$
 
 | ${\color{cornflowerblue}\text{Operation}}$  | ${\color{cadetblue}\text{Complexity}}$ |
@@ -25,7 +18,14 @@ $\Large{\color{darkseagreen}\text{Complexity}}$
 
 <br/>
 
-The mentioned complexities are ${\color{peru}\text{amortized}}$, i.e. the average time taken per operation over a sequence of operations. The Fibonacci heap is a data structure that supports the above operations in amortized constant time, except for the delete and pop operations, which take $\mathcal{O}(\log {n})$ time. 
+The mentioned complexities are ${\color{peru}\text{amortized}}$, i.e. the average time taken per operation over a sequence of operations. The Fibonacci heap is a data structure that supports the above operations in amortized constant time, except for the delete and pop operations, which take $\mathcal{O}(\log {n})$ time. Since the given implementation uses maps the union operation takes more than constant time, viz. $\mathcal{O}(m)$, where $m$ is the number of elements in the heap having the smallest size.
+
+<br/>
+
+$\Large{\color{darkseagreen}\text{Example applications}}$
+
+- [Dijkstra's algorithm](../../../algorithms/graphs/SSSP-dijkstra/dijkstra-2.c)
+- [Prim's algorithm](../../../algorithms/graphs/MST-prim/prim-2.c)
 
 <br/>
 

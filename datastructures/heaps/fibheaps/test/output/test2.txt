@@ -1,282 +1,1292 @@
-TESTING MIN FIBONACCI HEAP
+TESTING MAX FIBONACCI HEAP
 
-Creating 20 tasks for the MIN Fibonacci heap...
+Creating 34 tasks for the MAX Fibonacci heap...
 
-  Created task Task 0 with duration 37.58 min
-  Created task Task 1 with duration 29.39 min
-  Created task Task 2 with duration 49.03 min
-  Created task Task 3 with duration 25.48 min
-  Created task Task 4 with duration 45.38 min
-  Created task Task 5 with duration 58.52 min
-  Created task Task 6 with duration 38.49 min
-  Created task Task 7 with duration 22.29 min
-  Created task Task 8 with duration 10.13 min
-  Created task Task 9 with duration 39.10 min
-  Created task Task 10 with duration 43.58 min
-  Created task Task 11 with duration 31.24 min
-  Created task Task 12 with duration 5.31 min
-  Created task Task 13 with duration 36.08 min
-  Created task Task 14 with duration 39.30 min
-  Created task Task 15 with duration 1.08 min
-  Created task Task 16 with duration 29.22 min
-  Created task Task 17 with duration 47.10 min
-  Created task Task 18 with duration 17.12 min
-  Created task Task 19 with duration 58.03 min
+  Created task Task 0 with duration 36.11 min
+  Created task Task 1 with duration 26.17 min
+  Created task Task 2 with duration 3.03 min
+  Created task Task 3 with duration 23.45 min
+  Created task Task 4 with duration 4.34 min
+  Created task Task 5 with duration 53.21 min
+  Created task Task 6 with duration 28.50 min
+  Created task Task 7 with duration 45.05 min
+  Created task Task 8 with duration 35.18 min
+  Created task Task 9 with duration 22.29 min
+  Created task Task 10 with duration 31.26 min
+  Created task Task 11 with duration 33.34 min
+  Created task Task 12 with duration 35.30 min
+  Created task Task 13 with duration 50.38 min
+  Created task Task 14 with duration 18.23 min
+  Created task Task 15 with duration 14.46 min
+  Created task Task 16 with duration 26.32 min
+  Created task Task 17 with duration 4.30 min
+  Created task Task 18 with duration 36.27 min
+  Created task Task 19 with duration 15.32 min
+  Created task Task 20 with duration 54.08 min
+  Created task Task 21 with duration 54.22 min
+  Created task Task 22 with duration 50.31 min
+  Created task Task 23 with duration 20.17 min
+  Created task Task 24 with duration 50.42 min
+  Created task Task 25 with duration 46.13 min
+  Created task Task 26 with duration 9.20 min
+  Created task Task 27 with duration 47.36 min
+  Created task Task 28 with duration 42.29 min
+  Created task Task 29 with duration 6.00 min
+  Created task Task 30 with duration 52.20 min
+  Created task Task 31 with duration 39.18 min
+  Created task Task 32 with duration 44.35 min
+  Created task Task 33 with duration 40.20 min
 
 Pushing the tasks with random priorities...
 
-  Pushed Task 0 with priority 2
-  Pushed Task 1 with priority 8
-  Pushed Task 2 with priority 15
-  Pushed Task 3 with priority 13
+  Pushed Task 0 with priority 20
+  Pushed Task 1 with priority 29
+  Pushed Task 2 with priority 17
+  Pushed Task 3 with priority 14
   Pushed Task 4 with priority 17
-  Pushed Task 5 with priority 9
-  Pushed Task 6 with priority 14
-  Pushed Task 7 with priority 19
-  Pushed Task 8 with priority 14
-  Pushed Task 9 with priority 13
-  Pushed Task 10 with priority 10
-  Pushed Task 11 with priority 17
-  Pushed Task 12 with priority 3
-  Pushed Task 13 with priority 13
-  Pushed Task 14 with priority 13
-  Pushed Task 15 with priority 9
-  Pushed Task 16 with priority 4
-  Pushed Task 17 with priority 2
-  Pushed Task 18 with priority 9
-  Pushed Task 19 with priority 3
+  Pushed Task 5 with priority 3
+  Pushed Task 6 with priority 9
+  Pushed Task 7 with priority 25
+  Pushed Task 8 with priority 6
+  Pushed Task 9 with priority 15
+  Pushed Task 10 with priority 15
+  Pushed Task 11 with priority 20
+  Pushed Task 12 with priority 11
+  Pushed Task 13 with priority 19
+  Pushed Task 14 with priority 3
+  Pushed Task 15 with priority 10
+  Pushed Task 16 with priority 1
+  Pushed Task 17 with priority 20
+  Pushed Task 18 with priority 18
+  Pushed Task 19 with priority 30
+  Pushed Task 20 with priority 3
+  Pushed Task 21 with priority 14
+  Pushed Task 22 with priority 18
+  Pushed Task 23 with priority 19
+  Pushed Task 24 with priority 32
+  Pushed Task 25 with priority 21
+  Pushed Task 26 with priority 20
+  Pushed Task 27 with priority 17
+  Pushed Task 28 with priority 26
+  Pushed Task 29 with priority 32
+  Pushed Task 30 with priority 23
+  Pushed Task 31 with priority 13
+  Pushed Task 32 with priority 2
+  Pushed Task 33 with priority 6
 
 After pushing all tasks, we have a single root list
-in which all 20 nodes have the same degree 0
+in which all 34 nodes have the same degree 0
 
-Task queue [size: 20]
- |-> Task 0 - 37.58 min (key: 2)
- |-> Task 1 - 29.39 min (key: 8)
- |-> Task 2 - 49.03 min (key: 15)
- |-> Task 3 - 25.48 min (key: 13)
- |-> Task 4 - 45.38 min (key: 17)
- |-> Task 5 - 58.52 min (key: 9)
- |-> Task 6 - 38.49 min (key: 14)
- |-> Task 7 - 22.29 min (key: 19)
- |-> Task 8 - 10.13 min (key: 14)
- |-> Task 9 - 39.10 min (key: 13)
- |-> Task 10 - 43.58 min (key: 10)
- |-> Task 11 - 31.24 min (key: 17)
- |-> Task 12 - 5.31 min (key: 3)
- |-> Task 13 - 36.08 min (key: 13)
- |-> Task 14 - 39.30 min (key: 13)
- |-> Task 15 - 1.08 min (key: 9)
- |-> Task 16 - 29.22 min (key: 4)
- |-> Task 17 - 47.10 min (key: 2)
- |-> Task 18 - 17.12 min (key: 9)
- |-> Task 19 - 58.03 min (key: 3)
+--------------------
+ Task queue
+ Size: 34
+--------------------
+ |-> Task 24 - 50.42 min (key: 32)
+ |-> Task 19 - 15.32 min (key: 30)
+ |-> Task 1 - 26.17 min (key: 29)
+ |-> Task 0 - 36.11 min (key: 20)
+ |-> Task 2 - 3.03 min (key: 17)
+ |-> Task 3 - 23.45 min (key: 14)
+ |-> Task 4 - 4.34 min (key: 17)
+ |-> Task 5 - 53.21 min (key: 3)
+ |-> Task 6 - 28.50 min (key: 9)
+ |-> Task 7 - 45.05 min (key: 25)
+ |-> Task 8 - 35.18 min (key: 6)
+ |-> Task 9 - 22.29 min (key: 15)
+ |-> Task 10 - 31.26 min (key: 15)
+ |-> Task 11 - 33.34 min (key: 20)
+ |-> Task 12 - 35.30 min (key: 11)
+ |-> Task 13 - 50.38 min (key: 19)
+ |-> Task 14 - 18.23 min (key: 3)
+ |-> Task 15 - 14.46 min (key: 10)
+ |-> Task 16 - 26.32 min (key: 1)
+ |-> Task 17 - 4.30 min (key: 20)
+ |-> Task 18 - 36.27 min (key: 18)
+ |-> Task 20 - 54.08 min (key: 3)
+ |-> Task 21 - 54.22 min (key: 14)
+ |-> Task 22 - 50.31 min (key: 18)
+ |-> Task 23 - 20.17 min (key: 19)
+ |-> Task 25 - 46.13 min (key: 21)
+ |-> Task 26 - 9.20 min (key: 20)
+ |-> Task 27 - 47.36 min (key: 17)
+ |-> Task 28 - 42.29 min (key: 26)
+ |-> Task 29 - 6.00 min (key: 32)
+ |-> Task 30 - 52.20 min (key: 23)
+ |-> Task 31 - 39.18 min (key: 13)
+ |-> Task 32 - 44.35 min (key: 2)
+ |-> Task 33 - 40.20 min (key: 6)
+--------------------
 
 Deleting 7 tasks ...
 
-  Deleted task 12
-  Deleted task 2
-  Deleted task 11
   Deleted task 1
-  Deleted task 4
-fibDelete: invalid arguments
-fibDelete: invalid arguments
-fibDelete: invalid arguments
-  Deleted task 15
-fibDelete: invalid arguments
+  Deleted task 27
   Deleted task 17
+  Deleted task 10
+  Deleted task 19
+  Deleted task 24
+  Deleted task 33
 
 After deleting some tasks, the necessary housekeeping has been done:
 the root list has been rebuilt and nodes have been linked
 
-Task queue [size: 13]
- |-> Task 0 - 37.58 min (key: 2)
-    |-> Task 19 - 58.03 min (key: 3)
-    |-> Task 16 - 29.22 min (key: 4)
-       |-> Task 14 - 39.30 min (key: 13)
-          |-> Task 13 - 36.08 min (key: 13)
-    |-> Task 5 - 58.52 min (key: 9)
-       |-> Task 6 - 38.49 min (key: 14)
-       |-> Task 8 - 10.13 min (key: 14)
-          |-> Task 7 - 22.29 min (key: 19)
-       |-> Task 10 - 43.58 min (key: 10)
-          |-> Task 9 - 39.10 min (key: 13)
-          |-> Task 3 - 25.48 min (key: 13)
- |-> Task 18 - 17.12 min (key: 9)
+--------------------
+ Task queue
+ Size: 27
+--------------------
+ |-> Task 29 - 6.00 min (key: 32)
+    |-> Task 30 - 52.20 min (key: 23)
+    |-> Task 28 - 42.29 min (key: 26)
+    |-> Task 18 - 36.27 min (key: 18)
+       |-> Task 9 - 22.29 min (key: 15)
+       |-> Task 21 - 54.22 min (key: 14)
+          |-> Task 20 - 54.08 min (key: 3)
+ |-> Task 25 - 46.13 min (key: 21)
+    |-> Task 26 - 9.20 min (key: 20)
+    |-> Task 23 - 20.17 min (key: 19)
+       |-> Task 22 - 50.31 min (key: 18)
+ |-> Task 31 - 39.18 min (key: 13)
+    |-> Task 32 - 44.35 min (key: 2)
+ |-> Task 7 - 45.05 min (key: 25)
+    |-> Task 8 - 35.18 min (key: 6)
+    |-> Task 6 - 28.50 min (key: 9)
+       |-> Task 5 - 53.21 min (key: 3)
+    |-> Task 0 - 36.11 min (key: 20)
+       |-> Task 2 - 3.03 min (key: 17)
+       |-> Task 4 - 4.34 min (key: 17)
+          |-> Task 3 - 23.45 min (key: 14)
+    |-> Task 11 - 33.34 min (key: 20)
+       |-> Task 12 - 35.30 min (key: 11)
+       |-> Task 13 - 50.38 min (key: 19)
+          |-> Task 14 - 18.23 min (key: 3)
+          |-> Task 15 - 14.46 min (key: 10)
+             |-> Task 16 - 26.32 min (key: 1)
+--------------------
 
 
 Randomly updating 10 priorities ...
 
-  Updated priority of task 10 from 10 to 1
-  Updated priority of task 8 from 14 to 3
-  Updated priority of task 5 from 9 to 1
-  Updated priority of task 6 from 14 to 10
-  Updated priority of task 7 from 19 to 8
-  Updated priority of task 18 from 9 to 5
-  Updated priority of task 9 from 13 to 6
-  Updated priority of task 6 from 10 to 10
-  Updated priority of task 16 from 4 to 2
-  Updated priority of task 19 from 3 to 3
+  Updated priority of task 8 from 6 to 206
+  Updated priority of task 11 from 20 to 159
+  Updated priority of task 22 from 18 to 233
+  Updated priority of task 11 from 159 to 172
+  Updated priority of task 14 from 3 to 153
+  Updated priority of task 20 from 3 to 176
+  Updated priority of task 9 from 15 to 241
+  Updated priority of task 21 from 14 to 184
+  Updated priority of task 23 from 19 to 244
+  Updated priority of task 16 from 1 to 154
 
-The restructured MIN heap after updating 10 priorities
+The restructured MAX heap after updating 10 priorities
 shows the new priorities and the new root list
 
-Task queue [size: 13]
- |-> Task 10 - 43.58 min (key: 1)
-    |-> Task 9 - 39.10 min (key: 6)
-    |-> Task 3 - 25.48 min (key: 13)
- |-> Task 0 - 37.58 min (key: 2)
-    |-> Task 19 - 58.03 min (key: 3)
-    |-> Task 16 - 29.22 min (key: 2)
-       |-> Task 14 - 39.30 min (key: 13)
-          |-> Task 13 - 36.08 min (key: 13)
- |-> Task 18 - 17.12 min (key: 5)
- |-> Task 8 - 10.13 min (key: 3)
-    |-> Task 7 - 22.29 min (key: 8)
- |-> Task 5 - 58.52 min (key: 1)
-    |-> Task 6 - 38.49 min (key: 10)
+--------------------
+ Task queue
+ Size: 27
+--------------------
+ |-> Task 23 - 20.17 min (key: 244)
+ |-> Task 9 - 22.29 min (key: 241)
+ |-> Task 22 - 50.31 min (key: 233)
+ |-> Task 8 - 35.18 min (key: 206)
+ |-> Task 29 - 6.00 min (key: 32)
+    |-> Task 30 - 52.20 min (key: 23)
+    |-> Task 28 - 42.29 min (key: 26)
+ |-> Task 25 - 46.13 min (key: 21)
+    |-> Task 26 - 9.20 min (key: 20)
+ |-> Task 31 - 39.18 min (key: 13)
+    |-> Task 32 - 44.35 min (key: 2)
+ |-> Task 7 - 45.05 min (key: 25)
+    |-> Task 6 - 28.50 min (key: 9)
+       |-> Task 5 - 53.21 min (key: 3)
+    |-> Task 0 - 36.11 min (key: 20)
+       |-> Task 2 - 3.03 min (key: 17)
+       |-> Task 4 - 4.34 min (key: 17)
+          |-> Task 3 - 23.45 min (key: 14)
+ |-> Task 11 - 33.34 min (key: 172)
+    |-> Task 12 - 35.30 min (key: 11)
+    |-> Task 13 - 50.38 min (key: 19)
+       |-> Task 15 - 14.46 min (key: 10)
+ |-> Task 14 - 18.23 min (key: 153)
+ |-> Task 20 - 54.08 min (key: 176)
+ |-> Task 21 - 54.22 min (key: 184)
+ |-> Task 18 - 36.27 min (key: 18)
+ |-> Task 16 - 26.32 min (key: 154)
+--------------------
+
+
+Making a new Fibonacci heap of the same type
+with 10 new tasks...
+
+  Created task Task 35 with duration 44.36 min
+  Created task Task 36 with duration 11.26 min
+  Created task Task 37 with duration 17.03 min
+  Created task Task 38 with duration 3.23 min
+  Created task Task 39 with duration 45.04 min
+  Created task Task 40 with duration 34.53 min
+  Created task Task 41 with duration 21.28 min
+  Created task Task 42 with duration 50.45 min
+  Created task Task 43 with duration 5.35 min
+  Created task Task 44 with duration 18.22 min
+
+Pushing the new tasks with random priorities...
+
+  Pushed Task 35 with priority 7
+  Pushed Task 36 with priority 21
+  Pushed Task 37 with priority 10
+  Pushed Task 38 with priority 11
+  Pushed Task 39 with priority 0
+  Pushed Task 40 with priority 27
+  Pushed Task 41 with priority 12
+  Pushed Task 42 with priority 0
+  Pushed Task 43 with priority 22
+  Pushed Task 44 with priority 20
+
+After pushing the new tasks, we have a single root list
+in which all 10 nodes have the same degree 0
+
+--------------------
+ Task queue 2
+ Size: 10
+--------------------
+ |-> Task 40 - 34.53 min (key: 27)
+ |-> Task 36 - 11.26 min (key: 21)
+ |-> Task 35 - 44.36 min (key: 7)
+ |-> Task 37 - 17.03 min (key: 10)
+ |-> Task 38 - 3.23 min (key: 11)
+ |-> Task 39 - 45.04 min (key: 0)
+ |-> Task 41 - 21.28 min (key: 12)
+ |-> Task 42 - 50.45 min (key: 0)
+ |-> Task 43 - 5.35 min (key: 22)
+ |-> Task 44 - 18.22 min (key: 20)
+--------------------
+
+
+Deleting Task 38 from the new heap to trigger
+the restructuring of the root list..
+
+The new heap now looks like below
+
+--------------------
+ Task queue 2
+ Size: 9
+--------------------
+ |-> Task 40 - 34.53 min (key: 27)
+    |-> Task 44 - 18.22 min (key: 20)
+    |-> Task 36 - 11.26 min (key: 21)
+       |-> Task 35 - 44.36 min (key: 7)
+    |-> Task 43 - 5.35 min (key: 22)
+       |-> Task 42 - 50.45 min (key: 0)
+       |-> Task 41 - 21.28 min (key: 12)
+          |-> Task 39 - 45.04 min (key: 0)
+ |-> Task 37 - 17.03 min (key: 10)
+--------------------
+
+
+Taking the union of the two heaps...
+
+After taking the union,
+we have the following merged heap
+
+--------------------
+ FIB HEAP
+ Size: 36
+--------------------
+ |-> Task 23 - 20.17 min (key: 244)
+ |-> Task 9 - 22.29 min (key: 241)
+ |-> Task 22 - 50.31 min (key: 233)
+ |-> Task 8 - 35.18 min (key: 206)
+ |-> Task 29 - 6.00 min (key: 32)
+    |-> Task 30 - 52.20 min (key: 23)
+    |-> Task 28 - 42.29 min (key: 26)
+ |-> Task 25 - 46.13 min (key: 21)
+    |-> Task 26 - 9.20 min (key: 20)
+ |-> Task 31 - 39.18 min (key: 13)
+    |-> Task 32 - 44.35 min (key: 2)
+ |-> Task 7 - 45.05 min (key: 25)
+    |-> Task 6 - 28.50 min (key: 9)
+       |-> Task 5 - 53.21 min (key: 3)
+    |-> Task 0 - 36.11 min (key: 20)
+       |-> Task 2 - 3.03 min (key: 17)
+       |-> Task 4 - 4.34 min (key: 17)
+          |-> Task 3 - 23.45 min (key: 14)
+ |-> Task 11 - 33.34 min (key: 172)
+    |-> Task 12 - 35.30 min (key: 11)
+    |-> Task 13 - 50.38 min (key: 19)
+       |-> Task 15 - 14.46 min (key: 10)
+ |-> Task 14 - 18.23 min (key: 153)
+ |-> Task 20 - 54.08 min (key: 176)
+ |-> Task 21 - 54.22 min (key: 184)
+ |-> Task 18 - 36.27 min (key: 18)
+ |-> Task 16 - 26.32 min (key: 154)
+ |-> Task 40 - 34.53 min (key: 27)
+    |-> Task 44 - 18.22 min (key: 20)
+    |-> Task 36 - 11.26 min (key: 21)
+       |-> Task 35 - 44.36 min (key: 7)
+    |-> Task 43 - 5.35 min (key: 22)
+       |-> Task 42 - 50.45 min (key: 0)
+       |-> Task 41 - 21.28 min (key: 12)
+          |-> Task 39 - 45.04 min (key: 0)
+ |-> Task 37 - 17.03 min (key: 10)
+--------------------
+
+
+Getting the key of a random task in the merged heap...
+The key of Task 18 is 18 in the merged heap
 
 
 Popping all tasks..
 
-* Popping Task 10 with priority 1 *
- 
-Task queue [size: 12]
- |-> Task 5 - 58.52 min (key: 1)
-    |-> Task 6 - 38.49 min (key: 10)
-    |-> Task 8 - 10.13 min (key: 3)
-       |-> Task 7 - 22.29 min (key: 8)
-    |-> Task 0 - 37.58 min (key: 2)
-       |-> Task 19 - 58.03 min (key: 3)
-       |-> Task 16 - 29.22 min (key: 2)
-          |-> Task 14 - 39.30 min (key: 13)
-             |-> Task 13 - 36.08 min (key: 13)
- |-> Task 18 - 17.12 min (key: 5)
-    |-> Task 9 - 39.10 min (key: 6)
- |-> Task 3 - 25.48 min (key: 13)
+* Popping Task 23 with priority 244 *
+
+--------------------
+ FIB HEAP
+ Size: 35
+--------------------
+ |-> Task 9 - 22.29 min (key: 241)
+    |-> Task 22 - 50.31 min (key: 233)
+    |-> Task 25 - 46.13 min (key: 21)
+       |-> Task 26 - 9.20 min (key: 20)
+    |-> Task 29 - 6.00 min (key: 32)
+       |-> Task 30 - 52.20 min (key: 23)
+       |-> Task 28 - 42.29 min (key: 26)
+    |-> Task 11 - 33.34 min (key: 172)
+       |-> Task 12 - 35.30 min (key: 11)
+       |-> Task 13 - 50.38 min (key: 19)
+          |-> Task 15 - 14.46 min (key: 10)
+       |-> Task 7 - 45.05 min (key: 25)
+          |-> Task 6 - 28.50 min (key: 9)
+             |-> Task 5 - 53.21 min (key: 3)
+          |-> Task 0 - 36.11 min (key: 20)
+             |-> Task 2 - 3.03 min (key: 17)
+             |-> Task 4 - 4.34 min (key: 17)
+                |-> Task 3 - 23.45 min (key: 14)
+    |-> Task 8 - 35.18 min (key: 206)
+       |-> Task 14 - 18.23 min (key: 153)
+       |-> Task 31 - 39.18 min (key: 13)
+          |-> Task 32 - 44.35 min (key: 2)
+       |-> Task 21 - 54.22 min (key: 184)
+          |-> Task 20 - 54.08 min (key: 176)
+          |-> Task 16 - 26.32 min (key: 154)
+             |-> Task 18 - 36.27 min (key: 18)
+       |-> Task 40 - 34.53 min (key: 27)
+          |-> Task 44 - 18.22 min (key: 20)
+          |-> Task 36 - 11.26 min (key: 21)
+             |-> Task 35 - 44.36 min (key: 7)
+          |-> Task 43 - 5.35 min (key: 22)
+             |-> Task 42 - 50.45 min (key: 0)
+             |-> Task 41 - 21.28 min (key: 12)
+                |-> Task 39 - 45.04 min (key: 0)
+ |-> Task 37 - 17.03 min (key: 10)
+--------------------
 
 
-* Popping Task 5 with priority 1 *
- 
-Task queue [size: 11]
- |-> Task 0 - 37.58 min (key: 2)
-    |-> Task 19 - 58.03 min (key: 3)
-    |-> Task 16 - 29.22 min (key: 2)
-       |-> Task 14 - 39.30 min (key: 13)
-          |-> Task 13 - 36.08 min (key: 13)
-    |-> Task 18 - 17.12 min (key: 5)
-       |-> Task 9 - 39.10 min (key: 6)
-       |-> Task 6 - 38.49 min (key: 10)
-          |-> Task 3 - 25.48 min (key: 13)
- |-> Task 8 - 10.13 min (key: 3)
-    |-> Task 7 - 22.29 min (key: 8)
+* Popping Task 9 with priority 241 *
+
+--------------------
+ FIB HEAP
+ Size: 34
+--------------------
+ |-> Task 22 - 50.31 min (key: 233)
+    |-> Task 37 - 17.03 min (key: 10)
+    |-> Task 25 - 46.13 min (key: 21)
+       |-> Task 26 - 9.20 min (key: 20)
+    |-> Task 29 - 6.00 min (key: 32)
+       |-> Task 30 - 52.20 min (key: 23)
+       |-> Task 28 - 42.29 min (key: 26)
+    |-> Task 11 - 33.34 min (key: 172)
+       |-> Task 12 - 35.30 min (key: 11)
+       |-> Task 13 - 50.38 min (key: 19)
+          |-> Task 15 - 14.46 min (key: 10)
+       |-> Task 7 - 45.05 min (key: 25)
+          |-> Task 6 - 28.50 min (key: 9)
+             |-> Task 5 - 53.21 min (key: 3)
+          |-> Task 0 - 36.11 min (key: 20)
+             |-> Task 2 - 3.03 min (key: 17)
+             |-> Task 4 - 4.34 min (key: 17)
+                |-> Task 3 - 23.45 min (key: 14)
+    |-> Task 8 - 35.18 min (key: 206)
+       |-> Task 14 - 18.23 min (key: 153)
+       |-> Task 31 - 39.18 min (key: 13)
+          |-> Task 32 - 44.35 min (key: 2)
+       |-> Task 21 - 54.22 min (key: 184)
+          |-> Task 20 - 54.08 min (key: 176)
+          |-> Task 16 - 26.32 min (key: 154)
+             |-> Task 18 - 36.27 min (key: 18)
+       |-> Task 40 - 34.53 min (key: 27)
+          |-> Task 44 - 18.22 min (key: 20)
+          |-> Task 36 - 11.26 min (key: 21)
+             |-> Task 35 - 44.36 min (key: 7)
+          |-> Task 43 - 5.35 min (key: 22)
+             |-> Task 42 - 50.45 min (key: 0)
+             |-> Task 41 - 21.28 min (key: 12)
+                |-> Task 39 - 45.04 min (key: 0)
+--------------------
 
 
-* Popping Task 0 with priority 2 *
- 
-Task queue [size: 10]
- |-> Task 16 - 29.22 min (key: 2)
-    |-> Task 14 - 39.30 min (key: 13)
-       |-> Task 13 - 36.08 min (key: 13)
-    |-> Task 8 - 10.13 min (key: 3)
-       |-> Task 7 - 22.29 min (key: 8)
-    |-> Task 18 - 17.12 min (key: 5)
-       |-> Task 9 - 39.10 min (key: 6)
-       |-> Task 6 - 38.49 min (key: 10)
-          |-> Task 3 - 25.48 min (key: 13)
- |-> Task 19 - 58.03 min (key: 3)
+* Popping Task 22 with priority 233 *
+
+--------------------
+ FIB HEAP
+ Size: 33
+--------------------
+ |-> Task 8 - 35.18 min (key: 206)
+    |-> Task 14 - 18.23 min (key: 153)
+    |-> Task 31 - 39.18 min (key: 13)
+       |-> Task 32 - 44.35 min (key: 2)
+    |-> Task 21 - 54.22 min (key: 184)
+       |-> Task 20 - 54.08 min (key: 176)
+       |-> Task 16 - 26.32 min (key: 154)
+          |-> Task 18 - 36.27 min (key: 18)
+    |-> Task 40 - 34.53 min (key: 27)
+       |-> Task 44 - 18.22 min (key: 20)
+       |-> Task 36 - 11.26 min (key: 21)
+          |-> Task 35 - 44.36 min (key: 7)
+       |-> Task 43 - 5.35 min (key: 22)
+          |-> Task 42 - 50.45 min (key: 0)
+          |-> Task 41 - 21.28 min (key: 12)
+             |-> Task 39 - 45.04 min (key: 0)
+ |-> Task 11 - 33.34 min (key: 172)
+    |-> Task 12 - 35.30 min (key: 11)
+    |-> Task 13 - 50.38 min (key: 19)
+       |-> Task 15 - 14.46 min (key: 10)
+    |-> Task 7 - 45.05 min (key: 25)
+       |-> Task 6 - 28.50 min (key: 9)
+          |-> Task 5 - 53.21 min (key: 3)
+       |-> Task 0 - 36.11 min (key: 20)
+          |-> Task 2 - 3.03 min (key: 17)
+          |-> Task 4 - 4.34 min (key: 17)
+             |-> Task 3 - 23.45 min (key: 14)
+ |-> Task 29 - 6.00 min (key: 32)
+    |-> Task 30 - 52.20 min (key: 23)
+    |-> Task 28 - 42.29 min (key: 26)
+ |-> Task 25 - 46.13 min (key: 21)
+    |-> Task 26 - 9.20 min (key: 20)
+ |-> Task 37 - 17.03 min (key: 10)
+--------------------
 
 
-* Popping Task 16 with priority 2 *
- 
-Task queue [size: 9]
- |-> Task 19 - 58.03 min (key: 3)
- |-> Task 8 - 10.13 min (key: 3)
-    |-> Task 7 - 22.29 min (key: 8)
-    |-> Task 14 - 39.30 min (key: 13)
-       |-> Task 13 - 36.08 min (key: 13)
-    |-> Task 18 - 17.12 min (key: 5)
-       |-> Task 9 - 39.10 min (key: 6)
-       |-> Task 6 - 38.49 min (key: 10)
-          |-> Task 3 - 25.48 min (key: 13)
+* Popping Task 8 with priority 206 *
+
+--------------------
+ FIB HEAP
+ Size: 32
+--------------------
+ |-> Task 21 - 54.22 min (key: 184)
+    |-> Task 20 - 54.08 min (key: 176)
+    |-> Task 16 - 26.32 min (key: 154)
+       |-> Task 18 - 36.27 min (key: 18)
+ |-> Task 31 - 39.18 min (key: 13)
+    |-> Task 32 - 44.35 min (key: 2)
+ |-> Task 40 - 34.53 min (key: 27)
+    |-> Task 44 - 18.22 min (key: 20)
+    |-> Task 36 - 11.26 min (key: 21)
+       |-> Task 35 - 44.36 min (key: 7)
+    |-> Task 43 - 5.35 min (key: 22)
+       |-> Task 42 - 50.45 min (key: 0)
+       |-> Task 41 - 21.28 min (key: 12)
+          |-> Task 39 - 45.04 min (key: 0)
+ |-> Task 11 - 33.34 min (key: 172)
+    |-> Task 12 - 35.30 min (key: 11)
+    |-> Task 13 - 50.38 min (key: 19)
+       |-> Task 15 - 14.46 min (key: 10)
+    |-> Task 7 - 45.05 min (key: 25)
+       |-> Task 6 - 28.50 min (key: 9)
+          |-> Task 5 - 53.21 min (key: 3)
+       |-> Task 0 - 36.11 min (key: 20)
+          |-> Task 2 - 3.03 min (key: 17)
+          |-> Task 4 - 4.34 min (key: 17)
+             |-> Task 3 - 23.45 min (key: 14)
+    |-> Task 14 - 18.23 min (key: 153)
+       |-> Task 37 - 17.03 min (key: 10)
+       |-> Task 25 - 46.13 min (key: 21)
+          |-> Task 26 - 9.20 min (key: 20)
+       |-> Task 29 - 6.00 min (key: 32)
+          |-> Task 30 - 52.20 min (key: 23)
+          |-> Task 28 - 42.29 min (key: 26)
+--------------------
 
 
-* Popping Task 19 with priority 3 *
- 
-Task queue [size: 8]
- |-> Task 8 - 10.13 min (key: 3)
-    |-> Task 7 - 22.29 min (key: 8)
-    |-> Task 14 - 39.30 min (key: 13)
-       |-> Task 13 - 36.08 min (key: 13)
-    |-> Task 18 - 17.12 min (key: 5)
-       |-> Task 9 - 39.10 min (key: 6)
-       |-> Task 6 - 38.49 min (key: 10)
-          |-> Task 3 - 25.48 min (key: 13)
+* Popping Task 21 with priority 184 *
+
+--------------------
+ FIB HEAP
+ Size: 31
+--------------------
+ |-> Task 20 - 54.08 min (key: 176)
+ |-> Task 16 - 26.32 min (key: 154)
+    |-> Task 18 - 36.27 min (key: 18)
+    |-> Task 31 - 39.18 min (key: 13)
+       |-> Task 32 - 44.35 min (key: 2)
+ |-> Task 40 - 34.53 min (key: 27)
+    |-> Task 44 - 18.22 min (key: 20)
+    |-> Task 36 - 11.26 min (key: 21)
+       |-> Task 35 - 44.36 min (key: 7)
+    |-> Task 43 - 5.35 min (key: 22)
+       |-> Task 42 - 50.45 min (key: 0)
+       |-> Task 41 - 21.28 min (key: 12)
+          |-> Task 39 - 45.04 min (key: 0)
+ |-> Task 11 - 33.34 min (key: 172)
+    |-> Task 12 - 35.30 min (key: 11)
+    |-> Task 13 - 50.38 min (key: 19)
+       |-> Task 15 - 14.46 min (key: 10)
+    |-> Task 7 - 45.05 min (key: 25)
+       |-> Task 6 - 28.50 min (key: 9)
+          |-> Task 5 - 53.21 min (key: 3)
+       |-> Task 0 - 36.11 min (key: 20)
+          |-> Task 2 - 3.03 min (key: 17)
+          |-> Task 4 - 4.34 min (key: 17)
+             |-> Task 3 - 23.45 min (key: 14)
+    |-> Task 14 - 18.23 min (key: 153)
+       |-> Task 37 - 17.03 min (key: 10)
+       |-> Task 25 - 46.13 min (key: 21)
+          |-> Task 26 - 9.20 min (key: 20)
+       |-> Task 29 - 6.00 min (key: 32)
+          |-> Task 30 - 52.20 min (key: 23)
+          |-> Task 28 - 42.29 min (key: 26)
+--------------------
 
 
-* Popping Task 8 with priority 3 *
- 
-Task queue [size: 7]
- |-> Task 18 - 17.12 min (key: 5)
-    |-> Task 9 - 39.10 min (key: 6)
-    |-> Task 6 - 38.49 min (key: 10)
-       |-> Task 3 - 25.48 min (key: 13)
- |-> Task 7 - 22.29 min (key: 8)
- |-> Task 14 - 39.30 min (key: 13)
-    |-> Task 13 - 36.08 min (key: 13)
+* Popping Task 20 with priority 176 *
+
+--------------------
+ FIB HEAP
+ Size: 30
+--------------------
+ |-> Task 11 - 33.34 min (key: 172)
+    |-> Task 12 - 35.30 min (key: 11)
+    |-> Task 13 - 50.38 min (key: 19)
+       |-> Task 15 - 14.46 min (key: 10)
+    |-> Task 7 - 45.05 min (key: 25)
+       |-> Task 6 - 28.50 min (key: 9)
+          |-> Task 5 - 53.21 min (key: 3)
+       |-> Task 0 - 36.11 min (key: 20)
+          |-> Task 2 - 3.03 min (key: 17)
+          |-> Task 4 - 4.34 min (key: 17)
+             |-> Task 3 - 23.45 min (key: 14)
+    |-> Task 14 - 18.23 min (key: 153)
+       |-> Task 37 - 17.03 min (key: 10)
+       |-> Task 25 - 46.13 min (key: 21)
+          |-> Task 26 - 9.20 min (key: 20)
+       |-> Task 29 - 6.00 min (key: 32)
+          |-> Task 30 - 52.20 min (key: 23)
+          |-> Task 28 - 42.29 min (key: 26)
+ |-> Task 16 - 26.32 min (key: 154)
+    |-> Task 18 - 36.27 min (key: 18)
+    |-> Task 31 - 39.18 min (key: 13)
+       |-> Task 32 - 44.35 min (key: 2)
+ |-> Task 40 - 34.53 min (key: 27)
+    |-> Task 44 - 18.22 min (key: 20)
+    |-> Task 36 - 11.26 min (key: 21)
+       |-> Task 35 - 44.36 min (key: 7)
+    |-> Task 43 - 5.35 min (key: 22)
+       |-> Task 42 - 50.45 min (key: 0)
+       |-> Task 41 - 21.28 min (key: 12)
+          |-> Task 39 - 45.04 min (key: 0)
+--------------------
 
 
-* Popping Task 18 with priority 5 *
- 
-Task queue [size: 6]
- |-> Task 9 - 39.10 min (key: 6)
-    |-> Task 7 - 22.29 min (key: 8)
-    |-> Task 14 - 39.30 min (key: 13)
-       |-> Task 13 - 36.08 min (key: 13)
- |-> Task 6 - 38.49 min (key: 10)
-    |-> Task 3 - 25.48 min (key: 13)
+* Popping Task 11 with priority 172 *
+
+--------------------
+ FIB HEAP
+ Size: 29
+--------------------
+ |-> Task 16 - 26.32 min (key: 154)
+    |-> Task 18 - 36.27 min (key: 18)
+    |-> Task 31 - 39.18 min (key: 13)
+       |-> Task 32 - 44.35 min (key: 2)
+    |-> Task 7 - 45.05 min (key: 25)
+       |-> Task 6 - 28.50 min (key: 9)
+          |-> Task 5 - 53.21 min (key: 3)
+       |-> Task 0 - 36.11 min (key: 20)
+          |-> Task 2 - 3.03 min (key: 17)
+          |-> Task 4 - 4.34 min (key: 17)
+             |-> Task 3 - 23.45 min (key: 14)
+    |-> Task 40 - 34.53 min (key: 27)
+       |-> Task 44 - 18.22 min (key: 20)
+       |-> Task 36 - 11.26 min (key: 21)
+          |-> Task 35 - 44.36 min (key: 7)
+       |-> Task 43 - 5.35 min (key: 22)
+          |-> Task 42 - 50.45 min (key: 0)
+          |-> Task 41 - 21.28 min (key: 12)
+             |-> Task 39 - 45.04 min (key: 0)
+ |-> Task 14 - 18.23 min (key: 153)
+    |-> Task 37 - 17.03 min (key: 10)
+    |-> Task 25 - 46.13 min (key: 21)
+       |-> Task 26 - 9.20 min (key: 20)
+    |-> Task 29 - 6.00 min (key: 32)
+       |-> Task 30 - 52.20 min (key: 23)
+       |-> Task 28 - 42.29 min (key: 26)
+ |-> Task 13 - 50.38 min (key: 19)
+    |-> Task 15 - 14.46 min (key: 10)
+ |-> Task 12 - 35.30 min (key: 11)
+--------------------
 
 
-* Popping Task 9 with priority 6 *
- 
-Task queue [size: 5]
- |-> Task 7 - 22.29 min (key: 8)
- |-> Task 6 - 38.49 min (key: 10)
-    |-> Task 3 - 25.48 min (key: 13)
-    |-> Task 14 - 39.30 min (key: 13)
-       |-> Task 13 - 36.08 min (key: 13)
+* Popping Task 16 with priority 154 *
+
+--------------------
+ FIB HEAP
+ Size: 28
+--------------------
+ |-> Task 14 - 18.23 min (key: 153)
+    |-> Task 37 - 17.03 min (key: 10)
+    |-> Task 25 - 46.13 min (key: 21)
+       |-> Task 26 - 9.20 min (key: 20)
+    |-> Task 29 - 6.00 min (key: 32)
+       |-> Task 30 - 52.20 min (key: 23)
+       |-> Task 28 - 42.29 min (key: 26)
+    |-> Task 7 - 45.05 min (key: 25)
+       |-> Task 6 - 28.50 min (key: 9)
+          |-> Task 5 - 53.21 min (key: 3)
+       |-> Task 0 - 36.11 min (key: 20)
+          |-> Task 2 - 3.03 min (key: 17)
+          |-> Task 4 - 4.34 min (key: 17)
+             |-> Task 3 - 23.45 min (key: 14)
+       |-> Task 13 - 50.38 min (key: 19)
+          |-> Task 15 - 14.46 min (key: 10)
+          |-> Task 18 - 36.27 min (key: 18)
+             |-> Task 12 - 35.30 min (key: 11)
+ |-> Task 40 - 34.53 min (key: 27)
+    |-> Task 44 - 18.22 min (key: 20)
+    |-> Task 36 - 11.26 min (key: 21)
+       |-> Task 35 - 44.36 min (key: 7)
+    |-> Task 43 - 5.35 min (key: 22)
+       |-> Task 42 - 50.45 min (key: 0)
+       |-> Task 41 - 21.28 min (key: 12)
+          |-> Task 39 - 45.04 min (key: 0)
+ |-> Task 31 - 39.18 min (key: 13)
+    |-> Task 32 - 44.35 min (key: 2)
+--------------------
 
 
-* Popping Task 7 with priority 8 *
- 
-Task queue [size: 4]
- |-> Task 6 - 38.49 min (key: 10)
-    |-> Task 3 - 25.48 min (key: 13)
-    |-> Task 14 - 39.30 min (key: 13)
-       |-> Task 13 - 36.08 min (key: 13)
+* Popping Task 14 with priority 153 *
+
+--------------------
+ FIB HEAP
+ Size: 27
+--------------------
+ |-> Task 29 - 6.00 min (key: 32)
+    |-> Task 30 - 52.20 min (key: 23)
+    |-> Task 28 - 42.29 min (key: 26)
+    |-> Task 25 - 46.13 min (key: 21)
+       |-> Task 26 - 9.20 min (key: 20)
+       |-> Task 31 - 39.18 min (key: 13)
+          |-> Task 32 - 44.35 min (key: 2)
+    |-> Task 40 - 34.53 min (key: 27)
+       |-> Task 44 - 18.22 min (key: 20)
+       |-> Task 36 - 11.26 min (key: 21)
+          |-> Task 35 - 44.36 min (key: 7)
+       |-> Task 43 - 5.35 min (key: 22)
+          |-> Task 42 - 50.45 min (key: 0)
+          |-> Task 41 - 21.28 min (key: 12)
+             |-> Task 39 - 45.04 min (key: 0)
+ |-> Task 7 - 45.05 min (key: 25)
+    |-> Task 6 - 28.50 min (key: 9)
+       |-> Task 5 - 53.21 min (key: 3)
+    |-> Task 0 - 36.11 min (key: 20)
+       |-> Task 2 - 3.03 min (key: 17)
+       |-> Task 4 - 4.34 min (key: 17)
+          |-> Task 3 - 23.45 min (key: 14)
+    |-> Task 13 - 50.38 min (key: 19)
+       |-> Task 15 - 14.46 min (key: 10)
+       |-> Task 18 - 36.27 min (key: 18)
+          |-> Task 12 - 35.30 min (key: 11)
+ |-> Task 37 - 17.03 min (key: 10)
+--------------------
 
 
-* Popping Task 6 with priority 10 *
- 
-Task queue [size: 3]
- |-> Task 3 - 25.48 min (key: 13)
- |-> Task 14 - 39.30 min (key: 13)
-    |-> Task 13 - 36.08 min (key: 13)
+* Popping Task 29 with priority 32 *
+
+--------------------
+ FIB HEAP
+ Size: 26
+--------------------
+ |-> Task 40 - 34.53 min (key: 27)
+    |-> Task 44 - 18.22 min (key: 20)
+    |-> Task 36 - 11.26 min (key: 21)
+       |-> Task 35 - 44.36 min (key: 7)
+    |-> Task 43 - 5.35 min (key: 22)
+       |-> Task 42 - 50.45 min (key: 0)
+       |-> Task 41 - 21.28 min (key: 12)
+          |-> Task 39 - 45.04 min (key: 0)
+    |-> Task 7 - 45.05 min (key: 25)
+       |-> Task 6 - 28.50 min (key: 9)
+          |-> Task 5 - 53.21 min (key: 3)
+       |-> Task 0 - 36.11 min (key: 20)
+          |-> Task 2 - 3.03 min (key: 17)
+          |-> Task 4 - 4.34 min (key: 17)
+             |-> Task 3 - 23.45 min (key: 14)
+       |-> Task 13 - 50.38 min (key: 19)
+          |-> Task 15 - 14.46 min (key: 10)
+          |-> Task 18 - 36.27 min (key: 18)
+             |-> Task 12 - 35.30 min (key: 11)
+ |-> Task 28 - 42.29 min (key: 26)
+ |-> Task 30 - 52.20 min (key: 23)
+    |-> Task 37 - 17.03 min (key: 10)
+ |-> Task 25 - 46.13 min (key: 21)
+    |-> Task 26 - 9.20 min (key: 20)
+    |-> Task 31 - 39.18 min (key: 13)
+       |-> Task 32 - 44.35 min (key: 2)
+--------------------
 
 
-* Popping Task 3 with priority 13 *
- 
-Task queue [size: 2]
- |-> Task 14 - 39.30 min (key: 13)
-    |-> Task 13 - 36.08 min (key: 13)
+* Popping Task 40 with priority 27 *
+
+--------------------
+ FIB HEAP
+ Size: 25
+--------------------
+ |-> Task 28 - 42.29 min (key: 26)
+    |-> Task 44 - 18.22 min (key: 20)
+    |-> Task 30 - 52.20 min (key: 23)
+       |-> Task 37 - 17.03 min (key: 10)
+    |-> Task 25 - 46.13 min (key: 21)
+       |-> Task 26 - 9.20 min (key: 20)
+       |-> Task 31 - 39.18 min (key: 13)
+          |-> Task 32 - 44.35 min (key: 2)
+    |-> Task 7 - 45.05 min (key: 25)
+       |-> Task 6 - 28.50 min (key: 9)
+          |-> Task 5 - 53.21 min (key: 3)
+       |-> Task 0 - 36.11 min (key: 20)
+          |-> Task 2 - 3.03 min (key: 17)
+          |-> Task 4 - 4.34 min (key: 17)
+             |-> Task 3 - 23.45 min (key: 14)
+       |-> Task 13 - 50.38 min (key: 19)
+          |-> Task 15 - 14.46 min (key: 10)
+          |-> Task 18 - 36.27 min (key: 18)
+             |-> Task 12 - 35.30 min (key: 11)
+ |-> Task 43 - 5.35 min (key: 22)
+    |-> Task 42 - 50.45 min (key: 0)
+    |-> Task 41 - 21.28 min (key: 12)
+       |-> Task 39 - 45.04 min (key: 0)
+ |-> Task 36 - 11.26 min (key: 21)
+    |-> Task 35 - 44.36 min (key: 7)
+--------------------
 
 
-* Popping Task 14 with priority 13 *
- 
-Task queue [size: 1]
- |-> Task 13 - 36.08 min (key: 13)
+* Popping Task 28 with priority 26 *
+
+--------------------
+ FIB HEAP
+ Size: 24
+--------------------
+ |-> Task 7 - 45.05 min (key: 25)
+    |-> Task 6 - 28.50 min (key: 9)
+       |-> Task 5 - 53.21 min (key: 3)
+    |-> Task 0 - 36.11 min (key: 20)
+       |-> Task 2 - 3.03 min (key: 17)
+       |-> Task 4 - 4.34 min (key: 17)
+          |-> Task 3 - 23.45 min (key: 14)
+    |-> Task 13 - 50.38 min (key: 19)
+       |-> Task 15 - 14.46 min (key: 10)
+       |-> Task 18 - 36.27 min (key: 18)
+          |-> Task 12 - 35.30 min (key: 11)
+    |-> Task 30 - 52.20 min (key: 23)
+       |-> Task 37 - 17.03 min (key: 10)
+       |-> Task 36 - 11.26 min (key: 21)
+          |-> Task 35 - 44.36 min (key: 7)
+       |-> Task 43 - 5.35 min (key: 22)
+          |-> Task 42 - 50.45 min (key: 0)
+          |-> Task 41 - 21.28 min (key: 12)
+             |-> Task 39 - 45.04 min (key: 0)
+ |-> Task 25 - 46.13 min (key: 21)
+    |-> Task 26 - 9.20 min (key: 20)
+    |-> Task 31 - 39.18 min (key: 13)
+       |-> Task 32 - 44.35 min (key: 2)
+ |-> Task 44 - 18.22 min (key: 20)
+--------------------
 
 
-* Popping Task 13 with priority 13 *
- 
-Task queue [size: 0]
+* Popping Task 7 with priority 25 *
+
+--------------------
+ FIB HEAP
+ Size: 23
+--------------------
+ |-> Task 30 - 52.20 min (key: 23)
+    |-> Task 37 - 17.03 min (key: 10)
+    |-> Task 36 - 11.26 min (key: 21)
+       |-> Task 35 - 44.36 min (key: 7)
+    |-> Task 43 - 5.35 min (key: 22)
+       |-> Task 42 - 50.45 min (key: 0)
+       |-> Task 41 - 21.28 min (key: 12)
+          |-> Task 39 - 45.04 min (key: 0)
+    |-> Task 25 - 46.13 min (key: 21)
+       |-> Task 26 - 9.20 min (key: 20)
+       |-> Task 31 - 39.18 min (key: 13)
+          |-> Task 32 - 44.35 min (key: 2)
+       |-> Task 0 - 36.11 min (key: 20)
+          |-> Task 2 - 3.03 min (key: 17)
+          |-> Task 4 - 4.34 min (key: 17)
+             |-> Task 3 - 23.45 min (key: 14)
+ |-> Task 44 - 18.22 min (key: 20)
+ |-> Task 6 - 28.50 min (key: 9)
+    |-> Task 5 - 53.21 min (key: 3)
+ |-> Task 13 - 50.38 min (key: 19)
+    |-> Task 15 - 14.46 min (key: 10)
+    |-> Task 18 - 36.27 min (key: 18)
+       |-> Task 12 - 35.30 min (key: 11)
+--------------------
+
+
+* Popping Task 30 with priority 23 *
+
+--------------------
+ FIB HEAP
+ Size: 22
+--------------------
+ |-> Task 43 - 5.35 min (key: 22)
+    |-> Task 42 - 50.45 min (key: 0)
+    |-> Task 41 - 21.28 min (key: 12)
+       |-> Task 39 - 45.04 min (key: 0)
+ |-> Task 36 - 11.26 min (key: 21)
+    |-> Task 35 - 44.36 min (key: 7)
+ |-> Task 25 - 46.13 min (key: 21)
+    |-> Task 26 - 9.20 min (key: 20)
+    |-> Task 31 - 39.18 min (key: 13)
+       |-> Task 32 - 44.35 min (key: 2)
+    |-> Task 0 - 36.11 min (key: 20)
+       |-> Task 2 - 3.03 min (key: 17)
+       |-> Task 4 - 4.34 min (key: 17)
+          |-> Task 3 - 23.45 min (key: 14)
+    |-> Task 44 - 18.22 min (key: 20)
+       |-> Task 37 - 17.03 min (key: 10)
+       |-> Task 6 - 28.50 min (key: 9)
+          |-> Task 5 - 53.21 min (key: 3)
+       |-> Task 13 - 50.38 min (key: 19)
+          |-> Task 15 - 14.46 min (key: 10)
+          |-> Task 18 - 36.27 min (key: 18)
+             |-> Task 12 - 35.30 min (key: 11)
+--------------------
+
+
+* Popping Task 43 with priority 22 *
+
+--------------------
+ FIB HEAP
+ Size: 21
+--------------------
+ |-> Task 36 - 11.26 min (key: 21)
+    |-> Task 35 - 44.36 min (key: 7)
+    |-> Task 41 - 21.28 min (key: 12)
+       |-> Task 39 - 45.04 min (key: 0)
+ |-> Task 42 - 50.45 min (key: 0)
+ |-> Task 25 - 46.13 min (key: 21)
+    |-> Task 26 - 9.20 min (key: 20)
+    |-> Task 31 - 39.18 min (key: 13)
+       |-> Task 32 - 44.35 min (key: 2)
+    |-> Task 0 - 36.11 min (key: 20)
+       |-> Task 2 - 3.03 min (key: 17)
+       |-> Task 4 - 4.34 min (key: 17)
+          |-> Task 3 - 23.45 min (key: 14)
+    |-> Task 44 - 18.22 min (key: 20)
+       |-> Task 37 - 17.03 min (key: 10)
+       |-> Task 6 - 28.50 min (key: 9)
+          |-> Task 5 - 53.21 min (key: 3)
+       |-> Task 13 - 50.38 min (key: 19)
+          |-> Task 15 - 14.46 min (key: 10)
+          |-> Task 18 - 36.27 min (key: 18)
+             |-> Task 12 - 35.30 min (key: 11)
+--------------------
+
+
+* Popping Task 36 with priority 21 *
+
+--------------------
+ FIB HEAP
+ Size: 20
+--------------------
+ |-> Task 25 - 46.13 min (key: 21)
+    |-> Task 26 - 9.20 min (key: 20)
+    |-> Task 31 - 39.18 min (key: 13)
+       |-> Task 32 - 44.35 min (key: 2)
+    |-> Task 0 - 36.11 min (key: 20)
+       |-> Task 2 - 3.03 min (key: 17)
+       |-> Task 4 - 4.34 min (key: 17)
+          |-> Task 3 - 23.45 min (key: 14)
+    |-> Task 44 - 18.22 min (key: 20)
+       |-> Task 37 - 17.03 min (key: 10)
+       |-> Task 6 - 28.50 min (key: 9)
+          |-> Task 5 - 53.21 min (key: 3)
+       |-> Task 13 - 50.38 min (key: 19)
+          |-> Task 15 - 14.46 min (key: 10)
+          |-> Task 18 - 36.27 min (key: 18)
+             |-> Task 12 - 35.30 min (key: 11)
+ |-> Task 41 - 21.28 min (key: 12)
+    |-> Task 39 - 45.04 min (key: 0)
+    |-> Task 35 - 44.36 min (key: 7)
+       |-> Task 42 - 50.45 min (key: 0)
+--------------------
+
+
+* Popping Task 25 with priority 21 *
+
+--------------------
+ FIB HEAP
+ Size: 19
+--------------------
+ |-> Task 26 - 9.20 min (key: 20)
+ |-> Task 31 - 39.18 min (key: 13)
+    |-> Task 32 - 44.35 min (key: 2)
+ |-> Task 44 - 18.22 min (key: 20)
+    |-> Task 37 - 17.03 min (key: 10)
+    |-> Task 6 - 28.50 min (key: 9)
+       |-> Task 5 - 53.21 min (key: 3)
+    |-> Task 13 - 50.38 min (key: 19)
+       |-> Task 15 - 14.46 min (key: 10)
+       |-> Task 18 - 36.27 min (key: 18)
+          |-> Task 12 - 35.30 min (key: 11)
+    |-> Task 0 - 36.11 min (key: 20)
+       |-> Task 2 - 3.03 min (key: 17)
+       |-> Task 4 - 4.34 min (key: 17)
+          |-> Task 3 - 23.45 min (key: 14)
+       |-> Task 41 - 21.28 min (key: 12)
+          |-> Task 39 - 45.04 min (key: 0)
+          |-> Task 35 - 44.36 min (key: 7)
+             |-> Task 42 - 50.45 min (key: 0)
+--------------------
+
+
+* Popping Task 26 with priority 20 *
+
+--------------------
+ FIB HEAP
+ Size: 18
+--------------------
+ |-> Task 44 - 18.22 min (key: 20)
+    |-> Task 37 - 17.03 min (key: 10)
+    |-> Task 6 - 28.50 min (key: 9)
+       |-> Task 5 - 53.21 min (key: 3)
+    |-> Task 13 - 50.38 min (key: 19)
+       |-> Task 15 - 14.46 min (key: 10)
+       |-> Task 18 - 36.27 min (key: 18)
+          |-> Task 12 - 35.30 min (key: 11)
+    |-> Task 0 - 36.11 min (key: 20)
+       |-> Task 2 - 3.03 min (key: 17)
+       |-> Task 4 - 4.34 min (key: 17)
+          |-> Task 3 - 23.45 min (key: 14)
+       |-> Task 41 - 21.28 min (key: 12)
+          |-> Task 39 - 45.04 min (key: 0)
+          |-> Task 35 - 44.36 min (key: 7)
+             |-> Task 42 - 50.45 min (key: 0)
+ |-> Task 31 - 39.18 min (key: 13)
+    |-> Task 32 - 44.35 min (key: 2)
+--------------------
+
+
+* Popping Task 44 with priority 20 *
+
+--------------------
+ FIB HEAP
+ Size: 17
+--------------------
+ |-> Task 0 - 36.11 min (key: 20)
+    |-> Task 2 - 3.03 min (key: 17)
+    |-> Task 4 - 4.34 min (key: 17)
+       |-> Task 3 - 23.45 min (key: 14)
+    |-> Task 41 - 21.28 min (key: 12)
+       |-> Task 39 - 45.04 min (key: 0)
+       |-> Task 35 - 44.36 min (key: 7)
+          |-> Task 42 - 50.45 min (key: 0)
+    |-> Task 13 - 50.38 min (key: 19)
+       |-> Task 15 - 14.46 min (key: 10)
+       |-> Task 18 - 36.27 min (key: 18)
+          |-> Task 12 - 35.30 min (key: 11)
+       |-> Task 31 - 39.18 min (key: 13)
+          |-> Task 32 - 44.35 min (key: 2)
+          |-> Task 6 - 28.50 min (key: 9)
+             |-> Task 5 - 53.21 min (key: 3)
+ |-> Task 37 - 17.03 min (key: 10)
+--------------------
+
+
+* Popping Task 0 with priority 20 *
+
+--------------------
+ FIB HEAP
+ Size: 16
+--------------------
+ |-> Task 13 - 50.38 min (key: 19)
+    |-> Task 15 - 14.46 min (key: 10)
+    |-> Task 18 - 36.27 min (key: 18)
+       |-> Task 12 - 35.30 min (key: 11)
+    |-> Task 31 - 39.18 min (key: 13)
+       |-> Task 32 - 44.35 min (key: 2)
+       |-> Task 6 - 28.50 min (key: 9)
+          |-> Task 5 - 53.21 min (key: 3)
+    |-> Task 4 - 4.34 min (key: 17)
+       |-> Task 3 - 23.45 min (key: 14)
+       |-> Task 2 - 3.03 min (key: 17)
+          |-> Task 37 - 17.03 min (key: 10)
+       |-> Task 41 - 21.28 min (key: 12)
+          |-> Task 39 - 45.04 min (key: 0)
+          |-> Task 35 - 44.36 min (key: 7)
+             |-> Task 42 - 50.45 min (key: 0)
+--------------------
+
+
+* Popping Task 13 with priority 19 *
+
+--------------------
+ FIB HEAP
+ Size: 15
+--------------------
+ |-> Task 18 - 36.27 min (key: 18)
+    |-> Task 12 - 35.30 min (key: 11)
+ |-> Task 15 - 14.46 min (key: 10)
+ |-> Task 31 - 39.18 min (key: 13)
+    |-> Task 32 - 44.35 min (key: 2)
+    |-> Task 6 - 28.50 min (key: 9)
+       |-> Task 5 - 53.21 min (key: 3)
+ |-> Task 4 - 4.34 min (key: 17)
+    |-> Task 3 - 23.45 min (key: 14)
+    |-> Task 2 - 3.03 min (key: 17)
+       |-> Task 37 - 17.03 min (key: 10)
+    |-> Task 41 - 21.28 min (key: 12)
+       |-> Task 39 - 45.04 min (key: 0)
+       |-> Task 35 - 44.36 min (key: 7)
+          |-> Task 42 - 50.45 min (key: 0)
+--------------------
+
+
+* Popping Task 18 with priority 18 *
+
+--------------------
+ FIB HEAP
+ Size: 14
+--------------------
+ |-> Task 4 - 4.34 min (key: 17)
+    |-> Task 3 - 23.45 min (key: 14)
+    |-> Task 2 - 3.03 min (key: 17)
+       |-> Task 37 - 17.03 min (key: 10)
+    |-> Task 41 - 21.28 min (key: 12)
+       |-> Task 39 - 45.04 min (key: 0)
+       |-> Task 35 - 44.36 min (key: 7)
+          |-> Task 42 - 50.45 min (key: 0)
+ |-> Task 31 - 39.18 min (key: 13)
+    |-> Task 32 - 44.35 min (key: 2)
+    |-> Task 6 - 28.50 min (key: 9)
+       |-> Task 5 - 53.21 min (key: 3)
+ |-> Task 12 - 35.30 min (key: 11)
+    |-> Task 15 - 14.46 min (key: 10)
+--------------------
+
+
+* Popping Task 4 with priority 17 *
+
+--------------------
+ FIB HEAP
+ Size: 13
+--------------------
+ |-> Task 2 - 3.03 min (key: 17)
+    |-> Task 37 - 17.03 min (key: 10)
+    |-> Task 12 - 35.30 min (key: 11)
+       |-> Task 15 - 14.46 min (key: 10)
+    |-> Task 31 - 39.18 min (key: 13)
+       |-> Task 32 - 44.35 min (key: 2)
+       |-> Task 6 - 28.50 min (key: 9)
+          |-> Task 5 - 53.21 min (key: 3)
+ |-> Task 3 - 23.45 min (key: 14)
+ |-> Task 41 - 21.28 min (key: 12)
+    |-> Task 39 - 45.04 min (key: 0)
+    |-> Task 35 - 44.36 min (key: 7)
+       |-> Task 42 - 50.45 min (key: 0)
+--------------------
+
+
+* Popping Task 2 with priority 17 *
+
+--------------------
+ FIB HEAP
+ Size: 12
+--------------------
+ |-> Task 3 - 23.45 min (key: 14)
+    |-> Task 37 - 17.03 min (key: 10)
+    |-> Task 12 - 35.30 min (key: 11)
+       |-> Task 15 - 14.46 min (key: 10)
+    |-> Task 41 - 21.28 min (key: 12)
+       |-> Task 39 - 45.04 min (key: 0)
+       |-> Task 35 - 44.36 min (key: 7)
+          |-> Task 42 - 50.45 min (key: 0)
+ |-> Task 31 - 39.18 min (key: 13)
+    |-> Task 32 - 44.35 min (key: 2)
+    |-> Task 6 - 28.50 min (key: 9)
+       |-> Task 5 - 53.21 min (key: 3)
+--------------------
+
+
+* Popping Task 3 with priority 14 *
+
+--------------------
+ FIB HEAP
+ Size: 11
+--------------------
+ |-> Task 31 - 39.18 min (key: 13)
+    |-> Task 32 - 44.35 min (key: 2)
+    |-> Task 6 - 28.50 min (key: 9)
+       |-> Task 5 - 53.21 min (key: 3)
+    |-> Task 41 - 21.28 min (key: 12)
+       |-> Task 39 - 45.04 min (key: 0)
+       |-> Task 35 - 44.36 min (key: 7)
+          |-> Task 42 - 50.45 min (key: 0)
+ |-> Task 12 - 35.30 min (key: 11)
+    |-> Task 15 - 14.46 min (key: 10)
+ |-> Task 37 - 17.03 min (key: 10)
+--------------------
+
+
+* Popping Task 31 with priority 13 *
+
+--------------------
+ FIB HEAP
+ Size: 10
+--------------------
+ |-> Task 41 - 21.28 min (key: 12)
+    |-> Task 39 - 45.04 min (key: 0)
+    |-> Task 35 - 44.36 min (key: 7)
+       |-> Task 42 - 50.45 min (key: 0)
+    |-> Task 12 - 35.30 min (key: 11)
+       |-> Task 15 - 14.46 min (key: 10)
+       |-> Task 37 - 17.03 min (key: 10)
+          |-> Task 32 - 44.35 min (key: 2)
+ |-> Task 6 - 28.50 min (key: 9)
+    |-> Task 5 - 53.21 min (key: 3)
+--------------------
+
+
+* Popping Task 41 with priority 12 *
+
+--------------------
+ FIB HEAP
+ Size: 9
+--------------------
+ |-> Task 12 - 35.30 min (key: 11)
+    |-> Task 15 - 14.46 min (key: 10)
+    |-> Task 37 - 17.03 min (key: 10)
+       |-> Task 32 - 44.35 min (key: 2)
+    |-> Task 6 - 28.50 min (key: 9)
+       |-> Task 5 - 53.21 min (key: 3)
+       |-> Task 35 - 44.36 min (key: 7)
+          |-> Task 42 - 50.45 min (key: 0)
+ |-> Task 39 - 45.04 min (key: 0)
+--------------------
+
+
+* Popping Task 12 with priority 11 *
+
+--------------------
+ FIB HEAP
+ Size: 8
+--------------------
+ |-> Task 37 - 17.03 min (key: 10)
+    |-> Task 32 - 44.35 min (key: 2)
+    |-> Task 15 - 14.46 min (key: 10)
+       |-> Task 39 - 45.04 min (key: 0)
+    |-> Task 6 - 28.50 min (key: 9)
+       |-> Task 5 - 53.21 min (key: 3)
+       |-> Task 35 - 44.36 min (key: 7)
+          |-> Task 42 - 50.45 min (key: 0)
+--------------------
+
+
+* Popping Task 37 with priority 10 *
+
+--------------------
+ FIB HEAP
+ Size: 7
+--------------------
+ |-> Task 15 - 14.46 min (key: 10)
+    |-> Task 39 - 45.04 min (key: 0)
+ |-> Task 32 - 44.35 min (key: 2)
+ |-> Task 6 - 28.50 min (key: 9)
+    |-> Task 5 - 53.21 min (key: 3)
+    |-> Task 35 - 44.36 min (key: 7)
+       |-> Task 42 - 50.45 min (key: 0)
+--------------------
+
+
+* Popping Task 15 with priority 10 *
+
+--------------------
+ FIB HEAP
+ Size: 6
+--------------------
+ |-> Task 6 - 28.50 min (key: 9)
+    |-> Task 5 - 53.21 min (key: 3)
+    |-> Task 35 - 44.36 min (key: 7)
+       |-> Task 42 - 50.45 min (key: 0)
+ |-> Task 32 - 44.35 min (key: 2)
+    |-> Task 39 - 45.04 min (key: 0)
+--------------------
+
+
+* Popping Task 6 with priority 9 *
+
+--------------------
+ FIB HEAP
+ Size: 5
+--------------------
+ |-> Task 35 - 44.36 min (key: 7)
+    |-> Task 42 - 50.45 min (key: 0)
+    |-> Task 32 - 44.35 min (key: 2)
+       |-> Task 39 - 45.04 min (key: 0)
+ |-> Task 5 - 53.21 min (key: 3)
+--------------------
+
+
+* Popping Task 35 with priority 7 *
+
+--------------------
+ FIB HEAP
+ Size: 4
+--------------------
+ |-> Task 5 - 53.21 min (key: 3)
+    |-> Task 42 - 50.45 min (key: 0)
+    |-> Task 32 - 44.35 min (key: 2)
+       |-> Task 39 - 45.04 min (key: 0)
+--------------------
+
+
+* Popping Task 5 with priority 3 *
+
+--------------------
+ FIB HEAP
+ Size: 3
+--------------------
+ |-> Task 32 - 44.35 min (key: 2)
+    |-> Task 39 - 45.04 min (key: 0)
+ |-> Task 42 - 50.45 min (key: 0)
+--------------------
+
+
+* Popping Task 32 with priority 2 *
+
+--------------------
+ FIB HEAP
+ Size: 2
+--------------------
+ |-> Task 39 - 45.04 min (key: 0)
+    |-> Task 42 - 50.45 min (key: 0)
+--------------------
+
+
+* Popping Task 39 with priority 0 *
+
+--------------------
+ FIB HEAP
+ Size: 1
+--------------------
+ |-> Task 42 - 50.45 min (key: 0)
+--------------------
+
+
+* Popping Task 42 with priority 0 *
+
+--------------------
+ FIB HEAP
+ Size: 0
+--------------------
 < Empty >
+--------------------
+

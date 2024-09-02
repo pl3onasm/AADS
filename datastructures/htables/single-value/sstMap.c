@@ -214,14 +214,15 @@ mapEntry *sstMapNext(sstMap *M) {
 }
 
 //===================================================================
-// merges the keys and values of map M2 into map M1
-// if a key exists in both maps, the value in M1 is updated
-// M2 is destroyed
-void sstMapMerge(sstMap *M1, sstMap *M2) {
+// merges the keys and values of the smaller map into the larger map
+sstMap *sstMapMerge(sstMap *M1, sstMap *M2) {
+  if (sstMapSize(M1) < sstMapSize(M2)) 
+    SWAP(M1, M2);
   for (mapEntry *e = sstMapFirst(M2); e; e = sstMapNext(M2)) {
     char *key = (char *)e->key;
     size_t value = *(size_t *)e->value;
     sstMapAddKey(M1, key, value);
   }
   sstMapFree(M2);
+  return M1;
 }

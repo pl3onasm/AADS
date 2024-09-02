@@ -30,7 +30,7 @@ $\Large{\color{darkseagreen}\text{Example applications}}$
 
 <br/>
 
-$\Large{\color{darkseagreen}\text{Video}}$  
+$\Large{\color{darkseagreen}\text{Playlist}}$  
 
 [![Red-black trees](https://img.youtube.com/vi/qvZGUFHWChY/0.jpg)](https://www.youtube.com/watch?v=qvZGUFHWChY&list=PL9xmBV_5YoZNqDI8qfOZgzbqahCUmUEin&index=1)
 

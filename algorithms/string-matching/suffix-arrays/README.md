@@ -83,6 +83,6 @@ Implementation: [Suffix array](https://github.com/pl3onasm/CLRS/blob/main/algori
 
 <br/>
 
-$\Large{\color{darkseagreen}\text{Video}}$
+$\Large{\color{darkseagreen}\text{Playlist}}$
 
 [![Suffix arrays](https://img.youtube.com/vi/zqKlL3ZpTqs/0.jpg)](https://www.youtube.com/watch?v=zqKlL3ZpTqs&list=PLDV1Zeh2NRsCQ_Educ7GCNs3mvzpXhHW5)

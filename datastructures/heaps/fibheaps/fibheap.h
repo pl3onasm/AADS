@@ -89,8 +89,8 @@ void fibFree(fibheap *F);
   // the given data and key (priority)
 void fibPush(fibheap *F, void *data, void *key);
 
-  // returns the top element of the Fibonacci heap without removing it
-  // from the heap; returns NULL if the queue is empty
+  // returns the top element of the Fibonacci heap without removing 
+  // it from the heap; returns NULL if the queue is empty
 void *fibPeek(fibheap *F);
 
   // returns and removes the top element from the Fibonacci heap
@@ -111,6 +111,12 @@ void *fibGetKey(fibheap *F, void *data);
   // deletes the node containing the data from the Fibonacci heap
   // returns true if the deletion was successful
 bool fibDelete(fibheap *F, void *data);
+
+  // takes the union of two Fibonacci heaps and
+  // returns the resulting Fibonacci heap;
+  // the two input heaps should have the same type (MIN / MAX),
+  // the same key comparison function, and the same sentinel key
+fibheap *fibUnion(fibheap *F1, fibheap *F2);
 
   // returns the size of the Fibonacci heap
 static inline size_t fibSize(fibheap *F) {

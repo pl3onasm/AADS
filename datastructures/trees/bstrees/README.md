@@ -22,6 +22,6 @@ $\Large{\color{darkseagreen}\text{Example applications}}$
 
 <br/>
 
-$\Large{\color{darkseagreen}\text{Video}}$  
+$\Large{\color{darkseagreen}\text{Playlist}}$  
 
 [![Binary search trees](https://img.youtube.com/vi/LwpLXm3eb6A/0.jpg)](https://www.youtube.com/watch?v=JfSdGQdAzq8&list=PLDV1Zeh2NRsCYY48kOkeLQ-cg9-eqInzs)

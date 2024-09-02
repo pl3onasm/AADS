@@ -75,7 +75,7 @@ void fibFree(fibheap *F) {
   while (F->size) 
     fibPop(F);
   
-  mapFree(F->datamap);
+  if (F->datamap) mapFree(F->datamap);
   free(F);
 }
 
@@ -445,4 +445,48 @@ bool fibDelete(fibheap *F, void *data) {
   fibChangeKey(F, u, F->sentinel);
   fibPop(F);
   return true;
+}
+
+//===================================================================
+// Takes the union of two Fibonacci heaps and returns the resulting
+// Fibonacci heap
+fibheap *fibUnion(fibheap *F1, fibheap *F2) {
+  
+  if (! F1) return F2;
+  if (! F2) return F1;
+
+  if (F1->type != F2->type) {
+    fprintf(stderr, "fibUnion: heaps have different types\n");
+    return NULL;
+  }
+
+  if (F1->sentinel != F2->sentinel) {
+    fprintf(stderr, "fibUnion: heaps have different sentinels\n");
+    return NULL;
+  }
+
+  fibheap *F = fibNew(F1->type, F1->compKey, F1->copyKey, 
+                      F1->freeKey, F1->toString, F1->sentinel);
+
+  F->size = F1->size + F2->size;
+  F->top = F1->top;
+
+    // concatenate the root lists of F1 and F2
+  if (F1->top && F2->top) {
+    F1->top->prev->next = F2->top;
+    F2->top->prev->next = F1->top;
+    SWAP(F1->top->prev, F2->top->prev);
+  } 
+
+  if (F2->top && (! F1->top || 
+      F1->fac * F1->compKey(F2->top->key, F1->top->key) < 0))
+    F->top = F2->top;
+  
+  mapFree(F->datamap);
+  F->datamap = mapMerge(F1->datamap, F2->datamap);
+  F1->datamap = NULL;
+  
+  free(F1);
+  free(F2);
+  return F;
 }

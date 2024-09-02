@@ -380,12 +380,41 @@ void mapShowEntry(map *M, void *key) {
 }
 
 //=================================================================
-// Merges the keys and values of map M2 into map M1
-// if a key exists in both maps, the value in M1 is updated
-// M2 is destroyed
-void mapMerge(map *M1, map *M2) {
+// Returns a copy of the map
+map *mapCopy(map *M) {
+  
+  map *copy = mapNew(M->hash, M->capacity, M->cmpKey);
+  if (M->copyKey)
+    mapCopyKeys(copy, M->copyKey, M->freeKey);
+  if (M->copyValue)
+    mapCopyVals(copy, M->copyValue, M->freeValue);
+  if (M->showKey && M->showValue) {
+    mapSetShow(copy, M->showKey, M->showValue);
+    copy->label = "Map copy";
+  }
+  
+  for (mapEntry *e = mapFirst(M); e; e = mapNext(M)) 
+    mapAddKey(copy, e->key, e->value);
+  
+  return copy;
+}
+
+//=================================================================
+// Merges the keys of the smaller map into the larger map
+map *mapMerge(map *M1, map *M2) {
+  
+  if (M1->hash != M2->hash || M1->cmpKey != M2->cmpKey) {
+    fprintf(stderr, "mapMerge: hash or cmpKey functions differ\n");
+    return NULL;
+  }
+
+  if (mapSize(M1) < mapSize(M2)) 
+    SWAP(M1, M2);
+
   for (mapEntry *e = mapFirst(M2); e; e = mapNext(M2)) 
     mapAddKey(M1, e->key, e->value);
- mapFree(M2);
+
+  mapFree(M2);
+  return M1;
 }
 
