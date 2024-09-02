@@ -12,7 +12,7 @@ OBJS = $(patsubst %.c, %.o, $(SRCS))
 
 .PHONY: all clean allclean
 
-all: cleangraph $(BINS)
+all: $(BINS)
 	@echo "Completed.\n\nTo run:"
 	@echo "$$ ./$(lastword $(BINS))"
 	@chmod +x $(BINS)
