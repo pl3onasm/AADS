@@ -179,11 +179,13 @@ void fibPush(fibheap *F, void *data, void *key) {
 // no two nodes in the root list have the same degree
 static void consolidate(fibheap *F) {
   
-    // maxDegree of a node in the Fibonacci heap is log(n)
-  size_t maxDegree = 1 + ceil(log(F->size)/log(2));
+    // maxDegree of a node in the Fibonacci heap of size n is
+    // maxD(n) = floor(log_phi(n)), where phi is the golden ratio
+    // constant given by (1 + sqrt(5)) / 2
+  size_t maxD = floor(log(F->size) / log((1 + sqrt(5)) / 2)) + 1;
   
     // A is an auxiliary array of pointers to nodes in the root list
-  fibnode **A = safeCalloc(maxDegree, sizeof(fibnode*));  
+  fibnode **A = safeCalloc(maxD, sizeof(fibnode*));  
   fibnode *u = F->top, *end = F->top->prev;
   bool last = false;
   
@@ -210,7 +212,7 @@ static void consolidate(fibheap *F) {
   
     // rebuild the root list from the array A
   F->top = NULL;
-  for (size_t i = 0; i < maxDegree; i++) {
+  for (size_t i = 0; i < maxD; i++) {
     if (A[i]) {         
       fibnode *w = A[i];
       if (!F->top)
@@ -229,8 +231,7 @@ static void consolidate(fibheap *F) {
 }
 
 //===================================================================
-// Extracts the node with the minimum key from a MIN heap or
-// the node with the maximum key from a MAX heap
+// Extracts the top node from the Fibonacci heap
 void *fibPop(fibheap *F) {
   
   fibnode *z = F->top;
@@ -389,14 +390,20 @@ void fibShow(fibheap *F) {
                     "showKey function not set\n");
     return;
   }
+
+  printf("--------------------\n"
+          " %s\n"
+          " Size: %zu\n"
+          "--------------------\n",
+          F->label, F->size);
   
-  printf("\n%s [size: %zu]\n", F->label, F->size);
   if (! F->top) {
     printf("< Empty >\n");
+    printf("--------------------\n\n");
     return;
   }
   showAllData(F, F->top, 0);
-  printf("\n");
+  printf("--------------------\n\n");
 }
 
 //===================================================================

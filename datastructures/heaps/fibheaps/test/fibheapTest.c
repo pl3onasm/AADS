@@ -96,7 +96,8 @@ int main () {
   
   size_t size = rand() % 30 + 20;
 
-  printf("TESTING %s FIBONACCI HEAP\n\n", F->type == MIN ? "MIN" : "MAX");
+  printf("TESTING %s FIBONACCI HEAP\n\n", 
+         F->type == MIN ? "MIN" : "MAX");
   printf("Creating %zu tasks for the %s Fibonacci heap...\n\n", 
          size, F->type == MIN ? "MIN" : "MAX");
 
@@ -118,7 +119,7 @@ int main () {
   }
 
   printf("\nAfter pushing all tasks, we have a single root list\n"
-         "in which all %zu nodes have the same degree 0\n", size);
+         "in which all %zu nodes have the same degree 0\n\n", size);
   
   fibShow(F);
   
@@ -134,8 +135,9 @@ int main () {
     }
   }
 
-  printf("\nAfter deleting some tasks, the necessary housekeeping has been done:\n"
-         "the root list has been rebuilt and nodes have been linked\n");
+  printf("\nAfter deleting some tasks, the necessary housekeeping"
+         " has been done:\nthe root list has been rebuilt"
+         " and nodes have been linked\n\n");
 
   fibShow(F);
   
@@ -154,7 +156,7 @@ int main () {
     }
   }
   printf("\nThe restructured %s heap after updating 10 priorities\n"
-         "shows the new priorities and the new root list\n", 
+         "shows the new priorities and the new root list\n\n", 
          F->type == MIN ? "MIN" : "MAX");
 
   fibShow(F);
@@ -162,7 +164,7 @@ int main () {
   printf("\nPopping all tasks..\n");
   while (! fibIsEmpty(F)) {
     task *top = fibPeek(F);
-    printf("\n* Popping %s with priority %d *\n ", 
+    printf("\n* Popping %s with priority %d *\n\n", 
            top->name, *(int *)fibGetKey(F, top));
     task *t = fibPop(F);
     freeTask(t);
