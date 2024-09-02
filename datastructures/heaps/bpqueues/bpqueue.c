@@ -278,12 +278,13 @@ bool bpqDelete(bpqueue *pq, void *data) {
     return false;
   }
 
-  if (bpqChangeKey(pq, data, pq->sentinel))
-    return bpqPop(pq);
+  if (bpqChangeKey(pq, data, pq->sentinel)) {
+    bpqPop(pq);
+    return true;
+  }
 
   return false;
 }
-
 
 //===================================================================
 // End of file
