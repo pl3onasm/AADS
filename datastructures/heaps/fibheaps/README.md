@@ -24,8 +24,8 @@ The mentioned complexities are ${\color{peru}\text{amortized}}$, i.e. the averag
 
 $\Large{\color{darkseagreen}\text{Example applications}}$
 
-- [Dijkstra's algorithm](../../../algorithms/graphs/SSSP-dijkstra/dijkstra-2.c)
-- [Prim's algorithm](../../../algorithms/graphs/MST-prim/prim-2.c)
+- [Dijkstra's algorithm](../../../algorithms/graphs/SSSP-dijkstra/README.md)
+- [Prim's algorithm](../../../algorithms/graphs/MST-prim/README.md)
 
 <br/>
 

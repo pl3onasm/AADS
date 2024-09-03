@@ -16,11 +16,11 @@ $\Large{\color{darkseagreen}\text{Example applications}}$
 
 <br/>
 
-- [Huffman coding](../../../algorithms/greedy/huffman/huffman.c)
-- [Heapsort](../../../algorithms/sorting/heap-sort/heapsort.c)
-- [Kruskal's algorithm](../../../algorithms/graphs/MST-kruskal/kruskal.c)
-- [Priority queues](../../../datastructures/pqueues/bpqueue.h)
-- [Lecture hall scheduling](../../../algorithms/greedy/lct-hall-scheduling/lhs-4.c)
+- [Huffman coding](../../../algorithms/greedy/huffman/README.md)
+- [Heapsort](../../../algorithms/sorting/heap-sort/README.md)
+- [Kruskal's algorithm](../../../algorithms/graphs/MST-kruskal/README.md)
+- [Priority queues](../bpqueues/README.md)
+- [Lecture hall scheduling](../../../algorithms/greedy/lct-hall-scheduling/README.md)
 
 <br/>
 

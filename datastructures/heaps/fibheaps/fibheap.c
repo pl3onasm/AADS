@@ -460,7 +460,13 @@ fibheap *fibUnion(fibheap *F1, fibheap *F2) {
     return NULL;
   }
 
-  if (F1->sentinel != F2->sentinel) {
+  if (F1->compKey != F2->compKey) {
+    fprintf(stderr, "fibUnion: heaps have different "
+                     "comparison functions\n");
+    return NULL;
+  }
+
+  if (F1->compKey(F1->sentinel, F2->sentinel) != 0) {
     fprintf(stderr, "fibUnion: heaps have different sentinels\n");
     return NULL;
   }
