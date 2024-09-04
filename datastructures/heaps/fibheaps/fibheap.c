@@ -490,7 +490,6 @@ fibheap *fibUnion(fibheap *F1, fibheap *F2) {
   
   mapFree(F->datamap);
   F->datamap = mapMerge(F1->datamap, F2->datamap);
-  F1->datamap = NULL;
   
   free(F1);
   free(F2);
