@@ -1,18 +1,17 @@
 /* 
-  Generic Fibonacci heap interface, using fibonacci heaps
+  Generic Fibonacci heap interface
     Uses a hash table mapping data to nodes in the heap 
-    (str(data) -> fibnode ptr)
-    String representation of data should be unique for each 
-    data item
+    (str(data) -> fibnode ptr), and so string representation 
+    of data should be unique for each data item
     The comparison function should compare the keys of the
-    nodes in the queue (not the data) and return -1, 0, 1
+    nodes in the heap (not the data) and return -1, 0, 1
     for less than, equal to, greater than, respectively.
     Mind that if you use values as large as INT_MAX or INT_MIN
     for the sentinel key, you give a correct comparison function
     that can handle these values.
     The sentinel key is used to initialize the key of a node
     that is to be deleted from the heap. The key is set to the
-    sentinel key, and the node is popped from the heap.
+    sentinel key, and the node is then popped from the heap.
   Author: David De Potter
   LICENSE: MIT, see LICENSE file in repository root folder
 */
@@ -72,7 +71,7 @@ typedef struct {
 
   // creates a new Fibonacci heap, with given type (MIN / MAX),
   // key comparison function, key copy function, key free function,
-  // key show function, and sentinel key for deletion
+  // a function to convert data to string, and sentinel key for deletion
 fibheap *fibNew(fibType type, fibCompKey cmp, fibCopyKey copy,
                 fibFreeKey free, fibToString toString, void *sentinel);
 

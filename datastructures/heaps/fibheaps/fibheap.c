@@ -94,7 +94,7 @@ void fibSetLabel(fibheap *F, char *label) {
 }
 
 //===================================================================
-// Insertes node u before node v in the circular doubly linked list
+// Inserts node u before node v in the circular doubly linked list
 // containing v
 static void cListInsert (fibnode *u, fibnode *v) {
   u->next = v;
@@ -179,13 +179,15 @@ void fibPush(fibheap *F, void *data, void *key) {
 // no two nodes in the root list have the same degree
 static void consolidate(fibheap *F) {
   
-    // maxDegree of a node in the Fibonacci heap of size n is
+    // the max degree of a node in a Fibonacci heap of size n is
     // maxD(n) = floor(log_phi(n)), where phi is the golden ratio
     // constant given by (1 + sqrt(5)) / 2
-  size_t maxD = floor(log(F->size) / log((1 + sqrt(5)) / 2)) + 1;
+    // this means that we need an array of size maxD(n) + 1 to
+    // represent degrees 0 ... maxD(n) of the nodes in the root list
+  size_t maxS = floor(log(F->size) / log((1 + sqrt(5)) / 2)) + 1;
   
     // A is an auxiliary array of pointers to nodes in the root list
-  fibnode **A = safeCalloc(maxD, sizeof(fibnode*));  
+  fibnode **A = safeCalloc(maxS, sizeof(fibnode*));  
   fibnode *u = F->top, *end = F->top->prev;
   bool last = false;
   
@@ -212,7 +214,7 @@ static void consolidate(fibheap *F) {
   
     // rebuild the root list from the array A
   F->top = NULL;
-  for (size_t i = 0; i < maxD; i++) {
+  for (size_t i = 0; i < maxS; i++) {
     if (A[i]) {         
       fibnode *w = A[i];
       if (!F->top)
