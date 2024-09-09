@@ -24,6 +24,7 @@ ${\Large\color{peru}\text{Data structures}}$
 * [Heaps](datastructures/heaps)
 * [Graphs](datastructures/graphs)
 * [Disjoint sets](datastructures/union-find)
+* [Suffix arrays](algorithms/string-matching/suffix-arrays/README.md)
 
 <br/>
 
