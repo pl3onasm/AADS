@@ -4,7 +4,8 @@
 CC = gcc
 CFLAGS = -O2 -Wall -pedantic -std=c99 -D VERTEX_TYPE5
 LIBDIRS = ../../../lib ../../../datastructures/graphs/network \
-	../../../datastructures/lists ../../../datastructures/htables/multi-value \
+	../../../datastructures/lists \
+	../../../datastructures/htables/multi-value \
 	../../../datastructures/queues
 LIBOBJS = $(foreach dir, $(LIBDIRS), $(wildcard $(dir)/*.c))
 LIBOBJS := $(patsubst %.c, %.o, $(LIBOBJS))

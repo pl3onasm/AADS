@@ -10,7 +10,7 @@
 
 #include <stdlib.h>
 #include <stdbool.h>
-#include "../htables/single-value/sstmap.h"
+#include "../htables/single-value/string-size-t/sstMap.h"
 
 typedef void (*ufFreeData)(void *data);
 typedef void *(*ufCpyData)(void const *data);

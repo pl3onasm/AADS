@@ -8,7 +8,7 @@
 #ifndef SSTMAP_H_INCLUDED
 #define SSTMAP_H_INCLUDED
 
-#include "map.h"
+#include "../map.h"
 
 typedef struct sstMap sstMap;
 

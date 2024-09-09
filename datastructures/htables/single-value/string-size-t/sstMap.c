@@ -8,7 +8,7 @@
 #include <ctype.h>
 #include <string.h>
 #include "sstMap.h"
-#include "../../../lib/clib.h"
+#include "../../../../lib/clib.h"
 
 //===================================================================
 // FNV-1a hash function

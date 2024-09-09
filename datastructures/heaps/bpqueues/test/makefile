@@ -3,7 +3,8 @@
 
 CC = gcc
 CFLAGS = -O2 -Wall -pedantic -std=c99 
-LIBDIRS = ../../../../lib .. ../../../htables/single-value ../../../lists
+LIBDIRS = ../../../../lib .. ../../../htables/single-value \
+					../../../lists ../../../htables/single-value/string-size-t
 LIBOBJS = $(foreach dir, $(LIBDIRS), $(wildcard $(dir)/*.c))
 LIBOBJS := $(patsubst %.c, %.o, $(LIBOBJS))
 SRCS := $(wildcard *.c)

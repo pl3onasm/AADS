@@ -4,8 +4,11 @@
 CC = gcc
 CFLAGS = -O2 -Wall -pedantic -std=c99 -D VERTEX_TYPE5
 LIBDIRS = ../../../lib ../../../datastructures/graphs/graph \
-	../../../datastructures/lists ../../../datastructures/htables/multi-value \
-	../../../datastructures/pqueues/ ../../../datastructures/htables/single-value 
+  ../../../datastructures/lists \
+	../../../datastructures/htables/multi-value \
+	../../../datastructures/heaps/bpqueues \
+	../../../datastructures/htables/single-value \
+	../../../datastructures/htables/single-value/string-size-t
 LIBOBJS = $(foreach dir, $(LIBDIRS), $(wildcard $(dir)/*.c))
 LIBOBJS := $(patsubst %.c, %.o, $(LIBOBJS))
 SRCS := $(wildcard *.c)

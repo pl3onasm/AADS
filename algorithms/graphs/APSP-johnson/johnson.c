@@ -12,7 +12,7 @@
 */
 
 #include "../../../datastructures/graphs/graph/graph.h"
-#include "../../../datastructures/pqueues/bpqueue.h"
+#include "../../../datastructures/heaps/bpqueues/bpqueue.h"
 #include "../../../lib/clib.h"
 #include <float.h>
 
@@ -110,7 +110,7 @@ void reweightEdges(graph *G) {
 
 //===================================================================
 // Copies the key (priority) of a node in the priority queue
-void *copyKey (void *key) {
+void *copyKey (void const *key) {
   double *copy = safeCalloc(1, sizeof(double));
   *copy = *(double *)key;
   return copy;
@@ -141,7 +141,7 @@ char *vertexToString(void const *key) {
 bpqueue *initPQ(graph *G, vertex *src) {
 
   bpqueue *pq = bpqNew(nVertices(G), MIN, compareKeys, copyKey, 
-                       free, vertexToString);
+                       free, vertexToString, NULL);
   
   for (vertex *v = firstV(G); v; v = nextV(G)) {
     v->dDist = v == src ? 0 : DBL_MAX;

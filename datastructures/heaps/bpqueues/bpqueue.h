@@ -17,7 +17,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdio.h>
-#include "../../htables/single-value/sstmap.h"
+#include "../../htables/single-value/string-size-t/sstMap.h"
 
 // function pointer types
 typedef int (*bpqCompKey)(void const *a, void const *b);

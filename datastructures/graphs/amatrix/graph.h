@@ -24,7 +24,7 @@
 #ifndef GRAPH_H_INCLUDED
 #define GRAPH_H_INCLUDED
 
-#include "../../htables/single-value/sstmap.h"
+#include "../../htables/single-value/string-size-t/sstmap.h"
 #include "vertex.h"
 
   // graph types

@@ -8,7 +8,7 @@
 #ifndef SSHTABLE_H_INCLUDED
 #define SSHTABLE_H_INCLUDED
 
-#include "htable.h"
+#include "../htable.h"
 
 typedef struct sshtable sshtable;
 
