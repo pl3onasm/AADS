@@ -2,7 +2,7 @@ $\huge{\color{Cadetblue}\text{Binary Search Trees}}$
 
 <br/>
 
-A binary search trees (BST) is a type of binary tree that satisfies the ${\color{peru}\text{binary search property}}$: for each node $x$, all nodes in the left subtree of $x$ have keys less than the key of $x$, and all nodes in the right subtree of $x$ have keys greater than the key of $x$. This property allows for efficient search, insert, and delete operations, which have an average time complexity of $\mathcal{O}(\log{n})$. However, in the worst case, the time complexity of these operations can be $\mathcal{O}(n)$, if the tree is unbalanced and degenerates into a linked list. To avoid this, various self-balancing binary search trees have been developed, such as the AVL tree, the [red-black tree](../rbtrees/README.md), and the splay tree.
+A binary search trees (BST) is a type of binary tree that satisfies the ${\color{peru}\text{binary search property}}$: for each node $x$, all nodes in the left subtree of $x$ have keys less than the key of $x$, and all nodes in the right subtree of $x$ have keys greater than the key of $x$. This property allows for operations such as search, insert, and delete to be performed efficiently in a time complexity of $\mathcal{O}(\log{n})$ on average, where $n$ is the number of nodes in the tree. However, in the worst case, the time complexity of these operations can be $\mathcal{O}(n)$, if the tree is unbalanced and degenerates into a linked list. To avoid this, various self-balancing binary search trees have been developed, such as the [AVL tree](../avltrees/README.md), the [red-black tree](../rbtrees/README.md), and the splay tree.
 
 <br/>
 
@@ -13,6 +13,10 @@ $\Large{\color{darkseagreen}\text{Complexity}}$
 | ${\color{cornflowerblue}\text{Search}}$     | $\mathcal{O}(\log{n})$ | $\mathcal{O}(n)$ |
 | ${\color{cornflowerblue}\text{Insert}}$     | $\mathcal{O}(\log{n})$ | $\mathcal{O}(n)$ |
 | ${\color{cornflowerblue}\text{Delete}}$     | $\mathcal{O}(\log{n})$ | $\mathcal{O}(n)$ |
+| ${\color{cornflowerblue}\text{Minimum}}$    | $\mathcal{O}(\log{n})$ | $\mathcal{O}(n)$ |
+| ${\color{cornflowerblue}\text{Maximum}}$    | $\mathcal{O}(\log{n})$ | $\mathcal{O}(n)$ |
+| ${\color{cornflowerblue}\text{Successor}}$  | $\mathcal{O}(\log{n})$ | $\mathcal{O}(n)$ |
+| ${\color{cornflowerblue}\text{Predecessor}}$| $\mathcal{O}(\log{n})$ | $\mathcal{O}(n)$ |
 
 <br/>
 
