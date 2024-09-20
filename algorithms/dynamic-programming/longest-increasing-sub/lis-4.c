@@ -20,7 +20,7 @@ size_t computeLis (int *arr, size_t len, size_t *table,
     size_t low = 1, high = subLen;
     while (low <= high) {
       size_t mid = low + (1 + high - low) / 2;
-      if (arr[i] > arr[table[mid]]) low = mid + 1;
+      if (arr[i] >= arr[table[mid]]) low = mid + 1;
       else high = mid - 1;
     }
       // update the table and parent array
