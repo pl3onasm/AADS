@@ -1,4 +1,4 @@
-$\huge{\color{Cadetblue}\text{Depth-first search (BFS)}}$
+$\huge{\color{Cadetblue}\text{Depth-first search (DFS)}}$
 
 </br>
 
