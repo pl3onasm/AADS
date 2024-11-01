@@ -74,4 +74,4 @@ Just like before, the implementation uses char arrays to represent the numbers i
 
 Implementation: [Karatsuba multiplication](imp-2.c)
 
-For even faster integer multiplication, in $\mathcal{O}{(n \log n)}$ time, see the application in the folder for the [Fast Fourier Transform](../fft/README.md).
+For even faster integer multiplication, in $\mathcal{O}{(n \log n)}$ time, see the application in the folder for the [Fast Fourier Transform](../../fft).
