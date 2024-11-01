@@ -15,10 +15,11 @@
 #include <math.h>
 
 //===================================================================
-// Converts a natural number to an array of complex numbers in
-// reverse order so that the number can be interpreted as the
-// coefficients of a polynomial 
-// P(x) = x[0] + x[1] * x + x[2] * x^2 + ...
+// Converts a natural number a = dₙ₋₁dₙ₋₂...d₁d₀ to an array of 
+// complex numbers in reverse order so that its digits 
+// {d₀, d₁, ..., dₙ₋₁} can be interpreted as the complex coefficients 
+// of a polynomial of the form 
+// P(x) = d₀ + d₁*x + d₂*x^2 + ... + dₙ₋₁*x^(n-1)
 cdbl *convertToComplex(Nat *n) {
   
   cdbl *cN = safeCalloc(n->size, sizeof(cdbl));
@@ -29,8 +30,9 @@ cdbl *convertToComplex(Nat *n) {
 }
 
 //===================================================================
-// Converts an array of complex coefficients to a natural number
-// by evaluating the polynomial at x = 10
+// Converts an array of complex coefficients of a polynomial
+// P(x) = d₀ + d₁*x + d₂*x^2 + ... + dₙ₋₁*x^(n-1) to a natural number
+// a = dₙ₋₁dₙ₋₂...d₁d₀ by evaluating the polynomial at x = 10
 Nat *convertToNat(cdbl *coeffs, size_t len) {
   
   Nat *n = newNat(len);

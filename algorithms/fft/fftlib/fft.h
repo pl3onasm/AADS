@@ -6,11 +6,11 @@
 typedef complex double cdbl;
 
 
-  // returns the fast fourier transform
+  // returns the forward fast fourier transform
   // of an array of complex numbers
 cdbl *fft(cdbl *arr, size_t arrLen);
 
-  // returns the inverse fast fourier transform
+  // returns the backward fast fourier transform
   // of an array of complex numbers
 cdbl *ifft(cdbl *arr, size_t arrLen);
 

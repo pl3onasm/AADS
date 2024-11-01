@@ -89,11 +89,8 @@ cdbl *convolve(cdbl *x, cdbl *y, size_t xLen, size_t yLen) {
   cdbl *y2 = safeCalloc(len, sizeof(cdbl));
 
     // copy x and y into x2 and y2 
-  for (size_t i = 0; i < xLen; ++i) 
-    x2[i] = x[i];
-
-  for (size_t i = 0; i < yLen; ++i)
-    y2[i] = y[i];
+  memcpy(x2, x, xLen * sizeof(cdbl));
+  memcpy(y2, y, yLen * sizeof(cdbl));
 
     // compute FFT of x2 and y2
   cdbl *fftX = fft(x2, len);
