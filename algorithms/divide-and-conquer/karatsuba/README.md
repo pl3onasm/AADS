@@ -68,8 +68,10 @@ $$
 
 Using the master theorem, case 1, yields the solution $\Theta(n^{\log 3}) \approx \Theta(n^{1.585})$.
 
-Note the similarity between the Karatsuba algorithm and [Strassen's matrix multiplication algorithm](../strassen): both algorithms succeed in reducing the cost of each recursive step by swapping one multiplication for a few additions and subractions, which are linear operations. Whereas Strassen's algorithm reduces the cost of each recursive step to seven-eighths of the original cost, Karatsuba's algorithm reduces the cost of each recursive step to three-quarters of the original cost.  
+Note the similarity between the Karatsuba algorithm and [Strassen's matrix multiplication algorithm](../strassen): both algorithms succeed in reducing the cost of each recursive step by swapping one multiplication for a few additions and subractions, which are linear operations. Whereas Strassen's algorithm reduces the cost of each recursive step to seven-eighths of the original cost, Karatsuba's algorithm reduces the cost of each recursive step to three-quarters of the original cost.
 
 Just like before, the implementation uses char arrays to represent the numbers in order to keep the memory usage to a minimum.
 
 Implementation: [Karatsuba multiplication](imp-2.c)
+
+For even faster integer multiplication, in $\mathcal{O}{(n \log n)}$ time, see the application in the folder for the [Fast Fourier Transform](../fft/README.md).

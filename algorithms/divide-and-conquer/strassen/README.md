@@ -66,7 +66,7 @@ Implementation: [Matrix Multiplication - D&C](https://github.com/pl3onasm/AADS/b
 
 <br/>
 
-$\Large{\color{darkseagreen}\text{Strassen's Matrix}}$ ${\color{darkseagreen}\text{Multiplication}}$
+$\Large{\color{darkseagreen}\text{Strassen's Matrix}}$ $\Large{\color{darkseagreen}\text{Multiplication}}$
 
 The idea behind Strassen's algorithm is to reduce the number of (quadratic time) multiplications performed at each dividing step from 8 to 7 by substituting one of the multiplications with a number of (linear time) additions and subtractions. This way, it is possible to reduce the time complexity of the matrix multiplication algorithm to below $\Theta(n^3)$.
 

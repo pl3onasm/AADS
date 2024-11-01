@@ -6,7 +6,7 @@
   description: arbitrary precision arithmetic for natural numbers
 */
 
-#include "../../../../lib/clib.h"
+#include "../../../lib/clib.h"
 #include "nat.h"
 #include <ctype.h>
 #pragma GCC diagnostic ignored "-Wsequence-point"

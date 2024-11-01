@@ -15,6 +15,7 @@ $\Large{\color{Rosybrown}\text{Overview}}$
 | 33.4 [ed3]| [Closest Pair of Points](https://github.com/pl3onasm/CLRS/tree/main/algorithms/divide-and-conquer/closest-pair-of-points)|
 | 2.3 | [Merge Sort](https://github.com/pl3onasm/CLRS/tree/main/algorithms/sorting/merge-sort)|
 | 7.1-3 | [Quicksort](https://github.com/pl3onasm/CLRS/tree/main/algorithms/sorting/quick-sort)|
+| 30 | [Fast Fourier Transform](https://github.com/pl3onasm/CLRS/tree/main/algorithms/fft)|
 
 <br/>
 

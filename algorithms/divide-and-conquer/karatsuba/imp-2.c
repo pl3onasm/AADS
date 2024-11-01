@@ -19,7 +19,7 @@ Nat *karatsuba(Nat *x, Nat *y) {
     return zero();
 
   if (x->size == 1 && y->size == 1)
-    return intToNat((x->digits[0] - '0') * (y->digits[0] - '0'));
+    return intToNat(firstDigit(x) * firstDigit(y));
  
   size_t exp = MAX(x->size, y->size) / 2;
   Nat *s1, *s2, *s3, *s4, *x0, *x1, *y0, *y1;
@@ -27,7 +27,7 @@ Nat *karatsuba(Nat *x, Nat *y) {
     // split x and y into two parts:
     // x = x1 * 10^exp + x0; y = y1 * 10^exp + y0
   splitNat(x, exp, &x1, &x0); splitNat(y, exp, &y1, &y0);
-  
+
     // compute first component z1 = x1 * y1 
     // and third component z3 = x0 * y0
   Nat *z1 = karatsuba(x1, y1), *z3 = karatsuba(x0, y0);    
@@ -35,13 +35,14 @@ Nat *karatsuba(Nat *x, Nat *y) {
     // compute second component 
     // z2 = (x1 + x0) * (y1 + y0) - z1 - z3
   Nat *p = karatsuba((s1 = addNat(x1, x0)), (s2 = addNat(y1, y0)));
+
   Nat *z2 = subNat((s3 = subNat(p, z1)), z3);
 
     // combine the three components to get the final result
     // z = [z1 * 10^(2*exp)] + [z2 * 10^exp] + z3
   mulByPow10(z1, 2 * exp); mulByPow10(z2, exp);
   Nat *z = addNat((s4 = addNat(z1, z2)), z3);
-
+  
     // free all intermediate results
   freeNat(x0); freeNat(x1); freeNat(y0); freeNat(y1); 
   freeNat(z1); freeNat(z2); freeNat(z3); freeNat(s1); 

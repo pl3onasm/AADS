@@ -29,18 +29,13 @@ Nat *mulNat(Nat *x, Nat *y) {
       res->digits[i + j] += s / 10;
     }
 
-    // compute offset of first non-zero digit
-  size_t offset = 0;
-  while (offset < res->size && res->digits[offset] == 0) 
-    offset++;
-
-    // remove any leading zeros
-  res->size -= offset;
-  memmove(res->digits, res->digits + offset, res->size);
+    // compute start index
+  while (res->start < res->size && res->digits[res->start] == 0)
+    res->start++;
 
     // convert back to char
-  for (size_t i = 0; i < res->size; i++) 
-    res->digits[i] += '0';    
+  for (size_t i = 0; i < res->size; i++)
+    res->digits[res->start + i] += '0';
   
   return res;
 }
