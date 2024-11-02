@@ -1,5 +1,5 @@
 /* 
-  file: ftt.c
+  file: fft.c
   author: David De Potter
   email: pl3onasm@gmail.com
   license: MIT, see LICENSE file in repository root folder
@@ -8,10 +8,7 @@
 
 #include "../../../lib/clib.h"
 #include <math.h>
-#include <ctype.h>
 #include "fft.h"
-
-const double PI = 3.141592653589793238462643383279502884;
 
 //===================================================================
 // Returns the smallest power of 2 greater than n
@@ -23,7 +20,8 @@ static size_t getPow2(size_t n) {
 
 //===================================================================
 // Returns the fast fourier transform of an array of complex numbers
-// given the length of the array and the nth root of unity
+// given the length of the array and the nth root of unity. This is
+// an implementation of the Cooley-Tukey algorithm
 static cdbl *_fft(cdbl *arr, size_t len, cdbl ωn) {
   
   if (len == 1) 
@@ -33,14 +31,17 @@ static cdbl *_fft(cdbl *arr, size_t len, cdbl ωn) {
   cdbl *evenXs = safeCalloc(len/2, sizeof(cdbl)); 
   cdbl *oddXs = safeCalloc(len/2, sizeof(cdbl));
 
+    // DIVIDE the array into even and odd parts of length len/2
   for (size_t i = 0; i < len/2; ++i) {
     evenXs[i] = arr[2 * i];
     oddXs[i] = arr[2 * i + 1];
   }
   
+    // CONQUER: compute FFT of even and odd parts
   cdbl *evenYs = _fft(evenXs, len/2, ωn * ωn);
   cdbl *oddYs = _fft(oddXs, len/2, ωn * ωn);
-
+  
+    // COMBINE: compute FFT of the original array
   cdbl *y = safeCalloc(len, sizeof(cdbl));
   for (size_t i = 0; i < len/2; ++i) {
     y[i] = evenYs[i] + ω * oddYs[i];

@@ -5,8 +5,7 @@
   license: MIT, see LICENSE file in repository root folder
   description: application of the FFT algorithm to multiply 
     two natural numbers
-  time complexity: O(n log n), where n is the number of digits 
-    of the maximum of the two input numbers
+  time complexity: O(n log n log log n)
 */
 
 #include "fftlib/fft.h"
@@ -20,7 +19,7 @@
 // {d₀, d₁, ..., dₙ₋₁} can be interpreted as the complex coefficients 
 // of a polynomial of the form 
 // P(x) = d₀ + d₁*x + d₂*x^2 + ... + dₙ₋₁*x^(n-1)
-cdbl *convertToComplex(Nat *n) {
+cdbl *natToComplex(Nat *n) {
   
   cdbl *cN = safeCalloc(n->size, sizeof(cdbl));
   for (size_t i = 0; i < n->size; ++i) 
@@ -33,7 +32,7 @@ cdbl *convertToComplex(Nat *n) {
 // Converts an array of complex coefficients of a polynomial
 // P(x) = d₀ + d₁*x + d₂*x^2 + ... + dₙ₋₁*x^(n-1) to a natural number
 // a = dₙ₋₁dₙ₋₂...d₁d₀ by evaluating the polynomial at x = 10
-Nat *convertToNat(cdbl *coeffs, size_t len) {
+Nat *complexToNat(cdbl *coeffs, size_t len) {
   
   Nat *n = newNat(len);
   int carry = 0;
@@ -55,14 +54,14 @@ Nat *convertToNat(cdbl *coeffs, size_t len) {
 Nat *multiply(Nat *x, Nat *y) {
 
     // make complex double arrays of the numbers x and y
-  cdbl *cX = convertToComplex(x);
-  cdbl *cY = convertToComplex(y);
+  cdbl *cX = natToComplex(x);
+  cdbl *cY = natToComplex(y);
 
     // compute the convolution of the two arrays
   cdbl *conv = convolve(cX, cY, x->size, y->size);
 
     // convert the result back to a natural number
-  Nat *prod = convertToNat(conv, x->size + y->size);
+  Nat *prod = complexToNat(conv, x->size + y->size);
 
     // free memory
   free(cX); free(cY); free(conv);
